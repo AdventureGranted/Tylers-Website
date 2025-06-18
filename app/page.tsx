@@ -7,11 +7,13 @@ const subjects = [
   "Data Structures",
   "Algorithms",
   "Databases",
-  "Web/Mobile Development",
+  "Web Development",
+  "Mobile Development",
   "Agile Development",
   "Test Driven Development",
   "Pair Programming",
-  "Computer/Distributed Systems",
+  "Computer Systems",
+  "Distributed Systems",
   "Human-Computer Interaction",
   "Foundations of Data Analysis",
   "Computer Architecture",
@@ -20,7 +22,8 @@ const subjects = [
 ];
 
 const languages = [
-  "TypeScript/JavaScript",
+  "TypeScript",
+  "JavaScript",
   "React.js",
   "Node.js",
   "C#",
@@ -38,10 +41,13 @@ const technologies = [
   "Ubuntu",
   "macOS",
   "Windows",
-  "bash/zsh/PowerShell",
+  "bash",
+  "Zsh",
+  "PowerShell",
   "Git",
   "Spring",
-  "AWS/Azure",
+  "AWS",
+  "Azure",
   "Kubernetes",
   "Docker",
   "Swagger",
@@ -61,9 +67,9 @@ export default function Home() {
       <main className="px-6 pt-4 md:px-24">
         <div className="">
           <ProfileCard />
-          <div className="flex flex-col lg:flex-row mt-8 max-w-full mx- gap-10">
+          <div className="flex flex-col xl:flex-row mt-8 max-w-full mx- gap-10">
             <Card title="Subjects">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
                 {subjects.map((subject) => (
                   <span
                     key={subject}
@@ -75,7 +81,7 @@ export default function Home() {
               </div>
             </Card>
             <Card title="Programming Languages">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
                 {languages.map((lang) => (
                   <span
                     key={lang}
@@ -87,7 +93,7 @@ export default function Home() {
               </div>
             </Card>
             <Card title="Technologies">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
                 {technologies.map((tech) => (
                   <span
                     key={tech}
