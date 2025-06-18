@@ -58,7 +58,7 @@ const technologies = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-900">
-      <main className="p-6 md:p-24">
+      <main className="px-6 pt-4 md:px-24">
         <div className="">
           <ProfileCard />
           <div className="flex flex-col lg:flex-row mt-8 max-w-full mx- gap-10">
