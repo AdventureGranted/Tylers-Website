@@ -10,11 +10,16 @@ export default function ProfileCard() {
         height={240}
         className="rounded-4xl mb-4 shadow-2xl rotate-5"
       />
-      <p className="text-gray-200 text-center text-xl md:ml-5">
-        Hi, I&apos;m Tyler! I&apos;m a passionate web developer with experience
-        in building modern, responsive websites and applications. I love
-        learning new technologies and creating projects that make a difference.
-      </p>
+      <div className="flex flex-col items-center">
+        <h1 className="text-2xl font-bold text-gray-200">
+          Hi, I&apos;m Tyler Grant. Nice to meet you!
+        </h1>
+        <p className="text-gray-200 text-center text-xl md:ml-5 mt-2">
+          I&apos;m a passionate web developer with experience in building
+          modern, responsive websites and applications. I love learning new
+          technologies and creating projects that make a difference.
+        </p>
+      </div>
     </div>
   );
 }
