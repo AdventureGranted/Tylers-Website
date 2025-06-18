@@ -14,8 +14,8 @@ export default function ProfileCard() {
         <h1 className="text-4xl font-bold text-gray-200 w-full">
           Hi, I&apos;m Tyler Grant. Nice to meet you!
         </h1>
-        <p className="text-gray-200 text-2xl mt-2 w-2/3">
-          I&apos;m a passionate web developer with experience in building
+        <p className="text-gray-200 text-2xl mt-2 md:w-2/3">
+          I&apos;m a passionate software engineer with experience in building
           modern, responsive websites and applications. I love learning new
           technologies and creating projects that make a difference.
         </p>
