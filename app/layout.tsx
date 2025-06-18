@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Starfield from "./components/Starfield";
+import Navbar from "./components/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,10 +27,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Starfield
+        starCount={1500}
+        starColor={[255, 255, 255]}
+        speedFactor={0.05}
+        backgroundColor="black"
+      />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="min-h-screen bg-gray-900">
+          <Navbar />
+          {children}
+        </div>
       </body>
     </html>
   );
