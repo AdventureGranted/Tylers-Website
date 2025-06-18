@@ -2,101 +2,105 @@ import React from "react";
 import ProfileCard from "./components/ProfileCard";
 import Card from "./components/Card";
 
+const subjects = [
+  "Object Oriented Programming",
+  "Data Structures",
+  "Algorithms",
+  "Databases",
+  "Web/Mobile Development",
+  "Agile Development",
+  "Test Driven Development",
+  "Pair Programming",
+  "Computer/Distributed Systems",
+  "Human-Computer Interaction",
+  "Foundations of Data Analysis",
+  "Computer Architecture",
+  "Linear Algebra",
+  "Statistics",
+];
+
+const languages = [
+  "TypeScript/JavaScript",
+  "React.js",
+  "Node.js",
+  "C#",
+  "Java",
+  "C++",
+  "Python",
+  "Ruby on Rails",
+  "Kotlin",
+  "ASP.Net",
+  "Jest",
+  "RSpec",
+];
+
+const technologies = [
+  "Ubuntu",
+  "macOS",
+  "Windows",
+  "bash/zsh/PowerShell",
+  "Git",
+  "Spring",
+  "AWS/Azure",
+  "Kubernetes",
+  "Docker",
+  "Swagger",
+  "Postman",
+  "MySQL",
+  "Salesforce",
+  "Circle CI",
+  "NewRelic",
+  "Honeycomb",
+  "Expo",
+  "MongoDB",
+];
+
 export default function Home() {
   return (
-    <main className="p-6 md:p-24">
-      <div className="">
-        <ProfileCard />
-        <div className="flex  flex-col xl:flex-row mt-8 max-w-full mx- gap-10  font-bold">
-          <Card title="Subjects">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-gray-200 text-lg mt-6">
-              <span className="flex flex-col justify-center text-center">
-                Object Oriented Programming
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Data Structures
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Algorithms
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Databases
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Web/Mobile Development
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Agile Development
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Test Driven Development
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Pair Programming
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Computer/Distributed Systems
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Human-Computer Interaction
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Foundations of Data Analysis
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Computer Architecture
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Linear Algebra
-              </span>
-              <span className="flex flex-col justify-center text-center">
-                Statistics
-              </span>
-            </div>
-          </Card>
-          <Card title="Programming Languages">
-            <div className="grid grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
-              <span>TypeScript</span>
-              <span>JavaScript</span>
-              <span>React.js</span>
-              <span>Node.js</span>
-              <span>C#</span>
-              <span>Java</span>
-              <span>C++</span>
-              <span>Python</span>
-              <span>Ruby on Rails</span>
-              <span>Kotlin</span>
-              <span>ASP.Net</span>
-              <span>Jest</span>
-              <span>RSpec</span>
-            </div>
-          </Card>
-          <Card title="Technologies">
-            <div className="grid grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
-              <span>Ubuntu</span>
-              <span>macOS</span>
-              <span>Windows</span>
-              <span>bash</span>
-              <span>zsh</span>
-              <span>PowerShell</span>
-              <span>Git</span>
-              <span>Spring</span>
-              <span>AWS/Azure</span>
-              <span>Kubernetes</span>
-              <span>Docker</span>
-              <span>Swagger</span>
-              <span>Postman</span>
-              <span>MySQL</span>
-              <span>Salesforce</span>
-              <span>Circle CI</span>
-              <span>NewRelic</span>
-              <span>Honeycomb</span>
-              <span>Expo</span>
-              <span>MongoDB</span>
-            </div>
-          </Card>
+    <div className="min-h-screen bg-gray-900">
+      <main className="p-6 md:p-24">
+        <div className="">
+          <ProfileCard />
+          <div className="flex flex-col lg:flex-row mt-8 max-w-full mx- gap-10">
+            <Card title="Subjects">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
+                {subjects.map((subject) => (
+                  <span
+                    key={subject}
+                    className="flex flex-col justify-center text-center"
+                  >
+                    {subject}
+                  </span>
+                ))}
+              </div>
+            </Card>
+            <Card title="Programming Languages">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
+                {languages.map((lang) => (
+                  <span
+                    key={lang}
+                    className="flex flex-col justify-center text-center"
+                  >
+                    {lang}
+                  </span>
+                ))}
+              </div>
+            </Card>
+            <Card title="Technologies">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
+                {technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="flex flex-col justify-center text-center"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </Card>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
