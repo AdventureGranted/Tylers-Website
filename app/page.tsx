@@ -1,13 +1,12 @@
 import Navbar from "./components/NavBar";
+import ProfileCard from "./components/ProfileCard";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-400">
       <Navbar />
       <main className="p-8">
-        <section id="projects">
-          <h2 className="text-2xl font-semibold">Projects</h2>
-        </section>
+        <ProfileCard />
       </main>
     </div>
   );

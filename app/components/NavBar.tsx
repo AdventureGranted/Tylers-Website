@@ -14,24 +14,25 @@ function Navbar() {
     <nav className="bg-gray-800">
       <div className="h-24 items-center flex justify-between">
         {/* Logo Section */}
-        <div className="text-white text-4xl font-bold px-4">MyLogo</div>`{" "}
-        {/* Desktop */}
+        <div className="text-gray-200 text-4xl font-bold px-4">
+          MyLogo
+        </div>` {/* Desktop */}
         <div className="hidden md:block">
           {links.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-white text-2xl px-4"
+              className="text-gray-200 text-2xl px-4"
             >
               {link.label}
             </a>
           ))}
         </div>
         <button
-          className="md:hidden text-white text-2xl px-4"
+          className="md:hidden text-gray-200 text-2xl px-4"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <RxHamburgerMenu className="text-4xl text-white" />
+          <RxHamburgerMenu className="text-4xl text-gray-200" />
         </button>
       </div>
       {/* mobile */}
@@ -44,7 +45,7 @@ function Navbar() {
           <a
             key={link.label}
             href={link.href}
-            className="text-white text-2xl px-4 block"
+            className="text-gray-200 text-2xl px-4 block"
           >
             {link.label}
           </a>
