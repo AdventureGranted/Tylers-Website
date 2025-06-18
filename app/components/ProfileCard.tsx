@@ -8,7 +8,7 @@ export default function ProfileCard() {
         alt="Profile Picture of Tyler"
         width={240}
         height={240}
-        className="rounded-4xl mb-4 shadow-2xl rotate-6"
+        className="rounded-4xl mb-4 shadow-2xl rotate-5"
       />
       <p className="text-gray-200 text-center text-xl md:ml-5">
         Hi, I&apos;m Tyler! I&apos;m a passionate web developer with experience
