@@ -14,8 +14,8 @@ function Navbar() {
     { href: "", label: "Contact", icon: <IoIosContact /> },
   ];
   return (
-    <nav className="bg-gray-800">
-      <div className="h-24 items-center flex justify-between">
+    <nav className="bg-gray-800 mx-6 md:mx-25 rounded-b-2xl shadow-2xl">
+      <div className="mx-4 h-24 items-center flex justify-between">
         {/* Logo Section */}
         <div className="text-gray-200 text-4xl font-bold px-4">
           <Link
@@ -23,7 +23,6 @@ function Navbar() {
             className="flex items-center hover:text-gray-400 transition duration-300"
           >
             <IoHomeOutline />
-            <span className="ml-2">Home</span>
           </Link>
         </div>
         {/* Desktop */}
