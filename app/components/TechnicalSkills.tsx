@@ -60,7 +60,7 @@ const technologies = [
 ];
 export default function TechnicalSkills() {
   return (
-    <div className="flex flex-col xl:flex-row mt-8 max-w-full mx- gap-10">
+    <div className="flex flex-col xl:flex-row mt-4 max-w-full mx- gap-10">
       <Card title="Subjects">
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2 gap-x-8 gap-y-2 text-gray-200 text-lg mt-6">
           {subjects.map((subject) => (

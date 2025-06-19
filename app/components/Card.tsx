@@ -11,10 +11,8 @@ export default function Card({ title, children }: CardProps) {
           {title}
         </h1>
         <div className="w-4/5 h-1 bg-gray-400 rounded mx-auto mt-2 mb-2" />
-        <div className="flex-1 flex flex-col justify-start w-full">
-          <p className="text-gray-200 text-center text-xl mt-2 w-full">
-            {children}
-          </p>
+        <div className="flex-1 flex flex-col justify-start w-full text-gray-200 text-center text-xl mt-2">
+          {children}
         </div>
       </div>
     </div>
