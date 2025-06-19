@@ -9,9 +9,9 @@ import Link from "next/link";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const links = [
-    { href: "", label: "Resume", icon: <IoIosDocument /> },
-    { href: "", label: "Projects", icon: <FaProjectDiagram /> },
-    { href: "", label: "Contact", icon: <IoIosContact /> },
+    { href: "/about", label: "About  Me", icon: <IoIosDocument /> },
+    { href: "/projects", label: "Projects", icon: <FaProjectDiagram /> },
+    { href: "/contact", label: "Contact", icon: <IoIosContact /> },
   ];
   return (
     <nav className="bg-gray-800 mx-6 md:mx-25 rounded-b-2xl shadow-2xl">
