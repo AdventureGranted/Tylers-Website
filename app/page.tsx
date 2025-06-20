@@ -1,10 +1,27 @@
-import React from "react";
+'use client';
+import React, { useEffect, useState } from "react";
 import ProfileCard from "./components/ProfileCard";
 import TechnicalSkills from "./components/TechnicalSkills";
 import WorkExperienceCard from "./components/WorkExperienceCard";
 import Image from "next/image";
 
 export default function Home() {
+  const [showBubble, setShowBubble] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (typeof window === "undefined") return;
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 20 && showBubble) {
+        setShowBubble(false); // Hide on scroll down, never show again
+      }
+      setLastScrollY(currentScrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY, showBubble]);
+
   return (
     <div className="min-h-screen bg-gray-900 relative">
       <main className="px-6 pt-4 md:px-24 text-gray-200">
@@ -15,7 +32,11 @@ export default function Home() {
         </div>
       </main>
       {/* Floating Profile + Chat Bubble */}
-      <div className="fixed bottom-6 right-6 flex items-end z-50">
+      <div
+        className={`fixed bottom-6 right-6 flex items-end z-50 transition-opacity duration-300 ${
+          showBubble ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
         <div className="relative">
           <Image
             src="/profile.jpg"
