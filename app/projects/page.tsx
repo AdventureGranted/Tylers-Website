@@ -1,9 +1,12 @@
+import Image from "next/image";
+
 export default function ProjectsPage() {
   const projects = [
     {
       title: "Self Hosted Media & Automation Platform",
       subtitle: "Full-Stack Infrastructure Development",
       date: "September 2022 – Present",
+      image: "/selfhosting.png",
       bullets: [
         "Built a full-stack, self-hosted ecosystem with Plex, Sonarr, Radarr, Home Assistant, and more using Docker and reverse proxies for secure access",
         "Automated home and media workflows via REST APIs, webhooks, and OAuth2 authentication",
@@ -15,6 +18,7 @@ export default function ProjectsPage() {
       title: "Boxy – Senior Project",
       subtitle: null,
       date: "January 2022 – December 2022",
+      image: "/boxie.png",
       bullets: [
         "Developed a mobile app for tracking and organizing bin-stored items using React Native, AWS Amplify, and Expo",
         "Authored user and technical documentation to support long-term maintainability and user onboarding",
@@ -24,6 +28,7 @@ export default function ProjectsPage() {
       title: "Tyler-Grant.com",
       subtitle: "https://github.com/AdventureGranted/Tylers-Website",
       date: "June – Present",
+      image: "/family.jpeg",
       bullets: [
         "Created a personal portfolio website using Next.js, TypeScript, and Tailwind CSS",
         "Implemented server-side rendering for SEO optimization and fast initial load times",
@@ -41,6 +46,20 @@ export default function ProjectsPage() {
             key={idx}
             className="bg-gray-800 rounded-3xl shadow-lg p-6 flex flex-col border border-gray-700 hover:shadow-2xl transition-shadow duration-300"
           >
+            <div className="w-full aspect-video relative mb-4 overflow-hidden rounded-2xl border border-gray-700 bg-gray-700">
+              <Image
+                src={project.image}
+                alt={project.title + " image"}
+                fill
+                className={`${
+                  project.image === "/boxie.png"
+                    ? "object-center"
+                    : "object-cover"
+                } transition-transform duration-300 hover:scale-105`}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority={idx === 0}
+              />
+            </div>
             <h2 className="text-2xl font-semibold text-yellow-300 mb-1">
               {project.title}
             </h2>
