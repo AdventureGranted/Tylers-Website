@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useEffect, useState } from "react";
 import ProfileCard from "./components/ProfileCard";
 import TechnicalSkills from "./components/TechnicalSkills";
