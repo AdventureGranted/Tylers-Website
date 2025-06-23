@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function ProfileCard() {
   return (
-    <div className="max-w-full mx-auto bg-gray-800 rounded-4xl shadow-md overflow-hidden flex md:flex-row flex-col items-center p-6 mt-8">
+    <div className="max-w-full mx-auto bg-gray-800 rounded-4xl shadow-md overflow-hidden flex md:flex-row flex-col items-center p-6 mt-4">
       <Image
         src="/profile.jpg"
         alt="Profile Picture of Tyler"

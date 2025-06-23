@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-900 relative">
-      <main className="px-6 pt-4 md:px-24 text-gray-200">
+      <main className="px-6 mb-6 pt-4 md:px-24 text-gray-200">
         <div className="">
           <ProfileCard />
           <TechnicalSkills />

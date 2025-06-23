@@ -1,10 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ProjectsPage() {
   const projects = [
     {
       title: "Self Hosted Media & Automation Platform",
       subtitle: "Full-Stack Infrastructure Development",
+      link: null,
       date: "September 2022 – Present",
       image: "/selfhosting.png",
       bullets: [
@@ -17,6 +19,7 @@ export default function ProjectsPage() {
     {
       title: "Boxy – Senior Project",
       subtitle: null,
+      link: null,
       date: "January 2022 – December 2022",
       image: "/boxie.png",
       bullets: [
@@ -26,7 +29,8 @@ export default function ProjectsPage() {
     },
     {
       title: "Tyler-Grant.com",
-      subtitle: "https://github.com/AdventureGranted/Tylers-Website",
+      subtitle: null,
+      link: "https://github.com/AdventureGranted/Tylers-Website",
       date: "June – Present",
       image: "/family.jpeg",
       bullets: [
@@ -67,6 +71,11 @@ export default function ProjectsPage() {
               <div className="text-md text-gray-400 mb-1">
                 {project.subtitle}
               </div>
+            )}
+            {project.link && (
+              <Link href={project.link} className="text-md text-gray-400 mb-1">
+                {project.link}
+              </Link>
             )}
             <div className="text-sm text-gray-400 mb-3">{project.date}</div>
             <ul className="list-disc list-inside text-gray-200 space-y-2 pl-2">
