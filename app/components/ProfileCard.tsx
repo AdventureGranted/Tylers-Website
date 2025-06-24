@@ -22,7 +22,7 @@ export default function ProfileCard() {
         <a
           href="/Tyler_Grant_Resume_2025.pdf"
           download
-          className="mt-6 inline-block bg-gray-400 text-gray-900 font-bold py-2 transition-transform duration-300 hover:scale-105 px-6 rounded-full shadow hover:bg-yellow-300 transition-colors duration-200"
+          className="mt-6 inline-block bg-gray-400 text-gray-900 font-bold py-2 hover:scale-105 px-6 rounded-full shadow hover:bg-yellow-300 transition-colors duration-200"
         >
           Download Resume
         </a>
