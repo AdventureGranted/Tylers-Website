@@ -29,7 +29,11 @@ jobs:
           BUILD_DIR=/tmp/next-build
           rm -rf $BUILD_DIR
           mkdir -p $BUILD_DIR
-          cp -r . $BUILD_DIR
+
+          echo "Copying app source to temp build directory"
+          rsync -a --copy-links --exclude='node_modules' --exclude='.git' --exclude='.github' --exclude='*.log' --exclude='.next' ./ $BUILD_DIR
+
+          echo "Installing and building in isolated directory"
           cd $BUILD_DIR
           npm run build
 
