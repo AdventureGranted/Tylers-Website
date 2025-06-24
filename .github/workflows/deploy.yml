@@ -1,11 +1,11 @@
-name: Node.js CI
+name: Deploy Next.js App
 
 on:
   push:
     branches: ["main"]
 
 jobs:
-  build:
+  deploy:
     runs-on: self-hosted
 
     strategy:
@@ -14,24 +14,39 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: npm ci
-      - run: npm run build --if-present
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build in temp dir
+        run: |
+          BUILD_DIR=/tmp/next-build
+          rm -rf $BUILD_DIR
+          mkdir -p $BUILD_DIR
+          cp -r . $BUILD_DIR
+          cd $BUILD_DIR
+          npm run build
+
       - name: Deploy App
         env:
           NODE_ENV: production
           PORT: 3000
           APP_NAME: tylers-website
         run: |
+          echo "Syncing built app to live directory"
+          rsync -a --delete /tmp/next-build/ $GITHUB_WORKSPACE/
+
+          echo "Restarting app with PM2"
           if pm2 list | grep -q $APP_NAME; then
-            echo "Restarting App: $APP_NAME"
             pm2 restart $APP_NAME
           else
-            echo "Starting App: $APP_NAME"
             pm2 start npm --name $APP_NAME -- start -- --port=$PORT
           fi
+
           pm2 save

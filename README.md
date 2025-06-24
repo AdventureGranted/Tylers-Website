@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tyler Grant's Portfolio
+
+A modern, responsive portfolio website built with [Next.js](https://nextjs.org/), [React](https://react.dev/), and [Tailwind CSS](https://tailwindcss.com/).
+
+## Features
+
+- **Responsive Design:** Mobile-first, dark-themed, and fully responsive.
+- **Animated UI:** Mobile menu transitions, animated banners, and modals.
+- **Component-Based:** Reusable components for cards, modals, navigation, and more.
+- **Project Showcase:** Expandable project cards with images and details.
+- **Work Experience:** Data-driven, visually organized experience cards.
+- **Contact & About Pages:** Easy-to-update sections for personal info and contact.
+- **Resume Download:** Downloadable PDF with a custom thank-you modal.
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Run the development server:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+- `app/`
+  - `page.tsx` – Home page (Profile, Skills, Experience, animated chat bubble)
+  - `about/page.tsx` – About Me (Family, Hobbies, Other)
+  - `projects/page.tsx` – Projects grid with images and details
+  - `contact/page.tsx` – Contact info (email, phone)
+  - `components/`
+    - `NavBar.tsx` – Responsive navigation bar with animated mobile dropdown
+    - `ProfileCard.tsx` – Profile and resume download with modal
+    - `WorkExperienceCard.tsx` – Work experience cards
+    - `TechnicalSkills.tsx` – Skills and technologies
+    - `Card.tsx` – Reusable card component
+    - `Modal.tsx` – Reusable modal dialog
+- `public/` – Static assets (images, resume PDF, favicon)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Customization
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Update your resume:** Replace `public/Tyler_Grant_Resume_2025.pdf`.
+- **Add projects:** Edit `app/projects/page.tsx` and add to the `projects` array.
+- **Edit About/Contact:** Update `app/about/page.tsx` and `app/contact/page.tsx`.
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Next.js 15
+- React 19
+- Tailwind CSS 4
+- TypeScript
+- React Icons
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is for personal portfolio use. Feel free to fork and adapt for your own site!
