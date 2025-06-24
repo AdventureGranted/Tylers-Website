@@ -19,6 +19,13 @@ export default function ProfileCard() {
           modern, responsive websites and applications. I love learning new
           technologies and creating projects that make a difference.
         </p>
+        <a
+          href="/Tyler_Grant_Resume_2025.pdf"
+          download
+          className="mt-6 inline-block bg-gray-400 text-gray-900 font-bold py-2 px-6 rounded-full shadow hover:bg-yellow-300 transition-colors duration-200"
+        >
+          Download Resume
+        </a>
       </div>
     </div>
   );
