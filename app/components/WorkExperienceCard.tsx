@@ -5,7 +5,7 @@ const experiences = [
   {
     company: "Sorenson Communications",
     role: "Software Engineer",
-    date: "Dec 2022 - July 3, 2025",
+    date: "December 2022 - July 3, 2025",
     logo: "/sorensonCommunications.jpg",
     logoAlt: "Sorenson Communications Logo",
     bullets: [
@@ -31,7 +31,7 @@ const experiences = [
   {
     company: "Kantata",
     role: "Software Engineer Intern",
-    date: "Dec 2022 - July 3, 2025",
+    date: "May 2022 - August 2022",
     logo: "/kantata.png",
     logoAlt: "Kantata Logo",
     bullets: [
@@ -43,7 +43,7 @@ const experiences = [
   {
     company: "Zions Bank",
     role: "Software Engineer Intern",
-    date: "Dec 2022 - July 3, 2025",
+    date: "October 2021 - May 2022",
     logo: "/zionsBank.jpg",
     logoAlt: "Zions Bank Logo",
     bullets: [
