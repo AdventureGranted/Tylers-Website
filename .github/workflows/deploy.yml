@@ -31,10 +31,11 @@ jobs:
           mkdir -p $BUILD_DIR
 
           echo "Copying app source to temp build directory"
-          rsync -a --copy-links --exclude='node_modules' --exclude='.git' --exclude='.github' --exclude='*.log' --exclude='.next' ./ $BUILD_DIR
+          rsync -a --copy-links --exclude=node_modules --exclude=.next ./ $BUILD_DIR
 
           echo "Installing and building in isolated directory"
           cd $BUILD_DIR
+          npm ci
           npm run build
 
       - name: Deploy App
