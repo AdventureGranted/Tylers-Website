@@ -30,18 +30,20 @@ function Navbar() {
         </div>
         {/* Desktop */}
         <div className="hidden md:flex ml-auto">
-          {links.map((link) =>
-            pathname === link.href ? null : (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="flex items-center text-gray-200 text-2xl px-4 hover:text-yellow-300 transition duration-300 hover:scale-105"
-              >
-                {link.icon}
-                <span className="ml-2">{link.label}</span>
-              </Link>
-            )
-          )}
+          {links.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className={`flex items-center text-2xl px-4 transition duration-300 hover:scale-105 ${
+                pathname === link.href
+                  ? "text-yellow-300 font-bold"
+                  : "text-gray-200 hover:text-yellow-300"
+              }`}
+            >
+              {link.icon}
+              <span className="ml-2">{link.label}</span>
+            </Link>
+          ))}
         </div>
         {/* Mobile */}
         <div className="relative md:hidden ml-auto">
@@ -59,19 +61,21 @@ function Navbar() {
                 : "max-h-0 opacity-0 pointer-events-none"
             }`}
           >
-            {links.map((link) =>
-              pathname === link.href ? null : (
-                <Link
-                  onClick={() => setIsOpen(false)}
-                  key={link.label}
-                  href={link.href}
-                  className="flex items-center justify-center text-center text-gray-200 text-2xl px-4 hover:text-yellow-300 transition duration-300"
-                >
-                  {link.icon}
-                  <span className="ml-2">{link.label}</span>
-                </Link>
-              )
-            )}
+            {links.map((link) => (
+              <Link
+                onClick={() => setIsOpen(false)}
+                key={link.label}
+                href={link.href}
+                className={`flex items-center justify-center text-center text-2xl px-4 transition duration-300 ${
+                  pathname === link.href
+                    ? "text-yellow-300 font-bold"
+                    : "text-gray-200 hover:text-yellow-300"
+                }`}
+              >
+                {link.icon}
+                <span className="ml-2">{link.label}</span>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
