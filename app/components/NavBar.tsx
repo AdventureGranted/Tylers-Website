@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoHomeOutline } from "react-icons/io5";
 import { IoIosDocument, IoIosContact } from "react-icons/io";
@@ -8,6 +9,7 @@ import Link from "next/link";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
   const links = [
     { href: "/about", label: "About  Me", icon: <IoIosDocument /> },
     { href: "/projects", label: "Projects", icon: <FaProjectDiagram /> },
@@ -27,16 +29,18 @@ function Navbar() {
         </div>
         {/* Desktop */}
         <div className="hidden md:flex ml-auto">
-          {links.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="flex items-center text-gray-200 text-2xl px-4 hover:text-gray-400 transition duration-300"
-            >
-              {link.icon}
-              <span className="ml-2">{link.label}</span>
-            </Link>
-          ))}
+          {links.map((link) =>
+            pathname === link.href ? null : (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="flex items-center text-gray-200 text-2xl px-4 hover:text-gray-400 transition duration-300"
+              >
+                {link.icon}
+                <span className="ml-2">{link.label}</span>
+              </Link>
+            )
+          )}
         </div>
         <button
           className="md:hidden text-gray-200 text-2xl px-4"
@@ -51,16 +55,18 @@ function Navbar() {
           isOpen ? "block" : "hidden"
         } md:hidden bg-gray-600 space-y-2 pb-2 pt-2`}
       >
-        {links.map((link) => (
-          <Link
-            key={link.label}
-            href={link.href}
-            className="flex items-center text-gray-200 text-2xl px-4 hover:text-gray-400 transition duration-300"
-          >
-            {link.icon}
-            <span className="ml-2">{link.label}</span>
-          </Link>
-        ))}
+        {links.map((link) =>
+          pathname === link.href ? null : (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="flex items-center text-gray-200 text-2xl px-4 hover:text-gray-400 transition duration-300"
+            >
+              {link.icon}
+              <span className="ml-2">{link.label}</span>
+            </Link>
+          )
+        )}
       </div>
     </nav>
   );
