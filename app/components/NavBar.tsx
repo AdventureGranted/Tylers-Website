@@ -51,27 +51,28 @@ function Navbar() {
           >
             <RxHamburgerMenu className="text-4xl text-gray-200 hover:text-yellow-300" />
           </button>
-        </div>
-        {/* Mobile Dropdown Drawer */}
-        <div
-          className={`fixed md:hidden top-24 right-0 w-1/2 sm:w-1/3 bg-gray-600 space-y-2 pb-4 mr-6 pt-4 overflow-hidden transition-all duration-600 rounded-2xl shadow-2xl z-50 ${
-            isOpen
-              ? "max-h-96 opacity-100"
-              : "max-h-0 opacity-0 pointer-events-none"
-          }`}
-        >
-          {links.map((link) =>
-            pathname === link.href ? null : (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="flex items-center justify-center text-center text-gray-200 text-2xl px-4 hover:text-yellow-300 transition duration-300"
-              >
-                {link.icon}
-                <span className="ml-2">{link.label}</span>
-              </Link>
-            )
-          )}
+          {/* Mobile Dropdown Drawer */}
+          <div
+            className={`absolute right-0 top-full w-48 bg-gray-600 space-y-2 pb-4 pt-4 overflow-hidden transition-all duration-600 rounded-2xl shadow-2xl z-50 ${
+              isOpen
+                ? "max-h-96 opacity-100"
+                : "max-h-0 opacity-0 pointer-events-none"
+            }`}
+          >
+            {links.map((link) =>
+              pathname === link.href ? null : (
+                <Link
+                  onClick={() => setIsOpen(false)}
+                  key={link.label}
+                  href={link.href}
+                  className="flex items-center justify-center text-center text-gray-200 text-2xl px-4 hover:text-yellow-300 transition duration-300"
+                >
+                  {link.icon}
+                  <span className="ml-2">{link.label}</span>
+                </Link>
+              )
+            )}
+          </div>
         </div>
       </div>
     </nav>
