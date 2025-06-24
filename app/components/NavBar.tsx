@@ -3,16 +3,17 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoHomeOutline } from "react-icons/io5";
-import { IoIosDocument, IoIosContact } from "react-icons/io";
-import { FaProjectDiagram } from "react-icons/fa";
+import { IoIosContact } from "react-icons/io";
+import { AiOutlineUser } from "react-icons/ai";
+import { HiOutlineLightBulb } from "react-icons/hi";
 import Link from "next/link";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const links = [
-    { href: "/about", label: "About  Me", icon: <IoIosDocument /> },
-    { href: "/projects", label: "Projects", icon: <FaProjectDiagram /> },
+    { href: "/about", label: "About  Me", icon: <AiOutlineUser /> },
+    { href: "/projects", label: "Projects", icon: <HiOutlineLightBulb /> },
     { href: "/contact", label: "Contact", icon: <IoIosContact /> },
   ];
   return (
@@ -53,7 +54,7 @@ function Navbar() {
         </div>
         {/* Mobile Dropdown Drawer */}
         <div
-          className={`fixed md:hidden top-24 right-0 w-1/3 bg-gray-600 space-y-2 pb-4 mr-6 pt-4 overflow-hidden transition-all duration-600 rounded-2xl shadow-2xl z-50 ${
+          className={`fixed md:hidden top-24 right-0 w-1/2 sm:w-1/3 bg-gray-600 space-y-2 pb-4 mr-6 pt-4 overflow-hidden transition-all duration-600 rounded-2xl shadow-2xl z-50 ${
             isOpen
               ? "max-h-96 opacity-100"
               : "max-h-0 opacity-0 pointer-events-none"

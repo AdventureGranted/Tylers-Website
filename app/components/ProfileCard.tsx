@@ -1,6 +1,24 @@
 import Image from "next/image";
+import { useState } from "react";
+import Modal from "./Modal";
 
 export default function ProfileCard() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleDownload = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setShowModal(true);
+    // Trigger download after a short delay so the modal is visible
+    setTimeout(() => {
+      const link = document.createElement("a");
+      link.href = "/Tyler_Grant_Resume_2025.pdf";
+      link.download = "Tyler_Grant_Resume_2025.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 500);
+  };
+
   return (
     <div className="max-w-full mx-auto bg-gray-800 rounded-4xl shadow-md overflow-hidden flex md:flex-row flex-col items-center p-6 mt-4">
       <Image
@@ -22,10 +40,17 @@ export default function ProfileCard() {
         <a
           href="/Tyler_Grant_Resume_2025.pdf"
           download
+          onClick={handleDownload}
           className="mt-6 inline-block bg-gray-400 text-gray-900 font-bold py-2 hover:scale-105 px-6 rounded-full shadow hover:bg-yellow-300 transition-colors duration-200"
         >
           Download Resume
         </a>
+        <Modal show={showModal} onClose={() => setShowModal(false)}>
+          <h2 className="text-2xl font-bold mb-4 text-gray-900">Thank You!</h2>
+          <p className="text-gray-700 mb-6">
+            I hope youe consider my resume for your next project or opportunity.
+          </p>
+        </Modal>
       </div>
     </div>
   );
