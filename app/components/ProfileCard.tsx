@@ -8,7 +8,7 @@ export default function ProfileCard() {
         alt="Profile Picture of Tyler"
         width={240}
         height={240}
-        className="rounded-4xl mb-4 shadow-lg rotate-5 shadow-indigo-500/30"
+        className="rounded-4xl mb-4 shadow-lg rotate-5 shadow-indigo-500/30 transition-transform duration-300 hover:scale-105"
       />
       <div className="m-2 flex flex-col items-center justify-center h-full w-full text-center">
         <h1 className="text-4xl font-bold00 w-full">
@@ -22,7 +22,7 @@ export default function ProfileCard() {
         <a
           href="/Tyler_Grant_Resume_2025.pdf"
           download
-          className="mt-6 inline-block bg-gray-400 text-gray-900 font-bold py-2 px-6 rounded-full shadow hover:bg-yellow-300 transition-colors duration-200"
+          className="mt-6 inline-block bg-gray-400 text-gray-900 font-bold py-2 transition-transform duration-300 hover:scale-105 px-6 rounded-full shadow hover:bg-yellow-300 transition-colors duration-200"
         >
           Download Resume
         </a>

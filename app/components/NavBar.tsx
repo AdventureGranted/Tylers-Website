@@ -22,7 +22,7 @@ function Navbar() {
         <div className="text-gray-200 text-4xl font-bold px-4">
           <Link
             href="/"
-            className="flex items-center hover:text-gray-400 transition duration-300"
+            className="flex items-center hover:text-yellow-300  hover:scale-105 transition duration-300"
           >
             <IoHomeOutline />
           </Link>
@@ -34,7 +34,7 @@ function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="flex items-center text-gray-200 text-2xl px-4 hover:text-gray-400 transition duration-300"
+                className="flex items-center text-gray-200 text-2xl px-4 hover:text-yellow-300 transition duration-300 hover:scale-105"
               >
                 {link.icon}
                 <span className="ml-2">{link.label}</span>
@@ -42,31 +42,36 @@ function Navbar() {
             )
           )}
         </div>
-        <button
-          className="md:hidden text-gray-200 text-2xl px-4"
-          onClick={() => setIsOpen(!isOpen)}
+        {/* Mobile */}
+        <div className="relative md:hidden ml-auto">
+          <button
+            className="text-gray-200 text-2xl px-4"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <RxHamburgerMenu className="text-4xl text-gray-200 hover:text-yellow-300" />
+          </button>
+        </div>
+        {/* Mobile Dropdown Drawer */}
+        <div
+          className={`fixed md:hidden top-24 right-0 w-1/3 bg-gray-600 space-y-2 pb-4 mr-6 pt-4 overflow-hidden transition-all duration-600 rounded-2xl shadow-2xl z-50 ${
+            isOpen
+              ? "max-h-96 opacity-100"
+              : "max-h-0 opacity-0 pointer-events-none"
+          }`}
         >
-          <RxHamburgerMenu className="text-4xl text-gray-200" />
-        </button>
-      </div>
-      {/* mobile */}
-      <div
-        className={`${
-          isOpen ? "block" : "hidden"
-        } md:hidden bg-gray-600 space-y-2 pb-2 pt-2`}
-      >
-        {links.map((link) =>
-          pathname === link.href ? null : (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="flex items-center text-gray-200 text-2xl px-4 hover:text-gray-400 transition duration-300"
-            >
-              {link.icon}
-              <span className="ml-2">{link.label}</span>
-            </Link>
-          )
-        )}
+          {links.map((link) =>
+            pathname === link.href ? null : (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="flex items-center justify-center text-center text-gray-200 text-2xl px-4 hover:text-yellow-300 transition duration-300"
+              >
+                {link.icon}
+                <span className="ml-2">{link.label}</span>
+              </Link>
+            )
+          )}
+        </div>
       </div>
     </nav>
   );
