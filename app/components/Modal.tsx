@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ModalProps {
   show: boolean;
@@ -9,12 +9,12 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ show, onClose, children }) => {
   if (!show) return null;
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50">
-      <div className="bg-white rounded-2xl p-8 shadow-xl text-center max-w-xs relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="relative max-w-xs rounded-2xl bg-white p-8 text-center shadow-xl">
         {children}
         <button
           onClick={onClose}
-          className="mt-6 bg-gray-400 text-gray-900 font-bold py-2 px-6 rounded-full shadow hover:scale-105 hover:bg-yellow-300 transition-colors duration-200"
+          className="mt-6 rounded-full bg-gray-400 px-6 py-2 font-bold text-gray-900 shadow transition-colors duration-200 hover:scale-105 hover:bg-yellow-300"
         >
           Close
         </button>

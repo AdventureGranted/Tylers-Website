@@ -1,9 +1,9 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import ProfileCard from "./components/ProfileCard";
-import TechnicalSkills from "./components/TechnicalSkills";
-import WorkExperienceCard from "./components/WorkExperienceCard";
-import Image from "next/image";
+'use client';
+import React, { useEffect, useState } from 'react';
+import ProfileCard from './components/ProfileCard';
+import TechnicalSkills from './components/TechnicalSkills';
+import WorkExperienceCard from './components/WorkExperienceCard';
+import Image from 'next/image';
 
 export default function Home() {
   const [showBubble, setShowBubble] = useState(true);
@@ -11,20 +11,20 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (typeof window === "undefined") return;
+      if (typeof window === 'undefined') return;
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY && currentScrollY > 20 && showBubble) {
         setShowBubble(false); // Hide on scroll down, never show again
       }
       setLastScrollY(currentScrollY);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY, showBubble]);
 
   return (
-    <div className="min-h-screen bg-gray-900 relative">
-      <main className="px-6 mb-6 pt-4 md:px-24 text-gray-200">
+    <div className="relative min-h-screen bg-gray-900">
+      <main className="mb-6 px-6 pt-4 text-gray-200 md:px-24">
         <div className="">
           <ProfileCard />
           <TechnicalSkills />
@@ -33,8 +33,8 @@ export default function Home() {
       </main>
       {/* Floating Profile + Chat Bubble */}
       <div
-        className={`fixed bottom-6 right-6 flex items-end z-50 transition-opacity duration-300 ${
-          showBubble ? "opacity-100" : "opacity-0 pointer-events-none"
+        className={`fixed right-6 bottom-6 z-50 flex items-end transition-opacity duration-300 ${
+          showBubble ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
         <div className="relative">
@@ -46,8 +46,8 @@ export default function Home() {
             className="rounded-full border-4 border-black shadow-lg"
           />
           {/* Chat bubble */}
-          <div className="absolute -left-56 bottom-2 flex items-center">
-            <div className="bg-gray-900 text-gray-200 text-sm font-semibold px-4 py-2 rounded-2xl shadow-lg animate-bounce border-2 border-black relative after:content-[''] after:absolute after:top-1/2 after:right-[-16px] after:-translate-y-1/2 after:border-8 after:border-transparent after:border-l-yellow-300">
+          <div className="absolute bottom-2 -left-56 flex items-center">
+            <div className="relative animate-bounce rounded-2xl border-2 border-black bg-gray-900 px-4 py-2 text-sm font-semibold text-gray-200 shadow-lg after:absolute after:top-1/2 after:right-[-16px] after:-translate-y-1/2 after:border-8 after:border-transparent after:border-l-yellow-300 after:content-['']">
               Site is under development
             </div>
           </div>
