@@ -9,8 +9,8 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ show, onClose, children }) => {
   if (!show) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="relative max-w-xs rounded-2xl bg-white p-8 text-center shadow-xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+      <div className="relative max-w-xs rounded-2xl bg-gray-600 p-8 text-center shadow-xl">
         {children}
         <button
           onClick={onClose}

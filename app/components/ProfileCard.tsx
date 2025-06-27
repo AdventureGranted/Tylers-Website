@@ -46,9 +46,9 @@ export default function ProfileCard() {
           Download Resume
         </a>
         <Modal show={showModal} onClose={() => setShowModal(false)}>
-          <h2 className="mb-4 text-2xl font-bold text-gray-900">Thank You!</h2>
-          <p className="mb-6 text-gray-700">
-            I hope youe consider my resume for your next project or opportunity.
+          <h2 className="mb-4 text-2xl font-bold text-gray-300">Thank You!</h2>
+          <p className="mb-6 text-gray-300">
+            I hope you consider my resume for your next project or opportunity.
           </p>
         </Modal>
       </div>
