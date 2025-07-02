@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function AboutPage() {
   return (
     <main className="flex min-h-screen flex-col items-center bg-gray-900 px-4 py-12">
@@ -9,7 +11,20 @@ export default function AboutPage() {
       </section>
       <section className="mb-8 w-full max-w-2xl rounded-3xl border border-gray-700 bg-gray-800 p-6 shadow-lg">
         <h2 className="mb-2 text-2xl font-semibold text-yellow-300">Family</h2>
-        <p className="text-gray-200"></p>
+        <div className="flex flex-col gap-4 md:flex-row md:items-start">
+          <div className="flex justify-center md:justify-start">
+            <Image
+              src="/family.jpeg"
+              alt="Family"
+              width={300}
+              height={225}
+              className="rounded-lg object-cover"
+            />
+          </div>
+          <div className="flex-1">
+            <p className="text-gray-200"></p>
+          </div>
+        </div>
       </section>
       <section className="mb-8 w-full max-w-2xl rounded-3xl border border-gray-700 bg-gray-800 p-6 shadow-lg">
         <h2 className="mb-2 text-2xl font-semibold text-yellow-300">Other</h2>
