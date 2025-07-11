@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted-main
+    runs-on: main
 
     strategy:
       matrix:
