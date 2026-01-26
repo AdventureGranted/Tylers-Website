@@ -12,7 +12,7 @@ const experiences = [
       'Develop and maintain backend services in Python powering the Signos iOS and Android mobile applications',
       'Build and enhance features for signos.com using React and TypeScript, delivering a seamless user experience',
       'Design and optimize data pipelines and analytics infrastructure using MongoDB, AWS, and Snowflake',
-      'Collaborate with cross-functional teams to ship health-tech solutions that help users manage metabolic health/weight',
+      'Collaborate with cross-functional teams to ship health-tech solutions that help users manage metabolic health.',
     ],
   },
   {
