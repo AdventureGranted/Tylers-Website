@@ -7,6 +7,7 @@ on:
 env:
   PORT: 3000
   APP_NAME: tylers-website
+  HOME: /root
 
 jobs:
   deploy:
@@ -28,15 +29,9 @@ jobs:
 
       - name: Deploy App
         run: |
-          echo "Current directory: $(pwd)"
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          echo "PM2 list before:"
-          pm2 list
           if pm2 list | grep -q $APP_NAME; then
             pm2 restart $APP_NAME
           else
             pm2 start npm --name $APP_NAME -- start -- --port=$PORT
           fi
-          echo "PM2 list after:"
-          pm2 list
           pm2 save
