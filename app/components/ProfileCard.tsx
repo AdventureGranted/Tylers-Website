@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { useState } from 'react';
 import Modal from './Modal';
@@ -26,6 +28,7 @@ export default function ProfileCard() {
         alt="Profile Picture of Tyler"
         width={240}
         height={240}
+        priority
         className="mb-4 rotate-5 rounded-4xl shadow-lg shadow-indigo-500/30 transition-transform duration-300 hover:scale-105"
       />
       <div className="m-2 flex h-full w-full flex-col items-center justify-center text-center">

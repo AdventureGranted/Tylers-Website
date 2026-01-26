@@ -26,23 +26,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <Starfield
-        starCount={1500}
-        starColor={[255, 255, 255]}
-        speedFactor={0.05}
-        backgroundColor="black"
-      />
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <div className="min-h-screen bg-gray-900">
-            <Navbar />
-            {children}
-          </div>
-        </body>
-      </html>
-    </>
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Starfield
+          starCount={800}
+          starColor={[255, 255, 255]}
+          speedFactor={0.05}
+          backgroundColor="black"
+        />
+        <div className="min-h-screen bg-gray-900">
+          <Navbar />
+          {children}
+        </div>
+      </body>
+    </html>
   );
 }
