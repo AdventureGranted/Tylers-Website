@@ -4,53 +4,35 @@ on:
   push:
     branches: ["main"]
 
+env:
+  NODE_ENV: production
+  PORT: 3000
+  APP_NAME: tylers-website
+
 jobs:
   deploy:
     runs-on: main
 
-    strategy:
-      matrix:
-        node-version: [22.x]
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
           cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build in temp dir
+      - name: Install and build
         run: |
-          BUILD_DIR=/tmp/next-build
-          rm -rf $BUILD_DIR
-          mkdir -p $BUILD_DIR
-
-          echo "Copying app source to temp build directory"
-          rsync -a --copy-links --exclude=node_modules --exclude=.next ./ $BUILD_DIR
-
-          echo "Installing and building in isolated directory"
-          cd $BUILD_DIR
           npm ci
           npm run build
-      - name: Deploy App
-        env:
-          NODE_ENV: production
-          PORT: 3000
-          APP_NAME: tylers-website
-        run: |
-          echo "Syncing built app to live directory"
-          rsync -a --delete /tmp/next-build/ $GITHUB_WORKSPACE/
 
+      - name: Deploy App
+        run: |
           echo "Restarting app with PM2"
           if pm2 list | grep -q $APP_NAME; then
             pm2 restart $APP_NAME
           else
             pm2 start npm --name $APP_NAME -- start -- --port=$PORT
           fi
-
           pm2 save
