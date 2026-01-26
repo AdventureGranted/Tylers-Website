@@ -3,6 +3,19 @@ import React from 'react';
 
 const experiences = [
   {
+    company: 'Signos',
+    role: 'Software Engineer',
+    date: 'July 2025 - Present',
+    logo: '/signos.webp',
+    logoAlt: 'Signos Logo',
+    bullets: [
+      'Develop and maintain backend services in Python powering the Signos iOS and Android mobile applications',
+      'Build and enhance features for signos.com using React and TypeScript, delivering a seamless user experience',
+      'Design and optimize data pipelines and analytics infrastructure using MongoDB, AWS, and Snowflake',
+      'Collaborate with cross-functional teams to ship health-tech solutions that help users manage metabolic health',
+    ],
+  },
+  {
     company: 'Sorenson Communications',
     role: 'Software Engineer',
     date: 'December 2022 - July 3, 2025',
