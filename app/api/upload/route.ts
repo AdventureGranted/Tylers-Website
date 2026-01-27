@@ -1,14 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/lib/auth';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import convert from 'heic-convert';
+
+const s3Client = new S3Client({
+  region: 'garage',
+  endpoint: process.env.S3_ENDPOINT || 'http://192.168.1.251:3900',
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+  },
+  forcePathStyle: true, // Required for Garage/MinIO
+});
+
+const BUCKET_NAME = process.env.S3_BUCKET || 'tylers-website';
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
+  if (!session || session.user.role !== 'admin') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -52,14 +63,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Use UPLOAD_DIR env var or default to public/uploads
-    const baseUploadDir =
-      process.env.UPLOAD_DIR || path.join(process.cwd(), 'public', 'uploads');
-    const uploadDir = path.join(baseUploadDir, 'projects');
-    await mkdir(uploadDir, { recursive: true });
-
     let buffer = Buffer.from(await file.arrayBuffer());
     let ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    let contentType = file.type;
 
     // Convert HEIC to JPEG
     if (isHeic) {
@@ -71,16 +77,27 @@ export async function POST(request: NextRequest) {
         })
       );
       ext = 'jpg';
+      contentType = 'image/jpeg';
     }
 
     // Generate unique filename
-    const filename = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${ext}`;
-    const filepath = path.join(uploadDir, filename);
-    await writeFile(filepath, buffer);
+    const filename = `projects/${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${ext}`;
 
-    // Use UPLOAD_URL_PREFIX env var or default to /uploads
-    const urlPrefix = process.env.UPLOAD_URL_PREFIX || '/uploads';
-    const url = `${urlPrefix}/projects/${filename}`;
+    // Upload to S3/Garage
+    await s3Client.send(
+      new PutObjectCommand({
+        Bucket: BUCKET_NAME,
+        Key: filename,
+        Body: buffer,
+        ContentType: contentType,
+      })
+    );
+
+    // Return the URL - can be served via Garage's web endpoint or a proxy
+    const baseUrl =
+      process.env.S3_PUBLIC_URL ||
+      `${process.env.S3_ENDPOINT || 'http://192.168.1.251:3900'}/${BUCKET_NAME}`;
+    const url = `${baseUrl}/${filename}`;
 
     return NextResponse.json({ url, filename });
   } catch (error) {

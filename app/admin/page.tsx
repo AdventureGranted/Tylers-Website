@@ -8,7 +8,11 @@ export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect('/admin/login');
+    redirect('/login?callbackUrl=/admin');
+  }
+
+  if (session.user.role !== 'admin') {
+    redirect('/');
   }
 
   // Get analytics data
