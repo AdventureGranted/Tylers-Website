@@ -42,6 +42,11 @@ jobs:
           npx prisma generate
           npm run build
 
+      - name: Setup uploads symlink
+        run: |
+          rm -rf public/uploads
+          ln -s /mnt/nas/uploads public/uploads
+
       - name: Deploy App
         run: |
           if pm2 list | grep -q $APP_NAME; then
