@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '@/app/lib/prisma';
 import PhotoGrid from '@/app/components/PhotoGrid';
+import CommentSection from '@/app/components/CommentSection';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -69,6 +70,9 @@ export default async function HobbyDetailPage({ params }: Props) {
             </div>
           </div>
         )}
+
+        {/* Comments */}
+        <CommentSection projectId={project.id} />
       </div>
     </main>
   );

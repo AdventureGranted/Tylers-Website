@@ -9,7 +9,11 @@ export default async function ProjectsAdmin() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect('/admin/login');
+    redirect('/login?callbackUrl=/admin/projects');
+  }
+
+  if (session.user.role !== 'admin') {
+    redirect('/');
   }
 
   const projects = await prisma.project.findMany({
