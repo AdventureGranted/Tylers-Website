@@ -29,13 +29,16 @@ jobs:
           DATABASE_URL=${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
           NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
+          UPLOAD_DIR=${{ secrets.UPLOAD_DIR }}
+          UPLOAD_URL_PREFIX=${{ secrets.UPLOAD_URL_PREFIX }}
           EOF
 
       - name: Install and build
         run: |
           npm cache clean --force
-          rm -rf node_modules
+          rm -rf node_modules package-lock.json
           npm install
+          npm install next@latest --save
           npx prisma generate
           npm run build
 

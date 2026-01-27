@@ -52,8 +52,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Ensure upload directory exists
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'projects');
+    // Use UPLOAD_DIR env var or default to public/uploads
+    const baseUploadDir =
+      process.env.UPLOAD_DIR || path.join(process.cwd(), 'public', 'uploads');
+    const uploadDir = path.join(baseUploadDir, 'projects');
     await mkdir(uploadDir, { recursive: true });
 
     let buffer = Buffer.from(await file.arrayBuffer());
@@ -76,8 +78,9 @@ export async function POST(request: NextRequest) {
     const filepath = path.join(uploadDir, filename);
     await writeFile(filepath, buffer);
 
-    // Return public URL
-    const url = `/uploads/projects/${filename}`;
+    // Use UPLOAD_URL_PREFIX env var or default to /uploads
+    const urlPrefix = process.env.UPLOAD_URL_PREFIX || '/uploads';
+    const url = `${urlPrefix}/projects/${filename}`;
 
     return NextResponse.json({ url, filename });
   } catch (error) {
