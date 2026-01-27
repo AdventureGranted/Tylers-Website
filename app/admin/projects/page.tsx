@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { authOptions } from '@/app/lib/auth';
 import { prisma } from '@/app/lib/prisma';
+import type { ProjectWithImages } from '@/app/lib/types';
 
 export default async function ProjectsAdmin() {
   const session = await getServerSession(authOptions);
@@ -49,7 +50,7 @@ export default async function ProjectsAdmin() {
           </div>
         ) : (
           <div className="space-y-4">
-            {projects.map((project) => (
+            {projects.map((project: ProjectWithImages) => (
               <div
                 key={project.id}
                 className="flex items-center justify-between rounded-xl bg-gray-800 p-4"

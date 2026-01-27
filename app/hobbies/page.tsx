@@ -1,8 +1,9 @@
 import { prisma } from '@/app/lib/prisma';
 import HobbyCard from '@/app/components/HobbyCard';
+import type { ProjectWithImages } from '@/app/lib/types';
 
 export default async function HobbiesPage() {
-  const projects = await prisma.project.findMany({
+  const projects: ProjectWithImages[] = await prisma.project.findMany({
     where: { published: true, category: 'hobby' },
     orderBy: { createdAt: 'desc' },
     include: { images: { orderBy: { sortOrder: 'asc' } } },
