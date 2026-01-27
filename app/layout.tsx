@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Starfield from './components/Starfield';
 import Navbar from './components/NavBar';
+import SessionProvider from './components/SessionProvider';
+import AnalyticsTracker from './components/AnalyticsTracker';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -30,16 +32,19 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Starfield
-          starCount={800}
-          starColor={[255, 255, 255]}
-          speedFactor={0.05}
-          backgroundColor="black"
-        />
-        <div className="min-h-screen bg-gray-900">
-          <Navbar />
-          {children}
-        </div>
+        <SessionProvider>
+          <AnalyticsTracker />
+          <Starfield
+            starCount={800}
+            starColor={[255, 255, 255]}
+            speedFactor={0.05}
+            backgroundColor="black"
+          />
+          <div className="min-h-screen bg-gray-900">
+            <Navbar />
+            {children}
+          </div>
+        </SessionProvider>
       </body>
     </html>
   );
