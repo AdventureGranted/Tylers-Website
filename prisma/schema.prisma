@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Auth
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  sessions     Session[]
+  createdAt    DateTime  @default(now())
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Projects
+model Project {
+  id          String         @id @default(cuid())
+  title       String
+  slug        String         @unique
+  category    String         @default("hobby") // "hobby" or "work"
+  description String?
+  content     String?
+  images      ProjectImage[]
+  published   Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([category])
+}
+
+model ProjectImage {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String?
+  sortOrder Int     @default(0)
+}
+
+// Analytics
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  event     String   // 'page_view', 'resume_download'
+  page      String?
+  visitorId String
+  createdAt DateTime @default(now())
+
+  @@index([event])
+  @@index([visitorId])
+  @@index([createdAt])
+}

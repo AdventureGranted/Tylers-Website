@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { IoHomeOutline } from 'react-icons/io5';
+import { IoHomeOutline, IoColorPaletteOutline } from 'react-icons/io5';
 import { IoIosContact } from 'react-icons/io';
 import { AiOutlineUser } from 'react-icons/ai';
 import { HiOutlineLightBulb } from 'react-icons/hi';
@@ -14,6 +14,7 @@ function Navbar() {
   const links = [
     { href: '/about', label: 'About  Me', icon: <AiOutlineUser /> },
     { href: '/projects', label: 'Projects', icon: <HiOutlineLightBulb /> },
+    { href: '/hobbies', label: 'Hobbies', icon: <IoColorPaletteOutline /> },
     { href: '/contact', label: 'Contact', icon: <IoIosContact /> },
   ];
   return (
