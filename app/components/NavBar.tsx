@@ -263,10 +263,15 @@ function Navbar() {
         {/* Mobile */}
         <div className="relative ml-auto lg:hidden">
           <button
-            className="px-4 text-2xl text-gray-200"
+            className="relative px-4 text-2xl text-gray-200"
             onClick={() => setIsOpen(!isOpen)}
           >
             <RxHamburgerMenu className="text-4xl text-gray-200 hover:text-yellow-300" />
+            {session?.user?.role === 'admin' && unreadCount > 0 && (
+              <span className="absolute -top-1 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                {unreadCount > 9 ? '9+' : unreadCount}
+              </span>
+            )}
           </button>
           {/* Mobile Dropdown Drawer */}
           <div
@@ -297,26 +302,19 @@ function Navbar() {
                 {session ? (
                   <>
                     <div className="mb-2 flex flex-col items-center gap-2 px-4">
-                      <div className="relative">
-                        {session.user.profileImage ? (
-                          <Image
-                            src={session.user.profileImage}
-                            alt="Profile"
-                            width={48}
-                            height={48}
-                            className="h-12 w-12 rounded-full object-cover"
-                          />
-                        ) : (
-                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-300 text-lg font-bold text-gray-900">
-                            {session.user.name?.[0]?.toUpperCase() || 'U'}
-                          </div>
-                        )}
-                        {session.user.role === 'admin' && unreadCount > 0 && (
-                          <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
-                            {unreadCount > 9 ? '9+' : unreadCount}
-                          </span>
-                        )}
-                      </div>
+                      {session.user.profileImage ? (
+                        <Image
+                          src={session.user.profileImage}
+                          alt="Profile"
+                          width={48}
+                          height={48}
+                          className="h-12 w-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-300 text-lg font-bold text-gray-900">
+                          {session.user.name?.[0]?.toUpperCase() || 'U'}
+                        </div>
+                      )}
                       <span className="text-sm text-gray-400">
                         {session.user.name || 'User'}
                       </span>
@@ -330,14 +328,29 @@ function Navbar() {
                       Profile
                     </Link>
                     {session.user.role === 'admin' && (
-                      <Link
-                        onClick={() => setIsOpen(false)}
-                        href="/admin"
-                        className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
-                      >
-                        <AiOutlineDashboard className="mr-2" />
-                        Admin
-                      </Link>
+                      <>
+                        <Link
+                          onClick={() => setIsOpen(false)}
+                          href="/admin/contacts"
+                          className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
+                        >
+                          <HiOutlineMail className="mr-2" />
+                          Messages
+                          {unreadCount > 0 && (
+                            <span className="ml-2 rounded-full bg-red-500 px-2 py-0.5 text-xs font-bold text-white">
+                              {unreadCount}
+                            </span>
+                          )}
+                        </Link>
+                        <Link
+                          onClick={() => setIsOpen(false)}
+                          href="/admin"
+                          className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
+                        >
+                          <AiOutlineDashboard className="mr-2" />
+                          Admin
+                        </Link>
+                      </>
                     )}
                     <button
                       onClick={() => {
