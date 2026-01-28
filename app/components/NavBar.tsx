@@ -1,18 +1,40 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoHomeOutline, IoColorPaletteOutline } from 'react-icons/io5';
 import { IoIosContact } from 'react-icons/io';
-import { AiOutlineUser, AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
+import {
+  AiOutlineUser,
+  AiOutlineLogin,
+  AiOutlineLogout,
+  AiOutlineDashboard,
+  AiOutlineSetting,
+} from 'react-icons/ai';
 import { HiOutlineLightBulb } from 'react-icons/hi';
 import Link from 'next/link';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { data: session, status } = useSession();
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target as Node)
+      ) {
+        setUserMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
   const links = [
     { href: '/about', label: 'About  Me', icon: <AiOutlineUser /> },
     { href: '/projects', label: 'Projects', icon: <HiOutlineLightBulb /> },
@@ -20,7 +42,7 @@ function Navbar() {
     { href: '/contact', label: 'Contact', icon: <IoIosContact /> },
   ];
   return (
-    <nav className="mx-6 rounded-b-2xl bg-gray-800 shadow-2xl md:mx-25">
+    <nav className="relative z-50 mx-6 overflow-visible rounded-b-2xl bg-gray-800 shadow-2xl md:mx-25">
       <div className="mx-4 flex h-24 items-center justify-between">
         {/* Logo Section */}
         <div className="px-4 text-4xl font-bold text-gray-200">
@@ -51,17 +73,71 @@ function Navbar() {
           {status !== 'loading' && (
             <div className="ml-4 flex items-center border-l border-gray-600 pl-4">
               {session ? (
-                <button
-                  onClick={() => signOut()}
-                  className="flex items-center px-3 text-lg text-gray-400 transition duration-300 hover:text-yellow-300"
-                >
-                  <AiOutlineLogout className="mr-1" />
-                  Sign Out
-                </button>
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    className="flex items-center gap-2 rounded-lg px-3 py-2 text-lg text-gray-300 transition duration-300 hover:bg-gray-700 hover:text-yellow-300"
+                  >
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-sm font-bold text-gray-900">
+                      {session.user.name?.[0]?.toUpperCase() ||
+                        session.user.email?.[0]?.toUpperCase()}
+                    </div>
+                    <span className="hidden lg:inline">
+                      {session.user.name || session.user.email?.split('@')[0]}
+                    </span>
+                    <svg
+                      className={`h-4 w-4 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  {/* Dropdown Menu */}
+                  {userMenuOpen && (
+                    <div className="absolute right-0 z-50 mt-2 w-48 rounded-xl bg-gray-700 py-2 shadow-xl">
+                      <Link
+                        href="/profile"
+                        onClick={() => setUserMenuOpen(false)}
+                        className="flex items-center px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600 hover:text-yellow-300"
+                      >
+                        <AiOutlineUser className="mr-2" />
+                        Profile
+                      </Link>
+                      {session.user.role === 'admin' && (
+                        <Link
+                          href="/admin"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="flex items-center px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600 hover:text-yellow-300"
+                        >
+                          <AiOutlineDashboard className="mr-2" />
+                          Admin Dashboard
+                        </Link>
+                      )}
+                      <hr className="my-2 border-gray-600" />
+                      <button
+                        onClick={() => {
+                          setUserMenuOpen(false);
+                          signOut();
+                        }}
+                        className="flex w-full items-center px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600 hover:text-yellow-300"
+                      >
+                        <AiOutlineLogout className="mr-2" />
+                        Sign Out
+                      </button>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <>
                   <Link
-                    href="/login"
+                    href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
                     className={`flex items-center px-3 text-lg transition duration-300 hover:scale-105 ${
                       pathname === '/login'
                         ? 'font-bold text-yellow-300'
@@ -72,7 +148,7 @@ function Navbar() {
                     Sign In
                   </Link>
                   <Link
-                    href="/register"
+                    href={`/register?callbackUrl=${encodeURIComponent(pathname)}`}
                     className={`flex items-center px-3 text-lg transition duration-300 hover:scale-105 ${
                       pathname === '/register'
                         ? 'font-bold text-yellow-300'
@@ -121,21 +197,44 @@ function Navbar() {
             {status !== 'loading' && (
               <div className="mt-2 border-t border-gray-500 pt-2">
                 {session ? (
-                  <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      signOut();
-                    }}
-                    className="flex w-full items-center justify-center px-4 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
-                  >
-                    <AiOutlineLogout className="mr-2" />
-                    Sign Out
-                  </button>
+                  <>
+                    <div className="mb-2 px-4 text-center text-sm text-gray-400">
+                      {session.user.name || session.user.email}
+                    </div>
+                    <Link
+                      onClick={() => setIsOpen(false)}
+                      href="/profile"
+                      className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
+                    >
+                      <AiOutlineUser className="mr-2" />
+                      Profile
+                    </Link>
+                    {session.user.role === 'admin' && (
+                      <Link
+                        onClick={() => setIsOpen(false)}
+                        href="/admin"
+                        className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
+                      >
+                        <AiOutlineDashboard className="mr-2" />
+                        Admin
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        setIsOpen(false);
+                        signOut();
+                      }}
+                      className="flex w-full items-center justify-center px-4 py-1 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
+                    >
+                      <AiOutlineLogout className="mr-2" />
+                      Sign Out
+                    </button>
+                  </>
                 ) : (
                   <>
                     <Link
                       onClick={() => setIsOpen(false)}
-                      href="/login"
+                      href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
                       className={`flex items-center justify-center px-4 text-center text-xl transition duration-300 ${
                         pathname === '/login'
                           ? 'font-bold text-yellow-300'
@@ -147,7 +246,7 @@ function Navbar() {
                     </Link>
                     <Link
                       onClick={() => setIsOpen(false)}
-                      href="/register"
+                      href={`/register?callbackUrl=${encodeURIComponent(pathname)}`}
                       className={`flex items-center justify-center px-4 text-center text-xl transition duration-300 ${
                         pathname === '/register'
                           ? 'font-bold text-yellow-300'

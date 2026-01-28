@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, use } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -39,6 +39,8 @@ export default function EditProject({
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState('');
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get('from') || '/admin/projects';
 
   useEffect(() => {
     async function fetchProject() {
@@ -148,7 +150,7 @@ export default function EditProject({
         throw new Error(data.error || 'Failed to update project');
       }
 
-      router.push('/admin/projects');
+      router.push(returnUrl);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
@@ -189,7 +191,7 @@ export default function EditProject({
               Delete
             </button>
             <Link
-              href="/admin/projects"
+              href={returnUrl}
               className="text-gray-400 transition-colors hover:text-yellow-300"
             >
               Cancel
