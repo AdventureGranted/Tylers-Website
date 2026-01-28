@@ -57,14 +57,22 @@ model ProjectImage {
 // Analytics
 model AnalyticsEvent {
   id        String   @id @default(cuid())
-  event     String   // 'page_view', 'resume_download'
+  event     String   // 'page_view', 'resume_download', 'project_click'
   page      String?
   visitorId String
+  sessionId String?
+  referrer  String?
+  userAgent String?
+  device    String?  // 'mobile', 'tablet', 'desktop'
+  browser   String?
+  country   String?
   createdAt DateTime @default(now())
 
   @@index([event])
   @@index([visitorId])
+  @@index([sessionId])
   @@index([createdAt])
+  @@index([page])
 }
 
 // Contact Submissions

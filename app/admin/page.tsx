@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '@/app/lib/auth';
 import { prisma } from '@/app/lib/prisma';
 import Link from 'next/link';
+import TrafficChart from '@/app/components/TrafficChart';
 
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
@@ -15,23 +16,33 @@ export default async function AdminDashboard() {
     redirect('/');
   }
 
-  // Get analytics data
   const now = new Date();
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
+  // Main stats queries
   const [
     totalPageViews,
-    uniqueVisitors,
+    uniqueVisitors30d,
+    lifetimeUniqueVisitors,
     resumeDownloads,
     memberCount,
     unreadContacts,
+    totalSessions,
+    bounceSessions,
+    returningVisitors,
+    contactPageViews,
+    contactSubmissions,
   ] = await Promise.all([
+    // Page views (30d)
     prisma.analyticsEvent.count({
       where: {
         event: 'page_view',
         createdAt: { gte: thirtyDaysAgo },
       },
     }),
+    // Unique visitors (30d)
     prisma.analyticsEvent.groupBy({
       by: ['visitorId'],
       where: {
@@ -39,23 +50,196 @@ export default async function AdminDashboard() {
         createdAt: { gte: thirtyDaysAgo },
       },
     }),
+    // Lifetime unique visitors
+    prisma.analyticsEvent.groupBy({
+      by: ['visitorId'],
+      where: { event: 'page_view' },
+    }),
+    // Resume downloads (30d)
     prisma.analyticsEvent.count({
       where: {
         event: 'resume_download',
         createdAt: { gte: thirtyDaysAgo },
       },
     }),
-    prisma.project.count(),
+    // Member count
     prisma.user.count(),
+    // Unread contacts
     prisma.contactSubmission.count({
       where: { read: false },
     }),
+    // Total sessions (30d)
+    prisma.analyticsEvent.groupBy({
+      by: ['sessionId'],
+      where: {
+        event: 'page_view',
+        createdAt: { gte: thirtyDaysAgo },
+        sessionId: { not: null },
+      },
+    }),
+    // Bounce sessions (single page sessions)
+    prisma.$queryRaw<{ count: bigint }[]>`
+      SELECT COUNT(*) as count FROM (
+        SELECT "sessionId"
+        FROM "AnalyticsEvent"
+        WHERE event = 'page_view'
+        AND "sessionId" IS NOT NULL
+        AND "createdAt" >= ${thirtyDaysAgo}
+        GROUP BY "sessionId"
+        HAVING COUNT(*) = 1
+      ) as bounces
+    `,
+    // Returning visitors (30d)
+    prisma.$queryRaw<{ count: bigint }[]>`
+      SELECT COUNT(*) as count FROM (
+        SELECT "visitorId"
+        FROM "AnalyticsEvent"
+        WHERE event = 'page_view'
+        AND "createdAt" >= ${thirtyDaysAgo}
+        GROUP BY "visitorId"
+        HAVING MIN("createdAt") < ${thirtyDaysAgo}
+      ) as repeat_visitors
+    `,
+    // Contact page views (30d)
+    prisma.analyticsEvent.count({
+      where: {
+        event: 'page_view',
+        page: '/contact',
+        createdAt: { gte: thirtyDaysAgo },
+      },
+    }),
+    // Contact form submissions (30d)
+    prisma.contactSubmission.count({
+      where: {
+        createdAt: { gte: thirtyDaysAgo },
+      },
+    }),
   ]);
+
+  // Breakdown queries
+  const [
+    referrerStats,
+    deviceStats,
+    browserStats,
+    countryStats,
+    topPages,
+    recentActivity,
+    dailyViews,
+  ] = await Promise.all([
+    // Referrer breakdown (30d)
+    prisma.analyticsEvent.groupBy({
+      by: ['referrer'],
+      where: {
+        event: 'page_view',
+        createdAt: { gte: thirtyDaysAgo },
+      },
+      _count: { referrer: true },
+      orderBy: { _count: { referrer: 'desc' } },
+      take: 10,
+    }),
+    // Device breakdown (30d)
+    prisma.analyticsEvent.groupBy({
+      by: ['device'],
+      where: {
+        event: 'page_view',
+        createdAt: { gte: thirtyDaysAgo },
+        device: { not: null },
+      },
+      _count: { device: true },
+      orderBy: { _count: { device: 'desc' } },
+    }),
+    // Browser breakdown (30d)
+    prisma.analyticsEvent.groupBy({
+      by: ['browser'],
+      where: {
+        event: 'page_view',
+        createdAt: { gte: thirtyDaysAgo },
+        browser: { not: null },
+      },
+      _count: { browser: true },
+      orderBy: { _count: { browser: 'desc' } },
+      take: 5,
+    }),
+    // Country breakdown (30d)
+    prisma.analyticsEvent.groupBy({
+      by: ['country'],
+      where: {
+        event: 'page_view',
+        createdAt: { gte: thirtyDaysAgo },
+        country: { not: null },
+      },
+      _count: { country: true },
+      orderBy: { _count: { country: 'desc' } },
+      take: 10,
+    }),
+    // Top pages (30d)
+    prisma.analyticsEvent.groupBy({
+      by: ['page'],
+      where: {
+        event: 'page_view',
+        createdAt: { gte: thirtyDaysAgo },
+        page: { not: null },
+      },
+      _count: { page: true },
+      orderBy: { _count: { page: 'desc' } },
+      take: 10,
+    }),
+    // Recent activity (last 10)
+    prisma.analyticsEvent.findMany({
+      where: { event: 'page_view' },
+      orderBy: { createdAt: 'desc' },
+      take: 10,
+      select: {
+        page: true,
+        device: true,
+        country: true,
+        referrer: true,
+        createdAt: true,
+      },
+    }),
+    // Daily views (last 7 days)
+    prisma.$queryRaw<{ date: Date; count: bigint }[]>`
+      SELECT DATE("createdAt") as date, COUNT(*) as count
+      FROM "AnalyticsEvent"
+      WHERE event = 'page_view'
+      AND "createdAt" >= ${sevenDaysAgo}
+      GROUP BY DATE("createdAt")
+      ORDER BY date ASC
+    `,
+  ]);
+
+  // Calculate derived stats
+  const bounceRate =
+    totalSessions.length > 0
+      ? Math.round(
+          (Number(bounceSessions[0]?.count || 0) / totalSessions.length) * 100
+        )
+      : 0;
+
+  const returningRate =
+    uniqueVisitors30d.length > 0
+      ? Math.round(
+          (Number(returningVisitors[0]?.count || 0) /
+            uniqueVisitors30d.length) *
+            100
+        )
+      : 0;
+
+  const contactConversion =
+    contactPageViews > 0
+      ? Math.round((contactSubmissions / contactPageViews) * 100)
+      : 0;
+
+  const todayViews = dailyViews.find(
+    (d) => d.date.toDateString() === today.toDateString()
+  );
 
   const stats = [
     { label: 'Page Views (30d)', value: totalPageViews },
-    { label: 'Unique Visitors (30d)', value: uniqueVisitors.length },
-    { label: 'Resume Downloads (30d)', value: resumeDownloads },
+    { label: 'Today', value: Number(todayViews?.count || 0) },
+    { label: 'Unique Visitors (30d)', value: uniqueVisitors30d.length },
+    { label: 'Lifetime Visitors', value: lifetimeUniqueVisitors.length },
+    { label: 'Resume Downloads', value: resumeDownloads },
     { label: 'Members', value: memberCount },
     {
       label: 'Unread Messages',
@@ -64,11 +248,42 @@ export default async function AdminDashboard() {
     },
   ];
 
+  const engagementStats = [
+    {
+      label: 'Bounce Rate',
+      value: `${bounceRate}%`,
+      desc: 'Single page visits',
+    },
+    {
+      label: 'Returning Visitors',
+      value: `${returningRate}%`,
+      desc: 'Came back within 30d',
+    },
+    {
+      label: 'Contact Conversion',
+      value: `${contactConversion}%`,
+      desc: 'Form submissions / views',
+    },
+    {
+      label: 'Sessions (30d)',
+      value: totalSessions.length,
+      desc: 'Unique browsing sessions',
+    },
+  ];
+
+  const deviceTotal = deviceStats.reduce((a, b) => a + b._count.device, 0);
+  const referrerTotal = referrerStats.reduce(
+    (a, b) => a + b._count.referrer,
+    0
+  );
+
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
-      <div className="mx-auto max-w-4xl">
+    <div className="min-h-screen bg-gray-900 p-4 md:p-8">
+      <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-200">Admin Dashboard</h1>
+          <h1 className="text-2xl font-bold text-gray-200 md:text-3xl">
+            Admin Dashboard
+          </h1>
           <Link
             href="/"
             className="text-gray-400 transition-colors hover:text-yellow-300"
@@ -77,36 +292,15 @@ export default async function AdminDashboard() {
           </Link>
         </div>
 
-        {/* Stats Grid */}
-        <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-5">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className={`rounded-xl p-4 text-center ${
-                stat.highlight
-                  ? 'border-2 border-yellow-300/50 bg-yellow-300/10'
-                  : 'bg-gray-800'
-              }`}
-            >
-              <div
-                className={`text-3xl font-bold ${stat.highlight ? 'text-yellow-300' : 'text-yellow-300'}`}
-              >
-                {stat.value}
-              </div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
         {/* Quick Actions */}
-        <div className="rounded-xl bg-gray-800 p-6">
+        <div className="mb-8 rounded-xl bg-gray-800 p-6">
           <h2 className="mb-4 text-xl font-semibold text-gray-200">
             Quick Actions
           </h2>
-          <div className="flex flex-wrap gap-4">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:flex md:flex-wrap md:gap-4">
             <Link
               href="/admin/contacts"
-              className="relative rounded-lg bg-gray-700 px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600"
+              className="relative rounded-lg bg-gray-700 px-4 py-3 text-center text-gray-200 transition-colors hover:bg-gray-600 md:py-2 md:text-left"
             >
               Contact Submissions
               {unreadContacts > 0 && (
@@ -117,22 +311,244 @@ export default async function AdminDashboard() {
             </Link>
             <Link
               href="/admin/projects"
-              className="rounded-lg bg-gray-700 px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600"
+              className="rounded-lg bg-gray-700 px-4 py-3 text-center text-gray-200 transition-colors hover:bg-gray-600 md:py-2 md:text-left"
             >
               Manage Projects
             </Link>
             <Link
               href="/admin/members"
-              className="rounded-lg bg-gray-700 px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600"
+              className="rounded-lg bg-gray-700 px-4 py-3 text-center text-gray-200 transition-colors hover:bg-gray-600 md:py-2 md:text-left"
             >
               Manage Members
             </Link>
             <Link
               href="/admin/projects/new"
-              className="rounded-lg bg-yellow-300 px-4 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400"
+              className="rounded-lg bg-yellow-300 px-4 py-3 text-center font-semibold text-gray-900 transition-colors hover:bg-yellow-400 md:py-2 md:text-left"
             >
               New Project
             </Link>
+          </div>
+        </div>
+
+        {/* Main Stats Grid */}
+        <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+          {stats.map((stat) => (
+            <div
+              key={stat.label}
+              className={`rounded-xl p-4 text-center ${
+                stat.highlight
+                  ? 'border-2 border-yellow-300/50 bg-yellow-300/10'
+                  : 'bg-gray-800'
+              }`}
+            >
+              <div className="text-2xl font-bold text-yellow-300 md:text-3xl">
+                {stat.value}
+              </div>
+              <div className="text-xs text-gray-400 md:text-sm">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Engagement Stats */}
+        <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4">
+          {engagementStats.map((stat) => (
+            <div key={stat.label} className="rounded-xl bg-gray-800 p-4">
+              <div className="text-2xl font-bold text-yellow-300">
+                {stat.value}
+              </div>
+              <div className="text-sm font-medium text-gray-200">
+                {stat.label}
+              </div>
+              <div className="text-xs text-gray-500">{stat.desc}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Charts Row */}
+        <div className="mb-8 grid gap-6 lg:grid-cols-2">
+          {/* Daily Traffic */}
+          <div className="rounded-xl bg-gray-800 p-6">
+            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+              Daily Traffic (7 Days)
+            </h2>
+            <TrafficChart
+              data={dailyViews.map((d) => ({
+                date: d.date.toISOString(),
+                count: Number(d.count),
+              }))}
+            />
+          </div>
+
+          {/* Top Pages */}
+          <div className="rounded-xl bg-gray-800 p-6">
+            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+              Top Pages
+            </h2>
+            <div className="space-y-2">
+              {topPages.slice(0, 5).map((page) => (
+                <div
+                  key={page.page}
+                  className="flex items-center justify-between"
+                >
+                  <span className="truncate text-sm text-gray-300">
+                    {page.page || '/'}
+                  </span>
+                  <span className="ml-2 text-sm font-medium text-yellow-300">
+                    {page._count.page}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Breakdown Row */}
+        <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {/* Device Breakdown */}
+          <div className="rounded-xl bg-gray-800 p-6">
+            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+              Devices
+            </h2>
+            <div className="space-y-3">
+              {deviceStats.map((d) => {
+                const pct =
+                  deviceTotal > 0
+                    ? Math.round((d._count.device / deviceTotal) * 100)
+                    : 0;
+                return (
+                  <div key={d.device}>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-300 capitalize">
+                        {d.device}
+                      </span>
+                      <span className="text-gray-400">{pct}%</span>
+                    </div>
+                    <div className="mt-1 h-2 rounded-full bg-gray-700">
+                      <div
+                        className="h-2 rounded-full bg-yellow-300"
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Browser Breakdown */}
+          <div className="rounded-xl bg-gray-800 p-6">
+            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+              Browsers
+            </h2>
+            <div className="space-y-2">
+              {browserStats.map((b) => (
+                <div
+                  key={b.browser}
+                  className="flex items-center justify-between"
+                >
+                  <span className="text-gray-300 capitalize">{b.browser}</span>
+                  <span className="text-sm text-yellow-300">
+                    {b._count.browser}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Referrer Sources */}
+          <div className="rounded-xl bg-gray-800 p-6">
+            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+              Traffic Sources
+            </h2>
+            <div className="space-y-2">
+              {referrerStats.slice(0, 5).map((r) => {
+                const pct =
+                  referrerTotal > 0
+                    ? Math.round((r._count.referrer / referrerTotal) * 100)
+                    : 0;
+                return (
+                  <div
+                    key={r.referrer}
+                    className="flex items-center justify-between"
+                  >
+                    <span className="text-gray-300 capitalize">
+                      {r.referrer || 'direct'}
+                    </span>
+                    <span className="text-sm text-gray-400">{pct}%</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Countries */}
+          <div className="rounded-xl bg-gray-800 p-6">
+            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+              Countries
+            </h2>
+            <div className="space-y-2">
+              {countryStats.length > 0 ? (
+                countryStats.slice(0, 5).map((c) => (
+                  <div
+                    key={c.country}
+                    className="flex items-center justify-between"
+                  >
+                    <span className="text-gray-300">
+                      {c.country || 'Unknown'}
+                    </span>
+                    <span className="text-sm text-yellow-300">
+                      {c._count.country}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-gray-500">
+                  No geo data yet (requires CDN headers)
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Recent Activity */}
+        <div className="mb-8 rounded-xl bg-gray-800 p-6">
+          <h2 className="mb-4 text-lg font-semibold text-gray-200">
+            Recent Activity
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-700 text-left text-gray-400">
+                  <th className="pb-2">Page</th>
+                  <th className="pb-2">Device</th>
+                  <th className="pb-2">Source</th>
+                  <th className="pb-2">Country</th>
+                  <th className="pb-2">Time</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-300">
+                {recentActivity.map((event, i) => (
+                  <tr key={i} className="border-b border-gray-700/50">
+                    <td className="py-2">{event.page || '/'}</td>
+                    <td className="py-2 capitalize">{event.device || '-'}</td>
+                    <td className="py-2 capitalize">
+                      {event.referrer || 'direct'}
+                    </td>
+                    <td className="py-2">{event.country || '-'}</td>
+                    <td className="py-2 text-gray-500">
+                      {event.createdAt.toLocaleString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
