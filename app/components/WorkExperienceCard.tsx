@@ -1,5 +1,7 @@
+'use client';
+
 import Image from 'next/image';
-import React from 'react';
+import { motion } from 'framer-motion';
 
 const experiences = [
   {
@@ -18,7 +20,7 @@ const experiences = [
   {
     company: 'Sorenson Communications',
     role: 'Software Engineer',
-    date: 'December 2022 - July 3, 2025',
+    date: 'December 2022 - July 2025',
     logo: '/sorensonCommunications.jpg',
     logoAlt: 'Sorenson Communications Logo',
     bullets: [
@@ -26,7 +28,6 @@ const experiences = [
       'Enabled in-store QR-based access to interpreters for deaf and hard-of-hearing users, enhancing accessibility in retail environments',
       'Implemented dynamic geofencing and automated billing logic to support location-aware access and accurate usage tracking',
       'Built an SSO-enabled bypass flow to extend service access outside geofenced areas as an enterprise accessibility benefit',
-      'Improved user experience with a responsive, mobile-friendly frontend and seamless authentication flow',
     ],
   },
   {
@@ -38,7 +39,7 @@ const experiences = [
     bullets: [
       'Led office hours, lab sessions, and review events to support over 100 students in Data Structures, Algorithms, and Software Engineering courses',
       'Graded assignments and provided detailed technical feedback to reinforce core computer science concepts',
-      'Served as a retention TA, offering additional support to students at risk of dropping courses, contributing to improved course completion rates',
+      'Served as a retention TA, offering additional support to students at risk of dropping courses',
     ],
   },
   {
@@ -48,7 +49,7 @@ const experiences = [
     logo: '/kantata.png',
     logoAlt: 'Kantata Logo',
     bullets: [
-      'Collaborated with 4 interns to build admin panel features in Ruby on Rails and React, including a secure user impersonation tool to enhance QA',
+      'Collaborated with 4 interns to build admin panel features in Ruby on Rails and React, including a secure user impersonation tool',
       'Integrated Salesforce and Slack into the product ecosystem, simplifying customer workflows',
       'Practiced test-driven development, pair programming, and CI/CD under mentorship from senior engineers',
     ],
@@ -66,49 +67,95 @@ const experiences = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: { opacity: 1, x: 0 },
+};
+
 export default function WorkExperienceCard() {
   return (
-    <div className="mt-8 max-w-full rounded-4xl bg-gray-800 shadow-md">
-      <h1 className="pt-8 text-center text-3xl font-bold text-gray-200">
-        Work Experience
-      </h1>
-      <div className="mx-auto mt-2 mb-2 h-1 w-3/4 rounded bg-gray-400 md:w-1/2 xl:w-1/4" />
-      <div className="mt-4 flex flex-col items-start gap-8 overflow-hidden p-6">
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-100px' }}
+      variants={containerVariants}
+      className="mt-12"
+    >
+      {/* Section Header */}
+      <motion.div variants={itemVariants} className="mb-8 text-center">
+        <h2 className="text-3xl font-bold text-gray-200">Work Experience</h2>
+        <div className="mx-auto mt-2 h-1 w-24 rounded bg-gradient-to-r from-purple-500 to-yellow-300" />
+      </motion.div>
+
+      {/* Timeline */}
+      <div className="relative">
+        {/* Timeline line */}
+        <div className="absolute top-0 left-8 hidden h-full w-0.5 bg-gradient-to-b from-purple-500 via-yellow-300 to-purple-500 md:block" />
+
         {experiences.map((exp) => (
-          <div
+          <motion.div
             key={exp.company}
-            className="flex h-full w-full flex-col text-left"
+            variants={itemVariants}
+            className="group relative mb-8 last:mb-0"
           >
-            <div className="flex w-full flex-col items-center justify-between lg:flex-row">
-              <div className="flex flex-col items-center lg:flex-row">
-                <h1 className="text-center text-2xl font-bold lg:text-left">
-                  {exp.company}
-                </h1>
-                <h2 className="text-md text-left lg:mt-1 lg:ml-4">
-                  {exp.role}
-                </h2>
+            {/* Timeline dot */}
+            <div className="absolute top-8 left-6 hidden h-5 w-5 rounded-full border-4 border-gray-900 bg-yellow-300 transition-all duration-300 group-hover:scale-125 group-hover:bg-purple-500 md:block" />
+
+            {/* Card */}
+            <div className="rounded-2xl bg-gray-800 p-6 transition-all duration-300 hover:bg-gray-800/80 md:ml-16">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
+                {/* Logo */}
+                <div className="flex-shrink-0 self-center lg:self-start">
+                  <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl bg-white p-2">
+                    <Image
+                      src={exp.logo}
+                      alt={exp.logoAlt}
+                      width={64}
+                      height={64}
+                      className="h-auto max-h-16 w-auto object-contain"
+                    />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="flex-grow">
+                  <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between">
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-200">
+                        {exp.company}
+                      </h3>
+                      <p className="text-yellow-300">{exp.role}</p>
+                    </div>
+                    <span className="text-sm text-gray-400">{exp.date}</span>
+                  </div>
+
+                  <ul className="mt-4 space-y-2">
+                    {exp.bullets.map((bullet, i) => (
+                      <li
+                        key={i}
+                        className="flex items-start gap-2 text-gray-300"
+                      >
+                        <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <h2 className="text-md text-right whitespace-nowrap lg:mt-1">
-                {exp.date}
-              </h2>
             </div>
-            <div className="my-2 h-px w-full bg-gray-400" />
-            <div className="mt-4 flex w-full flex-col items-center lg:flex-row lg:items-start">
-              <Image
-                src={exp.logo}
-                alt={exp.logoAlt}
-                width={240}
-                height={240}
-              />
-              <ul className="ml-8 list-disc space-y-2 p-4 text-xl">
-                {exp.bullets.map((b, i) => (
-                  <li key={i}>{b}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
