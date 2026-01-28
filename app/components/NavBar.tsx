@@ -10,7 +10,6 @@ import {
   AiOutlineLogin,
   AiOutlineLogout,
   AiOutlineDashboard,
-  AiOutlineSetting,
 } from 'react-icons/ai';
 import { HiOutlineLightBulb } from 'react-icons/hi';
 import Link from 'next/link';
@@ -19,9 +18,19 @@ import Image from 'next/image';
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { data: session, status } = useSession();
+
+  // Track scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close user menu when clicking outside
   useEffect(() => {
@@ -43,14 +52,13 @@ function Navbar() {
     { href: '/contact', label: 'Contact', icon: <IoIosContact /> },
   ];
   return (
-    <nav className="relative z-50 mx-6 overflow-visible rounded-b-2xl bg-gray-800 shadow-2xl lg:mx-25">
+    <nav
+      className={`sticky top-0 z-50 mx-6 overflow-visible shadow-2xl transition-all duration-300 lg:mx-25 ${isScrolled ? 'rounded-2xl bg-gray-800/95 backdrop-blur-sm' : 'rounded-b-2xl bg-gray-800'}`}
+    >
       <div className="mx-4 flex h-24 items-center justify-between">
         {/* Logo Section */}
         <div className="px-4">
-          <Link
-            href="/"
-            className="group relative flex items-center"
-          >
+          <Link href="/" className="group relative flex items-center">
             {pathname === '/' ? (
               <Image
                 src="/navbar/tyler_grant_merged_logo_yellow.svg"

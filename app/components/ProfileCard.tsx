@@ -37,36 +37,37 @@ export default function ProfileCard() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="relative mx-auto mt-4 flex max-w-full flex-col items-center overflow-hidden rounded-3xl bg-gray-800 p-8 shadow-xl md:flex-row"
+      className="relative mx-auto mt-4 overflow-hidden rounded-3xl bg-gray-800 p-8 shadow-xl xl:min-h-[280px] xl:py-12"
     >
       {/* Subtle gradient background decoration */}
       <div className="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
       <div className="absolute -right-24 -bottom-24 h-48 w-48 rounded-full bg-yellow-300/10 blur-3xl" />
 
+      {/* Profile Image - centered on mobile, absolute left on md+ */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="relative"
+        className="relative mx-auto mb-6 w-fit xl:absolute xl:top-1/2 xl:left-8 xl:mb-0 xl:-translate-y-1/2"
       >
         {/* Glow effect behind image */}
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-500 to-yellow-300 opacity-50 blur-xl" />
         <Image
           src="/profile.jpg"
           alt="Profile Picture of Tyler"
-          width={240}
-          height={240}
+          width={200}
+          height={200}
           priority
-          className="relative mb-4 rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105 md:mb-0"
+          className="relative rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105"
         />
       </motion.div>
 
-      <div className="relative z-10 m-2 flex h-full w-full flex-col items-center justify-center text-center md:ml-8">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="w-full text-4xl font-bold text-white"
+          className="max-w-2xl text-4xl font-bold text-white"
         >
           Hi, I&apos;m <span className="text-yellow-300">Tyler Grant</span>.
           Nice to meet you!
@@ -76,7 +77,7 @@ export default function ProfileCard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-4 text-xl text-gray-300 md:w-2/3"
+          className="mt-4 max-w-xl text-xl text-gray-300"
         >
           I&apos;m a passionate software engineer with experience in building
           modern, responsive websites and applications. I love learning new

@@ -4,6 +4,21 @@ import Link from 'next/link';
 export default function ProjectsPage() {
   const projects = [
     {
+      title: 'Tyler-Grant.com',
+      subtitle: 'Full-Stack Portfolio & Authentication System',
+      link: 'https://github.com/AdventureGranted/Tylers-Website',
+      date: 'June 2024 – Present',
+      image: '/family.jpeg',
+      bullets: [
+        'Built a full-stack portfolio using Next.js, TypeScript, Tailwind CSS, and Framer Motion for smooth animations',
+        'Implemented user authentication with NextAuth.js including registration, role-based access control, and profile management',
+        'Self-hosted S3-compatible object storage using Garage for image uploads with Cloudflare tunnel for secure access',
+        'Designed PostgreSQL database with Prisma ORM for users, projects, and comments',
+        'Created admin dashboard for content and member management with search and filtering',
+        'Deployed on personal server with GitHub Actions CI/CD pipeline for automated builds and deployments',
+      ],
+    },
+    {
       title: 'Self Hosted Media & Automation Platform',
       subtitle: 'Full-Stack Infrastructure Development',
       link: null,
@@ -25,18 +40,6 @@ export default function ProjectsPage() {
       bullets: [
         'Developed a mobile app for tracking and organizing bin-stored items using React Native, AWS Amplify, and Expo',
         'Authored user and technical documentation to support long-term maintainability and user onboarding',
-      ],
-    },
-    {
-      title: 'Tyler-Grant.com',
-      subtitle: null,
-      link: 'https://github.com/AdventureGranted/Tylers-Website',
-      date: 'June – Present',
-      image: '/family.jpeg',
-      bullets: [
-        'Created a personal portfolio website using Next.js, TypeScript, and Tailwind CSS',
-        'Implemented server-side rendering for SEO optimization and fast initial load times',
-        'Deployed on personal server with automated CI/CD workflows for seamless updates',
       ],
     },
   ];

@@ -19,8 +19,15 @@ export default function ImageCarousel({
 }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
 
   if (images.length === 0) return null;
+
+  const isCurrentLoaded = loadedImages.has(currentIndex);
+
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prev) => new Set(prev).add(index));
+  };
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -51,7 +58,8 @@ export default function ImageCarousel({
     setTouchStart(null);
   };
 
-  const aspectClass = aspectRatio === 'square' ? 'aspect-square' : 'aspect-video';
+  const aspectClass =
+    aspectRatio === 'square' ? 'aspect-square' : 'aspect-video';
 
   return (
     <div className="relative w-full">
@@ -60,12 +68,20 @@ export default function ImageCarousel({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
+        {/* Loading skeleton */}
+        {!isCurrentLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-700">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-600 border-t-yellow-300" />
+          </div>
+        )}
+
         <Image
           src={images[currentIndex].url}
           alt={images[currentIndex].alt || 'Image'}
           fill
-          className="object-cover transition-opacity duration-300"
+          className={`object-cover transition-opacity duration-300 ${isCurrentLoaded ? 'opacity-100' : 'opacity-0'}`}
           sizes="(max-width: 768px) 100vw, 50vw"
+          onLoad={() => handleImageLoad(currentIndex)}
         />
 
         {/* Navigation arrows */}

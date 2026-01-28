@@ -19,7 +19,13 @@ import {
   SiApple,
   SiPostman,
   SiSalesforce,
+  SiNextdotjs,
+  SiTailwindcss,
+  SiPostgresql,
+  SiDebian,
+  SiLinux,
 } from 'react-icons/si';
+import { RiShieldKeyholeLine } from 'react-icons/ri';
 import { FaJava, FaWindows } from 'react-icons/fa';
 import { TbBrandCpp, TbBrandCSharp } from 'react-icons/tb';
 import { VscAzure } from 'react-icons/vsc';
@@ -31,7 +37,10 @@ const skillCategories = [
       { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-400' },
       { name: 'JavaScript', icon: SiJavascript, color: 'text-yellow-400' },
       { name: 'React', icon: SiReact, color: 'text-cyan-400' },
+      { name: 'Next.js', icon: SiNextdotjs, color: 'text-gray-300' },
       { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-500' },
+      { name: 'Tailwind CSS', icon: SiTailwindcss, color: 'text-cyan-400' },
+      { name: 'NextAuth', icon: RiShieldKeyholeLine, color: 'text-purple-400' },
       { name: 'Python', icon: SiPython, color: 'text-yellow-300' },
       { name: 'C#', icon: TbBrandCSharp, color: 'text-purple-400' },
       { name: 'Java', icon: FaJava, color: 'text-red-400' },
@@ -53,6 +62,7 @@ const skillCategories = [
   {
     title: 'Databases & Tools',
     skills: [
+      { name: 'PostgreSQL', icon: SiPostgresql, color: 'text-blue-400' },
       { name: 'MongoDB', icon: SiMongodb, color: 'text-green-500' },
       { name: 'MySQL', icon: SiMysql, color: 'text-blue-400' },
       { name: 'Postman', icon: SiPostman, color: 'text-orange-500' },
@@ -62,6 +72,8 @@ const skillCategories = [
   {
     title: 'Platforms',
     skills: [
+      { name: 'Linux', icon: SiLinux, color: 'text-yellow-400' },
+      { name: 'Debian', icon: SiDebian, color: 'text-red-400' },
       { name: 'Ubuntu', icon: SiUbuntu, color: 'text-orange-500' },
       { name: 'macOS', icon: SiApple, color: 'text-gray-300' },
       { name: 'Windows', icon: FaWindows, color: 'text-blue-400' },
@@ -106,7 +118,7 @@ export default function TechnicalSkills() {
       {/* Section Header */}
       <motion.div variants={itemVariants} className="mb-8 text-center">
         <h2 className="text-3xl font-bold text-gray-200">Technical Skills</h2>
-        <div className="mx-auto mt-2 h-1 w-24 rounded bg-gradient-to-r from-purple-500 to-yellow-300" />
+        <div className="mx-auto mt-2 h-1 w-72 rounded bg-gradient-to-r from-purple-500 to-yellow-300" />
       </motion.div>
 
       {/* Skills Grid */}
