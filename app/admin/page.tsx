@@ -5,6 +5,46 @@ import { prisma } from '@/app/lib/prisma';
 import Link from 'next/link';
 import TrafficChart from '@/app/components/TrafficChart';
 
+interface TrafficDataRow {
+  date: Date;
+  count: bigint;
+  referrer: string | null;
+}
+
+interface DeviceStatRow {
+  device: string | null;
+  _count: { device: number };
+}
+
+interface ReferrerStatRow {
+  referrer: string | null;
+  _count: { referrer: number };
+}
+
+interface BrowserStatRow {
+  browser: string | null;
+  _count: { browser: number };
+}
+
+interface CountryStatRow {
+  country: string | null;
+  _count: { country: number };
+}
+
+interface PageStatRow {
+  page: string | null;
+  _count: { page: number };
+}
+
+interface RecentActivityRow {
+  page: string | null;
+  device: string | null;
+  country: string | null;
+  referrer: string | null;
+  ip: string | null;
+  createdAt: Date;
+}
+
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
 
@@ -18,7 +58,6 @@ export default async function AdminDashboard() {
 
   const now = new Date();
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
   // Main stats queries
@@ -42,18 +81,22 @@ export default async function AdminDashboard() {
         createdAt: { gte: thirtyDaysAgo },
       },
     }),
-    // Unique visitors (30d)
+    // Unique visitors by IP (30d)
     prisma.analyticsEvent.groupBy({
-      by: ['visitorId'],
+      by: ['ip'],
       where: {
         event: 'page_view',
         createdAt: { gte: thirtyDaysAgo },
+        ip: { not: null },
       },
     }),
-    // Lifetime unique visitors
+    // Lifetime unique visitors by IP
     prisma.analyticsEvent.groupBy({
-      by: ['visitorId'],
-      where: { event: 'page_view' },
+      by: ['ip'],
+      where: {
+        event: 'page_view',
+        ip: { not: null },
+      },
     }),
     // Resume downloads (30d)
     prisma.analyticsEvent.count({
@@ -124,7 +167,7 @@ export default async function AdminDashboard() {
     countryStats,
     topPages,
     recentActivity,
-    dailyViews,
+    allTrafficData,
   ] = await Promise.all([
     // Referrer breakdown (30d)
     prisma.analyticsEvent.groupBy({
@@ -194,16 +237,16 @@ export default async function AdminDashboard() {
         device: true,
         country: true,
         referrer: true,
+        ip: true,
         createdAt: true,
       },
     }),
-    // Daily views (last 7 days)
-    prisma.$queryRaw<{ date: Date; count: bigint }[]>`
-      SELECT DATE("createdAt") as date, COUNT(*) as count
+    // All traffic data with referrer (for chart filtering)
+    prisma.$queryRaw<TrafficDataRow[]>`
+      SELECT DATE("createdAt") as date, COUNT(*) as count, referrer
       FROM "AnalyticsEvent"
       WHERE event = 'page_view'
-      AND "createdAt" >= ${sevenDaysAgo}
-      GROUP BY DATE("createdAt")
+      GROUP BY DATE("createdAt"), referrer
       ORDER BY date ASC
     `,
   ]);
@@ -230,13 +273,28 @@ export default async function AdminDashboard() {
       ? Math.round((contactSubmissions / contactPageViews) * 100)
       : 0;
 
-  const todayViews = dailyViews.find(
-    (d) => d.date.toDateString() === today.toDateString()
-  );
+  // Calculate today's views from traffic data
+  const todayViews = allTrafficData
+    .filter(
+      (d: TrafficDataRow) => d.date.toDateString() === today.toDateString()
+    )
+    .reduce((sum: number, d: TrafficDataRow) => sum + Number(d.count), 0);
+
+  // Get unique referrers for filter dropdown
+  const uniqueReferrers: string[] = Array.from(
+    new Set(allTrafficData.map((d: TrafficDataRow) => d.referrer || 'direct'))
+  ).sort() as string[];
+
+  // Format traffic data for chart
+  const trafficChartData = allTrafficData.map((d: TrafficDataRow) => ({
+    date: d.date.toISOString(),
+    count: Number(d.count),
+    referrer: d.referrer,
+  }));
 
   const stats = [
     { label: 'Page Views (30d)', value: totalPageViews },
-    { label: 'Today', value: Number(todayViews?.count || 0) },
+    { label: 'Today', value: todayViews },
     { label: 'Unique Visitors (30d)', value: uniqueVisitors30d.length },
     { label: 'Lifetime Visitors', value: lifetimeUniqueVisitors.length },
     { label: 'Resume Downloads', value: resumeDownloads },
@@ -271,9 +329,12 @@ export default async function AdminDashboard() {
     },
   ];
 
-  const deviceTotal = deviceStats.reduce((a, b) => a + b._count.device, 0);
-  const referrerTotal = referrerStats.reduce(
-    (a, b) => a + b._count.referrer,
+  const deviceTotal = (deviceStats as DeviceStatRow[]).reduce(
+    (a: number, b: DeviceStatRow) => a + b._count.device,
+    0
+  );
+  const referrerTotal = (referrerStats as ReferrerStatRow[]).reduce(
+    (a: number, b: ReferrerStatRow) => a + b._count.referrer,
     0
   );
 
@@ -371,14 +432,9 @@ export default async function AdminDashboard() {
           {/* Daily Traffic */}
           <div className="rounded-xl bg-gray-800 p-6">
             <h2 className="mb-4 text-lg font-semibold text-gray-200">
-              Daily Traffic (7 Days)
+              Traffic
             </h2>
-            <TrafficChart
-              data={dailyViews.map((d) => ({
-                date: d.date.toISOString(),
-                count: Number(d.count),
-              }))}
-            />
+            <TrafficChart data={trafficChartData} referrers={uniqueReferrers} />
           </div>
 
           {/* Top Pages */}
@@ -387,19 +443,21 @@ export default async function AdminDashboard() {
               Top Pages
             </h2>
             <div className="space-y-2">
-              {topPages.slice(0, 5).map((page) => (
-                <div
-                  key={page.page}
-                  className="flex items-center justify-between"
-                >
-                  <span className="truncate text-sm text-gray-300">
-                    {page.page || '/'}
-                  </span>
-                  <span className="ml-2 text-sm font-medium text-yellow-300">
-                    {page._count.page}
-                  </span>
-                </div>
-              ))}
+              {(topPages as PageStatRow[])
+                .slice(0, 5)
+                .map((page: PageStatRow) => (
+                  <div
+                    key={page.page}
+                    className="flex items-center justify-between"
+                  >
+                    <span className="truncate text-sm text-gray-300">
+                      {page.page || '/'}
+                    </span>
+                    <span className="ml-2 text-sm font-medium text-yellow-300">
+                      {page._count.page}
+                    </span>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
@@ -412,7 +470,7 @@ export default async function AdminDashboard() {
               Devices
             </h2>
             <div className="space-y-3">
-              {deviceStats.map((d) => {
+              {(deviceStats as DeviceStatRow[]).map((d: DeviceStatRow) => {
                 const pct =
                   deviceTotal > 0
                     ? Math.round((d._count.device / deviceTotal) * 100)
@@ -443,7 +501,7 @@ export default async function AdminDashboard() {
               Browsers
             </h2>
             <div className="space-y-2">
-              {browserStats.map((b) => (
+              {(browserStats as BrowserStatRow[]).map((b: BrowserStatRow) => (
                 <div
                   key={b.browser}
                   className="flex items-center justify-between"
@@ -463,23 +521,25 @@ export default async function AdminDashboard() {
               Traffic Sources
             </h2>
             <div className="space-y-2">
-              {referrerStats.slice(0, 5).map((r) => {
-                const pct =
-                  referrerTotal > 0
-                    ? Math.round((r._count.referrer / referrerTotal) * 100)
-                    : 0;
-                return (
-                  <div
-                    key={r.referrer}
-                    className="flex items-center justify-between"
-                  >
-                    <span className="text-gray-300 capitalize">
-                      {r.referrer || 'direct'}
-                    </span>
-                    <span className="text-sm text-gray-400">{pct}%</span>
-                  </div>
-                );
-              })}
+              {(referrerStats as ReferrerStatRow[])
+                .slice(0, 5)
+                .map((r: ReferrerStatRow) => {
+                  const pct =
+                    referrerTotal > 0
+                      ? Math.round((r._count.referrer / referrerTotal) * 100)
+                      : 0;
+                  return (
+                    <div
+                      key={r.referrer}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-gray-300 capitalize">
+                        {r.referrer || 'direct'}
+                      </span>
+                      <span className="text-sm text-gray-400">{pct}%</span>
+                    </div>
+                  );
+                })}
             </div>
           </div>
 
@@ -490,19 +550,21 @@ export default async function AdminDashboard() {
             </h2>
             <div className="space-y-2">
               {countryStats.length > 0 ? (
-                countryStats.slice(0, 5).map((c) => (
-                  <div
-                    key={c.country}
-                    className="flex items-center justify-between"
-                  >
-                    <span className="text-gray-300">
-                      {c.country || 'Unknown'}
-                    </span>
-                    <span className="text-sm text-yellow-300">
-                      {c._count.country}
-                    </span>
-                  </div>
-                ))
+                (countryStats as CountryStatRow[])
+                  .slice(0, 5)
+                  .map((c: CountryStatRow) => (
+                    <div
+                      key={c.country}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-gray-300">
+                        {c.country || 'Unknown'}
+                      </span>
+                      <span className="text-sm text-yellow-300">
+                        {c._count.country}
+                      </span>
+                    </div>
+                  ))
               ) : (
                 <p className="text-sm text-gray-500">
                   No geo data yet (requires CDN headers)
@@ -522,6 +584,7 @@ export default async function AdminDashboard() {
               <thead>
                 <tr className="border-b border-gray-700 text-left text-gray-400">
                   <th className="pb-2">Page</th>
+                  <th className="pb-2">IP</th>
                   <th className="pb-2">Device</th>
                   <th className="pb-2">Source</th>
                   <th className="pb-2">Country</th>
@@ -529,24 +592,29 @@ export default async function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="text-gray-300">
-                {recentActivity.map((event, i) => (
-                  <tr key={i} className="border-b border-gray-700/50">
-                    <td className="py-2">{event.page || '/'}</td>
-                    <td className="py-2 capitalize">{event.device || '-'}</td>
-                    <td className="py-2 capitalize">
-                      {event.referrer || 'direct'}
-                    </td>
-                    <td className="py-2">{event.country || '-'}</td>
-                    <td className="py-2 text-gray-500">
-                      {event.createdAt.toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </td>
-                  </tr>
-                ))}
+                {(recentActivity as RecentActivityRow[]).map(
+                  (event: RecentActivityRow, i: number) => (
+                    <tr key={i} className="border-b border-gray-700/50">
+                      <td className="py-2">{event.page || '/'}</td>
+                      <td className="py-2 font-mono text-xs text-gray-400">
+                        {event.ip || '-'}
+                      </td>
+                      <td className="py-2 capitalize">{event.device || '-'}</td>
+                      <td className="py-2 capitalize">
+                        {event.referrer || 'direct'}
+                      </td>
+                      <td className="py-2">{event.country || '-'}</td>
+                      <td className="py-2 text-gray-500">
+                        {event.createdAt.toLocaleString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </td>
+                    </tr>
+                  )
+                )}
               </tbody>
             </table>
           </div>

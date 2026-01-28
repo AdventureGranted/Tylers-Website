@@ -101,6 +101,13 @@ export async function POST(request: NextRequest) {
       request.headers.get('x-country') ||
       null;
 
+    // Get IP address (Cloudflare, forwarded, or direct)
+    const ip =
+      request.headers.get('cf-connecting-ip') ||
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      request.headers.get('x-real-ip') ||
+      null;
+
     // Check for recent duplicate (same visitor, same event, same page)
     const dedupeTime = new Date(Date.now() - DEDUPE_WINDOW_MINUTES * 60 * 1000);
 
@@ -121,6 +128,7 @@ export async function POST(request: NextRequest) {
           page,
           visitorId,
           sessionId,
+          ip,
           referrer: parsedReferrer,
           userAgent,
           device,

@@ -61,6 +61,7 @@ model AnalyticsEvent {
   page      String?
   visitorId String
   sessionId String?
+  ip        String?
   referrer  String?
   userAgent String?
   device    String?  // 'mobile', 'tablet', 'desktop'
@@ -73,6 +74,7 @@ model AnalyticsEvent {
   @@index([sessionId])
   @@index([createdAt])
   @@index([page])
+  @@index([ip])
 }
 
 // Contact Submissions
