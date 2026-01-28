@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { IoHomeOutline, IoColorPaletteOutline } from 'react-icons/io5';
+import { IoColorPaletteOutline } from 'react-icons/io5';
 import { IoIosContact } from 'react-icons/io';
 import {
   AiOutlineUser,
@@ -46,12 +46,37 @@ function Navbar() {
     <nav className="relative z-50 mx-6 overflow-visible rounded-b-2xl bg-gray-800 shadow-2xl lg:mx-25">
       <div className="mx-4 flex h-24 items-center justify-between">
         {/* Logo Section */}
-        <div className="px-4 text-4xl font-bold text-gray-200">
+        <div className="px-4">
           <Link
             href="/"
-            className="flex items-center transition duration-300 hover:scale-105 hover:text-yellow-300"
+            className="group relative flex items-center"
           >
-            <IoHomeOutline />
+            {pathname === '/' ? (
+              <Image
+                src="/navbar/tyler_grant_merged_logo_yellow.svg"
+                alt="Tyler Grant"
+                width={180}
+                height={60}
+                className="h-14 w-auto"
+              />
+            ) : (
+              <>
+                <Image
+                  src="/navbar/tyler_grant_merged_logo.svg"
+                  alt="Tyler Grant"
+                  width={180}
+                  height={60}
+                  className="h-14 w-auto transition-opacity duration-300 group-hover:opacity-0"
+                />
+                <Image
+                  src="/navbar/tyler_grant_merged_logo_yellow.svg"
+                  alt="Tyler Grant"
+                  width={180}
+                  height={60}
+                  className="absolute left-0 h-14 w-auto opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+              </>
+            )}
           </Link>
         </div>
         {/* Desktop */}

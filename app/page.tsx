@@ -1,7 +1,6 @@
 import ProfileCard from './components/ProfileCard';
 import TechnicalSkills from './components/TechnicalSkills';
 import WorkExperienceCard from './components/WorkExperienceCard';
-import ChatBubble from './components/ChatBubble';
 
 export default function Home() {
   return (
@@ -13,7 +12,6 @@ export default function Home() {
           <WorkExperienceCard />
         </div>
       </main>
-      <ChatBubble />
     </div>
   );
 }

@@ -7,18 +7,8 @@ import Modal from './Modal';
 export default function ProfileCard() {
   const [showModal, setShowModal] = useState(false);
 
-  const handleDownload = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
+  const handleDownload = () => {
     setShowModal(true);
-    // Trigger download after a short delay so the modal is visible
-    setTimeout(() => {
-      const link = document.createElement('a');
-      link.href = '/Tyler_Grant_Resume_2025.pdf';
-      link.download = 'Tyler_Grant_Resume_2025.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }, 500);
   };
 
   return (
