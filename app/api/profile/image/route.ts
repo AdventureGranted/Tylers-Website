@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/lib/auth';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { prisma } from '@/app/lib/prisma';
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import convert from 'heic-convert';
 
 const s3Client = new S3Client({
@@ -11,15 +12,16 @@ const s3Client = new S3Client({
     accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
   },
-  forcePathStyle: true, // Required for Garage/MinIO
+  forcePathStyle: true,
 });
 
 const BUCKET_NAME = process.env.S3_BUCKET || 'tylers-website';
+const PUBLIC_URL = process.env.S3_PUBLIC_URL || `${process.env.S3_ENDPOINT || 'http://192.168.1.251:3900'}/${BUCKET_NAME}`;
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
 
-  if (!session || session.user.role !== 'admin') {
+  if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -80,8 +82,29 @@ export async function POST(request: NextRequest) {
       contentType = 'image/jpeg';
     }
 
+    // Get current user to delete old image if exists
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { profileImage: true },
+    });
+
+    // Delete old profile image from S3 if exists
+    if (user?.profileImage) {
+      try {
+        const oldKey = user.profileImage.replace(`${PUBLIC_URL}/`, '');
+        await s3Client.send(
+          new DeleteObjectCommand({
+            Bucket: BUCKET_NAME,
+            Key: oldKey,
+          })
+        );
+      } catch (e) {
+        console.error('Failed to delete old profile image:', e);
+      }
+    }
+
     // Generate unique filename
-    const filename = `projects/${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${ext}`;
+    const filename = `profiles/${session.user.id}-${Date.now()}.${ext}`;
 
     // Upload to S3/Garage
     await s3Client.send(
@@ -93,17 +116,63 @@ export async function POST(request: NextRequest) {
       })
     );
 
-    // Return the URL - can be served via Garage's web endpoint or a proxy
-    const baseUrl =
-      process.env.S3_PUBLIC_URL ||
-      `${process.env.S3_ENDPOINT || 'http://192.168.1.251:3900'}/${BUCKET_NAME}`;
-    const url = `${baseUrl}/${filename}`;
+    const url = `${PUBLIC_URL}/${filename}`;
 
-    return NextResponse.json({ url, filename });
+    // Update user profile
+    await prisma.user.update({
+      where: { id: session.user.id },
+      data: { profileImage: url },
+    });
+
+    return NextResponse.json({ url });
   } catch (error) {
-    console.error('Upload error:', error);
+    console.error('Profile image upload error:', error);
     return NextResponse.json(
-      { error: 'Failed to upload file' },
+      { error: 'Failed to upload image' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { profileImage: true },
+    });
+
+    if (user?.profileImage) {
+      // Delete from S3
+      try {
+        const key = user.profileImage.replace(`${PUBLIC_URL}/`, '');
+        await s3Client.send(
+          new DeleteObjectCommand({
+            Bucket: BUCKET_NAME,
+            Key: key,
+          })
+        );
+      } catch (e) {
+        console.error('Failed to delete profile image from S3:', e);
+      }
+
+      // Update user
+      await prisma.user.update({
+        where: { id: session.user.id },
+        data: { profileImage: null },
+      });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Profile image delete error:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete image' },
       { status: 500 }
     );
   }

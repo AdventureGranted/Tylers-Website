@@ -35,6 +35,11 @@ function RegisterForm() {
     e.preventDefault();
     setError('');
 
+    if (!name.trim()) {
+      setError('Display name is required');
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -51,7 +56,7 @@ function RegisterForm() {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, name: name || undefined }),
+        body: JSON.stringify({ email, password, name }),
       });
 
       const data = await res.json();
@@ -78,7 +83,7 @@ function RegisterForm() {
 
       <div>
         <label htmlFor="name" className="mb-1 block text-sm text-gray-400">
-          Display Name (optional)
+          Display Name
         </label>
         <input
           type="text"
@@ -87,6 +92,7 @@ function RegisterForm() {
           onChange={(e) => setName(e.target.value)}
           className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
           placeholder="Your name"
+          required
         />
       </div>
 

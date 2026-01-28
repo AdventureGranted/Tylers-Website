@@ -14,6 +14,7 @@ import {
 } from 'react-icons/ai';
 import { HiOutlineLightBulb } from 'react-icons/hi';
 import Link from 'next/link';
+import Image from 'next/image';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +43,7 @@ function Navbar() {
     { href: '/contact', label: 'Contact', icon: <IoIosContact /> },
   ];
   return (
-    <nav className="relative z-50 mx-6 overflow-visible rounded-b-2xl bg-gray-800 shadow-2xl md:mx-25">
+    <nav className="relative z-50 mx-6 overflow-visible rounded-b-2xl bg-gray-800 shadow-2xl lg:mx-25">
       <div className="mx-4 flex h-24 items-center justify-between">
         {/* Logo Section */}
         <div className="px-4 text-4xl font-bold text-gray-200">
@@ -54,7 +55,7 @@ function Navbar() {
           </Link>
         </div>
         {/* Desktop */}
-        <div className="ml-auto hidden items-center md:flex">
+        <div className="ml-auto hidden items-center lg:flex">
           {links.map((link) => (
             <Link
               key={link.label}
@@ -78,12 +79,21 @@ function Navbar() {
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
                     className="flex items-center gap-2 rounded-lg px-3 py-2 text-lg text-gray-300 transition duration-300 hover:bg-gray-700 hover:text-yellow-300"
                   >
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-sm font-bold text-gray-900">
-                      {session.user.name?.[0]?.toUpperCase() ||
-                        session.user.email?.[0]?.toUpperCase()}
-                    </div>
+                    {session.user.profileImage ? (
+                      <Image
+                        src={session.user.profileImage}
+                        alt="Profile"
+                        width={32}
+                        height={32}
+                        className="h-8 w-8 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-sm font-bold text-gray-900">
+                        {session.user.name?.[0]?.toUpperCase() || 'U'}
+                      </div>
+                    )}
                     <span className="hidden lg:inline">
-                      {session.user.name || session.user.email?.split('@')[0]}
+                      {session.user.name || 'User'}
                     </span>
                     <svg
                       className={`h-4 w-4 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`}
@@ -163,7 +173,7 @@ function Navbar() {
           )}
         </div>
         {/* Mobile */}
-        <div className="relative ml-auto md:hidden">
+        <div className="relative ml-auto lg:hidden">
           <button
             className="px-4 text-2xl text-gray-200"
             onClick={() => setIsOpen(!isOpen)}
@@ -198,8 +208,23 @@ function Navbar() {
               <div className="mt-2 border-t border-gray-500 pt-2">
                 {session ? (
                   <>
-                    <div className="mb-2 px-4 text-center text-sm text-gray-400">
-                      {session.user.name || session.user.email}
+                    <div className="mb-2 flex flex-col items-center gap-2 px-4">
+                      {session.user.profileImage ? (
+                        <Image
+                          src={session.user.profileImage}
+                          alt="Profile"
+                          width={48}
+                          height={48}
+                          className="h-12 w-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-300 text-lg font-bold text-gray-900">
+                          {session.user.name?.[0]?.toUpperCase() || 'U'}
+                        </div>
+                      )}
+                      <span className="text-sm text-gray-400">
+                        {session.user.name || 'User'}
+                      </span>
                     </div>
                     <Link
                       onClick={() => setIsOpen(false)}
