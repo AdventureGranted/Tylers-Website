@@ -67,6 +67,20 @@ model AnalyticsEvent {
   @@index([createdAt])
 }
 
+// Contact Submissions
+model ContactSubmission {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  message     String
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([read])
+  @@index([createdAt])
+}
+
 // Comments
 model Comment {
   id        String   @id @default(cuid())

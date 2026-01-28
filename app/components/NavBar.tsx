@@ -11,7 +11,8 @@ import {
   AiOutlineLogout,
   AiOutlineDashboard,
 } from 'react-icons/ai';
-import { HiOutlineLightBulb } from 'react-icons/hi';
+import { HiOutlineLightBulb, HiOutlineMail } from 'react-icons/hi';
+import { UNREAD_COUNT_CHANGED } from '@/app/lib/events';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -19,6 +20,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { data: session, status } = useSession();
@@ -31,6 +33,35 @@ function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Fetch unread contact count for admins
+  useEffect(() => {
+    if (session?.user?.role === 'admin') {
+      const fetchUnread = async () => {
+        try {
+          const res = await fetch('/api/contact/unread');
+          if (res.ok) {
+            const data = await res.json();
+            setUnreadCount(data.count);
+          }
+        } catch (error) {
+          console.error('Error fetching unread count:', error);
+        }
+      };
+      fetchUnread();
+
+      // Listen for custom event when count changes
+      window.addEventListener(UNREAD_COUNT_CHANGED, fetchUnread);
+
+      // Also refresh every 60 seconds as backup
+      const interval = setInterval(fetchUnread, 60000);
+
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener(UNREAD_COUNT_CHANGED, fetchUnread);
+      };
+    }
+  }, [session?.user?.role]);
 
   // Close user menu when clicking outside
   useEffect(() => {
@@ -46,7 +77,7 @@ function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
   const links = [
-    { href: '/about', label: 'About  Me', icon: <AiOutlineUser /> },
+    // { href: '/about', label: 'About Me', icon: <AiOutlineUser /> },
     { href: '/projects', label: 'Projects', icon: <HiOutlineLightBulb /> },
     { href: '/hobbies', label: 'Hobbies', icon: <IoColorPaletteOutline /> },
     { href: '/contact', label: 'Contact', icon: <IoIosContact /> },
@@ -112,19 +143,26 @@ function Navbar() {
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
                     className="flex items-center gap-2 rounded-lg px-3 py-2 text-lg text-gray-300 transition duration-300 hover:bg-gray-700 hover:text-yellow-300"
                   >
-                    {session.user.profileImage ? (
-                      <Image
-                        src={session.user.profileImage}
-                        alt="Profile"
-                        width={32}
-                        height={32}
-                        className="h-8 w-8 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-sm font-bold text-gray-900">
-                        {session.user.name?.[0]?.toUpperCase() || 'U'}
-                      </div>
-                    )}
+                    <div className="relative">
+                      {session.user.profileImage ? (
+                        <Image
+                          src={session.user.profileImage}
+                          alt="Profile"
+                          width={32}
+                          height={32}
+                          className="h-8 w-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-sm font-bold text-gray-900">
+                          {session.user.name?.[0]?.toUpperCase() || 'U'}
+                        </div>
+                      )}
+                      {session.user.role === 'admin' && unreadCount > 0 && (
+                        <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                          {unreadCount > 9 ? '9+' : unreadCount}
+                        </span>
+                      )}
+                    </div>
                     <span className="hidden lg:inline">
                       {session.user.name || 'User'}
                     </span>
@@ -154,14 +192,31 @@ function Navbar() {
                         Profile
                       </Link>
                       {session.user.role === 'admin' && (
-                        <Link
-                          href="/admin"
-                          onClick={() => setUserMenuOpen(false)}
-                          className="flex items-center px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600 hover:text-yellow-300"
-                        >
-                          <AiOutlineDashboard className="mr-2" />
-                          Admin Dashboard
-                        </Link>
+                        <>
+                          <Link
+                            href="/admin/contacts"
+                            onClick={() => setUserMenuOpen(false)}
+                            className="flex items-center justify-between px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600 hover:text-yellow-300"
+                          >
+                            <span className="flex items-center">
+                              <HiOutlineMail className="mr-2" />
+                              Messages
+                            </span>
+                            {unreadCount > 0 && (
+                              <span className="rounded-full bg-red-500 px-2 py-0.5 text-xs font-bold text-white">
+                                {unreadCount}
+                              </span>
+                            )}
+                          </Link>
+                          <Link
+                            href="/admin"
+                            onClick={() => setUserMenuOpen(false)}
+                            className="flex items-center px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600 hover:text-yellow-300"
+                          >
+                            <AiOutlineDashboard className="mr-2" />
+                            Admin Dashboard
+                          </Link>
+                        </>
                       )}
                       <hr className="my-2 border-gray-600" />
                       <button
@@ -242,19 +297,26 @@ function Navbar() {
                 {session ? (
                   <>
                     <div className="mb-2 flex flex-col items-center gap-2 px-4">
-                      {session.user.profileImage ? (
-                        <Image
-                          src={session.user.profileImage}
-                          alt="Profile"
-                          width={48}
-                          height={48}
-                          className="h-12 w-12 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-300 text-lg font-bold text-gray-900">
-                          {session.user.name?.[0]?.toUpperCase() || 'U'}
-                        </div>
-                      )}
+                      <div className="relative">
+                        {session.user.profileImage ? (
+                          <Image
+                            src={session.user.profileImage}
+                            alt="Profile"
+                            width={48}
+                            height={48}
+                            className="h-12 w-12 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-300 text-lg font-bold text-gray-900">
+                            {session.user.name?.[0]?.toUpperCase() || 'U'}
+                          </div>
+                        )}
+                        {session.user.role === 'admin' && unreadCount > 0 && (
+                          <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                            {unreadCount > 9 ? '9+' : unreadCount}
+                          </span>
+                        )}
+                      </div>
                       <span className="text-sm text-gray-400">
                         {session.user.name || 'User'}
                       </span>

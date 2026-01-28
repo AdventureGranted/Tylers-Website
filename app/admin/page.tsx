@@ -19,36 +19,49 @@ export default async function AdminDashboard() {
   const now = new Date();
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-  const [totalPageViews, uniqueVisitors, resumeDownloads, projectCount, memberCount] =
-    await Promise.all([
-      prisma.analyticsEvent.count({
-        where: {
-          event: 'page_view',
-          createdAt: { gte: thirtyDaysAgo },
-        },
-      }),
-      prisma.analyticsEvent.groupBy({
-        by: ['visitorId'],
-        where: {
-          event: 'page_view',
-          createdAt: { gte: thirtyDaysAgo },
-        },
-      }),
-      prisma.analyticsEvent.count({
-        where: {
-          event: 'resume_download',
-          createdAt: { gte: thirtyDaysAgo },
-        },
-      }),
-      prisma.project.count(),
-      prisma.user.count(),
-    ]);
+  const [
+    totalPageViews,
+    uniqueVisitors,
+    resumeDownloads,
+    memberCount,
+    unreadContacts,
+  ] = await Promise.all([
+    prisma.analyticsEvent.count({
+      where: {
+        event: 'page_view',
+        createdAt: { gte: thirtyDaysAgo },
+      },
+    }),
+    prisma.analyticsEvent.groupBy({
+      by: ['visitorId'],
+      where: {
+        event: 'page_view',
+        createdAt: { gte: thirtyDaysAgo },
+      },
+    }),
+    prisma.analyticsEvent.count({
+      where: {
+        event: 'resume_download',
+        createdAt: { gte: thirtyDaysAgo },
+      },
+    }),
+    prisma.project.count(),
+    prisma.user.count(),
+    prisma.contactSubmission.count({
+      where: { read: false },
+    }),
+  ]);
 
   const stats = [
     { label: 'Page Views (30d)', value: totalPageViews },
     { label: 'Unique Visitors (30d)', value: uniqueVisitors.length },
     { label: 'Resume Downloads (30d)', value: resumeDownloads },
     { label: 'Members', value: memberCount },
+    {
+      label: 'Unread Messages',
+      value: unreadContacts,
+      highlight: unreadContacts > 0,
+    },
   ];
 
   return (
@@ -65,13 +78,19 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Stats Grid */}
-        <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-5">
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="rounded-xl bg-gray-800 p-4 text-center"
+              className={`rounded-xl p-4 text-center ${
+                stat.highlight
+                  ? 'border-2 border-yellow-300/50 bg-yellow-300/10'
+                  : 'bg-gray-800'
+              }`}
             >
-              <div className="text-3xl font-bold text-yellow-300">
+              <div
+                className={`text-3xl font-bold ${stat.highlight ? 'text-yellow-300' : 'text-yellow-300'}`}
+              >
                 {stat.value}
               </div>
               <div className="text-sm text-gray-400">{stat.label}</div>
@@ -85,6 +104,17 @@ export default async function AdminDashboard() {
             Quick Actions
           </h2>
           <div className="flex flex-wrap gap-4">
+            <Link
+              href="/admin/contacts"
+              className="relative rounded-lg bg-gray-700 px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600"
+            >
+              Contact Submissions
+              {unreadContacts > 0 && (
+                <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-yellow-300 text-xs font-bold text-gray-900">
+                  {unreadContacts}
+                </span>
+              )}
+            </Link>
             <Link
               href="/admin/projects"
               className="rounded-lg bg-gray-700 px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600"

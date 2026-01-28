@@ -1,5 +1,6 @@
 import { HiOutlineMail } from 'react-icons/hi';
 import { BsTelephone, BsLinkedin, BsGithub } from 'react-icons/bs';
+import ContactForm from '@/app/components/ContactForm';
 
 export default function ContactPage() {
   const contactMethods = [
@@ -47,13 +48,15 @@ export default function ContactPage() {
             <a
               key={method.label}
               href={method.href}
-              className="group flex items-center gap-4 rounded-2xl border border-gray-700 bg-gray-800 p-6 transition-all duration-300 hover:border-yellow-300/50 hover:bg-gray-750 hover:shadow-lg hover:shadow-yellow-300/10 md:gap-6 md:rounded-3xl md:p-8"
+              className="group hover:bg-gray-750 flex items-center gap-4 rounded-2xl border border-gray-700 bg-gray-800 p-6 transition-all duration-300 hover:border-yellow-300/50 hover:shadow-lg hover:shadow-yellow-300/10 md:gap-6 md:rounded-3xl md:p-8"
             >
               <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-700 text-yellow-300 transition-colors group-hover:bg-yellow-300 group-hover:text-gray-900 md:h-16 md:w-16 md:rounded-2xl md:text-4xl">
                 {method.icon}
               </div>
               <div>
-                <p className="text-sm text-gray-400 md:text-base">{method.label}</p>
+                <p className="text-sm text-gray-400 md:text-base">
+                  {method.label}
+                </p>
                 <p className="font-semibold text-gray-200 transition-colors group-hover:text-yellow-300 md:text-lg">
                   {method.value}
                 </p>
@@ -63,7 +66,7 @@ export default function ContactPage() {
         </div>
 
         {/* Social Links */}
-        <div className="rounded-2xl border border-gray-700 bg-gray-800 p-6 md:rounded-3xl md:p-10">
+        <div className="mb-8 rounded-2xl border border-gray-700 bg-gray-800 p-6 md:mb-10 md:rounded-3xl md:p-10">
           <h2 className="mb-4 text-center text-lg font-semibold text-gray-300 md:mb-6 md:text-xl">
             Connect With Me
           </h2>
@@ -82,6 +85,9 @@ export default function ContactPage() {
             ))}
           </div>
         </div>
+
+        {/* Contact Form */}
+        <ContactForm />
       </div>
     </main>
   );
