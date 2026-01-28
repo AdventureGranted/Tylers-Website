@@ -4,9 +4,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'tylers-website.web.192.168.1.251.nip.io',
-        port: '3902',
+        protocol: 'https',
+        // Update this to your Cloudflare tunnel domain for images
+        hostname: 'images.tyler-grant.com',
         pathname: '/**',
       },
     ],
