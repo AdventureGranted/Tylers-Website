@@ -19,7 +19,7 @@ export default async function AdminDashboard() {
   const now = new Date();
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-  const [totalPageViews, uniqueVisitors, resumeDownloads, projectCount] =
+  const [totalPageViews, uniqueVisitors, resumeDownloads, projectCount, memberCount] =
     await Promise.all([
       prisma.analyticsEvent.count({
         where: {
@@ -41,13 +41,14 @@ export default async function AdminDashboard() {
         },
       }),
       prisma.project.count(),
+      prisma.user.count(),
     ]);
 
   const stats = [
     { label: 'Page Views (30d)', value: totalPageViews },
     { label: 'Unique Visitors (30d)', value: uniqueVisitors.length },
     { label: 'Resume Downloads (30d)', value: resumeDownloads },
-    { label: 'Projects', value: projectCount },
+    { label: 'Members', value: memberCount },
   ];
 
   return (
@@ -89,6 +90,12 @@ export default async function AdminDashboard() {
               className="rounded-lg bg-gray-700 px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600"
             >
               Manage Projects
+            </Link>
+            <Link
+              href="/admin/members"
+              className="rounded-lg bg-gray-700 px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600"
+            >
+              Manage Members
             </Link>
             <Link
               href="/admin/projects/new"
