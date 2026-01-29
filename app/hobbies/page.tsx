@@ -25,6 +25,7 @@ export default async function HobbiesPage() {
               images={project.images}
               beforeImageIndex={project.beforeImageIndex}
               afterImageIndex={project.afterImageIndex}
+              compareMode={project.compareMode}
             />
           ))}
         </div>

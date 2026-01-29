@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import ImageCarousel from './ImageCarousel';
+import BeforeAfterToggle from './BeforeAfterToggle';
 
 interface HobbyCardProps {
   slug: string;
@@ -12,6 +12,7 @@ interface HobbyCardProps {
   images: { url: string; alt: string | null; type?: string }[];
   beforeImageIndex?: number | null;
   afterImageIndex?: number | null;
+  compareMode?: string | null;
 }
 
 export default function HobbyCard({
@@ -21,12 +22,12 @@ export default function HobbyCard({
   images,
   beforeImageIndex,
   afterImageIndex,
+  compareMode,
 }: HobbyCardProps) {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<'carousel' | 'beforeAfter'>(
     'beforeAfter'
   );
-  const [showAfter, setShowAfter] = useState(true);
 
   const handleCardClick = () => {
     router.push(`/hobbies/${slug}`);
@@ -35,12 +36,6 @@ export default function HobbyCard({
   // Filter to only images for before/after comparison (videos don't work well)
   const imageOnlyMedia = images.filter((img) => img.type !== 'video');
   const hasBeforeAfter = imageOnlyMedia.length >= 2;
-  // Use saved indices if available, otherwise default to first and last
-  const beforeIdx = beforeImageIndex ?? 0;
-  const afterIdx = afterImageIndex ?? imageOnlyMedia.length - 1;
-  const beforeImage = imageOnlyMedia[beforeIdx] || imageOnlyMedia[0];
-  const afterImage =
-    imageOnlyMedia[afterIdx] || imageOnlyMedia[imageOnlyMedia.length - 1];
 
   return (
     <div
@@ -51,55 +46,27 @@ export default function HobbyCard({
         <div className="mb-4" onClick={(e) => e.stopPropagation()}>
           {/* View mode toggle - only show if there are 2+ images */}
           {hasBeforeAfter && (
-            <div className="mb-2 flex items-center justify-between">
-              <div className="flex overflow-hidden rounded-lg bg-gray-700 text-xs">
-                <button
-                  onClick={() => setViewMode('carousel')}
-                  className={`px-2 py-1 transition-colors ${
-                    viewMode === 'carousel'
-                      ? 'bg-yellow-300 text-gray-900'
-                      : 'text-gray-400 hover:text-gray-200'
-                  }`}
-                >
-                  Gallery
-                </button>
-                <button
-                  onClick={() => setViewMode('beforeAfter')}
-                  className={`px-2 py-1 transition-colors ${
-                    viewMode === 'beforeAfter'
-                      ? 'bg-yellow-300 text-gray-900'
-                      : 'text-gray-400 hover:text-gray-200'
-                  }`}
-                >
-                  Before/After
-                </button>
-              </div>
-
-              {/* Before/After toggle when in that mode */}
-              {viewMode === 'beforeAfter' && (
-                <div className="flex overflow-hidden rounded-lg bg-gray-700 text-xs">
-                  <button
-                    onClick={() => setShowAfter(false)}
-                    className={`px-2 py-1 transition-colors ${
-                      !showAfter
-                        ? 'bg-yellow-300 text-gray-900'
-                        : 'text-gray-400 hover:text-gray-200'
-                    }`}
-                  >
-                    Before
-                  </button>
-                  <button
-                    onClick={() => setShowAfter(true)}
-                    className={`px-2 py-1 transition-colors ${
-                      showAfter
-                        ? 'bg-yellow-300 text-gray-900'
-                        : 'text-gray-400 hover:text-gray-200'
-                    }`}
-                  >
-                    After
-                  </button>
-                </div>
-              )}
+            <div className="mb-2 flex overflow-hidden rounded-lg bg-gray-700 text-xs">
+              <button
+                onClick={() => setViewMode('carousel')}
+                className={`px-2 py-1 transition-colors ${
+                  viewMode === 'carousel'
+                    ? 'bg-yellow-300 text-gray-900'
+                    : 'text-gray-400 hover:text-gray-200'
+                }`}
+              >
+                Gallery
+              </button>
+              <button
+                onClick={() => setViewMode('beforeAfter')}
+                className={`px-2 py-1 transition-colors ${
+                  viewMode === 'beforeAfter'
+                    ? 'bg-yellow-300 text-gray-900'
+                    : 'text-gray-400 hover:text-gray-200'
+                }`}
+              >
+                Before/After
+              </button>
             </div>
           )}
 
@@ -107,27 +74,19 @@ export default function HobbyCard({
           {viewMode === 'carousel' || !hasBeforeAfter ? (
             <ImageCarousel images={images} />
           ) : (
-            <div className="relative aspect-video overflow-hidden rounded-xl bg-gray-700">
-              {/* Before image (base layer) */}
-              <Image
-                src={beforeImage.url}
-                alt={beforeImage.alt || 'Before'}
-                fill
-                className="object-cover"
-              />
-              {/* After image (overlay with fade) */}
-              <div
-                className="absolute inset-0 transition-opacity duration-300"
-                style={{ opacity: showAfter ? 1 : 0 }}
-              >
-                <Image
-                  src={afterImage.url}
-                  alt={afterImage.alt || 'After'}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
+            <BeforeAfterToggle
+              images={images.map((img, i) => ({
+                id: img.url,
+                url: img.url,
+                alt: img.alt,
+                sortOrder: i,
+                type: img.type,
+              }))}
+              readOnly
+              initialBeforeIndex={beforeImageIndex ?? undefined}
+              initialAfterIndex={afterImageIndex ?? undefined}
+              initialMode={(compareMode as 'toggle' | 'slider') ?? undefined}
+            />
           )}
         </div>
       )}

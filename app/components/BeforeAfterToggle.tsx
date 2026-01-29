@@ -218,24 +218,15 @@ export default function BeforeAfterToggle({
           {/* Before image (clipped by slider position) */}
           <div
             className="absolute inset-0 overflow-hidden"
-            style={{ width: `${sliderPosition}%` }}
+            style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
           >
-            <div
-              className="relative h-full"
-              style={{
-                width: sliderRef.current
-                  ? `${sliderRef.current.offsetWidth}px`
-                  : '100vw',
-              }}
-            >
-              <Image
-                src={beforeImage.url}
-                alt={beforeImage.alt || 'Before'}
-                fill
-                className="object-cover"
-                draggable={false}
-              />
-            </div>
+            <Image
+              src={beforeImage.url}
+              alt={beforeImage.alt || 'Before'}
+              fill
+              className="object-cover"
+              draggable={false}
+            />
           </div>
 
           {/* Slider handle */}
