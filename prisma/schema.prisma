@@ -30,19 +30,83 @@ model Session {
 
 // Projects
 model Project {
-  id          String         @id @default(cuid())
-  title       String
-  slug        String         @unique
-  category    String         @default("hobby") // "hobby" or "work"
-  description String?
-  content     String?
-  images      ProjectImage[]
-  comments    Comment[]
-  published   Boolean        @default(false)
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  id              String         @id @default(cuid())
+  title           String
+  slug            String         @unique
+  category        String         @default("hobby") // "hobby" or "work"
+  description     String?
+  content         String?
+  lessonsLearned  Json           @default("[]") // Array of lesson strings
+  // New fields
+  status          String         @default("planning") // planning, in_progress, completed, on_hold
+  estimatedBudget Float?
+  startDate       DateTime?
+  completionDate  DateTime?
+  privateNotes    String?
+  difficulty      Int?           // 1-5 rating
+  tags            Json           @default("[]") // Array of skill/tag strings
+  // Relations
+  images          ProjectImage[]
+  comments        Comment[]
+  receipts        Receipt[]
+  timeEntries     TimeEntry[]
+  materials       MaterialItem[]
+  links           ProjectLink[]
+  published       Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
 
   @@index([category])
+  @@index([status])
+}
+
+model TimeEntry {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  hours       Float
+  description String?
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  @@index([projectId])
+}
+
+model MaterialItem {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name      String
+  acquired  Boolean  @default(false)
+  quantity  Int?
+  notes     String?
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+}
+
+model ProjectLink {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title     String
+  url       String
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+}
+
+model Receipt {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  imageUrl    String
+  amount      Float
+  category    String   @default("material") // "tool" or "material"
+  description String?
+  createdAt   DateTime @default(now())
+
+  @@index([projectId])
 }
 
 model ProjectImage {
