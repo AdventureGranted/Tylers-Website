@@ -6,6 +6,7 @@ import Image from 'next/image';
 interface CarouselImage {
   url: string;
   alt: string | null;
+  type?: string;
 }
 
 interface ImageCarouselProps {
@@ -75,14 +76,26 @@ export default function ImageCarousel({
           </div>
         )}
 
-        <Image
-          src={images[currentIndex].url}
-          alt={images[currentIndex].alt || 'Image'}
-          fill
-          className={`object-cover transition-opacity duration-300 ${isCurrentLoaded ? 'opacity-100' : 'opacity-0'}`}
-          sizes="(max-width: 768px) 100vw, 50vw"
-          onLoad={() => handleImageLoad(currentIndex)}
-        />
+        {images[currentIndex].type === 'video' ? (
+          <video
+            key={images[currentIndex].url}
+            src={images[currentIndex].url}
+            className={`h-full w-full object-cover transition-opacity duration-300 ${isCurrentLoaded ? 'opacity-100' : 'opacity-0'}`}
+            controls
+            playsInline
+            preload="metadata"
+            onLoadedData={() => handleImageLoad(currentIndex)}
+          />
+        ) : (
+          <Image
+            src={images[currentIndex].url}
+            alt={images[currentIndex].alt || 'Image'}
+            fill
+            className={`object-cover transition-opacity duration-300 ${isCurrentLoaded ? 'opacity-100' : 'opacity-0'}`}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            onLoad={() => handleImageLoad(currentIndex)}
+          />
+        )}
 
         {/* Navigation arrows */}
         {images.length > 1 && (

@@ -8,6 +8,7 @@ import Image from 'next/image';
 interface UploadedImage {
   url: string;
   alt: string;
+  type?: string;
 }
 
 export default function NewProject() {
@@ -19,6 +20,7 @@ export default function NewProject() {
   const [published, setPublished] = useState(false);
   const [images, setImages] = useState<UploadedImage[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
@@ -38,15 +40,14 @@ export default function NewProject() {
     }
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
+  const uploadFiles = async (files: File[]) => {
+    if (files.length === 0) return;
 
     setUploading(true);
     setError('');
 
     try {
-      for (const file of Array.from(files)) {
+      for (const file of files) {
         const formData = new FormData();
         formData.append('file', file);
 
@@ -60,15 +61,38 @@ export default function NewProject() {
           throw new Error(data.error || 'Upload failed');
         }
 
-        const { url } = await res.json();
-        setImages((prev) => [...prev, { url, alt: '' }]);
+        const { url, type } = await res.json();
+        setImages((prev) => [...prev, { url, alt: '', type: type || 'image' }]);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Upload failed');
     } finally {
       setUploading(false);
-      e.target.value = '';
     }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    await uploadFiles(Array.from(files));
+    e.target.value = '';
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = Array.from(e.dataTransfer.files);
+    await uploadFiles(files);
   };
 
   const updateImageAlt = (index: number, alt: string) => {
@@ -111,7 +135,12 @@ export default function NewProject() {
           description,
           content,
           published,
-          images: images.map((img, i) => ({ ...img, sortOrder: i })),
+          images: images.map((img, i) => ({
+            url: img.url,
+            alt: img.alt,
+            sortOrder: i,
+            type: img.type || 'image',
+          })),
         }),
       });
 
@@ -149,10 +178,7 @@ export default function NewProject() {
           )}
 
           <div>
-            <label
-              htmlFor="title"
-              className="mb-1 block text-sm text-gray-400"
-            >
+            <label htmlFor="title" className="mb-1 block text-sm text-gray-400">
               Title
             </label>
             <input
@@ -229,21 +255,36 @@ export default function NewProject() {
             />
           </div>
 
-          {/* Image Upload */}
+          {/* Image/Video Upload */}
           <div>
-            <label className="mb-2 block text-sm text-gray-400">Images</label>
+            <label className="mb-2 block text-sm text-gray-400">
+              Media (Images & Videos)
+            </label>
 
-            <label className="flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-700 p-6 transition-colors hover:border-yellow-300">
+            <label
+              className={`flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors ${
+                isDragging
+                  ? 'border-yellow-300 bg-yellow-300/10'
+                  : 'border-gray-700 hover:border-yellow-300'
+              }`}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
               <input
                 type="file"
-                accept="image/*,.heic,.heif"
+                accept="image/*,.heic,.heif,video/mp4,video/webm,video/quicktime,.mov"
                 multiple
                 onChange={handleImageUpload}
                 className="hidden"
                 disabled={uploading}
               />
-              <span className="text-gray-400">
-                {uploading ? 'Uploading...' : 'Click to upload images'}
+              <span className="text-center text-gray-400">
+                {uploading
+                  ? 'Uploading...'
+                  : isDragging
+                    ? 'Drop files here'
+                    : 'Click or drag files to upload'}
               </span>
             </label>
 
@@ -254,20 +295,48 @@ export default function NewProject() {
                     key={img.url}
                     className="flex items-center gap-4 rounded-lg bg-gray-800 p-3"
                   >
-                    <Image
-                      src={img.url}
-                      alt={img.alt || 'Project image'}
-                      width={80}
-                      height={80}
-                      className="h-20 w-20 rounded object-cover"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Alt text"
-                      value={img.alt}
-                      onChange={(e) => updateImageAlt(index, e.target.value)}
-                      className="flex-1 rounded border border-gray-700 bg-gray-900 px-3 py-1 text-sm text-gray-200 focus:border-yellow-300 focus:outline-none"
-                    />
+                    {img.type === 'video' ? (
+                      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded bg-gray-700">
+                        <video
+                          src={img.url}
+                          className="h-full w-full object-cover"
+                          muted
+                          preload="metadata"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                            className="h-8 w-8 text-white"
+                          >
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </div>
+                    ) : (
+                      <Image
+                        src={img.url}
+                        alt={img.alt || 'Project image'}
+                        width={80}
+                        height={80}
+                        className="h-20 w-20 shrink-0 rounded object-cover"
+                      />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <input
+                        type="text"
+                        placeholder="Alt text / description"
+                        value={img.alt}
+                        onChange={(e) => updateImageAlt(index, e.target.value)}
+                        className="w-full rounded border border-gray-700 bg-gray-900 px-3 py-1 text-sm text-gray-200 focus:border-yellow-300 focus:outline-none"
+                      />
+                      {img.type === 'video' && (
+                        <span className="mt-1 inline-block rounded bg-blue-500/20 px-2 py-0.5 text-xs text-blue-400">
+                          Video
+                        </span>
+                      )}
+                    </div>
                     <div className="flex gap-1">
                       <button
                         type="button"

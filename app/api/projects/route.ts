@@ -49,10 +49,16 @@ export async function POST(request: NextRequest) {
         published: published ?? false,
         images: {
           create: (images || []).map(
-            (img: { url: string; alt?: string; sortOrder?: number }) => ({
+            (img: {
+              url: string;
+              alt?: string;
+              sortOrder?: number;
+              type?: string;
+            }) => ({
               url: img.url,
               alt: img.alt || null,
               sortOrder: img.sortOrder || 0,
+              type: img.type || 'image',
             })
           ),
         },

@@ -30,21 +30,25 @@ model Session {
 
 // Projects
 model Project {
-  id              String         @id @default(cuid())
-  title           String
-  slug            String         @unique
-  category        String         @default("hobby") // "hobby" or "work"
-  description     String?
-  content         String?
-  lessonsLearned  Json           @default("[]") // Array of lesson strings
+  id               String         @id @default(cuid())
+  title            String
+  slug             String         @unique
+  category         String         @default("hobby") // "hobby" or "work"
+  description      String?
+  content          String?
+  lessonsLearned   Json           @default("[]") // Array of lesson strings
   // New fields
-  status          String         @default("planning") // planning, in_progress, completed, on_hold
-  estimatedBudget Float?
-  startDate       DateTime?
-  completionDate  DateTime?
-  privateNotes    String?
-  difficulty      Int?           // 1-5 rating
-  tags            Json           @default("[]") // Array of skill/tag strings
+  status           String         @default("planning") // planning, in_progress, completed, on_hold
+  estimatedBudget  Float?
+  startDate        DateTime?
+  completionDate   DateTime?
+  privateNotes     String?
+  difficulty       Int?           // 1-5 rating
+  tags             Json           @default("[]") // Array of skill/tag strings
+  // Before/After comparison settings
+  beforeImageIndex Int?
+  afterImageIndex  Int?
+  compareMode      String?  @default("toggle") // "toggle" or "slider"
   // Relations
   images          ProjectImage[]
   comments        Comment[]
@@ -116,6 +120,7 @@ model ProjectImage {
   url       String
   alt       String?
   sortOrder Int     @default(0)
+  type      String  @default("image") // "image" or "video"
 }
 
 // Analytics

@@ -9,7 +9,9 @@ interface HobbyCardProps {
   slug: string;
   title: string;
   description: string | null;
-  images: { url: string; alt: string | null }[];
+  images: { url: string; alt: string | null; type?: string }[];
+  beforeImageIndex?: number | null;
+  afterImageIndex?: number | null;
 }
 
 export default function HobbyCard({
@@ -17,6 +19,8 @@ export default function HobbyCard({
   title,
   description,
   images,
+  beforeImageIndex,
+  afterImageIndex,
 }: HobbyCardProps) {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<'carousel' | 'beforeAfter'>(
@@ -28,9 +32,15 @@ export default function HobbyCard({
     router.push(`/hobbies/${slug}`);
   };
 
-  const hasBeforeAfter = images.length >= 2;
-  const beforeImage = images[0];
-  const afterImage = images[images.length - 1];
+  // Filter to only images for before/after comparison (videos don't work well)
+  const imageOnlyMedia = images.filter((img) => img.type !== 'video');
+  const hasBeforeAfter = imageOnlyMedia.length >= 2;
+  // Use saved indices if available, otherwise default to first and last
+  const beforeIdx = beforeImageIndex ?? 0;
+  const afterIdx = afterImageIndex ?? imageOnlyMedia.length - 1;
+  const beforeImage = imageOnlyMedia[beforeIdx] || imageOnlyMedia[0];
+  const afterImage =
+    imageOnlyMedia[afterIdx] || imageOnlyMedia[imageOnlyMedia.length - 1];
 
   return (
     <div
@@ -93,7 +103,7 @@ export default function HobbyCard({
             </div>
           )}
 
-          {/* Image display */}
+          {/* Media display */}
           {viewMode === 'carousel' || !hasBeforeAfter ? (
             <ImageCarousel images={images} />
           ) : (

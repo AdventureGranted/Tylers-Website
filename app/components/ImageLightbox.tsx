@@ -6,6 +6,7 @@ import Image from 'next/image';
 interface LightboxImage {
   url: string;
   alt: string | null;
+  type?: string;
 }
 
 interface ImageLightboxProps {
@@ -165,16 +166,28 @@ export default function ImageLightbox({
           </>
         )}
 
-        {/* Image */}
-        <Image
-          src={images[currentIndex].url}
-          alt={images[currentIndex].alt || 'Image'}
-          width={1200}
-          height={800}
-          className="max-h-[85vh] w-auto object-contain"
-          sizes="(max-width: 768px) 100vw, 80vw"
-          priority
-        />
+        {/* Image or Video */}
+        {images[currentIndex].type === 'video' ? (
+          <video
+            key={images[currentIndex].url}
+            src={images[currentIndex].url}
+            className="max-h-[85vh] w-auto object-contain"
+            controls
+            autoPlay
+            playsInline
+            preload="metadata"
+          />
+        ) : (
+          <Image
+            src={images[currentIndex].url}
+            alt={images[currentIndex].alt || 'Image'}
+            width={1200}
+            height={800}
+            className="max-h-[85vh] w-auto object-contain"
+            sizes="(max-width: 768px) 100vw, 80vw"
+            priority
+          />
+        )}
 
         {/* Dots indicator */}
         {images.length > 1 && (

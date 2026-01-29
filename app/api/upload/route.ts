@@ -38,27 +38,38 @@ export async function POST(request: NextRequest) {
       file.name.toLowerCase().endsWith('.heic') ||
       file.name.toLowerCase().endsWith('.heif');
 
+    // Check if video
+    const isVideo = file.type.startsWith('video/');
+
     // Validate file type
     const allowedTypes = [
+      // Images
       'image/jpeg',
       'image/png',
       'image/webp',
       'image/gif',
       'image/heic',
       'image/heif',
+      // Videos
+      'video/mp4',
+      'video/webm',
+      'video/quicktime',
     ];
     if (!allowedTypes.includes(file.type) && !isHeic) {
       return NextResponse.json(
-        { error: 'Invalid file type. Allowed: jpg, png, webp, gif, heic' },
+        {
+          error:
+            'Invalid file type. Allowed: jpg, png, webp, gif, heic, mp4, webm, mov',
+        },
         { status: 400 }
       );
     }
 
-    // Validate file size (10MB max)
-    const maxSize = 10 * 1024 * 1024;
+    // Validate file size (100MB for videos, 10MB for images)
+    const maxSize = isVideo ? 100 * 1024 * 1024 : 10 * 1024 * 1024;
     if (file.size > maxSize) {
       return NextResponse.json(
-        { error: 'File too large. Max size: 10MB' },
+        { error: `File too large. Max size: ${isVideo ? '100MB' : '10MB'}` },
         { status: 400 }
       );
     }
@@ -67,8 +78,8 @@ export async function POST(request: NextRequest) {
     let ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
     let contentType = file.type;
 
-    // Convert HEIC to JPEG
-    if (isHeic) {
+    // Convert HEIC to JPEG (only for images, not videos)
+    if (isHeic && !isVideo) {
       buffer = Buffer.from(
         await convert({
           buffer,
@@ -79,6 +90,9 @@ export async function POST(request: NextRequest) {
       ext = 'jpg';
       contentType = 'image/jpeg';
     }
+
+    // Determine media type
+    const mediaType = isVideo ? 'video' : 'image';
 
     // Generate unique filename
     const filename = `projects/${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${ext}`;
@@ -99,7 +113,7 @@ export async function POST(request: NextRequest) {
       `${process.env.S3_ENDPOINT || 'http://192.168.1.251:3900'}/${BUCKET_NAME}`;
     const url = `${baseUrl}/${filename}`;
 
-    return NextResponse.json({ url, filename });
+    return NextResponse.json({ url, filename, type: mediaType });
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json(

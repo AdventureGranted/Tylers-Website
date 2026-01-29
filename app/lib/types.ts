@@ -4,6 +4,7 @@ export interface ProjectImage {
   alt: string | null;
   sortOrder: number;
   projectId: string;
+  type?: string;
 }
 
 export interface Project {

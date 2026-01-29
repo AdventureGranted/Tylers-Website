@@ -20,6 +20,7 @@ import BeforeAfterToggle from '@/app/components/BeforeAfterToggle';
 interface UploadedImage {
   url: string;
   alt: string;
+  type?: string;
 }
 
 interface Project {
@@ -31,7 +32,16 @@ interface Project {
   content: string | null;
   published: boolean;
   status: string;
-  images: { id: string; url: string; alt: string | null; sortOrder: number }[];
+  images: {
+    id: string;
+    url: string;
+    alt: string | null;
+    sortOrder: number;
+    type?: string;
+  }[];
+  beforeImageIndex: number | null;
+  afterImageIndex: number | null;
+  compareMode: string | null;
 }
 
 export default function EditProject({
@@ -48,9 +58,12 @@ export default function EditProject({
   const [published, setPublished] = useState(false);
   const [status, setStatus] = useState('planning');
   const [images, setImages] = useState<UploadedImage[]>([]);
-  const [projectImages, setProjectImages] = useState<Project['images']>([]);
   const [actualCost, setActualCost] = useState(0);
   const [uploading, setUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [beforeImageIndex, setBeforeImageIndex] = useState<number | null>(null);
+  const [afterImageIndex, setAfterImageIndex] = useState<number | null>(null);
+  const [compareMode, setCompareMode] = useState<'toggle' | 'slider'>('toggle');
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState('');
@@ -73,9 +86,17 @@ export default function EditProject({
         setPublished(project.published);
         setStatus(project.status || 'planning');
         setImages(
-          project.images.map((img) => ({ url: img.url, alt: img.alt || '' }))
+          project.images.map((img) => ({
+            url: img.url,
+            alt: img.alt || '',
+            type: img.type || 'image',
+          }))
         );
-        setProjectImages(project.images);
+        setBeforeImageIndex(project.beforeImageIndex);
+        setAfterImageIndex(project.afterImageIndex);
+        setCompareMode(
+          (project.compareMode as 'toggle' | 'slider') || 'toggle'
+        );
 
         // Fetch receipts to calculate actual cost
         const receiptsRes = await fetch(`/api/projects/${id}/receipts`);
@@ -93,15 +114,14 @@ export default function EditProject({
     fetchProject();
   }, [id]);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
+  const uploadFiles = async (files: File[]) => {
+    if (files.length === 0) return;
 
     setUploading(true);
     setError('');
 
     try {
-      for (const file of Array.from(files)) {
+      for (const file of files) {
         const formData = new FormData();
         formData.append('file', file);
 
@@ -115,15 +135,38 @@ export default function EditProject({
           throw new Error(data.error || 'Upload failed');
         }
 
-        const { url } = await res.json();
-        setImages((prev) => [...prev, { url, alt: '' }]);
+        const { url, type } = await res.json();
+        setImages((prev) => [...prev, { url, alt: '', type: type || 'image' }]);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Upload failed');
     } finally {
       setUploading(false);
-      e.target.value = '';
     }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    await uploadFiles(Array.from(files));
+    e.target.value = '';
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = Array.from(e.dataTransfer.files);
+    await uploadFiles(files);
   };
 
   const updateImageAlt = (index: number, alt: string) => {
@@ -166,7 +209,15 @@ export default function EditProject({
           description,
           content,
           published,
-          images: images.map((img, i) => ({ ...img, sortOrder: i })),
+          beforeImageIndex,
+          afterImageIndex,
+          compareMode,
+          images: images.map((img, i) => ({
+            url: img.url,
+            alt: img.alt,
+            sortOrder: i,
+            type: img.type || 'image',
+          })),
         }),
       });
 
@@ -245,191 +296,258 @@ export default function EditProject({
           </div>
 
           {/* Center column - Basic form */}
-          <form onSubmit={handleSubmit} className="min-w-0 flex-1 space-y-6">
-            <div>
-              <label
-                htmlFor="title"
-                className="mb-1 block text-sm text-gray-400"
-              >
-                Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
-                required
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="slug"
-                className="mb-1 block text-sm text-gray-400"
-              >
-                Slug
-              </label>
-              <input
-                type="text"
-                id="slug"
-                value={slug}
-                onChange={(e) => setSlug(e.target.value)}
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
-                required
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="category"
-                className="mb-1 block text-sm text-gray-400"
-              >
-                Category
-              </label>
-              <select
-                id="category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
-              >
-                <option value="hobby">Hobby</option>
-                <option value="work">Work / CS Project</option>
-              </select>
-            </div>
-
-            <div>
-              <label
-                htmlFor="description"
-                className="mb-1 block text-sm text-gray-400"
-              >
-                Description
-              </label>
-              <textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={3}
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="content"
-                className="mb-1 block text-sm text-gray-400"
-              >
-                Content
-              </label>
-              <textarea
-                id="content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                rows={10}
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
-              />
-            </div>
-
-            {/* Image Upload */}
-            <div>
-              <label className="mb-2 block text-sm text-gray-400">Images</label>
-
-              <label className="flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-700 p-6 transition-colors hover:border-yellow-300">
+          <div className="min-w-0 flex-1 space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label
+                  htmlFor="title"
+                  className="mb-1 block text-sm text-gray-400"
+                >
+                  Title
+                </label>
                 <input
-                  type="file"
-                  accept="image/*,.heic,.heif"
-                  multiple
-                  onChange={handleImageUpload}
-                  className="hidden"
-                  disabled={uploading}
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                  required
                 />
-                <span className="text-gray-400">
-                  {uploading ? 'Uploading...' : 'Click to upload images'}
-                </span>
-              </label>
+              </div>
 
-              {images.length > 0 && (
-                <div className="mt-4 space-y-3">
-                  {images.map((img, index) => (
-                    <div
-                      key={img.url}
-                      className="flex items-center gap-4 rounded-lg bg-gray-800 p-3"
-                    >
-                      <Image
-                        src={img.url}
-                        alt={img.alt || 'Project image'}
-                        width={80}
-                        height={80}
-                        className="h-20 w-20 rounded object-cover"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Alt text"
-                        value={img.alt}
-                        onChange={(e) => updateImageAlt(index, e.target.value)}
-                        className="flex-1 rounded border border-gray-700 bg-gray-900 px-3 py-1 text-sm text-gray-200 focus:border-yellow-300 focus:outline-none"
-                      />
-                      <div className="flex gap-1">
-                        <button
-                          type="button"
-                          onClick={() => moveImage(index, 'up')}
-                          disabled={index === 0}
-                          className="rounded bg-gray-700 px-2 py-1 text-gray-400 hover:bg-gray-600 disabled:opacity-30"
-                        >
-                          &uarr;
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => moveImage(index, 'down')}
-                          disabled={index === images.length - 1}
-                          className="rounded bg-gray-700 px-2 py-1 text-gray-400 hover:bg-gray-600 disabled:opacity-30"
-                        >
-                          &darr;
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => removeImage(index)}
-                          className="rounded bg-red-500/20 px-2 py-1 text-red-400 hover:bg-red-500/30"
-                        >
-                          &times;
-                        </button>
+              <div>
+                <label
+                  htmlFor="slug"
+                  className="mb-1 block text-sm text-gray-400"
+                >
+                  Slug
+                </label>
+                <input
+                  type="text"
+                  id="slug"
+                  value={slug}
+                  onChange={(e) => setSlug(e.target.value)}
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="category"
+                  className="mb-1 block text-sm text-gray-400"
+                >
+                  Category
+                </label>
+                <select
+                  id="category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                >
+                  <option value="hobby">Hobby</option>
+                  <option value="work">Work / CS Project</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="description"
+                  className="mb-1 block text-sm text-gray-400"
+                >
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={3}
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="content"
+                  className="mb-1 block text-sm text-gray-400"
+                >
+                  Content
+                </label>
+                <textarea
+                  id="content"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  rows={10}
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                />
+              </div>
+
+              {/* Image/Video Upload */}
+              <div>
+                <label className="mb-2 block text-sm text-gray-400">
+                  Media (Images & Videos)
+                </label>
+
+                <label
+                  className={`flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors ${
+                    isDragging
+                      ? 'border-yellow-300 bg-yellow-300/10'
+                      : 'border-gray-700 hover:border-yellow-300'
+                  }`}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  <input
+                    type="file"
+                    accept="image/*,.heic,.heif,video/mp4,video/webm,video/quicktime,.mov"
+                    multiple
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    disabled={uploading}
+                  />
+                  <span className="text-center text-gray-400">
+                    {uploading
+                      ? 'Uploading...'
+                      : isDragging
+                        ? 'Drop files here'
+                        : 'Click or drag files to upload'}
+                  </span>
+                </label>
+
+                {images.length > 0 && (
+                  <div className="mt-4 space-y-3">
+                    {images.map((img, index) => (
+                      <div
+                        key={img.url}
+                        className="flex items-center gap-4 rounded-lg bg-gray-800 p-3"
+                      >
+                        {img.type === 'video' ? (
+                          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded bg-gray-700">
+                            <video
+                              src={img.url}
+                              className="h-full w-full object-cover"
+                              muted
+                              preload="metadata"
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                                className="h-8 w-8 text-white"
+                              >
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </div>
+                          </div>
+                        ) : (
+                          <Image
+                            src={img.url}
+                            alt={img.alt || 'Project image'}
+                            width={80}
+                            height={80}
+                            className="h-20 w-20 shrink-0 rounded object-cover"
+                          />
+                        )}
+                        <div className="min-w-0 flex-1">
+                          <input
+                            type="text"
+                            placeholder="Alt text / description"
+                            value={img.alt}
+                            onChange={(e) =>
+                              updateImageAlt(index, e.target.value)
+                            }
+                            className="w-full rounded border border-gray-700 bg-gray-900 px-3 py-1 text-sm text-gray-200 focus:border-yellow-300 focus:outline-none"
+                          />
+                          {img.type === 'video' && (
+                            <span className="mt-1 inline-block rounded bg-blue-500/20 px-2 py-0.5 text-xs text-blue-400">
+                              Video
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex gap-1">
+                          <button
+                            type="button"
+                            onClick={() => moveImage(index, 'up')}
+                            disabled={index === 0}
+                            className="rounded bg-gray-700 px-2 py-1 text-gray-400 hover:bg-gray-600 disabled:opacity-30"
+                          >
+                            &uarr;
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => moveImage(index, 'down')}
+                            disabled={index === images.length - 1}
+                            className="rounded bg-gray-700 px-2 py-1 text-gray-400 hover:bg-gray-600 disabled:opacity-30"
+                          >
+                            &darr;
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => removeImage(index)}
+                            className="rounded bg-red-500/20 px-2 py-1 text-red-400 hover:bg-red-500/30"
+                          >
+                            &times;
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="published"
-                checked={published}
-                onChange={(e) => setPublished(e.target.checked)}
-                className="h-4 w-4 rounded border-gray-700 bg-gray-800"
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="published"
+                  checked={published}
+                  onChange={(e) => setPublished(e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-700 bg-gray-800"
+                />
+                <label htmlFor="published" className="text-sm text-gray-400">
+                  Published
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading || uploading}
+                className="w-full rounded-lg bg-yellow-300 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-50"
+              >
+                {loading ? 'Saving...' : 'Save Changes'}
+              </button>
+            </form>
+
+            {/* Before/After Preview - outside form to avoid form interactions */}
+            {images.filter((img) => img.type !== 'video').length >= 2 && (
+              <BeforeAfterToggle
+                images={images
+                  .filter((img) => img.type !== 'video')
+                  .map((img, i) => ({
+                    id: img.url,
+                    url: img.url,
+                    alt: img.alt || null,
+                    sortOrder: i,
+                    type: img.type,
+                  }))}
+                initialBeforeIndex={beforeImageIndex ?? undefined}
+                initialAfterIndex={afterImageIndex ?? undefined}
+                initialMode={compareMode}
+                onIndicesChange={(before, after) => {
+                  setBeforeImageIndex(before);
+                  setAfterImageIndex(after);
+                }}
+                onModeChange={setCompareMode}
               />
-              <label htmlFor="published" className="text-sm text-gray-400">
-                Published
-              </label>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading || uploading}
-              className="w-full rounded-lg bg-yellow-300 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-50"
-            >
-              {loading ? 'Saving...' : 'Save Changes'}
-            </button>
-          </form>
+            )}
+          </div>
 
           {/* Right column - Costs & Tracking */}
           <div className="hidden w-72 shrink-0 space-y-4 xl:block">
             <h2 className="text-lg font-semibold text-gray-200">
               Costs & Tracking
             </h2>
-            {projectImages.length >= 2 && (
-              <BeforeAfterToggle images={projectImages} />
-            )}
             <BudgetTracker projectId={id} actualCost={actualCost} />
             <TimeTracker projectId={id} />
             <ReceiptManager projectId={id} />
@@ -446,9 +564,6 @@ export default function EditProject({
             <ProjectTimeline projectId={id} />
             <DifficultyRating projectId={id} />
             <ProjectTags projectId={id} />
-            {projectImages.length >= 2 && (
-              <BeforeAfterToggle images={projectImages} />
-            )}
             <BudgetTracker projectId={id} actualCost={actualCost} />
             <TimeTracker projectId={id} />
             <ReceiptManager projectId={id} />

@@ -183,7 +183,15 @@ export default async function HobbyDetailPage({ params }: Props) {
             {/* Before/After Toggle */}
             {project.images.length >= 2 && (
               <div className="mb-8">
-                <BeforeAfterToggle images={project.images} readOnly />
+                <BeforeAfterToggle
+                  images={project.images}
+                  readOnly
+                  initialBeforeIndex={project.beforeImageIndex ?? undefined}
+                  initialAfterIndex={project.afterImageIndex ?? undefined}
+                  initialMode={
+                    (project.compareMode as 'toggle' | 'slider') ?? undefined
+                  }
+                />
               </div>
             )}
 

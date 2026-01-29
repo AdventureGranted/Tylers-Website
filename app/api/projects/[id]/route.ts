@@ -34,8 +34,18 @@ export async function PUT(
   const { id } = await params;
 
   try {
-    const { title, slug, category, description, content, published, images } =
-      await request.json();
+    const {
+      title,
+      slug,
+      category,
+      description,
+      content,
+      published,
+      images,
+      beforeImageIndex,
+      afterImageIndex,
+      compareMode,
+    } = await request.json();
 
     // Check if slug is taken by another project
     if (slug) {
@@ -60,13 +70,22 @@ export async function PUT(
         description,
         content,
         published,
+        beforeImageIndex: beforeImageIndex ?? null,
+        afterImageIndex: afterImageIndex ?? null,
+        compareMode: compareMode ?? 'toggle',
         images: {
           deleteMany: {},
           create: (images || []).map(
-            (img: { url: string; alt?: string; sortOrder?: number }) => ({
+            (img: {
+              url: string;
+              alt?: string;
+              sortOrder?: number;
+              type?: string;
+            }) => ({
               url: img.url,
               alt: img.alt || null,
               sortOrder: img.sortOrder || 0,
+              type: img.type || 'image',
             })
           ),
         },

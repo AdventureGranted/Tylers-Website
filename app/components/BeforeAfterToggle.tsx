@@ -9,26 +9,78 @@ interface ProjectImage {
   url: string;
   alt: string | null;
   sortOrder: number;
+  type?: string;
 }
 
 interface BeforeAfterToggleProps {
   images: ProjectImage[];
   readOnly?: boolean;
+  initialBeforeIndex?: number;
+  initialAfterIndex?: number;
+  initialMode?: 'toggle' | 'slider';
+  onIndicesChange?: (beforeIndex: number, afterIndex: number) => void;
+  onModeChange?: (mode: 'toggle' | 'slider') => void;
 }
 
 export default function BeforeAfterToggle({
-  images,
+  images: allMedia,
   readOnly = false,
+  initialBeforeIndex,
+  initialAfterIndex,
+  initialMode,
+  onIndicesChange,
+  onModeChange,
 }: BeforeAfterToggleProps) {
+  // Filter to only images - videos don't work well for before/after comparison
+  const images = allMedia.filter((img) => img.type !== 'video');
+
   const [showAfter, setShowAfter] = useState(true);
-  const [beforeIndex, setBeforeIndex] = useState(0);
+  const [beforeIndex, setBeforeIndex] = useState(initialBeforeIndex ?? 0);
   const [afterIndex, setAfterIndex] = useState(
-    images.length > 1 ? images.length - 1 : 0
+    initialAfterIndex ?? (images.length > 1 ? images.length - 1 : 0)
   );
-  const [mode, setMode] = useState<'toggle' | 'slider'>('toggle');
+  const [mode, setMode] = useState<'toggle' | 'slider'>(
+    initialMode ?? 'toggle'
+  );
   const [sliderPosition, setSliderPosition] = useState(50);
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
+
+  // Sync with initial values when they change
+  useEffect(() => {
+    if (initialBeforeIndex !== undefined) {
+      setBeforeIndex(initialBeforeIndex);
+    }
+  }, [initialBeforeIndex]);
+
+  useEffect(() => {
+    if (initialAfterIndex !== undefined) {
+      setAfterIndex(initialAfterIndex);
+    }
+  }, [initialAfterIndex]);
+
+  useEffect(() => {
+    if (initialMode !== undefined) {
+      setMode(initialMode);
+    }
+  }, [initialMode]);
+
+  // Handle mode change
+  const handleModeChange = (newMode: 'toggle' | 'slider') => {
+    setMode(newMode);
+    onModeChange?.(newMode);
+  };
+
+  // Notify parent when indices change
+  const handleBeforeIndexChange = (index: number) => {
+    setBeforeIndex(index);
+    onIndicesChange?.(index, afterIndex);
+  };
+
+  const handleAfterIndexChange = (index: number) => {
+    setAfterIndex(index);
+    onIndicesChange?.(beforeIndex, index);
+  };
 
   // Handle slider drag
   useEffect(() => {
@@ -92,6 +144,7 @@ export default function BeforeAfterToggle({
         {mode === 'toggle' ? (
           <div className="flex overflow-hidden rounded-lg bg-gray-700">
             <button
+              type="button"
               onClick={() => setShowAfter(false)}
               className={`px-3 py-1.5 text-xs font-medium transition-colors ${
                 !showAfter
@@ -102,6 +155,7 @@ export default function BeforeAfterToggle({
               Before
             </button>
             <button
+              type="button"
               onClick={() => setShowAfter(true)}
               className={`px-3 py-1.5 text-xs font-medium transition-colors ${
                 showAfter
@@ -223,7 +277,8 @@ export default function BeforeAfterToggle({
             </label>
             <div className="flex overflow-hidden rounded-lg bg-gray-700">
               <button
-                onClick={() => setMode('toggle')}
+                type="button"
+                onClick={() => handleModeChange('toggle')}
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'toggle'
                     ? 'bg-yellow-300 text-gray-900'
@@ -233,7 +288,8 @@ export default function BeforeAfterToggle({
                 Toggle
               </button>
               <button
-                onClick={() => setMode('slider')}
+                type="button"
+                onClick={() => handleModeChange('slider')}
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'slider'
                     ? 'bg-yellow-300 text-gray-900'
@@ -253,12 +309,14 @@ export default function BeforeAfterToggle({
               </label>
               <select
                 value={beforeIndex}
-                onChange={(e) => setBeforeIndex(parseInt(e.target.value))}
+                onChange={(e) =>
+                  handleBeforeIndexChange(parseInt(e.target.value))
+                }
                 className="w-full rounded bg-gray-700 px-2 py-1 text-xs text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
               >
                 {images.map((img, i) => (
                   <option key={img.id} value={i}>
-                    Image {i + 1}
+                    {img.alt ? `${i + 1}. ${img.alt}` : `Image ${i + 1}`}
                   </option>
                 ))}
               </select>
@@ -269,12 +327,14 @@ export default function BeforeAfterToggle({
               </label>
               <select
                 value={afterIndex}
-                onChange={(e) => setAfterIndex(parseInt(e.target.value))}
+                onChange={(e) =>
+                  handleAfterIndexChange(parseInt(e.target.value))
+                }
                 className="w-full rounded bg-gray-700 px-2 py-1 text-xs text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
               >
                 {images.map((img, i) => (
                   <option key={img.id} value={i}>
-                    Image {i + 1}
+                    {img.alt ? `${i + 1}. ${img.alt}` : `Image ${i + 1}`}
                   </option>
                 ))}
               </select>
