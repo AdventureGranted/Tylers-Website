@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ImageCarousel from './ImageCarousel';
 import BeforeAfterToggle from './BeforeAfterToggle';
@@ -25,9 +24,6 @@ export default function HobbyCard({
   compareMode,
 }: HobbyCardProps) {
   const router = useRouter();
-  const [viewMode, setViewMode] = useState<'carousel' | 'beforeAfter'>(
-    'beforeAfter'
-  );
 
   const handleCardClick = () => {
     router.push(`/hobbies/${slug}`);
@@ -43,37 +39,12 @@ export default function HobbyCard({
       className="group flex cursor-pointer flex-col rounded-3xl border border-gray-700 bg-gray-800 p-6 shadow-lg transition-all duration-300 hover:border-yellow-300/50 hover:shadow-2xl"
     >
       {images.length > 0 && (
-        <div className="mb-4" onClick={(e) => e.stopPropagation()}>
-          {/* View mode toggle - only show if there are 2+ images */}
-          {hasBeforeAfter && (
-            <div className="mb-2 flex overflow-hidden rounded-lg bg-gray-700 text-xs">
-              <button
-                onClick={() => setViewMode('carousel')}
-                className={`px-2 py-1 transition-colors ${
-                  viewMode === 'carousel'
-                    ? 'bg-yellow-300 text-gray-900'
-                    : 'text-gray-400 hover:text-gray-200'
-                }`}
-              >
-                Gallery
-              </button>
-              <button
-                onClick={() => setViewMode('beforeAfter')}
-                className={`px-2 py-1 transition-colors ${
-                  viewMode === 'beforeAfter'
-                    ? 'bg-yellow-300 text-gray-900'
-                    : 'text-gray-400 hover:text-gray-200'
-                }`}
-              >
-                Before/After
-              </button>
-            </div>
-          )}
-
-          {/* Media display */}
-          {viewMode === 'carousel' || !hasBeforeAfter ? (
-            <ImageCarousel images={images} />
-          ) : (
+        <div
+          className="mb-4"
+          onClick={(e) => e.stopPropagation()}
+          onMouseUp={(e) => e.stopPropagation()}
+        >
+          {hasBeforeAfter ? (
             <BeforeAfterToggle
               images={images.map((img, i) => ({
                 id: img.url,
@@ -87,6 +58,8 @@ export default function HobbyCard({
               initialAfterIndex={afterImageIndex ?? undefined}
               initialMode={(compareMode as 'toggle' | 'slider') ?? undefined}
             />
+          ) : (
+            <ImageCarousel images={images} />
           )}
         </div>
       )}

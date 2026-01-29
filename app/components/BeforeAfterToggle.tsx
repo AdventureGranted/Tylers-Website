@@ -43,6 +43,7 @@ export default function BeforeAfterToggle({
     initialMode ?? 'toggle'
   );
   const [sliderPosition, setSliderPosition] = useState(50);
+  const [isSliding, setIsSliding] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
 
@@ -93,6 +94,7 @@ export default function BeforeAfterToggle({
 
     const handleMouseUp = () => {
       isDragging.current = false;
+      setIsSliding(false);
     };
 
     document.addEventListener('mousemove', handleMouseMove);
@@ -203,7 +205,10 @@ export default function BeforeAfterToggle({
           className="relative aspect-video cursor-ew-resize overflow-hidden rounded-lg bg-gray-700 select-none"
           onMouseDown={() => {
             isDragging.current = true;
+            setIsSliding(true);
           }}
+          onTouchStart={() => setIsSliding(true)}
+          onTouchEnd={() => setIsSliding(false)}
           onTouchMove={handleTouchMove}
         >
           {/* After image (full width, background) */}
@@ -246,12 +251,16 @@ export default function BeforeAfterToggle({
             </div>
           </div>
 
-          {/* Labels */}
-          <div className="pointer-events-none absolute inset-0 flex justify-between p-3">
-            <span className="rounded bg-black/50 px-2 py-1 text-xs text-white">
+          {/* Labels - hide when sliding */}
+          <div
+            className={`pointer-events-none absolute inset-0 flex justify-between p-3 transition-opacity duration-200 ${
+              isSliding ? 'opacity-0' : 'opacity-100'
+            }`}
+          >
+            <span className="w-14 rounded bg-black/50 px-2 py-1 text-center text-xs text-white">
               Before
             </span>
-            <span className="rounded bg-black/50 px-2 py-1 text-xs text-white">
+            <span className="w-14 rounded bg-black/50 px-2 py-1 text-center text-xs text-white">
               After
             </span>
           </div>
