@@ -4,6 +4,18 @@ import { useState, useEffect, use } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import ProjectStatus from '@/app/components/ProjectStatus';
+import ProjectTimeline from '@/app/components/ProjectTimeline';
+import BudgetTracker from '@/app/components/BudgetTracker';
+import TimeTracker from '@/app/components/TimeTracker';
+import ReceiptManager from '@/app/components/ReceiptManager';
+import MaterialsChecklist from '@/app/components/MaterialsChecklist';
+import DifficultyRating from '@/app/components/DifficultyRating';
+import ProjectTags from '@/app/components/ProjectTags';
+import RelatedLinks from '@/app/components/RelatedLinks';
+import LessonsLearned from '@/app/components/LessonsLearned';
+import PrivateNotes from '@/app/components/PrivateNotes';
+import BeforeAfterToggle from '@/app/components/BeforeAfterToggle';
 
 interface UploadedImage {
   url: string;
@@ -18,7 +30,8 @@ interface Project {
   description: string | null;
   content: string | null;
   published: boolean;
-  images: { url: string; alt: string | null; sortOrder: number }[];
+  status: string;
+  images: { id: string; url: string; alt: string | null; sortOrder: number }[];
 }
 
 export default function EditProject({
@@ -33,7 +46,10 @@ export default function EditProject({
   const [description, setDescription] = useState('');
   const [content, setContent] = useState('');
   const [published, setPublished] = useState(false);
+  const [status, setStatus] = useState('planning');
   const [images, setImages] = useState<UploadedImage[]>([]);
+  const [projectImages, setProjectImages] = useState<Project['images']>([]);
+  const [actualCost, setActualCost] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
@@ -55,9 +71,18 @@ export default function EditProject({
         setDescription(project.description || '');
         setContent(project.content || '');
         setPublished(project.published);
+        setStatus(project.status || 'planning');
         setImages(
           project.images.map((img) => ({ url: img.url, alt: img.alt || '' }))
         );
+        setProjectImages(project.images);
+
+        // Fetch receipts to calculate actual cost
+        const receiptsRes = await fetch(`/api/projects/${id}/receipts`);
+        if (receiptsRes.ok) {
+          const receiptsData = await receiptsRes.json();
+          setActualCost(receiptsData.total || 0);
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load project');
       } finally {
@@ -180,7 +205,7 @@ export default function EditProject({
 
   return (
     <div className="min-h-screen bg-gray-900 p-8">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-[1600px]">
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-200">Edit Project</h1>
           <div className="flex gap-4">
@@ -199,185 +224,240 @@ export default function EditProject({
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {error && (
-            <div className="rounded-lg bg-red-500/20 p-3 text-red-400">
-              {error}
-            </div>
-          )}
+        {error && (
+          <div className="mb-6 rounded-lg bg-red-500/20 p-3 text-red-400">
+            {error}
+          </div>
+        )}
 
-          <div>
-            <label
-              htmlFor="title"
-              className="mb-1 block text-sm text-gray-400"
-            >
-              Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
-              required
-            />
+        <div className="flex flex-col gap-8 xl:flex-row xl:items-start">
+          {/* Left column - Project Info */}
+          <div className="hidden w-72 shrink-0 space-y-4 xl:block">
+            <h2 className="text-lg font-semibold text-gray-200">
+              Project Info
+            </h2>
+            <ProjectStatus projectId={id} initialStatus={status} />
+            <ProjectTimeline projectId={id} />
+            <DifficultyRating projectId={id} />
+            <ProjectTags projectId={id} />
+            <RelatedLinks projectId={id} />
+            <PrivateNotes projectId={id} />
           </div>
 
-          <div>
-            <label htmlFor="slug" className="mb-1 block text-sm text-gray-400">
-              Slug
-            </label>
-            <input
-              type="text"
-              id="slug"
-              value={slug}
-              onChange={(e) => setSlug(e.target.value)}
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
-              required
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="category"
-              className="mb-1 block text-sm text-gray-400"
-            >
-              Category
-            </label>
-            <select
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
-            >
-              <option value="hobby">Hobby</option>
-              <option value="work">Work / CS Project</option>
-            </select>
-          </div>
-
-          <div>
-            <label
-              htmlFor="description"
-              className="mb-1 block text-sm text-gray-400"
-            >
-              Description
-            </label>
-            <textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={3}
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="content"
-              className="mb-1 block text-sm text-gray-400"
-            >
-              Content
-            </label>
-            <textarea
-              id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              rows={10}
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
-            />
-          </div>
-
-          {/* Image Upload */}
-          <div>
-            <label className="mb-2 block text-sm text-gray-400">Images</label>
-
-            <label className="flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-700 p-6 transition-colors hover:border-yellow-300">
+          {/* Center column - Basic form */}
+          <form onSubmit={handleSubmit} className="min-w-0 flex-1 space-y-6">
+            <div>
+              <label
+                htmlFor="title"
+                className="mb-1 block text-sm text-gray-400"
+              >
+                Title
+              </label>
               <input
-                type="file"
-                accept="image/*,.heic,.heif"
-                multiple
-                onChange={handleImageUpload}
-                className="hidden"
-                disabled={uploading}
+                type="text"
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                required
               />
-              <span className="text-gray-400">
-                {uploading ? 'Uploading...' : 'Click to upload images'}
-              </span>
-            </label>
+            </div>
 
-            {images.length > 0 && (
-              <div className="mt-4 space-y-3">
-                {images.map((img, index) => (
-                  <div
-                    key={img.url}
-                    className="flex items-center gap-4 rounded-lg bg-gray-800 p-3"
-                  >
-                    <Image
-                      src={img.url}
-                      alt={img.alt || 'Project image'}
-                      width={80}
-                      height={80}
-                      className="h-20 w-20 rounded object-cover"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Alt text"
-                      value={img.alt}
-                      onChange={(e) => updateImageAlt(index, e.target.value)}
-                      className="flex-1 rounded border border-gray-700 bg-gray-900 px-3 py-1 text-sm text-gray-200 focus:border-yellow-300 focus:outline-none"
-                    />
-                    <div className="flex gap-1">
-                      <button
-                        type="button"
-                        onClick={() => moveImage(index, 'up')}
-                        disabled={index === 0}
-                        className="rounded bg-gray-700 px-2 py-1 text-gray-400 hover:bg-gray-600 disabled:opacity-30"
-                      >
-                        &uarr;
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => moveImage(index, 'down')}
-                        disabled={index === images.length - 1}
-                        className="rounded bg-gray-700 px-2 py-1 text-gray-400 hover:bg-gray-600 disabled:opacity-30"
-                      >
-                        &darr;
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => removeImage(index)}
-                        className="rounded bg-red-500/20 px-2 py-1 text-red-400 hover:bg-red-500/30"
-                      >
-                        &times;
-                      </button>
+            <div>
+              <label
+                htmlFor="slug"
+                className="mb-1 block text-sm text-gray-400"
+              >
+                Slug
+              </label>
+              <input
+                type="text"
+                id="slug"
+                value={slug}
+                onChange={(e) => setSlug(e.target.value)}
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                required
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="category"
+                className="mb-1 block text-sm text-gray-400"
+              >
+                Category
+              </label>
+              <select
+                id="category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              >
+                <option value="hobby">Hobby</option>
+                <option value="work">Work / CS Project</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="description"
+                className="mb-1 block text-sm text-gray-400"
+              >
+                Description
+              </label>
+              <textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={3}
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="content"
+                className="mb-1 block text-sm text-gray-400"
+              >
+                Content
+              </label>
+              <textarea
+                id="content"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                rows={10}
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              />
+            </div>
+
+            {/* Image Upload */}
+            <div>
+              <label className="mb-2 block text-sm text-gray-400">Images</label>
+
+              <label className="flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-700 p-6 transition-colors hover:border-yellow-300">
+                <input
+                  type="file"
+                  accept="image/*,.heic,.heif"
+                  multiple
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  disabled={uploading}
+                />
+                <span className="text-gray-400">
+                  {uploading ? 'Uploading...' : 'Click to upload images'}
+                </span>
+              </label>
+
+              {images.length > 0 && (
+                <div className="mt-4 space-y-3">
+                  {images.map((img, index) => (
+                    <div
+                      key={img.url}
+                      className="flex items-center gap-4 rounded-lg bg-gray-800 p-3"
+                    >
+                      <Image
+                        src={img.url}
+                        alt={img.alt || 'Project image'}
+                        width={80}
+                        height={80}
+                        className="h-20 w-20 rounded object-cover"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Alt text"
+                        value={img.alt}
+                        onChange={(e) => updateImageAlt(index, e.target.value)}
+                        className="flex-1 rounded border border-gray-700 bg-gray-900 px-3 py-1 text-sm text-gray-200 focus:border-yellow-300 focus:outline-none"
+                      />
+                      <div className="flex gap-1">
+                        <button
+                          type="button"
+                          onClick={() => moveImage(index, 'up')}
+                          disabled={index === 0}
+                          className="rounded bg-gray-700 px-2 py-1 text-gray-400 hover:bg-gray-600 disabled:opacity-30"
+                        >
+                          &uarr;
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => moveImage(index, 'down')}
+                          disabled={index === images.length - 1}
+                          className="rounded bg-gray-700 px-2 py-1 text-gray-400 hover:bg-gray-600 disabled:opacity-30"
+                        >
+                          &darr;
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="rounded bg-red-500/20 px-2 py-1 text-red-400 hover:bg-red-500/30"
+                        >
+                          &times;
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="published"
+                checked={published}
+                onChange={(e) => setPublished(e.target.checked)}
+                className="h-4 w-4 rounded border-gray-700 bg-gray-800"
+              />
+              <label htmlFor="published" className="text-sm text-gray-400">
+                Published
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading || uploading}
+              className="w-full rounded-lg bg-yellow-300 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-50"
+            >
+              {loading ? 'Saving...' : 'Save Changes'}
+            </button>
+          </form>
+
+          {/* Right column - Costs & Tracking */}
+          <div className="hidden w-72 shrink-0 space-y-4 xl:block">
+            <h2 className="text-lg font-semibold text-gray-200">
+              Costs & Tracking
+            </h2>
+            {projectImages.length >= 2 && (
+              <BeforeAfterToggle images={projectImages} />
             )}
+            <BudgetTracker projectId={id} actualCost={actualCost} />
+            <TimeTracker projectId={id} />
+            <ReceiptManager projectId={id} />
+            <MaterialsChecklist projectId={id} />
+            <LessonsLearned projectId={id} />
           </div>
 
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="published"
-              checked={published}
-              onChange={(e) => setPublished(e.target.checked)}
-              className="h-4 w-4 rounded border-gray-700 bg-gray-800"
-            />
-            <label htmlFor="published" className="text-sm text-gray-400">
-              Published
-            </label>
+          {/* Mobile: All management components */}
+          <div className="space-y-4 xl:hidden">
+            <h2 className="text-lg font-semibold text-gray-200">
+              Project Management
+            </h2>
+            <ProjectStatus projectId={id} initialStatus={status} />
+            <ProjectTimeline projectId={id} />
+            <DifficultyRating projectId={id} />
+            <ProjectTags projectId={id} />
+            {projectImages.length >= 2 && (
+              <BeforeAfterToggle images={projectImages} />
+            )}
+            <BudgetTracker projectId={id} actualCost={actualCost} />
+            <TimeTracker projectId={id} />
+            <ReceiptManager projectId={id} />
+            <MaterialsChecklist projectId={id} />
+            <RelatedLinks projectId={id} />
+            <LessonsLearned projectId={id} />
+            <PrivateNotes projectId={id} />
           </div>
-
-          <button
-            type="submit"
-            disabled={loading || uploading}
-            className="w-full rounded-lg bg-yellow-300 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-50"
-          >
-            {loading ? 'Saving...' : 'Save Changes'}
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );
