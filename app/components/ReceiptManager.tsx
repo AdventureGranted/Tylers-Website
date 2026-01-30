@@ -10,9 +10,9 @@ import {
 
 interface Receipt {
   id: string;
-  imageUrl: string;
-  amount: number;
-  category: string;
+  imageUrl: string | null;
+  toolAmount: number;
+  materialAmount: number;
   description: string | null;
   createdAt: string;
 }
@@ -40,9 +40,10 @@ export default function ReceiptManager({
   // Form state
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState<'material' | 'tool'>('material');
+  const [toolAmount, setToolAmount] = useState('');
+  const [materialAmount, setMaterialAmount] = useState('');
   const [description, setDescription] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
 
   const fetchReceipts = useCallback(async () => {
     try {
@@ -68,46 +69,85 @@ export default function ReceiptManager({
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      processFile(file);
+    }
+  };
+
+  const processFile = (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload an image file');
+      return;
+    }
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      processFile(file);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!imageFile || !amount) return;
+
+    // At least one amount must be provided
+    const toolAmt = parseFloat(toolAmount) || 0;
+    const materialAmt = parseFloat(materialAmount) || 0;
+    if (toolAmt === 0 && materialAmt === 0) {
+      alert('Please enter at least one amount (tool or material)');
+      return;
+    }
 
     setUploading(true);
 
     try {
-      // Upload image first
-      const formData = new FormData();
-      formData.append('file', imageFile);
-      formData.append('folder', 'receipts');
+      let imageUrl = null;
 
-      const uploadRes = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
+      // Upload image if provided
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        formData.append('folder', 'receipts');
 
-      if (!uploadRes.ok) {
-        throw new Error('Failed to upload image');
+        const uploadRes = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!uploadRes.ok) {
+          throw new Error('Failed to upload image');
+        }
+
+        const data = await uploadRes.json();
+        imageUrl = data.url;
       }
-
-      const { url } = await uploadRes.json();
 
       // Create receipt
       const receiptRes = await fetch(`/api/projects/${projectId}/receipts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          imageUrl: url,
-          amount: parseFloat(amount),
-          category,
+          imageUrl,
+          toolAmount: toolAmt,
+          materialAmount: materialAmt,
           description: description || null,
         }),
       });
@@ -116,8 +156,8 @@ export default function ReceiptManager({
         // Reset form and refresh
         setImageFile(null);
         setImagePreview(null);
-        setAmount('');
-        setCategory('material');
+        setToolAmount('');
+        setMaterialAmount('');
         setDescription('');
         setShowForm(false);
         fetchReceipts();
@@ -204,108 +244,169 @@ export default function ReceiptManager({
         </button>
       )}
 
-      {/* Upload Form */}
+      {/* Upload Form Modal */}
       {(!readOnly || allowUpload) && showForm && (
-        <form
-          onSubmit={handleSubmit}
-          className="mb-6 rounded-xl bg-gray-700 p-4"
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          onClick={() => {
+            setShowForm(false);
+            setImageFile(null);
+            setImagePreview(null);
+            setToolAmount('');
+            setMaterialAmount('');
+            setDescription('');
+          }}
         >
-          <h3 className="mb-4 font-medium text-gray-200">Upload Receipt</h3>
+          <form
+            onSubmit={handleSubmit}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-lg rounded-2xl bg-gray-800 p-6 shadow-2xl"
+          >
+            <h3 className="mb-6 text-xl font-semibold text-gray-200">
+              Upload Receipt
+            </h3>
 
-          <div className="mb-4">
-            <label className="mb-2 block text-sm text-gray-400">
-              Receipt Image *
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="w-full rounded-lg bg-gray-600 p-2 text-sm text-gray-200 file:mr-4 file:rounded-lg file:border-0 file:bg-yellow-300 file:px-4 file:py-2 file:text-sm file:font-medium file:text-gray-900"
-              required
-            />
-            {imagePreview && (
-              <div className="mt-2">
-                <Image
-                  src={imagePreview}
-                  alt="Preview"
-                  width={200}
-                  height={200}
-                  className="rounded-lg object-cover"
+            <div className="mb-5">
+              <label className="mb-2 block text-sm font-medium text-gray-400">
+                Receipt Image (optional)
+              </label>
+              <div
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                className={`relative rounded-lg border-2 border-dashed transition-colors ${
+                  isDragging
+                    ? 'border-yellow-300 bg-yellow-300/10'
+                    : 'border-gray-600 hover:border-gray-500'
+                }`}
+              >
+                {imagePreview ? (
+                  <div className="p-4">
+                    <div className="flex justify-center">
+                      <div className="relative">
+                        <Image
+                          src={imagePreview}
+                          alt="Preview"
+                          width={250}
+                          height={250}
+                          className="rounded-lg object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setImageFile(null);
+                            setImagePreview(null);
+                          }}
+                          className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1 text-white hover:bg-red-600"
+                        >
+                          <svg
+                            className="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <label className="flex cursor-pointer flex-col items-center justify-center p-8">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
+                    <HiOutlineUpload className="mb-2 h-10 w-10 text-gray-500" />
+                    <span className="text-sm text-gray-400">
+                      {isDragging
+                        ? 'Drop image here'
+                        : 'Click or drag image to upload'}
+                    </span>
+                    <span className="mt-1 text-xs text-gray-500">
+                      Or leave empty to add cost without receipt
+                    </span>
+                  </label>
+                )}
+              </div>
+            </div>
+
+            <div className="mb-5 grid grid-cols-2 gap-4">
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-400">
+                  Material Cost ($)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={materialAmount}
+                  onChange={(e) => setMaterialAmount(e.target.value)}
+                  placeholder="0.00"
+                  className="w-full rounded-lg bg-gray-700 px-4 py-3 text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
                 />
               </div>
-            )}
-          </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-400">
+                  Tool Cost ($)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={toolAmount}
+                  onChange={(e) => setToolAmount(e.target.value)}
+                  placeholder="0.00"
+                  className="w-full rounded-lg bg-gray-700 px-4 py-3 text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
+                />
+              </div>
+            </div>
 
-          <div className="mb-4 grid grid-cols-2 gap-3">
-            <div>
-              <label className="mb-2 block text-sm text-gray-400">
-                Amount ($) *
+            <div className="mb-6">
+              <label className="mb-2 block text-sm font-medium text-gray-400">
+                Description (optional)
               </label>
               <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="0.00"
-                className="w-full rounded-lg bg-gray-600 px-4 py-2 text-gray-200 placeholder-gray-400 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
-                required
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="e.g., Wood supplies, Paint, etc."
+                className="w-full rounded-lg bg-gray-700 px-4 py-3 text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
               />
             </div>
-            <div>
-              <label className="mb-2 block text-sm text-gray-400">
-                Category *
-              </label>
-              <select
-                value={category}
-                onChange={(e) =>
-                  setCategory(e.target.value as 'material' | 'tool')
-                }
-                className="w-full rounded-lg bg-gray-600 px-4 py-2 text-gray-200 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
+
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                disabled={uploading || (!toolAmount && !materialAmount)}
+                className="flex-1 rounded-lg bg-yellow-300 px-4 py-3 font-medium text-gray-900 transition-colors hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <option value="material">Material</option>
-                <option value="tool">Tool</option>
-              </select>
+                {uploading ? 'Uploading...' : 'Save'}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowForm(false);
+                  setImageFile(null);
+                  setImagePreview(null);
+                  setToolAmount('');
+                  setMaterialAmount('');
+                  setDescription('');
+                }}
+                className="rounded-lg bg-gray-700 px-6 py-3 text-gray-200 transition-colors hover:bg-gray-600"
+              >
+                Cancel
+              </button>
             </div>
-          </div>
-
-          <div className="mb-4">
-            <label className="mb-2 block text-sm text-gray-400">
-              Description (optional)
-            </label>
-            <input
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="e.g., Wood supplies, Paint, etc."
-              className="w-full rounded-lg bg-gray-600 px-4 py-2 text-gray-200 placeholder-gray-400 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
-            />
-          </div>
-
-          <div className="flex gap-2">
-            <button
-              type="submit"
-              disabled={uploading || !imageFile || !amount}
-              className="rounded-lg bg-yellow-300 px-4 py-2 font-medium text-gray-900 transition-colors hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {uploading ? 'Uploading...' : 'Save Receipt'}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setShowForm(false);
-                setImageFile(null);
-                setImagePreview(null);
-                setAmount('');
-                setCategory('material');
-                setDescription('');
-              }}
-              className="rounded-lg bg-gray-600 px-4 py-2 text-gray-200 transition-colors hover:bg-gray-500"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       )}
 
       {/* Receipts List */}
@@ -318,32 +419,39 @@ export default function ReceiptManager({
               key={receipt.id}
               className="flex items-center gap-3 rounded-xl bg-gray-700 p-3"
             >
-              <button
-                onClick={() => setSelectedImage(receipt.imageUrl)}
-                className="flex-shrink-0"
-              >
-                <Image
-                  src={receipt.imageUrl}
-                  alt="Receipt"
-                  width={50}
-                  height={50}
-                  className="rounded-lg object-cover transition-opacity hover:opacity-80"
-                />
-              </button>
+              {receipt.imageUrl ? (
+                <button
+                  onClick={() => setSelectedImage(receipt.imageUrl)}
+                  className="flex-shrink-0"
+                >
+                  <Image
+                    src={receipt.imageUrl}
+                    alt="Receipt"
+                    width={50}
+                    height={50}
+                    className="rounded-lg object-cover transition-opacity hover:opacity-80"
+                  />
+                </button>
+              ) : (
+                <div className="flex h-[50px] w-[50px] flex-shrink-0 items-center justify-center rounded-lg bg-gray-600">
+                  <HiOutlineReceiptTax className="h-6 w-6 text-gray-400" />
+                </div>
+              )}
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <span className="font-semibold text-yellow-300">
-                    ${receipt.amount.toFixed(2)}
+                    ${(receipt.toolAmount + receipt.materialAmount).toFixed(2)}
                   </span>
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                      receipt.category === 'tool'
-                        ? 'bg-purple-500/20 text-purple-400'
-                        : 'bg-blue-500/20 text-blue-400'
-                    }`}
-                  >
-                    {receipt.category === 'tool' ? 'Tool' : 'Material'}
-                  </span>
+                  {receipt.materialAmount > 0 && (
+                    <span className="rounded-full bg-blue-500/20 px-2 py-0.5 text-xs font-medium text-blue-400">
+                      Material: ${receipt.materialAmount.toFixed(2)}
+                    </span>
+                  )}
+                  {receipt.toolAmount > 0 && (
+                    <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-medium text-purple-400">
+                      Tool: ${receipt.toolAmount.toFixed(2)}
+                    </span>
+                  )}
                 </div>
                 {receipt.description && (
                   <div className="truncate text-sm text-gray-400">

@@ -285,7 +285,7 @@ export default function EditProject({
 
         <div className="flex flex-col gap-8 xl:flex-row xl:items-start">
           {/* Left column - Project Info */}
-          <div className="hidden w-72 shrink-0 space-y-4 xl:block">
+          <div className="hidden w-96 shrink-0 space-y-4 xl:block">
             <h2 className="text-lg font-semibold text-gray-200">
               Project Info
             </h2>
@@ -546,7 +546,7 @@ export default function EditProject({
           </div>
 
           {/* Right column - Costs & Tracking */}
-          <div className="hidden w-72 shrink-0 space-y-4 xl:block">
+          <div className="hidden w-96 shrink-0 space-y-4 xl:block">
             <h2 className="text-lg font-semibold text-gray-200">
               Costs & Tracking
             </h2>

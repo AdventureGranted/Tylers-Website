@@ -21,12 +21,8 @@ export async function GET(
     orderBy: { createdAt: 'desc' },
   });
 
-  const toolTotal = receipts
-    .filter((r) => r.category === 'tool')
-    .reduce((sum, r) => sum + r.amount, 0);
-  const materialTotal = receipts
-    .filter((r) => r.category === 'material')
-    .reduce((sum, r) => sum + r.amount, 0);
+  const toolTotal = receipts.reduce((sum, r) => sum + r.toolAmount, 0);
+  const materialTotal = receipts.reduce((sum, r) => sum + r.materialAmount, 0);
   const total = toolTotal + materialTotal;
 
   return NextResponse.json({ receipts, total, toolTotal, materialTotal });
@@ -54,11 +50,15 @@ export async function POST(
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }
 
-  const { imageUrl, amount, category, description } = await request.json();
+  const { imageUrl, toolAmount, materialAmount, description } =
+    await request.json();
 
-  if (!imageUrl || amount === undefined) {
+  const toolAmt = parseFloat(toolAmount) || 0;
+  const materialAmt = parseFloat(materialAmount) || 0;
+
+  if (toolAmt === 0 && materialAmt === 0) {
     return NextResponse.json(
-      { error: 'Image URL and amount are required' },
+      { error: 'At least one amount (tool or material) is required' },
       { status: 400 }
     );
   }
@@ -66,9 +66,9 @@ export async function POST(
   const receipt = await prisma.receipt.create({
     data: {
       projectId: id,
-      imageUrl,
-      amount: parseFloat(amount),
-      category: category || 'material',
+      imageUrl: imageUrl || null,
+      toolAmount: toolAmt,
+      materialAmount: materialAmt,
       description,
     },
   });

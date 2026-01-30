@@ -102,14 +102,14 @@ model ProjectLink {
 }
 
 model Receipt {
-  id          String   @id @default(cuid())
-  projectId   String
-  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  imageUrl    String
-  amount      Float
-  category    String   @default("material") // "tool" or "material"
-  description String?
-  createdAt   DateTime @default(now())
+  id             String   @id @default(cuid())
+  projectId      String
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  imageUrl       String?
+  toolAmount     Float    @default(0)
+  materialAmount Float    @default(0)
+  description    String?
+  createdAt      DateTime @default(now())
 
   @@index([projectId])
 }

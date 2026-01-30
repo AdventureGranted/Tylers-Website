@@ -42,7 +42,10 @@ export default async function HobbyDetailPage({ params }: Props) {
   }
 
   // Calculate actual cost from receipts
-  const actualCost = project.receipts.reduce((sum, r) => sum + r.amount, 0);
+  const actualCost = project.receipts.reduce(
+    (sum, r) => sum + r.toolAmount + r.materialAmount,
+    0
+  );
 
   // Public info sidebar (read-only for everyone)
   const PublicInfoSidebar = () => (
@@ -137,7 +140,7 @@ export default async function HobbyDetailPage({ params }: Props) {
         <div className="flex flex-col gap-6 xl:flex-row xl:items-start">
           {/* Left Sidebar on desktop (Admin Only) */}
           {isAdmin && (
-            <div className="hidden w-80 shrink-0 xl:block">
+            <div className="hidden w-96 shrink-0 xl:block">
               <div className="sticky top-24">
                 <AdminLeftSidebar />
               </div>
@@ -260,7 +263,7 @@ export default async function HobbyDetailPage({ params }: Props) {
           </div>
 
           {/* Right Sidebar on desktop */}
-          <div className="hidden w-80 shrink-0 xl:block">
+          <div className="hidden w-96 shrink-0 xl:block">
             <div className="sticky top-24">
               {isAdmin ? <AdminRightSidebar /> : <PublicInfoSidebar />}
             </div>
