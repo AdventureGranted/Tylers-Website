@@ -161,6 +161,8 @@ export default function ReceiptManager({
         setDescription('');
         setShowForm(false);
         fetchReceipts();
+        // Notify other components (like BudgetTracker) that receipts changed
+        window.dispatchEvent(new Event('receipt-updated'));
       }
     } catch (error) {
       console.error('Error uploading receipt:', error);
@@ -180,6 +182,8 @@ export default function ReceiptManager({
 
       if (res.ok) {
         fetchReceipts();
+        // Notify other components (like BudgetTracker) that receipts changed
+        window.dispatchEvent(new Event('receipt-updated'));
       }
     } catch (error) {
       console.error('Error deleting receipt:', error);

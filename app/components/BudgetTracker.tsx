@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   HiOutlineCurrencyDollar,
   HiOutlinePencil,
@@ -9,38 +9,60 @@ import {
 
 interface BudgetTrackerProps {
   projectId: string;
-  actualCost: number;
+  actualCost?: number; // Now optional, will fetch if not provided
   readOnly?: boolean;
 }
 
 export default function BudgetTracker({
   projectId,
-  actualCost,
+  actualCost: initialActualCost,
   readOnly = false,
 }: BudgetTrackerProps) {
   const [estimatedBudget, setEstimatedBudget] = useState<number | null>(null);
+  const [actualCost, setActualCost] = useState(initialActualCost ?? 0);
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    const fetchBudget = async () => {
-      try {
-        const res = await fetch(`/api/projects/${projectId}/metadata`);
-        if (res.ok) {
-          const data = await res.json();
-          setEstimatedBudget(data.estimatedBudget);
-          setInputValue(data.estimatedBudget?.toString() || '');
-        }
-      } catch (error) {
-        console.error('Error fetching budget:', error);
-      } finally {
-        setLoading(false);
+  const fetchData = useCallback(async () => {
+    try {
+      // Fetch both budget metadata and receipt totals
+      const [metadataRes, receiptsRes] = await Promise.all([
+        fetch(`/api/projects/${projectId}/metadata`),
+        fetch(`/api/projects/${projectId}/receipts`),
+      ]);
+
+      if (metadataRes.ok) {
+        const data = await metadataRes.json();
+        setEstimatedBudget(data.estimatedBudget);
+        setInputValue(data.estimatedBudget?.toString() || '');
       }
-    };
-    fetchBudget();
+
+      if (receiptsRes.ok) {
+        const data = await receiptsRes.json();
+        setActualCost(data.total ?? 0);
+      }
+    } catch (error) {
+      console.error('Error fetching budget data:', error);
+    } finally {
+      setLoading(false);
+    }
   }, [projectId]);
+
+  useEffect(() => {
+    fetchData();
+
+    // Listen for receipt updates
+    const handleReceiptUpdate = () => {
+      fetchData();
+    };
+
+    window.addEventListener('receipt-updated', handleReceiptUpdate);
+    return () => {
+      window.removeEventListener('receipt-updated', handleReceiptUpdate);
+    };
+  }, [fetchData]);
 
   const handleSave = async () => {
     setSaving(true);
