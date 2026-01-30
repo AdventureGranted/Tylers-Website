@@ -21,8 +21,24 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { title, slug, category, description, content, published, images } =
-      await request.json();
+    const {
+      title,
+      slug,
+      category,
+      description,
+      content,
+      published,
+      images,
+      status,
+      difficulty,
+      estimatedBudget,
+      startDate,
+      completionDate,
+      privateNotes,
+      tags,
+      lessonsLearned,
+      links,
+    } = await request.json();
 
     if (!title || !slug) {
       return NextResponse.json(
@@ -47,6 +63,14 @@ export async function POST(request: NextRequest) {
         description,
         content,
         published: published ?? false,
+        status: status ?? 'planning',
+        difficulty: difficulty ?? null,
+        estimatedBudget: estimatedBudget ?? null,
+        startDate: startDate ? new Date(startDate) : null,
+        completionDate: completionDate ? new Date(completionDate) : null,
+        privateNotes: privateNotes ?? null,
+        tags: tags ?? [],
+        lessonsLearned: lessonsLearned ?? [],
         images: {
           create: (images || []).map(
             (img: {
@@ -62,8 +86,14 @@ export async function POST(request: NextRequest) {
             })
           ),
         },
+        links: {
+          create: (links || []).map((link: { title: string; url: string }) => ({
+            title: link.title,
+            url: link.url,
+          })),
+        },
       },
-      include: { images: true },
+      include: { images: true, links: true },
     });
 
     return NextResponse.json(project, { status: 201 });

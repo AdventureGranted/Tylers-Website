@@ -63,7 +63,9 @@ export default function EditProject({
   const [isDragging, setIsDragging] = useState(false);
   const [beforeImageIndex, setBeforeImageIndex] = useState<number | null>(null);
   const [afterImageIndex, setAfterImageIndex] = useState<number | null>(null);
-  const [compareMode, setCompareMode] = useState<'toggle' | 'slider'>('toggle');
+  const [compareMode, setCompareMode] = useState<
+    'toggle' | 'slider' | 'single'
+  >('toggle');
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState('');

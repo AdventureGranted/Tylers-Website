@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { HiPlus, HiTrash } from 'react-icons/hi';
 
 interface UploadedImage {
   url: string;
@@ -11,7 +12,12 @@ interface UploadedImage {
   type?: string;
 }
 
-export default function NewProject() {
+interface ProjectLink {
+  title: string;
+  url: string;
+}
+
+function NewProjectForm() {
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [category, setCategory] = useState('hobby');
@@ -23,7 +29,24 @@ export default function NewProject() {
   const [isDragging, setIsDragging] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Optional fields
+  const [status, setStatus] = useState('planning');
+  const [difficulty, setDifficulty] = useState<number | null>(null);
+  const [estimatedBudget, setEstimatedBudget] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [completionDate, setCompletionDate] = useState('');
+  const [privateNotes, setPrivateNotes] = useState('');
+  const [tags, setTags] = useState('');
+  const [lessons, setLessons] = useState<string[]>([]);
+  const [newLesson, setNewLesson] = useState('');
+  const [links, setLinks] = useState<ProjectLink[]>([]);
+  const [newLinkTitle, setNewLinkTitle] = useState('');
+  const [newLinkUrl, setNewLinkUrl] = useState('');
+
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const fromPath = searchParams.get('from');
 
   const generateSlug = (title: string) => {
     return title
@@ -119,6 +142,32 @@ export default function NewProject() {
     });
   };
 
+  const addLesson = () => {
+    if (newLesson.trim()) {
+      setLessons([...lessons, newLesson.trim()]);
+      setNewLesson('');
+    }
+  };
+
+  const removeLesson = (index: number) => {
+    setLessons(lessons.filter((_, i) => i !== index));
+  };
+
+  const addLink = () => {
+    if (newLinkTitle.trim() && newLinkUrl.trim()) {
+      setLinks([
+        ...links,
+        { title: newLinkTitle.trim(), url: newLinkUrl.trim() },
+      ]);
+      setNewLinkTitle('');
+      setNewLinkUrl('');
+    }
+  };
+
+  const removeLink = (index: number) => {
+    setLinks(links.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -135,6 +184,20 @@ export default function NewProject() {
           description,
           content,
           published,
+          status,
+          difficulty: difficulty || null,
+          estimatedBudget: estimatedBudget ? parseFloat(estimatedBudget) : null,
+          startDate: startDate || null,
+          completionDate: completionDate || null,
+          privateNotes: privateNotes || null,
+          tags: tags
+            ? tags
+                .split(',')
+                .map((t) => t.trim())
+                .filter(Boolean)
+            : [],
+          lessonsLearned: lessons,
+          links,
           images: images.map((img, i) => ({
             url: img.url,
             alt: img.alt,
@@ -149,7 +212,8 @@ export default function NewProject() {
         throw new Error(data.error || 'Failed to create project');
       }
 
-      router.push('/admin/projects');
+      // Redirect back to where user came from, or default to admin projects
+      router.push(fromPath || '/admin/projects');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
@@ -163,7 +227,7 @@ export default function NewProject() {
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-200">New Project</h1>
           <Link
-            href="/admin/projects"
+            href={fromPath || '/admin/projects'}
             className="text-gray-400 transition-colors hover:text-yellow-300"
           >
             Cancel
@@ -253,6 +317,255 @@ export default function NewProject() {
               rows={10}
               className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
             />
+          </div>
+
+          {/* Optional Fields Section */}
+          <div className="border-t border-gray-700 pt-6">
+            <h2 className="mb-4 text-lg font-semibold text-gray-300">
+              Optional Details
+            </h2>
+
+            {/* Status and Difficulty Row */}
+            <div className="mb-4 grid grid-cols-2 gap-4">
+              <div>
+                <label
+                  htmlFor="status"
+                  className="mb-1 block text-sm text-gray-400"
+                >
+                  Status
+                </label>
+                <select
+                  id="status"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                >
+                  <option value="planning">Planning</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                  <option value="on_hold">On Hold</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  htmlFor="difficulty"
+                  className="mb-1 block text-sm text-gray-400"
+                >
+                  Difficulty (1-5)
+                </label>
+                <select
+                  id="difficulty"
+                  value={difficulty || ''}
+                  onChange={(e) =>
+                    setDifficulty(
+                      e.target.value ? parseInt(e.target.value) : null
+                    )
+                  }
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                >
+                  <option value="">Not rated</option>
+                  <option value="1">1 - Easy</option>
+                  <option value="2">2 - Moderate</option>
+                  <option value="3">3 - Medium</option>
+                  <option value="4">4 - Hard</option>
+                  <option value="5">5 - Expert</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Dates Row */}
+            <div className="mb-4 grid grid-cols-2 gap-4">
+              <div>
+                <label
+                  htmlFor="startDate"
+                  className="mb-1 block text-sm text-gray-400"
+                >
+                  Start Date
+                </label>
+                <input
+                  type="date"
+                  id="startDate"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="completionDate"
+                  className="mb-1 block text-sm text-gray-400"
+                >
+                  Completion Date
+                </label>
+                <input
+                  type="date"
+                  id="completionDate"
+                  value={completionDate}
+                  onChange={(e) => setCompletionDate(e.target.value)}
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Budget */}
+            <div className="mb-4">
+              <label
+                htmlFor="estimatedBudget"
+                className="mb-1 block text-sm text-gray-400"
+              >
+                Estimated Budget ($)
+              </label>
+              <input
+                type="number"
+                id="estimatedBudget"
+                value={estimatedBudget}
+                onChange={(e) => setEstimatedBudget(e.target.value)}
+                placeholder="0.00"
+                step="0.01"
+                min="0"
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              />
+            </div>
+
+            {/* Tags */}
+            <div className="mb-4">
+              <label
+                htmlFor="tags"
+                className="mb-1 block text-sm text-gray-400"
+              >
+                Tags (comma-separated)
+              </label>
+              <input
+                type="text"
+                id="tags"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                placeholder="woodworking, furniture, DIY"
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              />
+            </div>
+
+            {/* Private Notes */}
+            <div className="mb-4">
+              <label
+                htmlFor="privateNotes"
+                className="mb-1 block text-sm text-gray-400"
+              >
+                Private Notes (admin only)
+              </label>
+              <textarea
+                id="privateNotes"
+                value={privateNotes}
+                onChange={(e) => setPrivateNotes(e.target.value)}
+                rows={3}
+                placeholder="Notes only visible to admins..."
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              />
+            </div>
+
+            {/* Lessons Learned */}
+            <div className="mb-4">
+              <label className="mb-1 block text-sm text-gray-400">
+                Lessons Learned
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newLesson}
+                  onChange={(e) => setNewLesson(e.target.value)}
+                  onKeyDown={(e) =>
+                    e.key === 'Enter' && (e.preventDefault(), addLesson())
+                  }
+                  placeholder="Add a lesson..."
+                  className="flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={addLesson}
+                  className="rounded-lg bg-gray-700 px-3 py-2 text-gray-300 hover:bg-gray-600"
+                >
+                  <HiPlus className="h-5 w-5" />
+                </button>
+              </div>
+              {lessons.length > 0 && (
+                <ul className="mt-2 space-y-1">
+                  {lessons.map((lesson, index) => (
+                    <li
+                      key={index}
+                      className="flex items-center justify-between rounded bg-gray-800 px-3 py-2 text-sm text-gray-300"
+                    >
+                      <span>{lesson}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeLesson(index)}
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <HiTrash className="h-4 w-4" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* Links */}
+            <div className="mb-4">
+              <label className="mb-1 block text-sm text-gray-400">
+                Project Links
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newLinkTitle}
+                  onChange={(e) => setNewLinkTitle(e.target.value)}
+                  placeholder="Link title"
+                  className="w-1/3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                />
+                <input
+                  type="url"
+                  value={newLinkUrl}
+                  onChange={(e) => setNewLinkUrl(e.target.value)}
+                  onKeyDown={(e) =>
+                    e.key === 'Enter' && (e.preventDefault(), addLink())
+                  }
+                  placeholder="https://..."
+                  className="flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={addLink}
+                  className="rounded-lg bg-gray-700 px-3 py-2 text-gray-300 hover:bg-gray-600"
+                >
+                  <HiPlus className="h-5 w-5" />
+                </button>
+              </div>
+              {links.length > 0 && (
+                <ul className="mt-2 space-y-1">
+                  {links.map((link, index) => (
+                    <li
+                      key={index}
+                      className="flex items-center justify-between rounded bg-gray-800 px-3 py-2 text-sm"
+                    >
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-yellow-300 hover:underline"
+                      >
+                        {link.title}
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => removeLink(index)}
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <HiTrash className="h-4 w-4" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
 
           {/* Image/Video Upload */}
@@ -391,5 +704,19 @@ export default function NewProject() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function NewProject() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-gray-900">
+          <div className="text-gray-400">Loading...</div>
+        </div>
+      }
+    >
+      <NewProjectForm />
+    </Suspense>
   );
 }

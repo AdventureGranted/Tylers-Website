@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import ImageCarousel from './ImageCarousel';
 import BeforeAfterToggle from './BeforeAfterToggle';
 
@@ -31,7 +32,11 @@ export default function HobbyCard({
 
   // Filter to only images for before/after comparison (videos don't work well)
   const imageOnlyMedia = images.filter((img) => img.type !== 'video');
-  const hasBeforeAfter = imageOnlyMedia.length >= 2;
+  const hasBeforeAfter = imageOnlyMedia.length >= 2 && compareMode !== 'single';
+
+  // For single mode, use the afterImageIndex as the display image (or first image)
+  const singleImageIndex = afterImageIndex ?? 0;
+  const singleImage = images[singleImageIndex] || images[0];
 
   return (
     <div
@@ -44,7 +49,26 @@ export default function HobbyCard({
           onClick={(e) => e.stopPropagation()}
           onMouseUp={(e) => e.stopPropagation()}
         >
-          {hasBeforeAfter ? (
+          {compareMode === 'single' && singleImage ? (
+            <div className="relative aspect-video overflow-hidden rounded-2xl bg-gray-700">
+              {singleImage.type === 'video' ? (
+                <video
+                  src={singleImage.url}
+                  className="h-full w-full object-cover"
+                  controls
+                  playsInline
+                  preload="metadata"
+                />
+              ) : (
+                <Image
+                  src={singleImage.url}
+                  alt={singleImage.alt || title}
+                  fill
+                  className="object-cover"
+                />
+              )}
+            </div>
+          ) : hasBeforeAfter ? (
             <BeforeAfterToggle
               images={images.map((img, i) => ({
                 id: img.url,

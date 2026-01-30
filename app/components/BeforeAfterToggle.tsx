@@ -17,9 +17,9 @@ interface BeforeAfterToggleProps {
   readOnly?: boolean;
   initialBeforeIndex?: number;
   initialAfterIndex?: number;
-  initialMode?: 'toggle' | 'slider';
+  initialMode?: 'toggle' | 'slider' | 'single';
   onIndicesChange?: (beforeIndex: number, afterIndex: number) => void;
-  onModeChange?: (mode: 'toggle' | 'slider') => void;
+  onModeChange?: (mode: 'toggle' | 'slider' | 'single') => void;
 }
 
 export default function BeforeAfterToggle({
@@ -39,7 +39,7 @@ export default function BeforeAfterToggle({
   const [afterIndex, setAfterIndex] = useState(
     initialAfterIndex ?? (images.length > 1 ? images.length - 1 : 0)
   );
-  const [mode, setMode] = useState<'toggle' | 'slider'>(
+  const [mode, setMode] = useState<'toggle' | 'slider' | 'single'>(
     initialMode ?? 'toggle'
   );
   const [sliderPosition, setSliderPosition] = useState(50);
@@ -67,7 +67,7 @@ export default function BeforeAfterToggle({
   }, [initialMode]);
 
   // Handle mode change
-  const handleModeChange = (newMode: 'toggle' | 'slider') => {
+  const handleModeChange = (newMode: 'toggle' | 'slider' | 'single') => {
     setMode(newMode);
     onModeChange?.(newMode);
   };
@@ -253,14 +253,14 @@ export default function BeforeAfterToggle({
 
           {/* Labels - hide when sliding */}
           <div
-            className={`pointer-events-none absolute inset-0 flex justify-between p-3 transition-opacity duration-200 ${
+            className={`pointer-events-none absolute top-3 right-3 left-3 flex justify-between transition-opacity duration-200 ${
               isSliding ? 'opacity-0' : 'opacity-100'
             }`}
           >
-            <span className="w-14 rounded bg-black/50 px-2 py-1 text-center text-xs text-white">
+            <span className="rounded bg-black/50 px-2 py-1 text-center text-xs text-white">
               Before
             </span>
-            <span className="w-14 rounded bg-black/50 px-2 py-1 text-center text-xs text-white">
+            <span className="rounded bg-black/50 px-2 py-1 text-center text-xs text-white">
               After
             </span>
           </div>
@@ -273,7 +273,7 @@ export default function BeforeAfterToggle({
           {/* Mode selector */}
           <div>
             <label className="mb-1 block text-xs text-gray-400">
-              Comparison Mode
+              Display Mode
             </label>
             <div className="flex overflow-hidden rounded-lg bg-gray-700">
               <button
@@ -298,32 +298,25 @@ export default function BeforeAfterToggle({
               >
                 Slider
               </button>
+              <button
+                type="button"
+                onClick={() => handleModeChange('single')}
+                className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
+                  mode === 'single'
+                    ? 'bg-yellow-300 text-gray-900'
+                    : 'text-gray-400 hover:text-gray-200'
+                }`}
+              >
+                Single
+              </button>
             </div>
           </div>
 
           {/* Image selection */}
-          <div className="grid grid-cols-2 gap-2">
+          {mode === 'single' ? (
             <div>
               <label className="mb-1 block text-xs text-gray-400">
-                Before Image
-              </label>
-              <select
-                value={beforeIndex}
-                onChange={(e) =>
-                  handleBeforeIndexChange(parseInt(e.target.value))
-                }
-                className="w-full rounded bg-gray-700 px-2 py-1 text-xs text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
-              >
-                {images.map((img, i) => (
-                  <option key={img.id} value={i}>
-                    {img.alt ? `${i + 1}. ${img.alt}` : `Image ${i + 1}`}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="mb-1 block text-xs text-gray-400">
-                After Image
+                Display Image
               </label>
               <select
                 value={afterIndex}
@@ -339,7 +332,46 @@ export default function BeforeAfterToggle({
                 ))}
               </select>
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="mb-1 block text-xs text-gray-400">
+                  Before Image
+                </label>
+                <select
+                  value={beforeIndex}
+                  onChange={(e) =>
+                    handleBeforeIndexChange(parseInt(e.target.value))
+                  }
+                  className="w-full rounded bg-gray-700 px-2 py-1 text-xs text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
+                >
+                  {images.map((img, i) => (
+                    <option key={img.id} value={i}>
+                      {img.alt ? `${i + 1}. ${img.alt}` : `Image ${i + 1}`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="mb-1 block text-xs text-gray-400">
+                  After Image
+                </label>
+                <select
+                  value={afterIndex}
+                  onChange={(e) =>
+                    handleAfterIndexChange(parseInt(e.target.value))
+                  }
+                  className="w-full rounded bg-gray-700 px-2 py-1 text-xs text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
+                >
+                  {images.map((img, i) => (
+                    <option key={img.id} value={i}>
+                      {img.alt ? `${i + 1}. ${img.alt}` : `Image ${i + 1}`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
