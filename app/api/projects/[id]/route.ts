@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import { revalidatePath } from 'next/cache';
 import { authOptions } from '@/app/lib/auth';
 import { prisma } from '@/app/lib/prisma';
 
@@ -93,6 +94,11 @@ export async function PUT(
       include: { images: true },
     });
 
+    // Revalidate pages that display projects
+    revalidatePath('/hobbies');
+    revalidatePath('/projects');
+    revalidatePath(`/hobbies/${project.slug}`);
+
     return NextResponse.json(project);
   } catch (error) {
     console.error('Failed to update project:', error);
@@ -117,6 +123,11 @@ export async function DELETE(
 
   try {
     await prisma.project.delete({ where: { id } });
+
+    // Revalidate pages that display projects
+    revalidatePath('/hobbies');
+    revalidatePath('/projects');
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Failed to delete project:', error);

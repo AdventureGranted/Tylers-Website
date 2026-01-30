@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import { revalidatePath } from 'next/cache';
 import { authOptions } from '@/app/lib/auth';
 import { prisma } from '@/app/lib/prisma';
 
@@ -95,6 +96,10 @@ export async function POST(request: NextRequest) {
       },
       include: { images: true, links: true },
     });
+
+    // Revalidate the hobbies and projects pages so they show the new content
+    revalidatePath('/hobbies');
+    revalidatePath('/projects');
 
     return NextResponse.json(project, { status: 201 });
   } catch (error) {
