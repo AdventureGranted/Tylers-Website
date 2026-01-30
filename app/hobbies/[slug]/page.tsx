@@ -17,6 +17,8 @@ import DifficultyRating from '@/app/components/DifficultyRating';
 import ProjectTags from '@/app/components/ProjectTags';
 import RelatedLinks from '@/app/components/RelatedLinks';
 import BeforeAfterToggle from '@/app/components/BeforeAfterToggle';
+import Image from 'next/image';
+import { HiOutlinePhotograph } from 'react-icons/hi';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -180,18 +182,52 @@ export default async function HobbyDetailPage({ params }: Props) {
               </p>
             )}
 
-            {/* Before/After Toggle */}
-            {project.images.length >= 2 && (
+            {/* Before/After Toggle or Single Image */}
+            {project.images.length >= 1 && (
               <div className="mb-8">
-                <BeforeAfterToggle
-                  images={project.images}
-                  readOnly
-                  initialBeforeIndex={project.beforeImageIndex ?? undefined}
-                  initialAfterIndex={project.afterImageIndex ?? undefined}
-                  initialMode={
-                    (project.compareMode as 'toggle' | 'slider') ?? undefined
-                  }
-                />
+                {project.compareMode === 'single' ? (
+                  <div className="rounded-2xl bg-gray-800 p-4">
+                    <div className="mb-3 flex items-center">
+                      <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-200">
+                        <HiOutlinePhotograph className="text-yellow-300" />
+                        Featured Photo
+                      </h3>
+                    </div>
+                    <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-700">
+                      {(() => {
+                        const imageIndex = project.afterImageIndex ?? 0;
+                        const image =
+                          project.images[imageIndex] || project.images[0];
+                        return image.type === 'video' ? (
+                          <video
+                            src={image.url}
+                            className="h-full w-full object-cover"
+                            controls
+                            playsInline
+                            preload="metadata"
+                          />
+                        ) : (
+                          <Image
+                            src={image.url}
+                            alt={image.alt || project.title}
+                            fill
+                            className="object-cover"
+                          />
+                        );
+                      })()}
+                    </div>
+                  </div>
+                ) : project.images.length >= 2 ? (
+                  <BeforeAfterToggle
+                    images={project.images}
+                    readOnly
+                    initialBeforeIndex={project.beforeImageIndex ?? undefined}
+                    initialAfterIndex={project.afterImageIndex ?? undefined}
+                    initialMode={
+                      (project.compareMode as 'toggle' | 'slider') ?? undefined
+                    }
+                  />
+                ) : null}
               </div>
             )}
 

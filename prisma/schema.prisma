@@ -34,6 +34,7 @@ model Project {
   title            String
   slug             String         @unique
   category         String         @default("hobby") // "hobby" or "work"
+  sortOrder        Int            @default(0)
   description      String?
   content          String?
   lessonsLearned   Json           @default("[]") // Array of lesson strings

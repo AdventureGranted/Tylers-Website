@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import ImageCarousel from './ImageCarousel';
 import BeforeAfterToggle from './BeforeAfterToggle';
+import { HiOutlinePhotograph } from 'react-icons/hi';
 
 interface HobbyCardProps {
   slug: string;
@@ -50,23 +51,31 @@ export default function HobbyCard({
           onMouseUp={(e) => e.stopPropagation()}
         >
           {compareMode === 'single' && singleImage ? (
-            <div className="relative aspect-video overflow-hidden rounded-2xl bg-gray-700">
-              {singleImage.type === 'video' ? (
-                <video
-                  src={singleImage.url}
-                  className="h-full w-full object-cover"
-                  controls
-                  playsInline
-                  preload="metadata"
-                />
-              ) : (
-                <Image
-                  src={singleImage.url}
-                  alt={singleImage.alt || title}
-                  fill
-                  className="object-cover"
-                />
-              )}
+            <div className="rounded-2xl bg-gray-800 p-4">
+              <div className="mb-3 flex items-center">
+                <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-200">
+                  <HiOutlinePhotograph className="text-yellow-300" />
+                  Featured Photo
+                </h3>
+              </div>
+              <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-700">
+                {singleImage.type === 'video' ? (
+                  <video
+                    src={singleImage.url}
+                    className="h-full w-full object-cover"
+                    controls
+                    playsInline
+                    preload="metadata"
+                  />
+                ) : (
+                  <Image
+                    src={singleImage.url}
+                    alt={singleImage.alt || title}
+                    fill
+                    className="object-cover"
+                  />
+                )}
+              </div>
             </div>
           ) : hasBeforeAfter ? (
             <BeforeAfterToggle
