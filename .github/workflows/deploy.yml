@@ -8,6 +8,7 @@ env:
   PORT: 3000
   APP_NAME: tylers-website
   HOME: /root
+  STAGING_DIR: /root/tylers-website-staging
 
 jobs:
   deploy:
@@ -21,10 +22,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "npm"
 
-      - name: Create .env file
+      - name: Build in staging directory
         run: |
+          # Create staging directory
+          mkdir -p $STAGING_DIR
+
+          # Copy source files to staging (preserve node_modules if exists for faster builds)
+          rsync -av --delete \
+            --exclude 'node_modules' \
+            --exclude '.next' \
+            --exclude '.env' \
+            ./ $STAGING_DIR/
+
+          cd $STAGING_DIR
+
+          # Create .env file
           cat <<EOF > .env
           DATABASE_URL=${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
@@ -36,17 +49,21 @@ jobs:
           S3_PUBLIC_URL=${{ secrets.S3_PUBLIC_URL }}
           EOF
 
-      - name: Install and build
-        run: |
-          npm cache clean --force
-          rm -rf node_modules package-lock.json
+          # Install dependencies (will reuse existing node_modules)
           npm install
-          npm install next@latest --save
           npx prisma generate
           npm run build
 
-      - name: Deploy App
+      - name: Deploy with minimal downtime
         run: |
+          LIVE_DIR=$(pwd)
+
+          # Sync the built app from staging to live
+          rsync -av --delete \
+            --exclude '.git' \
+            $STAGING_DIR/ $LIVE_DIR/
+
+          # Restart the app
           if pm2 list | grep -q $APP_NAME; then
             pm2 restart $APP_NAME
           else

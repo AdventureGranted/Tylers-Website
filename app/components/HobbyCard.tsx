@@ -36,8 +36,9 @@ export default function HobbyCard({
   const hasBeforeAfter = imageOnlyMedia.length >= 2 && compareMode !== 'single';
 
   // For single mode, use the afterImageIndex as the display image (or first image)
+  // Must use imageOnlyMedia to match BeforeAfterToggle's filtered array
   const singleImageIndex = afterImageIndex ?? 0;
-  const singleImage = images[singleImageIndex] || images[0];
+  const singleImage = imageOnlyMedia[singleImageIndex] || imageOnlyMedia[0];
 
   return (
     <div

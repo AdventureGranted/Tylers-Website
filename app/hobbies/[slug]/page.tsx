@@ -198,18 +198,14 @@ export default async function HobbyDetailPage({ params }: Props) {
                     </div>
                     <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-700">
                       {(() => {
+                        // Filter to images only (same as BeforeAfterToggle does)
+                        const imagesOnly = project.images.filter(
+                          (img) => img.type !== 'video'
+                        );
                         const imageIndex = project.afterImageIndex ?? 0;
-                        const image =
-                          project.images[imageIndex] || project.images[0];
-                        return image.type === 'video' ? (
-                          <video
-                            src={image.url}
-                            className="h-full w-full object-cover"
-                            controls
-                            playsInline
-                            preload="metadata"
-                          />
-                        ) : (
+                        const image = imagesOnly[imageIndex] || imagesOnly[0];
+                        if (!image) return null;
+                        return (
                           <Image
                             src={image.url}
                             alt={image.alt || project.title}
