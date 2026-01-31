@@ -6,11 +6,13 @@ import { motion } from 'framer-motion';
 import { BsGithub, BsLinkedin } from 'react-icons/bs';
 import { HiOutlineMail } from 'react-icons/hi';
 import Modal from './Modal';
+import { trackResumeDownload } from '@/app/lib/analytics';
 
 export default function ProfileCard() {
   const [showModal, setShowModal] = useState(false);
 
   const handleDownload = () => {
+    trackResumeDownload();
     setShowModal(true);
   };
 

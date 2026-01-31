@@ -5,6 +5,7 @@ export async function trackEvent(event: string, page?: string) {
     await fetch('/api/analytics', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
       body: JSON.stringify({ event, page }),
     });
   } catch (error) {
