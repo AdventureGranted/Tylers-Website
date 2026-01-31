@@ -38,21 +38,19 @@ jobs:
           cd $STAGING_DIR
 
           # Create .env file
-          cat > .env <<ENVFILE
-DATABASE_URL=${{ secrets.DATABASE_URL }}
-NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
-NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
-S3_ENDPOINT=${{ secrets.S3_ENDPOINT }}
-S3_ACCESS_KEY_ID=${{ secrets.S3_ACCESS_KEY_ID }}
-S3_SECRET_ACCESS_KEY=${{ secrets.S3_SECRET_ACCESS_KEY }}
-S3_BUCKET=${{ secrets.S3_BUCKET }}
-S3_PUBLIC_URL=${{ secrets.S3_PUBLIC_URL }}
-SMTP_HOST=${{ secrets.SMTP_HOST }}
-SMTP_PORT=${{ secrets.SMTP_PORT }}
-SMTP_USER=${{ secrets.SMTP_USER }}
-SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}
-CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}
-ENVFILE
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> .env
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env
+          echo "S3_ENDPOINT=${{ secrets.S3_ENDPOINT }}" >> .env
+          echo "S3_ACCESS_KEY_ID=${{ secrets.S3_ACCESS_KEY_ID }}" >> .env
+          echo "S3_SECRET_ACCESS_KEY=${{ secrets.S3_SECRET_ACCESS_KEY }}" >> .env
+          echo "S3_BUCKET=${{ secrets.S3_BUCKET }}" >> .env
+          echo "S3_PUBLIC_URL=${{ secrets.S3_PUBLIC_URL }}" >> .env
+          echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> .env
+          echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> .env
+          echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> .env
+          echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> .env
+          echo "CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}" >> .env
 
           # Install dependencies (will reuse existing node_modules)
           npm install
