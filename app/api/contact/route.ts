@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/app/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/lib/auth';
+import { sendContactNotification } from '@/app/lib/email';
 
 // POST - Create a new contact submission
 export async function POST(request: NextRequest) {
@@ -33,6 +34,11 @@ export async function POST(request: NextRequest) {
         phone: phone || null,
         message,
       },
+    });
+
+    // Send email notification (don't block the response if it fails)
+    sendContactNotification({ name, email, phone, message }).catch((error) => {
+      console.error('Failed to send contact notification email:', error);
     });
 
     return NextResponse.json(submission, { status: 201 });

@@ -47,6 +47,11 @@ jobs:
           S3_SECRET_ACCESS_KEY=${{ secrets.S3_SECRET_ACCESS_KEY }}
           S3_BUCKET=${{ secrets.S3_BUCKET }}
           S3_PUBLIC_URL=${{ secrets.S3_PUBLIC_URL }}
+          SMTP_HOST=${{ secrets.SMTP_HOST }}
+          SMTP_PORT=${{ secrets.SMTP_PORT }}
+          SMTP_USER=${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}
+          CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}
           EOF
 
           # Install dependencies (will reuse existing node_modules)
