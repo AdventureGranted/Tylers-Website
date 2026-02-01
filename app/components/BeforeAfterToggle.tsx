@@ -106,7 +106,13 @@ export default function BeforeAfterToggle({
   }, []);
 
   // Handle touch events for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
+    setIsSliding(true);
+  };
+
   const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
     if (!sliderRef.current) return;
     const rect = sliderRef.current.getBoundingClientRect();
     const x = Math.max(
@@ -202,12 +208,12 @@ export default function BeforeAfterToggle({
       {mode === 'slider' && (
         <div
           ref={sliderRef}
-          className="relative aspect-video cursor-ew-resize overflow-hidden rounded-lg bg-gray-700 select-none"
+          className="relative aspect-video cursor-ew-resize touch-none overflow-hidden rounded-lg bg-gray-700 select-none"
           onMouseDown={() => {
             isDragging.current = true;
             setIsSliding(true);
           }}
-          onTouchStart={() => setIsSliding(true)}
+          onTouchStart={handleTouchStart}
           onTouchEnd={() => setIsSliding(false)}
           onTouchMove={handleTouchMove}
         >

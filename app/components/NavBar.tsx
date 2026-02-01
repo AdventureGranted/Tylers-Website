@@ -25,14 +25,17 @@ function Navbar() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
 
-  // Track scroll position
+  // Track scroll position and close mobile menu on scroll
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
+      if (isOpen) {
+        setIsOpen(false);
+      }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isOpen]);
 
   // Fetch unread contact count for admins
   useEffect(() => {
