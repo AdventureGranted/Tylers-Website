@@ -87,7 +87,7 @@ function Navbar() {
   ];
   return (
     <nav
-      className={`sticky top-0 z-50 mx-6 overflow-visible shadow-2xl transition-all duration-300 lg:mx-25 ${isScrolled ? 'rounded-2xl bg-gray-800/95 backdrop-blur-sm' : 'rounded-b-2xl bg-gray-800'}`}
+      className={`sticky top-2 z-50 mx-6 overflow-visible rounded-2xl shadow-2xl transition-all duration-300 lg:mx-25 ${isScrolled ? 'bg-gray-800/95 backdrop-blur-sm' : 'bg-gray-800'}`}
     >
       <div className="mx-4 flex h-24 items-center justify-between">
         {/* Logo Section */}

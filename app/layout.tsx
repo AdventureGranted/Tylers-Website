@@ -40,7 +40,7 @@ export default function RootLayout({
             speedFactor={0.05}
             backgroundColor="black"
           />
-          <div className="min-h-screen bg-gray-900">
+          <div className="mt-6">
             <Navbar />
             {children}
           </div>
