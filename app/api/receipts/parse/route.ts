@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Tesseract from 'tesseract.js';
 import { extractText } from 'unpdf';
 
 const OPENWEBUI_URL = process.env.OPENWEBUI_URL || 'http://192.168.1.203:8080';
@@ -24,7 +23,7 @@ interface ParsedReceipt {
   materialAmount: number;
   miscAmount: number;
   raw_text?: string;
-  method: 'vision' | 'ocr' | 'pdf';
+  method: 'vision' | 'pdf';
 }
 
 const RECEIPT_PARSE_PROMPT = `You are a receipt parsing assistant. Analyze the receipt and extract the following information in JSON format:
@@ -54,7 +53,9 @@ Important:
 - materialAmount = sum of all items with category "material"
 - miscAmount = sum of all items with category "misc" (including tax)
 - Use 0 for any values you can't determine
-- Return ONLY valid JSON, no other text`;
+- Return ONLY valid JSON, no markdown, no code blocks, no explanation
+- Use double quotes for all strings and property names
+- Do not include trailing commas`;
 
 async function tryVisionModel(base64Image: string): Promise<string | null> {
   try {
@@ -86,7 +87,8 @@ async function tryVisionModel(base64Image: string): Promise<string | null> {
     });
 
     if (!response.ok) {
-      console.error('Vision model error:', response.status);
+      const errorText = await response.text();
+      console.error('Vision model error:', response.status, errorText);
       return null;
     }
 
@@ -95,19 +97,6 @@ async function tryVisionModel(base64Image: string): Promise<string | null> {
   } catch (error) {
     console.error('Vision model failed:', error);
     return null;
-  }
-}
-
-async function extractTextWithOCR(base64Image: string): Promise<string> {
-  try {
-    const buffer = Buffer.from(base64Image, 'base64');
-    const result = await Tesseract.recognize(buffer, 'eng', {
-      logger: () => {}, // Suppress logs
-    });
-    return result.data.text;
-  } catch (error) {
-    console.error('OCR failed:', error);
-    throw new Error('OCR extraction failed');
   }
 }
 
@@ -164,12 +153,49 @@ async function parseWithTextModel(ocrText: string): Promise<string | null> {
   }
 }
 
+function cleanJSON(text: string): string {
+  let cleaned = text;
+
+  // Remove trailing commas before } or ]
+  cleaned = cleaned.replace(/,(\s*[}\]])/g, '$1');
+
+  // Fix unquoted property names (common LLM issue)
+  cleaned = cleaned.replace(
+    /(\{|\,)\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*:/g,
+    '$1"$2":'
+  );
+
+  // Replace single quotes with double quotes (but not inside strings)
+  // This is a simple approach - replace 'value' patterns
+  cleaned = cleaned.replace(/'([^'\\]*(\\.[^'\\]*)*)'/g, '"$1"');
+
+  // Remove any control characters that might cause issues
+  cleaned = cleaned.replace(/[\x00-\x1F\x7F]/g, (char) => {
+    if (char === '\n' || char === '\r' || char === '\t') return char;
+    return '';
+  });
+
+  return cleaned;
+}
+
 function extractJSON(text: string): ParsedReceipt | null {
   try {
     // Try to find JSON in the response
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
-      const parsed = JSON.parse(jsonMatch[0]);
+      let jsonStr = jsonMatch[0];
+
+      // Try parsing as-is first
+      let parsed;
+      try {
+        parsed = JSON.parse(jsonStr);
+      } catch {
+        // If that fails, try cleaning the JSON
+        console.log('Initial JSON parse failed, attempting cleanup...');
+        jsonStr = cleanJSON(jsonStr);
+        parsed = JSON.parse(jsonStr);
+      }
+
       // Ensure items have categories, default to 'material' if missing
       const items: ParsedItem[] = Array.isArray(parsed.items)
         ? parsed.items.map(
@@ -200,6 +226,14 @@ function extractJSON(text: string): ParsedReceipt | null {
     }
   } catch (error) {
     console.error('JSON parsing failed:', error);
+    // Log the problematic text for debugging
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      console.error(
+        'Problematic JSON (first 500 chars):',
+        jsonMatch[0].substring(0, 500)
+      );
+    }
   }
   return null;
 }
@@ -254,10 +288,9 @@ export async function POST(request: NextRequest) {
         );
       }
     } else {
-      // Image processing path
+      // Image processing path - uses vision model
       const base64Image = inputData.replace(/^data:image\/\w+;base64,/, '');
 
-      // Try vision model first
       console.log('Attempting vision model parsing...');
       const visionResponse = await tryVisionModel(base64Image);
 
@@ -268,28 +301,13 @@ export async function POST(request: NextRequest) {
           console.log('Vision model succeeded');
         }
       }
-
-      // Fallback to OCR + text model
-      if (!result) {
-        console.log('Falling back to OCR...');
-        rawText = await extractTextWithOCR(base64Image);
-
-        const textResponse = await parseWithTextModel(rawText);
-        if (textResponse) {
-          result = extractJSON(textResponse);
-          if (result) {
-            result.method = 'ocr';
-            result.raw_text = rawText;
-            console.log('OCR + text model succeeded');
-          }
-        }
-      }
     }
 
     if (!result) {
       return NextResponse.json(
         {
-          error: 'Failed to parse receipt',
+          error:
+            'Failed to parse receipt. The AI vision model may be unavailable. Please try again later or enter amounts manually.',
           raw_text: rawText,
         },
         { status: 422 }

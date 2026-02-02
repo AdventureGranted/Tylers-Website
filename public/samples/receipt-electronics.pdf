@@ -1,0 +1,85 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 300 500] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1150 >>
+stream
+BT
+/F1 14 Tf
+105 470 Td
+(TECH ELECTRONICS) Tj
+0 -18 Td
+/F1 10 Tf
+(500 Digital Drive) Tj
+0 -14 Td
+(San Jose, CA 95110) Tj
+0 -14 Td
+((408) 555-9876) Tj
+0 -20 Td
+(================================) Tj
+0 -16 Td
+(Date: 03/18/2024  Time: 3:22 PM) Tj
+0 -14 Td
+(Transaction: 77821) Tj
+0 -20 Td
+(--------------------------------) Tj
+0 -18 Td
+(USB-C Cable 6ft        $12.99) Tj
+0 -16 Td
+(HDMI Cable 10ft        $24.99) Tj
+0 -16 Td
+(Power Strip 6 Outlet   $29.99) Tj
+0 -16 Td
+(LED Desk Lamp          $45.99) Tj
+0 -16 Td
+(Surge Protector        $34.99) Tj
+0 -16 Td
+(Wire Organizer Kit     $15.99) Tj
+0 -16 Td
+(Electrical Tape 3pk     $8.49) Tj
+0 -16 Td
+(Multimeter Digital     $39.99) Tj
+0 -20 Td
+(--------------------------------) Tj
+0 -18 Td
+(SUBTOTAL              $213.42) Tj
+0 -16 Td
+(TAX 9.25%              $19.74) Tj
+0 -20 Td
+(================================) Tj
+0 -18 Td
+/F1 12 Tf
+(TOTAL                 $233.16) Tj
+0 -20 Td
+/F1 10 Tf
+(AMEX ****3344         $233.16) Tj
+0 -24 Td
+(Thank you for shopping!) Tj
+0 -14 Td
+(www.techelectronics.com) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+xref
+0 6
+0000000000 65535 f
+0000000009 00000 n
+0000000058 00000 n
+0000000115 00000 n
+0000000266 00000 n
+0000001470 00000 n
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1545
+%%EOF

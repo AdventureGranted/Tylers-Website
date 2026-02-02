@@ -33,7 +33,7 @@ interface ParsedReceipt {
   materialAmount: number;
   miscAmount: number;
   raw_text?: string;
-  method: 'vision' | 'ocr' | 'pdf';
+  method: 'vision' | 'pdf';
 }
 
 export default function ReceiptParserDemo() {
@@ -44,6 +44,7 @@ export default function ReceiptParserDemo() {
   const [result, setResult] = useState<ParsedReceipt | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
+  const [isSampleData, setIsSampleData] = useState(false);
 
   const handleFile = useCallback((fileInput: File) => {
     const isImage = fileInput.type.startsWith('image/');
@@ -63,6 +64,7 @@ export default function ReceiptParserDemo() {
     setIsPdf(filePdf);
     setError(null);
     setResult(null);
+    setIsSampleData(false);
 
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -104,6 +106,264 @@ export default function ReceiptParserDemo() {
     setIsPdf(false);
     setResult(null);
     setError(null);
+    setIsSampleData(false);
+  };
+
+  // Sample receipts with pre-parsed mock data for demo purposes
+  const sampleReceipts = [
+    {
+      name: 'Hardware Store',
+      description: 'Lumber, drill, screws',
+      path: '/samples/receipt-hardware.svg',
+      isPdf: false,
+      mockData: {
+        vendor: 'Hardware Depot',
+        date: '2024-01-15',
+        items: [
+          {
+            name: '2x4x8 Lumber (5)',
+            price: 24.95,
+            category: 'material' as const,
+          },
+          {
+            name: 'Deck Screws 1lb Box',
+            price: 8.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'Wood Stain - Walnut',
+            price: 14.97,
+            category: 'material' as const,
+          },
+          {
+            name: 'Paint Brush Set 3pc',
+            price: 12.49,
+            category: 'material' as const,
+          },
+          {
+            name: 'Cordless Drill 20V',
+            price: 89.99,
+            category: 'tool' as const,
+          },
+          {
+            name: 'Drill Bit Set 29pc',
+            price: 24.99,
+            category: 'tool' as const,
+          },
+          {
+            name: 'Sandpaper Assorted',
+            price: 6.99,
+            category: 'material' as const,
+          },
+          { name: 'Tax', price: 15.13, category: 'misc' as const },
+        ],
+        subtotal: 183.37,
+        tax: 15.13,
+        total: 198.5,
+        toolAmount: 114.98,
+        materialAmount: 68.39,
+        miscAmount: 15.13,
+        method: 'vision' as const,
+      },
+    },
+    {
+      name: 'Craft Store',
+      description: 'Paint, canvas, easel',
+      path: '/samples/receipt-craft.svg',
+      isPdf: false,
+      mockData: {
+        vendor: 'Craft World',
+        date: '2024-02-20',
+        items: [
+          {
+            name: 'Acrylic Paint Set 24ct',
+            price: 18.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'Canvas 16x20 (3pk)',
+            price: 24.99,
+            category: 'material' as const,
+          },
+          { name: 'Easel - Tabletop', price: 32.99, category: 'tool' as const },
+          {
+            name: 'Brush Set Artist 12pc',
+            price: 15.49,
+            category: 'material' as const,
+          },
+          {
+            name: 'Palette Plastic',
+            price: 4.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'Frame 16x20 Wood',
+            price: 19.99,
+            category: 'material' as const,
+          },
+          { name: 'Tax', price: 8.81, category: 'misc' as const },
+        ],
+        subtotal: 117.44,
+        tax: 8.81,
+        total: 126.25,
+        toolAmount: 32.99,
+        materialAmount: 84.45,
+        miscAmount: 8.81,
+        method: 'vision' as const,
+      },
+    },
+    {
+      name: 'Home Improvement',
+      description: 'Handles, hinges, tools',
+      path: '/samples/receipt-home.svg',
+      isPdf: false,
+      mockData: {
+        vendor: 'Home Improvement Center',
+        date: '2024-03-05',
+        items: [
+          {
+            name: 'Cabinet Handle Brass 5pk',
+            price: 22.49,
+            category: 'material' as const,
+          },
+          {
+            name: 'Drawer Knob Chrome 10pk',
+            price: 18.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'Hinge Soft Close 6pk',
+            price: 34.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'Screwdriver Set 8pc',
+            price: 19.99,
+            category: 'tool' as const,
+          },
+          {
+            name: 'Wood Filler 16oz',
+            price: 8.49,
+            category: 'material' as const,
+          },
+          {
+            name: 'Spray Paint White 2pk',
+            price: 15.98,
+            category: 'material' as const,
+          },
+          {
+            name: 'Painters Tape 2 Roll',
+            price: 11.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'Drop Cloth 9x12',
+            price: 12.99,
+            category: 'material' as const,
+          },
+          { name: 'Level 24 Inch', price: 24.99, category: 'tool' as const },
+          {
+            name: 'Protection Plan 2yr',
+            price: 9.99,
+            category: 'misc' as const,
+          },
+          { name: 'Tax', price: 14.48, category: 'misc' as const },
+        ],
+        subtotal: 180.89,
+        tax: 14.48,
+        total: 195.37,
+        toolAmount: 44.98,
+        materialAmount: 125.92,
+        miscAmount: 24.47,
+        method: 'vision' as const,
+      },
+    },
+    {
+      name: 'Electronics (PDF)',
+      description: 'Cables, lamp, tools',
+      path: '/samples/receipt-electronics.pdf',
+      isPdf: true,
+      mockData: {
+        vendor: 'Tech Electronics',
+        date: '2024-03-18',
+        items: [
+          {
+            name: 'USB-C Cable 6ft',
+            price: 12.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'HDMI Cable 10ft',
+            price: 24.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'Power Strip 6 Outlet',
+            price: 29.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'LED Desk Lamp',
+            price: 45.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'Surge Protector',
+            price: 34.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'Wire Organizer Kit',
+            price: 15.99,
+            category: 'material' as const,
+          },
+          {
+            name: 'Electrical Tape 3pk',
+            price: 8.49,
+            category: 'material' as const,
+          },
+          {
+            name: 'Multimeter Digital',
+            price: 39.99,
+            category: 'tool' as const,
+          },
+          { name: 'Tax', price: 19.74, category: 'misc' as const },
+        ],
+        subtotal: 213.42,
+        tax: 19.74,
+        total: 233.16,
+        toolAmount: 39.99,
+        materialAmount: 173.43,
+        miscAmount: 19.74,
+        method: 'pdf' as const,
+      },
+    },
+  ];
+
+  const loadSampleReceipt = async (
+    path: string,
+    name: string,
+    isPdfFile: boolean,
+    mockData: ParsedReceipt
+  ) => {
+    setError(null);
+    setFileName(name);
+    setIsPdf(isPdfFile);
+    setIsSampleData(true);
+
+    try {
+      const response = await fetch(path);
+      const blob = await response.blob();
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFile(e.target?.result as string);
+        // Use mock data for samples to demonstrate the feature
+        setResult(mockData);
+      };
+      reader.readAsDataURL(blob);
+    } catch {
+      setError('Failed to load sample receipt');
+    }
   };
 
   const parseReceipt = async () => {
@@ -269,8 +529,45 @@ export default function ReceiptParserDemo() {
                 )}
               </div>
 
-              {/* Parse Button */}
-              {file && (
+              {/* Sample Receipts */}
+              {!file && (
+                <div className="mt-4">
+                  <p className="mb-3 text-center text-sm text-[var(--text-muted)]">
+                    Or try a sample receipt:
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                    {sampleReceipts.map((sample) => (
+                      <button
+                        key={sample.name}
+                        onClick={() =>
+                          loadSampleReceipt(
+                            sample.path,
+                            sample.name,
+                            sample.isPdf,
+                            sample.mockData
+                          )
+                        }
+                        className="rounded-xl border border-[var(--card-border)] bg-[var(--input-bg)] p-3 text-left transition-all hover:border-yellow-500/50 hover:bg-[var(--card-bg)]"
+                      >
+                        {sample.isPdf ? (
+                          <HiDocumentText className="mb-2 h-5 w-5 text-red-500" />
+                        ) : (
+                          <FaReceipt className="mb-2 h-5 w-5 text-yellow-500 dark:text-yellow-300" />
+                        )}
+                        <p className="text-xs font-medium text-[var(--text-primary)]">
+                          {sample.name}
+                        </p>
+                        <p className="text-xs text-[var(--text-muted)]">
+                          {sample.description}
+                        </p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Parse Button - only show for real uploads, not samples */}
+              {file && !isSampleData && (
                 <motion.button
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -290,6 +587,18 @@ export default function ReceiptParserDemo() {
                     </>
                   )}
                 </motion.button>
+              )}
+
+              {/* Sample data note */}
+              {file && isSampleData && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 rounded-xl bg-blue-500/10 p-3 text-center text-sm text-blue-400"
+                >
+                  This is sample data for demo purposes. Upload your own receipt
+                  to test the AI parser!
+                </motion.div>
               )}
 
               {error && (
@@ -319,12 +628,17 @@ export default function ReceiptParserDemo() {
               {result ? (
                 <div className="space-y-4">
                   {/* Method Badge */}
-                  <div className="inline-flex items-center gap-1 rounded-full bg-purple-500/10 px-3 py-1 text-xs font-medium text-purple-500 dark:text-purple-400">
-                    {result.method === 'vision'
-                      ? '👁️ Vision AI'
-                      : result.method === 'pdf'
-                        ? '📄 PDF Text'
-                        : '📝 OCR + AI'}
+                  <div className="flex flex-wrap gap-2">
+                    {isSampleData && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-400">
+                        📋 Sample Data
+                      </span>
+                    )}
+                    <span className="inline-flex items-center gap-1 rounded-full bg-purple-500/10 px-3 py-1 text-xs font-medium text-purple-500 dark:text-purple-400">
+                      {result.method === 'vision'
+                        ? '👁️ Vision AI'
+                        : '📄 PDF Text'}
+                    </span>
                   </div>
 
                   {/* Vendor & Date */}
@@ -518,12 +832,12 @@ export default function ReceiptParserDemo() {
                     <span>Vision AI reads images directly</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <HiDocumentText className="h-4 w-4 text-purple-400" />
-                    <span>OCR fallback for tricky receipts</span>
-                  </div>
-                  <div className="flex items-center gap-2">
                     <FaReceipt className="h-4 w-4 text-purple-400" />
                     <span>PDF text extraction</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <HiChip className="h-4 w-4 text-purple-400" />
+                    <span>Smart categorization</span>
                   </div>
                 </div>
                 {/* Arrow on desktop */}
@@ -590,13 +904,10 @@ export default function ReceiptParserDemo() {
                 Powered by:
               </span>
               <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
-                llama3.2-vision
+                Vision AI
               </span>
               <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
-                Tesseract OCR
-              </span>
-              <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
-                Self-hosted AI
+                Self-hosted LLM
               </span>
             </motion.div>
           </motion.div>

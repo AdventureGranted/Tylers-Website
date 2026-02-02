@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="480" viewBox="0 0 300 480">
+  <rect width="300" height="480" fill="#fefefe"/>
+  <rect x="10" y="10" width="280" height="460" fill="#fff" stroke="#e0e0e0" stroke-width="1"/>
+
+  <!-- Header -->
+  <text x="150" y="38" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#333">*** HOME IMPROVEMENT ***</text>
+  <text x="150" y="54" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#333">***      CENTER      ***</text>
+  <text x="150" y="72" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">789 Industrial Blvd</text>
+  <text x="150" y="84" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">Chicago, IL 60601</text>
+
+  <!-- Divider -->
+  <text x="150" y="104" text-anchor="middle" font-family="monospace" font-size="10" fill="#999">================================</text>
+
+  <!-- Date -->
+  <text x="20" y="122" font-family="monospace" font-size="9" fill="#333">03/05/2024  4:17 PM</text>
+  <text x="260" y="122" text-anchor="end" font-family="monospace" font-size="9" fill="#333">REG 04</text>
+
+  <!-- Divider -->
+  <text x="150" y="140" text-anchor="middle" font-family="monospace" font-size="10" fill="#999">--------------------------------</text>
+
+  <!-- Items -->
+  <text x="20" y="158" font-family="monospace" font-size="10" fill="#333">CABINET HANDLE BRASS 5PK</text>
+  <text x="260" y="158" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$22.49</text>
+
+  <text x="20" y="174" font-family="monospace" font-size="10" fill="#333">DRAWER KNOB CHROME 10PK</text>
+  <text x="260" y="174" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$18.99</text>
+
+  <text x="20" y="190" font-family="monospace" font-size="10" fill="#333">HINGE SOFT CLOSE 6PK</text>
+  <text x="260" y="190" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$34.99</text>
+
+  <text x="20" y="206" font-family="monospace" font-size="10" fill="#333">SCREWDRIVER SET 8PC</text>
+  <text x="260" y="206" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$19.99</text>
+
+  <text x="20" y="222" font-family="monospace" font-size="10" fill="#333">WOOD FILLER 16OZ</text>
+  <text x="260" y="222" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$8.49</text>
+
+  <text x="20" y="238" font-family="monospace" font-size="10" fill="#333">SPRAY PAINT WHITE 2PK</text>
+  <text x="260" y="238" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$15.98</text>
+
+  <text x="20" y="254" font-family="monospace" font-size="10" fill="#333">PAINTERS TAPE 2 ROLL</text>
+  <text x="260" y="254" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$11.99</text>
+
+  <text x="20" y="270" font-family="monospace" font-size="10" fill="#333">DROP CLOTH 9X12</text>
+  <text x="260" y="270" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$12.99</text>
+
+  <text x="20" y="286" font-family="monospace" font-size="10" fill="#333">LEVEL 24 INCH</text>
+  <text x="260" y="286" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$24.99</text>
+
+  <text x="20" y="302" font-family="monospace" font-size="10" fill="#333">PROTECTION PLAN 2YR</text>
+  <text x="260" y="302" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$9.99</text>
+
+  <!-- Divider -->
+  <text x="150" y="324" text-anchor="middle" font-family="monospace" font-size="10" fill="#999">--------------------------------</text>
+
+  <!-- Totals -->
+  <text x="20" y="344" font-family="monospace" font-size="10" fill="#333">SUBTOTAL (10 items)</text>
+  <text x="260" y="344" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$180.89</text>
+
+  <text x="20" y="360" font-family="monospace" font-size="10" fill="#333">STATE TAX 6.25%</text>
+  <text x="260" y="360" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$11.31</text>
+
+  <text x="20" y="376" font-family="monospace" font-size="10" fill="#333">COUNTY TAX 1.75%</text>
+  <text x="260" y="376" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$3.17</text>
+
+  <text x="150" y="396" text-anchor="middle" font-family="monospace" font-size="10" fill="#999">================================</text>
+
+  <text x="20" y="418" font-family="monospace" font-size="14" font-weight="bold" fill="#333">TOTAL</text>
+  <text x="260" y="418" text-anchor="end" font-family="monospace" font-size="14" font-weight="bold" fill="#333">$195.37</text>
+
+  <text x="20" y="438" font-family="monospace" font-size="10" fill="#333">MASTERCARD ****8832</text>
+  <text x="260" y="438" text-anchor="end" font-family="monospace" font-size="10" fill="#333">$195.37</text>
+
+  <!-- Footer -->
+  <text x="150" y="460" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">Returns within 90 days with receipt</text>
+</svg>
