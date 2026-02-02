@@ -280,10 +280,19 @@ export default function AIChatBubble() {
   // Mobile-specific styles when keyboard is visible
   const mobileKeyboardStyles =
     isMobile && keyboardVisible
-      ? 'fixed inset-x-0 bottom-0 top-auto w-full max-h-[50vh] rounded-b-none rounded-t-2xl'
+      ? 'fixed inset-x-0 top-auto w-full max-h-[50vh] rounded-b-none rounded-t-2xl'
       : isMobile && isOpen
-        ? 'fixed inset-x-2 bottom-20 w-auto max-h-[70vh] rounded-2xl'
+        ? 'fixed inset-x-2 w-auto max-h-[70vh] rounded-2xl'
         : '';
+
+  // Compute bottom position with safe area support
+  const getChatWindowBottom = () => {
+    if (isMobile && keyboardVisible) {
+      return '0px';
+    }
+    // 5rem = 80px for the button height + spacing
+    return 'calc(5rem + env(safe-area-inset-bottom, 0px))';
+  };
 
   return (
     <>
@@ -291,13 +300,13 @@ export default function AIChatBubble() {
       <div
         ref={chatWindowRef}
         className={`z-[9998] flex flex-col overflow-hidden border border-[var(--card-border)] bg-[var(--card-bg)] shadow-2xl transition-all duration-300 ${
-          mobileKeyboardStyles ||
-          'fixed right-4 bottom-20 w-80 rounded-2xl sm:w-96'
+          mobileKeyboardStyles || 'fixed right-4 w-80 rounded-2xl sm:w-96'
         } ${
           isOpen
             ? 'pointer-events-auto opacity-100'
             : 'pointer-events-none max-h-0 opacity-0'
         } ${isOpen && !keyboardVisible ? 'max-h-[500px]' : ''}`}
+        style={{ bottom: getChatWindowBottom() }}
         role="dialog"
         aria-label="AI Chat Assistant"
         aria-hidden={!isOpen}
@@ -454,9 +463,10 @@ export default function AIChatBubble() {
       {!(isMobile && keyboardVisible && isOpen) && (
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`fixed right-4 bottom-4 z-[9999] flex h-14 w-14 items-center justify-center rounded-full bg-yellow-500 shadow-lg transition-all hover:scale-110 hover:bg-yellow-600 dark:bg-yellow-300 dark:hover:bg-yellow-400 ${
+          className={`fixed right-4 z-[9999] flex h-14 w-14 items-center justify-center rounded-full bg-yellow-500 shadow-lg transition-all hover:scale-110 hover:bg-yellow-600 dark:bg-yellow-300 dark:hover:bg-yellow-400 ${
             isOpen ? 'rotate-90' : ''
           }`}
+          style={{ bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
           aria-label={isOpen ? 'Close chat' : 'Open AI chat assistant'}
           aria-expanded={isOpen}
         >

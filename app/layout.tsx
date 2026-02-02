@@ -1,7 +1,6 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import StarfieldWrapper from './components/StarfieldWrapper';
 import Navbar from './components/NavBar';
 import SessionProvider from './components/SessionProvider';
 import AnalyticsTracker from './components/AnalyticsTracker';
@@ -85,6 +84,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#111827',
+};
+
 // JSON-LD structured data
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -115,10 +121,14 @@ export default function RootLayout({
               (function() {
                 try {
                   var theme = localStorage.getItem('theme');
+                  var themeColor = '#111827';
                   if (theme === 'light') {
                     document.documentElement.classList.remove('dark');
                     document.documentElement.classList.add('light');
+                    themeColor = '#f3f4f6';
                   }
+                  var meta = document.querySelector('meta[name="theme-color"]');
+                  if (meta) meta.setAttribute('content', themeColor);
                 } catch (e) {}
               })();
             `,
@@ -136,7 +146,6 @@ export default function RootLayout({
           <ThemeProvider>
             <ToastProvider>
               <AnalyticsTracker />
-              <StarfieldWrapper starCount={800} speedFactor={0.05} />
               {/* Skip to main content link for accessibility */}
               <a
                 href="#main-content"
