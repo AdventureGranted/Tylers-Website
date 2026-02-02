@@ -24,6 +24,8 @@ import {
   SiPostgresql,
   SiDebian,
   SiLinux,
+  SiTerraform,
+  SiAnsible,
 } from 'react-icons/si';
 import { RiShieldKeyholeLine } from 'react-icons/ri';
 import { FaJava, FaWindows } from 'react-icons/fa';
@@ -63,6 +65,8 @@ const skillCategories = [
       { name: 'Azure', icon: VscAzure, color: 'text-blue-400' },
       { name: 'Docker', icon: SiDocker, color: 'text-blue-400' },
       { name: 'Kubernetes', icon: SiKubernetes, color: 'text-blue-500' },
+      { name: 'Terraform', icon: SiTerraform, color: 'text-purple-500' },
+      { name: 'Ansible', icon: SiAnsible, color: 'text-red-400' },
       { name: 'Git', icon: SiGit, color: 'text-orange-500' },
     ],
   },
@@ -116,8 +120,12 @@ export default function TechnicalSkills() {
       {/* Skills Grid */}
       <div className="grid gap-8 lg:grid-cols-2">
         {skillCategories.map((category) => (
-          <motion.div key={category.title} variants={itemVariants}>
-            <Card>
+          <motion.div
+            key={category.title}
+            variants={itemVariants}
+            className="h-full"
+          >
+            <Card className="h-full">
               <h3 className="mb-4 text-xl font-semibold text-yellow-500 dark:text-yellow-300">
                 {category.title}
               </h3>
