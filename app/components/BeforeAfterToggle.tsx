@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { HiOutlinePhotograph } from 'react-icons/hi';
 
@@ -83,6 +83,29 @@ export default function BeforeAfterToggle({
     onIndicesChange?.(beforeIndex, index);
   };
 
+  // Handle keyboard navigation for slider
+  const handleSliderKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (mode !== 'slider') return;
+
+      const step = e.shiftKey ? 10 : 1;
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        setSliderPosition((prev) => Math.max(0, prev - step));
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSliderPosition((prev) => Math.min(100, prev + step));
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        setSliderPosition(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        setSliderPosition(100);
+      }
+    },
+    [mode]
+  );
+
   // Handle slider drag
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -140,19 +163,30 @@ export default function BeforeAfterToggle({
   const afterImage = images[afterIndex];
 
   return (
-    <div className="rounded-2xl bg-gray-800 p-4">
+    <div
+      className="rounded-2xl bg-gray-800 p-4"
+      role="region"
+      aria-label="Before and after image comparison"
+    >
       {/* Header */}
       <div className="mb-3 flex items-center justify-between">
         <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-200">
-          <HiOutlinePhotograph className="text-yellow-300" />
+          <HiOutlinePhotograph className="text-yellow-300" aria-hidden="true" />
           Before / After
         </h3>
 
         {/* Mode toggle for toggle mode, or labels for slider mode */}
         {mode === 'toggle' ? (
-          <div className="flex overflow-hidden rounded-lg bg-gray-700">
+          <div
+            className="flex overflow-hidden rounded-lg bg-gray-700"
+            role="tablist"
+            aria-label="Image view selection"
+          >
             <button
               type="button"
+              role="tab"
+              aria-selected={!showAfter}
+              aria-controls="comparison-image"
               onClick={() => setShowAfter(false)}
               className={`px-3 py-1.5 text-xs font-medium transition-colors ${
                 !showAfter
@@ -164,6 +198,9 @@ export default function BeforeAfterToggle({
             </button>
             <button
               type="button"
+              role="tab"
+              aria-selected={showAfter}
+              aria-controls="comparison-image"
               onClick={() => setShowAfter(true)}
               className={`px-3 py-1.5 text-xs font-medium transition-colors ${
                 showAfter
@@ -175,17 +212,23 @@ export default function BeforeAfterToggle({
             </button>
           </div>
         ) : (
-          <span className="text-xs text-gray-400">Drag to compare</span>
+          <span className="text-xs text-gray-400" aria-live="polite">
+            Drag to compare
+          </span>
         )}
       </div>
 
       {/* Toggle Mode - Fade transition */}
       {mode === 'toggle' && (
-        <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-700">
+        <div
+          id="comparison-image"
+          role="tabpanel"
+          className="relative aspect-video overflow-hidden rounded-lg bg-gray-700"
+        >
           {/* Before image (base layer) */}
           <Image
             src={beforeImage.url}
-            alt={beforeImage.alt || 'Before'}
+            alt={beforeImage.alt || 'Before image'}
             fill
             className="object-cover"
           />
@@ -193,10 +236,11 @@ export default function BeforeAfterToggle({
           <div
             className="absolute inset-0 transition-opacity duration-300"
             style={{ opacity: showAfter ? 1 : 0 }}
+            aria-hidden={!showAfter}
           >
             <Image
               src={afterImage.url}
-              alt={afterImage.alt || 'After'}
+              alt={afterImage.alt || 'After image'}
               fill
               className="object-cover"
             />
@@ -208,7 +252,15 @@ export default function BeforeAfterToggle({
       {mode === 'slider' && (
         <div
           ref={sliderRef}
-          className="relative aspect-video cursor-ew-resize touch-none overflow-hidden rounded-lg bg-gray-700 select-none"
+          role="slider"
+          aria-label="Image comparison slider"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(sliderPosition)}
+          aria-valuetext={`Showing ${Math.round(sliderPosition)}% before image, ${Math.round(100 - sliderPosition)}% after image`}
+          tabIndex={0}
+          onKeyDown={handleSliderKeyDown}
+          className="relative aspect-video cursor-ew-resize touch-none overflow-hidden rounded-lg bg-gray-700 select-none focus:ring-2 focus:ring-yellow-300 focus:outline-none"
           onMouseDown={() => {
             isDragging.current = true;
             setIsSliding(true);
@@ -220,7 +272,7 @@ export default function BeforeAfterToggle({
           {/* After image (full width, background) */}
           <Image
             src={afterImage.url}
-            alt={afterImage.alt || 'After'}
+            alt={afterImage.alt || 'After image'}
             fill
             className="object-cover"
             draggable={false}
@@ -230,10 +282,11 @@ export default function BeforeAfterToggle({
           <div
             className="absolute inset-0 overflow-hidden"
             style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+            aria-hidden="true"
           >
             <Image
               src={beforeImage.url}
-              alt={beforeImage.alt || 'Before'}
+              alt={beforeImage.alt || 'Before image'}
               fill
               className="object-cover"
               draggable={false}
@@ -247,6 +300,7 @@ export default function BeforeAfterToggle({
               left: `${sliderPosition}%`,
               transform: 'translateX(-50%)',
             }}
+            aria-hidden="true"
           >
             {/* Handle grip */}
             <div className="absolute top-1/2 left-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-lg">
@@ -262,6 +316,7 @@ export default function BeforeAfterToggle({
             className={`pointer-events-none absolute top-3 right-3 left-3 flex justify-between transition-opacity duration-200 ${
               isSliding ? 'opacity-0' : 'opacity-100'
             }`}
+            aria-hidden="true"
           >
             <span className="rounded bg-black/50 px-2 py-1 text-center text-xs text-white">
               Before
@@ -278,12 +333,18 @@ export default function BeforeAfterToggle({
         <div className="mt-3 space-y-3">
           {/* Mode selector */}
           <div>
-            <label className="mb-1 block text-xs text-gray-400">
+            <label className="mb-1 block text-xs text-gray-400" id="mode-label">
               Display Mode
             </label>
-            <div className="flex overflow-hidden rounded-lg bg-gray-700">
+            <div
+              className="flex overflow-hidden rounded-lg bg-gray-700"
+              role="radiogroup"
+              aria-labelledby="mode-label"
+            >
               <button
                 type="button"
+                role="radio"
+                aria-checked={mode === 'toggle'}
                 onClick={() => handleModeChange('toggle')}
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'toggle'
@@ -295,6 +356,8 @@ export default function BeforeAfterToggle({
               </button>
               <button
                 type="button"
+                role="radio"
+                aria-checked={mode === 'slider'}
                 onClick={() => handleModeChange('slider')}
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'slider'
@@ -306,6 +369,8 @@ export default function BeforeAfterToggle({
               </button>
               <button
                 type="button"
+                role="radio"
+                aria-checked={mode === 'single'}
                 onClick={() => handleModeChange('single')}
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'single'
@@ -321,10 +386,14 @@ export default function BeforeAfterToggle({
           {/* Image selection */}
           {mode === 'single' ? (
             <div>
-              <label className="mb-1 block text-xs text-gray-400">
+              <label
+                htmlFor="display-image-select"
+                className="mb-1 block text-xs text-gray-400"
+              >
                 Display Image
               </label>
               <select
+                id="display-image-select"
                 value={afterIndex}
                 onChange={(e) =>
                   handleAfterIndexChange(parseInt(e.target.value))
@@ -341,10 +410,14 @@ export default function BeforeAfterToggle({
           ) : (
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="mb-1 block text-xs text-gray-400">
+                <label
+                  htmlFor="before-image-select"
+                  className="mb-1 block text-xs text-gray-400"
+                >
                   Before Image
                 </label>
                 <select
+                  id="before-image-select"
                   value={beforeIndex}
                   onChange={(e) =>
                     handleBeforeIndexChange(parseInt(e.target.value))
@@ -359,10 +432,14 @@ export default function BeforeAfterToggle({
                 </select>
               </div>
               <div>
-                <label className="mb-1 block text-xs text-gray-400">
+                <label
+                  htmlFor="after-image-select"
+                  className="mb-1 block text-xs text-gray-400"
+                >
                   After Image
                 </label>
                 <select
+                  id="after-image-select"
                   value={afterIndex}
                   onChange={(e) =>
                     handleAfterIndexChange(parseInt(e.target.value))

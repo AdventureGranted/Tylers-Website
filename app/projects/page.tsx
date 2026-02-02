@@ -1,5 +1,12 @@
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Projects',
+  description:
+    'View my software development projects including full-stack applications, self-hosted infrastructure, and mobile apps.',
+};
 
 export default function ProjectsPage() {
   const projects = [

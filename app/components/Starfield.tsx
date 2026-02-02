@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface Props {
   speedFactor?: number;
@@ -18,6 +18,20 @@ export default function Starfield(props: Props) {
   } = props;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Check for reduced motion preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -75,6 +89,34 @@ export default function Starfield(props: Props) {
       }
     };
 
+    const drawStars = () => {
+      clear();
+      const cx = w / 2;
+      const cy = h / 2;
+
+      const count = stars.length;
+      for (let i = 0; i < count; i++) {
+        const star = stars[i];
+        const x = cx + star.x / (star.z * 0.001);
+        const y = cy + star.y / (star.z * 0.001);
+
+        if (x < 0 || x >= w || y < 0 || y >= h) {
+          continue;
+        }
+
+        const d = star.z / 1000.0;
+        const b = 1 - d * d;
+
+        putPixel(x, y, b);
+      }
+    };
+
+    // For reduced motion: just draw static stars once
+    if (prefersReducedMotion) {
+      drawStars();
+      return;
+    }
+
     let prevTime: number;
     const init = (time: number) => {
       prevTime = time;
@@ -91,28 +133,7 @@ export default function Starfield(props: Props) {
       prevTime = time;
 
       moveStars(elapsed * speedFactor);
-
-      clear();
-
-      const cx = w / 2;
-      const cy = h / 2;
-
-      const count = stars.length;
-      for (let i = 0; i < count; i++) {
-        const star = stars[i];
-
-        const x = cx + star.x / (star.z * 0.001);
-        const y = cy + star.y / (star.z * 0.001);
-
-        if (x < 0 || x >= w || y < 0 || y >= h) {
-          continue;
-        }
-
-        const d = star.z / 1000.0;
-        const b = 1 - d * d;
-
-        putPixel(x, y, b);
-      }
+      drawStars();
 
       animationId = requestAnimationFrame(tick);
     };
@@ -136,11 +157,18 @@ export default function Starfield(props: Props) {
       window.removeEventListener('resize', handleResize);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [starColor, backgroundColor, speedFactor, starCount]);
+  }, [
+    starColor,
+    backgroundColor,
+    speedFactor,
+    starCount,
+    prefersReducedMotion,
+  ]);
 
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       style={{
         padding: 0,
         margin: 0,
@@ -153,7 +181,7 @@ export default function Starfield(props: Props) {
         opacity: 1,
         pointerEvents: 'none',
         mixBlendMode: 'screen',
-        willChange: 'transform',
+        willChange: prefersReducedMotion ? 'auto' : 'transform',
       }}
     />
   );

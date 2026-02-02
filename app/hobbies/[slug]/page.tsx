@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
+import { Metadata } from 'next';
 import { authOptions } from '@/app/lib/auth';
 import { prisma } from '@/app/lib/prisma';
 import PhotoGrid from '@/app/components/PhotoGrid';
@@ -22,6 +23,49 @@ import { HiOutlinePhotograph } from 'react-icons/hi';
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tyler-grant.com';
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+
+  const project = await prisma.project.findUnique({
+    where: { slug },
+    select: {
+      title: true,
+      description: true,
+      images: { take: 1, orderBy: { sortOrder: 'asc' } },
+    },
+  });
+
+  if (!project) {
+    return { title: 'Project Not Found' };
+  }
+
+  const ogImage = project.images[0]?.url || '/og-image.png';
+
+  return {
+    title: project.title,
+    description:
+      project.description ||
+      `Check out ${project.title} - a hobby project by Tyler Grant`,
+    openGraph: {
+      title: project.title,
+      description:
+        project.description ||
+        `Check out ${project.title} - a hobby project by Tyler Grant`,
+      url: `${siteUrl}/hobbies/${slug}`,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: project.title }],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: project.title,
+      description: project.description || `Check out ${project.title}`,
+      images: [ogImage],
+    },
+  };
 }
 
 export default async function HobbyDetailPage({ params }: Props) {

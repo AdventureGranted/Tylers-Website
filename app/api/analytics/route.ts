@@ -4,6 +4,12 @@ import { prisma } from '@/app/lib/prisma';
 const DEDUPE_WINDOW_MINUTES = 30;
 const SESSION_TIMEOUT_MINUTES = 30;
 
+interface AnalyticsEvent {
+  event: string;
+  page?: string;
+  timestamp?: number;
+}
+
 function parseUserAgent(userAgent: string | null): {
   device: string;
   browser: string;
@@ -69,9 +75,14 @@ function parseReferrer(referrer: string | null): string | null {
 
 export async function POST(request: NextRequest) {
   try {
-    const { event, page } = await request.json();
+    const body = await request.json();
 
-    if (!event) {
+    // Support both single event and batched events
+    const events: AnalyticsEvent[] = body.events || [
+      { event: body.event, page: body.page },
+    ];
+
+    if (events.length === 0 || !events[0].event) {
       return NextResponse.json({ error: 'Event is required' }, { status: 400 });
     }
 
@@ -108,24 +119,37 @@ export async function POST(request: NextRequest) {
       request.headers.get('x-real-ip') ||
       null;
 
-    // Check for recent duplicate (same visitor, same event, same page)
+    // Process all events
     const dedupeTime = new Date(Date.now() - DEDUPE_WINDOW_MINUTES * 60 * 1000);
 
-    const recentEvent = await prisma.analyticsEvent.findFirst({
+    // Get existing events for deduplication in a single query
+    const existingEvents = await prisma.analyticsEvent.findMany({
       where: {
         visitorId,
-        event,
-        page: page ?? null,
         createdAt: { gte: dedupeTime },
+        OR: events.map((e) => ({
+          event: e.event,
+          page: e.page ?? null,
+        })),
       },
+      select: { event: true, page: true },
     });
 
-    // Only create if no recent duplicate
-    if (!recentEvent) {
-      await prisma.analyticsEvent.create({
-        data: {
-          event,
-          page,
+    const existingSet = new Set(
+      existingEvents.map((e) => `${e.event}:${e.page ?? ''}`)
+    );
+
+    // Filter out duplicates
+    const newEvents = events.filter(
+      (e) => !existingSet.has(`${e.event}:${e.page ?? ''}`)
+    );
+
+    // Batch insert new events
+    if (newEvents.length > 0) {
+      await prisma.analyticsEvent.createMany({
+        data: newEvents.map((e) => ({
+          event: e.event,
+          page: e.page,
           visitorId,
           sessionId,
           ip,
@@ -134,11 +158,15 @@ export async function POST(request: NextRequest) {
           device,
           browser,
           country,
-        },
+          createdAt: e.timestamp ? new Date(e.timestamp) : new Date(),
+        })),
       });
     }
 
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({
+      success: true,
+      processed: newEvents.length,
+    });
 
     // Set visitor cookie if new (1 year)
     if (!request.cookies.get('visitor_id')) {

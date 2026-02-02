@@ -1,6 +1,13 @@
+import { Metadata } from 'next';
 import { HiOutlineMail } from 'react-icons/hi';
 import { BsTelephone, BsLinkedin, BsGithub } from 'react-icons/bs';
 import ContactForm from '@/app/components/ContactForm';
+
+export const metadata: Metadata = {
+  title: 'Contact',
+  description:
+    'Get in touch with Tyler Grant. Reach out for job opportunities, project collaborations, or just to say hello.',
+};
 
 export default function ContactPage() {
   const contactMethods = [

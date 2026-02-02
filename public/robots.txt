@@ -1,0 +1,15 @@
+# Robots.txt for tyler-grant.com
+
+User-agent: *
+Allow: /
+
+# Disallow admin and API routes
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/*
+Disallow: /login
+Disallow: /register
+Disallow: /profile
+
+# Sitemap
+Sitemap: https://tyler-grant.com/sitemap.xml
