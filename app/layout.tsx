@@ -5,6 +5,7 @@ import StarfieldWrapper from './components/StarfieldWrapper';
 import Navbar from './components/NavBar';
 import SessionProvider from './components/SessionProvider';
 import AnalyticsTracker from './components/AnalyticsTracker';
+import AIChatBubble from './components/AIChatBubble';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -132,6 +133,7 @@ export default function RootLayout({
               {children}
             </main>
           </div>
+          <AIChatBubble />
         </SessionProvider>
       </body>
     </html>

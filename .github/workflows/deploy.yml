@@ -51,6 +51,9 @@ jobs:
           echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> .env
           echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> .env
           echo "CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}" >> .env
+          echo "OPENWEBUI_URL=${{ secrets.OPENWEBUI_URL }}" >> .env
+          echo "OPENWEBUI_API_KEY=${{ secrets.OPENWEBUI_API_KEY }}" >> .env
+          echo "AI_MODEL=${{ secrets.AI_MODEL }}" >> .env
 
           # Install dependencies (will reuse existing node_modules)
           npm install
