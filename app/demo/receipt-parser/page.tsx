@@ -486,9 +486,22 @@ export default function ReceiptParserDemo() {
                         <p className="text-lg font-medium text-[var(--text-primary)]">
                           PDF Document
                         </p>
-                        <p className="text-sm text-[var(--text-muted)]">
+                        <p className="mb-3 text-sm text-[var(--text-muted)]">
                           Ready to parse
                         </p>
+                        {file && (
+                          <a
+                            href={file}
+                            download={fileName || 'receipt.pdf'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 rounded-lg bg-red-500/20 px-3 py-2 text-sm font-medium text-red-400 transition-colors hover:bg-red-500/30"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <HiDocumentText className="h-4 w-4" />
+                            View PDF
+                          </a>
+                        )}
                       </div>
                     ) : (
                       <div className="relative aspect-[3/4] overflow-hidden rounded-xl">

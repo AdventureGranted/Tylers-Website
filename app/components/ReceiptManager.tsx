@@ -976,11 +976,49 @@ export default function ReceiptManager({
           <form
             onSubmit={handleUpdate}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-lg rounded-2xl bg-[var(--card-bg)] p-6 shadow-2xl"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-[var(--card-bg)] p-6 shadow-2xl"
           >
-            <h3 className="mb-6 text-xl font-semibold text-[var(--text-primary)]">
+            <h3 className="mb-4 text-xl font-semibold text-[var(--text-primary)]">
               Edit Receipt
             </h3>
+
+            {/* Receipt Preview */}
+            {editingReceipt.imageUrl && (
+              <div className="mb-5 flex justify-center">
+                {editingReceipt.imageUrl.toLowerCase().endsWith('.pdf') ? (
+                  <a
+                    href={editingReceipt.imageUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 rounded-xl bg-[var(--input-bg)] p-4 transition-colors hover:bg-[var(--nav-hover)]"
+                  >
+                    <HiOutlineDocumentDownload className="h-12 w-12 text-red-500" />
+                    <span className="text-sm text-[var(--text-muted)]">
+                      View PDF Receipt
+                    </span>
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedImage(editingReceipt.imageUrl)}
+                    className="group relative"
+                  >
+                    <Image
+                      src={editingReceipt.imageUrl}
+                      alt="Receipt"
+                      width={120}
+                      height={120}
+                      className="rounded-lg object-cover transition-opacity group-hover:opacity-80"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/0 transition-colors group-hover:bg-black/30">
+                      <span className="text-sm font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">
+                        View
+                      </span>
+                    </div>
+                  </button>
+                )}
+              </div>
+            )}
 
             {/* Line Items Editor */}
             <div className="mb-5">
