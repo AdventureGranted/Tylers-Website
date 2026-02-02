@@ -42,7 +42,7 @@ ${message}
   `.trim();
 
   await transporter.sendMail({
-    from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
+    from: `"Portfolio Contact" <${process.env.SMTP_FROM}>`,
     to: process.env.CONTACT_EMAIL,
     replyTo: email,
     subject: `New Contact: ${name}`,
