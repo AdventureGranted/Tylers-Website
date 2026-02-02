@@ -11,7 +11,11 @@ import {
   AiOutlineLogout,
   AiOutlineDashboard,
 } from 'react-icons/ai';
-import { HiOutlineLightBulb, HiOutlineMail } from 'react-icons/hi';
+import {
+  HiOutlineLightBulb,
+  HiOutlineMail,
+  HiOutlineBeaker,
+} from 'react-icons/hi';
 import { UNREAD_COUNT_CHANGED } from '@/app/lib/events';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -474,6 +478,7 @@ function Navbar() {
   const NAV_LINKS = [
     { href: '/projects', label: 'Projects', icon: <HiOutlineLightBulb /> },
     { href: '/hobbies', label: 'Hobbies', icon: <IoColorPaletteOutline /> },
+    { href: '/demo/receipt-parser', label: 'Demos', icon: <HiOutlineBeaker /> },
     { href: '/contact', label: 'Contact', icon: <IoIosContact /> },
   ];
 

@@ -2,7 +2,16 @@
 
 import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { HiUpload, HiPhotograph, HiX, HiSparkles } from 'react-icons/hi';
+import {
+  HiUpload,
+  HiPhotograph,
+  HiX,
+  HiSparkles,
+  HiEye,
+  HiDocumentText,
+  HiChip,
+  HiClipboardList,
+} from 'react-icons/hi';
 import { FaReceipt } from 'react-icons/fa';
 import Image from 'next/image';
 import PageTransition from '@/app/components/PageTransition';
@@ -383,50 +392,150 @@ export default function ReceiptParserDemo() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mt-12 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
-            style={{ boxShadow: 'var(--card-shadow)' }}
+            className="mt-12"
           >
-            <h2 className="mb-4 text-xl font-bold text-[var(--text-primary)]">
+            <h2 className="mb-8 text-center text-2xl font-bold text-[var(--text-primary)]">
               How it works
             </h2>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <div className="text-center">
-                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-yellow-500/10 font-bold text-yellow-500 dark:text-yellow-300">
-                  1
+
+            {/* Processing Pipeline */}
+            <div className="grid gap-6 md:grid-cols-3">
+              {/* Step 1: Upload */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="group relative rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
+                style={{ boxShadow: 'var(--card-shadow)' }}
+              >
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg">
+                    <HiUpload className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-medium text-blue-500">
+                      Step 1
+                    </span>
+                    <h3 className="font-semibold text-[var(--text-primary)]">
+                      Upload
+                    </h3>
+                  </div>
                 </div>
-                <p className="text-sm text-[var(--text-secondary)]">
-                  <strong>Images:</strong> Vision AI (llama3.2-vision) directly
-                  reads the receipt
+                <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                  Drop your receipt image (PNG, JPG) or PDF document. We support
+                  both digital and scanned receipts.
                 </p>
-              </div>
-              <div className="text-center">
-                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-yellow-500/10 font-bold text-yellow-500 dark:text-yellow-300">
-                  2
+                {/* Arrow on desktop */}
+                <div className="absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 text-[var(--text-muted)] md:block">
+                  →
                 </div>
-                <p className="text-sm text-[var(--text-secondary)]">
-                  <strong>Fallback:</strong> OCR (Tesseract) extracts text, then
-                  AI parses it
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-yellow-500/10 font-bold text-yellow-500 dark:text-yellow-300">
-                  3
+              </motion.div>
+
+              {/* Step 2: Process */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="group relative rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
+                style={{ boxShadow: 'var(--card-shadow)' }}
+              >
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg">
+                    <HiChip className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-medium text-purple-500">
+                      Step 2
+                    </span>
+                    <h3 className="font-semibold text-[var(--text-primary)]">
+                      AI Processing
+                    </h3>
+                  </div>
                 </div>
-                <p className="text-sm text-[var(--text-secondary)]">
-                  <strong>PDFs:</strong> Text extracted directly, then AI parses
-                  the content
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-yellow-500/10 font-bold text-yellow-500 dark:text-yellow-300">
-                  4
+                <div className="space-y-2 text-sm text-[var(--text-secondary)]">
+                  <div className="flex items-center gap-2">
+                    <HiEye className="h-4 w-4 text-purple-400" />
+                    <span>Vision AI reads images directly</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <HiDocumentText className="h-4 w-4 text-purple-400" />
+                    <span>OCR fallback for tricky receipts</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaReceipt className="h-4 w-4 text-purple-400" />
+                    <span>PDF text extraction</span>
+                  </div>
                 </div>
-                <p className="text-sm text-[var(--text-secondary)]">
-                  <strong>Output:</strong> Structured data with tool/material
-                  categorization
+                {/* Arrow on desktop */}
+                <div className="absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 text-[var(--text-muted)] md:block">
+                  →
+                </div>
+              </motion.div>
+
+              {/* Step 3: Results */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="group rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
+                style={{ boxShadow: 'var(--card-shadow)' }}
+              >
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-500 to-yellow-600 text-white shadow-lg">
+                    <HiClipboardList className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-medium text-yellow-500">
+                      Step 3
+                    </span>
+                    <h3 className="font-semibold text-[var(--text-primary)]">
+                      Structured Data
+                    </h3>
+                  </div>
+                </div>
+                <p className="mb-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                  Get organized data ready to use:
                 </p>
-              </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs text-[var(--text-muted)]">
+                    Vendor
+                  </span>
+                  <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs text-[var(--text-muted)]">
+                    Date
+                  </span>
+                  <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs text-[var(--text-muted)]">
+                    Items
+                  </span>
+                  <span className="rounded-full bg-blue-500/20 px-3 py-1 text-xs text-blue-400">
+                    Tools $
+                  </span>
+                  <span className="rounded-full bg-green-500/20 px-3 py-1 text-xs text-green-400">
+                    Materials $
+                  </span>
+                </div>
+              </motion.div>
             </div>
+
+            {/* Tech Stack */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="mt-6 flex flex-wrap items-center justify-center gap-3"
+            >
+              <span className="text-xs text-[var(--text-muted)]">
+                Powered by:
+              </span>
+              <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
+                llama3.2-vision
+              </span>
+              <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
+                Tesseract OCR
+              </span>
+              <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
+                Self-hosted AI
+              </span>
+            </motion.div>
           </motion.div>
         </main>
       </div>
