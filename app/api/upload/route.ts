@@ -41,6 +41,9 @@ export async function POST(request: NextRequest) {
     // Check if video
     const isVideo = file.type.startsWith('video/');
 
+    // Check if PDF
+    const isPdf = file.type === 'application/pdf';
+
     // Validate file type
     const allowedTypes = [
       // Images
@@ -54,12 +57,14 @@ export async function POST(request: NextRequest) {
       'video/mp4',
       'video/webm',
       'video/quicktime',
+      // Documents
+      'application/pdf',
     ];
     if (!allowedTypes.includes(file.type) && !isHeic) {
       return NextResponse.json(
         {
           error:
-            'Invalid file type. Allowed: jpg, png, webp, gif, heic, mp4, webm, mov',
+            'Invalid file type. Allowed: jpg, png, webp, gif, heic, mp4, webm, mov, pdf',
         },
         { status: 400 }
       );
@@ -92,7 +97,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Determine media type
-    const mediaType = isVideo ? 'video' : 'image';
+    const mediaType = isVideo ? 'video' : isPdf ? 'document' : 'image';
 
     // Generate unique filename
     const filename = `projects/${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${ext}`;
