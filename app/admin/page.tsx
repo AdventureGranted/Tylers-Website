@@ -383,6 +383,12 @@ export default async function AdminDashboard() {
               Manage Members
             </Link>
             <Link
+              href="/admin/chat-sessions"
+              className="rounded-lg bg-gray-700 px-4 py-3 text-center text-gray-200 transition-colors hover:bg-gray-600 md:py-2 md:text-left"
+            >
+              Chat Sessions
+            </Link>
+            <Link
               href="/admin/projects/new"
               className="rounded-lg bg-yellow-300 px-4 py-3 text-center font-semibold text-gray-900 transition-colors hover:bg-yellow-400 md:py-2 md:text-left"
             >
