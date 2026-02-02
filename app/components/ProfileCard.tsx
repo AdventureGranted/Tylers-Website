@@ -6,6 +6,7 @@ import { BsGithub, BsLinkedin } from 'react-icons/bs';
 import { HiOutlineMail } from 'react-icons/hi';
 import { useToast } from '@/app/hooks/useToast';
 import { trackResumeDownload } from '@/app/lib/analytics';
+import { SOCIAL_LINKS, SocialIconName } from '@/app/lib/config';
 
 // Pre-generated blur data URL for profile image (10x10 placeholder)
 const profileBlurDataURL =
@@ -19,23 +20,12 @@ export default function ProfileCard() {
     success('Thank you for downloading my resume!');
   };
 
-  const socialLinks = [
-    {
-      icon: <BsGithub className="text-xl" />,
-      href: 'https://github.com/tylerbb812',
-      label: 'GitHub',
-    },
-    {
-      icon: <BsLinkedin className="text-xl" />,
-      href: 'https://www.linkedin.com/in/tyler-james-grant/',
-      label: 'LinkedIn',
-    },
-    {
-      icon: <HiOutlineMail className="text-xl" />,
-      href: 'mailto:recruit.tyler.grant@gmail.com',
-      label: 'Email',
-    },
-  ];
+  // Map icon names to components (inside component to avoid hydration issues)
+  const iconMap: Record<SocialIconName, React.ReactNode> = {
+    github: <BsGithub className="text-xl" />,
+    linkedin: <BsLinkedin className="text-xl" />,
+    email: <HiOutlineMail className="text-xl" />,
+  };
 
   return (
     <motion.div
@@ -102,7 +92,7 @@ export default function ProfileCard() {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="mt-6 flex gap-4"
         >
-          {socialLinks.map((link) => (
+          {SOCIAL_LINKS.map((link) => (
             <a
               key={link.label}
               href={link.href}
@@ -111,7 +101,7 @@ export default function ProfileCard() {
               aria-label={link.label}
               className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--input-bg)] text-[var(--text-secondary)] transition-all duration-300 hover:scale-110 hover:bg-yellow-300 hover:text-gray-900"
             >
-              {link.icon}
+              {iconMap[link.iconName]}
             </a>
           ))}
         </motion.div>

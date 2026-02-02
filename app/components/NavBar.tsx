@@ -174,32 +174,24 @@ function Logo({ isHome }: { isHome: boolean }) {
   return (
     <div className="px-4">
       <Link href="/" className="group relative flex items-center">
-        {isHome ? (
-          <Image
-            src="/navbar/tyler_grant_merged_logo_yellow.svg"
-            alt="Tyler Grant"
-            width={180}
-            height={60}
-            className="h-14 w-auto"
-          />
-        ) : (
-          <>
-            <Image
-              src="/navbar/tyler_grant_merged_logo.svg"
-              alt="Tyler Grant"
-              width={180}
-              height={60}
-              className="h-14 w-auto transition-opacity duration-300 group-hover:opacity-0"
-            />
-            <Image
-              src="/navbar/tyler_grant_merged_logo_yellow.svg"
-              alt="Tyler Grant"
-              width={180}
-              height={60}
-              className="absolute left-0 h-14 w-auto opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            />
-          </>
-        )}
+        <Image
+          src={
+            isHome
+              ? '/navbar/tyler_grant_merged_logo_yellow.svg'
+              : '/navbar/tyler_grant_merged_logo.svg'
+          }
+          alt="Tyler Grant"
+          width={180}
+          height={60}
+          className="h-10 w-auto group-hover:hidden"
+        />
+        <Image
+          src="/navbar/tyler_grant_merged_logo_yellow.svg"
+          alt="Tyler Grant"
+          width={180}
+          height={60}
+          className="hidden h-10 w-auto group-hover:block"
+        />
       </Link>
     </div>
   );
@@ -500,7 +492,7 @@ function Navbar() {
       }`}
       style={{ boxShadow: 'var(--card-shadow)' }}
     >
-      <div className="mx-4 flex h-24 items-center justify-between">
+      <div className="mx-4 flex h-16 items-center justify-between">
         <Logo isHome={pathname === '/'} />
 
         {/* Desktop Navigation */}

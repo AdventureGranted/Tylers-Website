@@ -1,17 +1,17 @@
-<svg width="580" height="200" xmlns="http://www.w3.org/2000/svg">
+<svg width="680" height="235" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
       .tyler-text {
         font-family: Arial, Helvetica, sans-serif;
-        font-size: 72px;
+        font-size: 110px;
         font-weight: 900;
         fill: #667eea;
         letter-spacing: 3px;
       }
       .grant-text {
         font-family: Arial, Helvetica, sans-serif;
-        font-size: 32px;
-        font-weight: 300;
+        font-size: 85px;
+        font-weight: 700;
         fill: #fde047;
         letter-spacing: 10px;
       }
@@ -23,18 +23,18 @@
       }
     </style>
   </defs>
-
+  
   <!-- Split Color Block on Left -->
   <!-- Left half - blue -->
-  <rect x="0" y="0" width="100" height="200" fill="#667eea" rx="15"/>
-
+  <rect x="0" y="17.5" width="100" height="200" fill="#667eea" rx="15"/>
+  
   <!-- Right half - yellow -->
-  <rect x="100" y="0" width="100" height="200" fill="#fde047" rx="15"/>
-
+  <rect x="100" y="17.5" width="100" height="200" fill="#fde047" rx="15"/>
+  
   <!-- Letter T centered in block -->
-  <text x="100" y="145" class="initial-text" text-anchor="middle">T</text>
-
+  <text x="100" y="162.5" class="initial-text" text-anchor="middle">T</text>
+  
   <!-- Stacked Text on Right -->
-  <text x="380" y="110" class="tyler-text" text-anchor="middle">TYLER</text>
-  <text x="380" y="150" class="grant-text" text-anchor="middle">GRANT</text>
+  <text x="450" y="120" class="tyler-text" text-anchor="middle">TYLER</text>
+  <text x="450" y="190" class="grant-text" text-anchor="middle">GRANT</text>
 </svg>
