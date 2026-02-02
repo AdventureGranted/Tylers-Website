@@ -19,6 +19,7 @@ export async function GET(
   const receipts = await prisma.receipt.findMany({
     where: { projectId: id },
     orderBy: { createdAt: 'desc' },
+    include: { items: true },
   });
 
   const toolTotal = receipts.reduce((sum, r) => sum + r.toolAmount, 0);
@@ -57,8 +58,14 @@ export async function POST(
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }
 
-  const { imageUrl, toolAmount, materialAmount, miscAmount, description } =
-    await request.json();
+  const {
+    imageUrl,
+    toolAmount,
+    materialAmount,
+    miscAmount,
+    description,
+    items,
+  } = await request.json();
 
   const toolAmt = parseFloat(toolAmount) || 0;
   const materialAmt = parseFloat(materialAmount) || 0;
@@ -71,6 +78,7 @@ export async function POST(
     );
   }
 
+  // Create receipt with items if provided
   const receipt = await prisma.receipt.create({
     data: {
       projectId: id,
@@ -79,7 +87,20 @@ export async function POST(
       materialAmount: materialAmt,
       miscAmount: miscAmt,
       description,
+      items:
+        items && items.length > 0
+          ? {
+              create: items.map(
+                (item: { name: string; price: number; category: string }) => ({
+                  name: item.name,
+                  price: item.price,
+                  category: item.category,
+                })
+              ),
+            }
+          : undefined,
     },
+    include: { items: true },
   });
 
   return NextResponse.json(receipt, { status: 201 });

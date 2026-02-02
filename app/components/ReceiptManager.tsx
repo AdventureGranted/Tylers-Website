@@ -7,8 +7,16 @@ import {
   HiOutlineUpload,
   HiOutlineReceiptTax,
   HiOutlineDocumentDownload,
+  HiOutlinePencil,
   HiSparkles,
 } from 'react-icons/hi';
+
+interface ReceiptItem {
+  id?: string;
+  name: string;
+  price: number;
+  category: 'material' | 'tool' | 'misc';
+}
 
 interface Receipt {
   id: string;
@@ -18,12 +26,7 @@ interface Receipt {
   miscAmount: number;
   description: string | null;
   createdAt: string;
-}
-
-interface ParsedItem {
-  name: string;
-  price: number;
-  category: 'material' | 'tool' | 'misc';
+  items?: ReceiptItem[];
 }
 
 interface ReceiptManagerProps {
@@ -58,7 +61,14 @@ export default function ReceiptManager({
   const [isDragging, setIsDragging] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
-  const [parsedItems, setParsedItems] = useState<ParsedItem[]>([]);
+  const [formItems, setFormItems] = useState<ReceiptItem[]>([]);
+  const [editingReceipt, setEditingReceipt] = useState<Receipt | null>(null);
+  const [editToolAmount, setEditToolAmount] = useState('');
+  const [editMaterialAmount, setEditMaterialAmount] = useState('');
+  const [editMiscAmount, setEditMiscAmount] = useState('');
+  const [editDescription, setEditDescription] = useState('');
+  const [editItems, setEditItems] = useState<ReceiptItem[]>([]);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const fetchReceipts = useCallback(async () => {
     try {
@@ -126,8 +136,15 @@ export default function ReceiptManager({
     }
   };
 
-  // Calculate totals from parsed items
-  const calculateTotalsFromItems = (items: ParsedItem[]) => {
+  // Calculate totals from items
+  const calculateTotalsFromItems = (
+    items: ReceiptItem[],
+    setters: {
+      setTool: (v: string) => void;
+      setMaterial: (v: string) => void;
+      setMisc: (v: string) => void;
+    }
+  ) => {
     const tool = items
       .filter((i) => i.category === 'tool')
       .reduce((sum, i) => sum + i.price, 0);
@@ -138,20 +155,108 @@ export default function ReceiptManager({
       .filter((i) => i.category === 'misc')
       .reduce((sum, i) => sum + i.price, 0);
 
-    setToolAmount(tool > 0 ? tool.toFixed(2) : '');
-    setMaterialAmount(material > 0 ? material.toFixed(2) : '');
-    setMiscAmount(misc > 0 ? misc.toFixed(2) : '');
+    setters.setTool(tool > 0 ? tool.toFixed(2) : '');
+    setters.setMaterial(material > 0 ? material.toFixed(2) : '');
+    setters.setMisc(misc > 0 ? misc.toFixed(2) : '');
   };
 
-  // Update a single item's category
-  const updateItemCategory = (
+  // Update a single item's category in create form
+  const updateFormItemCategory = (
     index: number,
     category: 'material' | 'tool' | 'misc'
   ) => {
-    const updated = [...parsedItems];
+    const updated = [...formItems];
     updated[index] = { ...updated[index], category };
-    setParsedItems(updated);
-    calculateTotalsFromItems(updated);
+    setFormItems(updated);
+    calculateTotalsFromItems(updated, {
+      setTool: setToolAmount,
+      setMaterial: setMaterialAmount,
+      setMisc: setMiscAmount,
+    });
+  };
+
+  // Update a single item's category in edit form
+  const updateEditItemCategory = (
+    index: number,
+    category: 'material' | 'tool' | 'misc'
+  ) => {
+    const updated = [...editItems];
+    updated[index] = { ...updated[index], category };
+    setEditItems(updated);
+    calculateTotalsFromItems(updated, {
+      setTool: setEditToolAmount,
+      setMaterial: setEditMaterialAmount,
+      setMisc: setEditMiscAmount,
+    });
+  };
+
+  // Add a new item manually
+  const addFormItem = () => {
+    setFormItems([...formItems, { name: '', price: 0, category: 'material' }]);
+  };
+
+  const addEditItem = () => {
+    setEditItems([...editItems, { name: '', price: 0, category: 'material' }]);
+  };
+
+  // Remove an item
+  const removeFormItem = (index: number) => {
+    const updated = formItems.filter((_, i) => i !== index);
+    setFormItems(updated);
+    calculateTotalsFromItems(updated, {
+      setTool: setToolAmount,
+      setMaterial: setMaterialAmount,
+      setMisc: setMiscAmount,
+    });
+  };
+
+  const removeEditItem = (index: number) => {
+    const updated = editItems.filter((_, i) => i !== index);
+    setEditItems(updated);
+    calculateTotalsFromItems(updated, {
+      setTool: setEditToolAmount,
+      setMaterial: setEditMaterialAmount,
+      setMisc: setEditMiscAmount,
+    });
+  };
+
+  // Update item name or price
+  const updateFormItem = (
+    index: number,
+    field: 'name' | 'price',
+    value: string
+  ) => {
+    const updated = [...formItems];
+    if (field === 'price') {
+      updated[index] = { ...updated[index], price: parseFloat(value) || 0 };
+      calculateTotalsFromItems(updated, {
+        setTool: setToolAmount,
+        setMaterial: setMaterialAmount,
+        setMisc: setMiscAmount,
+      });
+    } else {
+      updated[index] = { ...updated[index], name: value };
+    }
+    setFormItems(updated);
+  };
+
+  const updateEditItem = (
+    index: number,
+    field: 'name' | 'price',
+    value: string
+  ) => {
+    const updated = [...editItems];
+    if (field === 'price') {
+      updated[index] = { ...updated[index], price: parseFloat(value) || 0 };
+      calculateTotalsFromItems(updated, {
+        setTool: setEditToolAmount,
+        setMaterial: setEditMaterialAmount,
+        setMisc: setEditMiscAmount,
+      });
+    } else {
+      updated[index] = { ...updated[index], name: value };
+    }
+    setEditItems(updated);
   };
 
   const handleAutoParse = async () => {
@@ -176,8 +281,12 @@ export default function ReceiptManager({
 
       // Store parsed items for editing
       if (data.items && data.items.length > 0) {
-        setParsedItems(data.items);
-        calculateTotalsFromItems(data.items);
+        setFormItems(data.items);
+        calculateTotalsFromItems(data.items, {
+          setTool: setToolAmount,
+          setMaterial: setMaterialAmount,
+          setMisc: setMiscAmount,
+        });
       } else {
         // Fallback if no items parsed - use the totals directly
         if (data.toolAmount > 0) {
@@ -250,7 +359,10 @@ export default function ReceiptManager({
         imageUrl = data.url;
       }
 
-      // Create receipt
+      // Create receipt with items
+      const itemsToSave = formItems.filter(
+        (item) => item.name.trim() && item.price > 0
+      );
       const receiptRes = await fetch(`/api/projects/${projectId}/receipts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -260,6 +372,7 @@ export default function ReceiptManager({
           materialAmount: materialAmt,
           miscAmount: miscAmt,
           description: description || null,
+          items: itemsToSave.length > 0 ? itemsToSave : undefined,
         }),
       });
 
@@ -272,7 +385,7 @@ export default function ReceiptManager({
         setMaterialAmount('');
         setMiscAmount('');
         setDescription('');
-        setParsedItems([]);
+        setFormItems([]);
         setShowForm(false);
         fetchReceipts();
         // Notify other components (like BudgetTracker) that receipts changed
@@ -283,6 +396,83 @@ export default function ReceiptManager({
       alert('Failed to upload receipt');
     } finally {
       setUploading(false);
+    }
+  };
+
+  const openEditModal = (receipt: Receipt) => {
+    setEditingReceipt(receipt);
+    setEditToolAmount(
+      receipt.toolAmount > 0 ? receipt.toolAmount.toString() : ''
+    );
+    setEditMaterialAmount(
+      receipt.materialAmount > 0 ? receipt.materialAmount.toString() : ''
+    );
+    setEditMiscAmount(
+      (receipt.miscAmount || 0) > 0 ? receipt.miscAmount.toString() : ''
+    );
+    setEditDescription(receipt.description || '');
+    // Load existing items
+    setEditItems(
+      receipt.items?.map((item) => ({
+        name: item.name,
+        price: item.price,
+        category: item.category as 'material' | 'tool' | 'misc',
+      })) || []
+    );
+  };
+
+  const closeEditModal = () => {
+    setEditingReceipt(null);
+    setEditToolAmount('');
+    setEditMaterialAmount('');
+    setEditMiscAmount('');
+    setEditDescription('');
+    setEditItems([]);
+  };
+
+  const handleUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingReceipt) return;
+
+    const toolAmt = parseFloat(editToolAmount) || 0;
+    const materialAmt = parseFloat(editMaterialAmount) || 0;
+    const miscAmt = parseFloat(editMiscAmount) || 0;
+
+    if (toolAmt === 0 && materialAmt === 0 && miscAmt === 0) {
+      alert('Please enter at least one amount');
+      return;
+    }
+
+    setIsUpdating(true);
+
+    try {
+      const itemsToSave = editItems.filter(
+        (item) => item.name.trim() && item.price > 0
+      );
+      const res = await fetch(`/api/receipts/${editingReceipt.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          toolAmount: toolAmt,
+          materialAmount: materialAmt,
+          miscAmount: miscAmt,
+          description: editDescription || null,
+          items: itemsToSave,
+        }),
+      });
+
+      if (res.ok) {
+        closeEditModal();
+        fetchReceipts();
+        window.dispatchEvent(new Event('receipt-updated'));
+      } else {
+        alert('Failed to update receipt');
+      }
+    } catch (error) {
+      console.error('Error updating receipt:', error);
+      alert('Failed to update receipt');
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -381,7 +571,7 @@ export default function ReceiptManager({
             setMaterialAmount('');
             setMiscAmount('');
             setDescription('');
-            setParsedItems([]);
+            setFormItems([]);
             setParseError(null);
           }}
         >
@@ -504,28 +694,56 @@ export default function ReceiptManager({
               </div>
             </div>
 
-            {/* Parsed Items with Editable Categories */}
-            {parsedItems.length > 0 && (
-              <div className="mb-5">
-                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
-                  Parsed Items (adjust categories if needed)
+            {/* Line Items Editor */}
+            <div className="mb-5">
+              <div className="mb-2 flex items-center justify-between">
+                <label className="text-sm font-medium text-[var(--text-muted)]">
+                  Line Items
                 </label>
+                <button
+                  type="button"
+                  onClick={addFormItem}
+                  className="rounded-md bg-yellow-500/20 px-2 py-1 text-xs font-medium text-yellow-500 transition-colors hover:bg-yellow-500/30 dark:text-yellow-300"
+                >
+                  + Add Item
+                </button>
+              </div>
+              {formItems.length > 0 ? (
                 <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg bg-[var(--input-bg)] p-3">
-                  {parsedItems.map((item, index) => (
+                  {formItems.map((item, index) => (
                     <div
                       key={index}
                       className="flex items-center gap-2 text-sm"
                     >
-                      <span className="min-w-0 flex-1 truncate text-[var(--text-primary)]">
-                        {item.name}
-                      </span>
-                      <span className="shrink-0 font-medium text-[var(--text-secondary)]">
-                        ${item.price.toFixed(2)}
-                      </span>
+                      <input
+                        type="text"
+                        value={item.name}
+                        onChange={(e) =>
+                          updateFormItem(index, 'name', e.target.value)
+                        }
+                        placeholder="Item name"
+                        className="min-w-0 flex-1 rounded-md border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-1 focus:ring-yellow-500 focus:outline-none"
+                      />
+                      <div className="relative shrink-0">
+                        <span className="absolute top-1/2 left-2 -translate-y-1/2 text-[var(--text-muted)]">
+                          $
+                        </span>
+                        <input
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          value={item.price || ''}
+                          onChange={(e) =>
+                            updateFormItem(index, 'price', e.target.value)
+                          }
+                          placeholder="0.00"
+                          className="w-20 rounded-md border border-[var(--card-border)] bg-[var(--card-bg)] py-1 pr-2 pl-5 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-1 focus:ring-yellow-500 focus:outline-none"
+                        />
+                      </div>
                       <select
                         value={item.category}
                         onChange={(e) =>
-                          updateItemCategory(
+                          updateFormItemCategory(
                             index,
                             e.target.value as 'material' | 'tool' | 'misc'
                           )
@@ -542,11 +760,23 @@ export default function ReceiptManager({
                         <option value="tool">Tool</option>
                         <option value="misc">Misc</option>
                       </select>
+                      <button
+                        type="button"
+                        onClick={() => removeFormItem(index)}
+                        className="shrink-0 rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20"
+                      >
+                        <HiOutlineTrash className="h-4 w-4" />
+                      </button>
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
+              ) : (
+                <p className="rounded-lg bg-[var(--input-bg)] p-3 text-center text-sm text-[var(--text-muted)]">
+                  No items yet. Add items manually or use AI to parse from
+                  receipt.
+                </p>
+              )}
+            </div>
 
             <div className="mb-5 grid grid-cols-3 gap-3">
               <div>
@@ -627,7 +857,7 @@ export default function ReceiptManager({
                   setMaterialAmount('');
                   setMiscAmount('');
                   setDescription('');
-                  setParsedItems([]);
+                  setFormItems([]);
                   setParseError(null);
                 }}
                 className="rounded-lg bg-[var(--card-border)] px-6 py-3 text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)]"
@@ -714,17 +944,205 @@ export default function ReceiptManager({
                   {new Date(receipt.createdAt).toLocaleDateString()}
                 </div>
               </div>
-              {!readOnly && (
-                <button
-                  onClick={() => handleDelete(receipt.id)}
-                  className="flex-shrink-0 rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-red-500/20 hover:text-red-400"
-                  title="Delete receipt"
-                >
-                  <HiOutlineTrash className="text-lg" />
-                </button>
+              {(!readOnly || allowUpload) && (
+                <div className="flex shrink-0 gap-1">
+                  <button
+                    onClick={() => openEditModal(receipt)}
+                    className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-yellow-500/20 hover:text-yellow-500"
+                    title="Edit receipt"
+                  >
+                    <HiOutlinePencil className="text-lg" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(receipt.id)}
+                    className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-red-500/20 hover:text-red-400"
+                    title="Delete receipt"
+                  >
+                    <HiOutlineTrash className="text-lg" />
+                  </button>
+                </div>
               )}
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Edit Receipt Modal */}
+      {editingReceipt && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          onClick={closeEditModal}
+        >
+          <form
+            onSubmit={handleUpdate}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-lg rounded-2xl bg-[var(--card-bg)] p-6 shadow-2xl"
+          >
+            <h3 className="mb-6 text-xl font-semibold text-[var(--text-primary)]">
+              Edit Receipt
+            </h3>
+
+            {/* Line Items Editor */}
+            <div className="mb-5">
+              <div className="mb-2 flex items-center justify-between">
+                <label className="text-sm font-medium text-[var(--text-muted)]">
+                  Line Items
+                </label>
+                <button
+                  type="button"
+                  onClick={addEditItem}
+                  className="rounded-md bg-yellow-500/20 px-2 py-1 text-xs font-medium text-yellow-500 transition-colors hover:bg-yellow-500/30 dark:text-yellow-300"
+                >
+                  + Add Item
+                </button>
+              </div>
+              {editItems.length > 0 ? (
+                <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg bg-[var(--input-bg)] p-3">
+                  {editItems.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 text-sm"
+                    >
+                      <input
+                        type="text"
+                        value={item.name}
+                        onChange={(e) =>
+                          updateEditItem(index, 'name', e.target.value)
+                        }
+                        placeholder="Item name"
+                        className="min-w-0 flex-1 rounded-md border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-1 focus:ring-yellow-500 focus:outline-none"
+                      />
+                      <div className="relative shrink-0">
+                        <span className="absolute top-1/2 left-2 -translate-y-1/2 text-[var(--text-muted)]">
+                          $
+                        </span>
+                        <input
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          value={item.price || ''}
+                          onChange={(e) =>
+                            updateEditItem(index, 'price', e.target.value)
+                          }
+                          placeholder="0.00"
+                          className="w-20 rounded-md border border-[var(--card-border)] bg-[var(--card-bg)] py-1 pr-2 pl-5 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-1 focus:ring-yellow-500 focus:outline-none"
+                        />
+                      </div>
+                      <select
+                        value={item.category}
+                        onChange={(e) =>
+                          updateEditItemCategory(
+                            index,
+                            e.target.value as 'material' | 'tool' | 'misc'
+                          )
+                        }
+                        className={`shrink-0 rounded-md border-0 px-2 py-1 text-xs font-medium focus:ring-2 focus:ring-yellow-500 focus:outline-none ${
+                          item.category === 'material'
+                            ? 'bg-blue-500/20 text-blue-400'
+                            : item.category === 'tool'
+                              ? 'bg-purple-500/20 text-purple-400'
+                              : 'bg-orange-500/20 text-orange-400'
+                        }`}
+                      >
+                        <option value="material">Material</option>
+                        <option value="tool">Tool</option>
+                        <option value="misc">Misc</option>
+                      </select>
+                      <button
+                        type="button"
+                        onClick={() => removeEditItem(index)}
+                        className="shrink-0 rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20"
+                      >
+                        <HiOutlineTrash className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="rounded-lg bg-[var(--input-bg)] p-3 text-center text-sm text-[var(--text-muted)]">
+                  No items. Add items to track individual purchases.
+                </p>
+              )}
+            </div>
+
+            <div className="mb-5 grid grid-cols-3 gap-3">
+              <div>
+                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                  Material ($)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={editMaterialAmount}
+                  onChange={(e) => setEditMaterialAmount(e.target.value)}
+                  placeholder="0.00"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                />
+              </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                  Tool ($)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={editToolAmount}
+                  onChange={(e) => setEditToolAmount(e.target.value)}
+                  placeholder="0.00"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                />
+              </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                  Misc ($)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={editMiscAmount}
+                  onChange={(e) => setEditMiscAmount(e.target.value)}
+                  placeholder="0.00"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                />
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                Description
+              </label>
+              <input
+                type="text"
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+                placeholder="e.g., Wood supplies, Paint, etc."
+                className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+              />
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                disabled={
+                  isUpdating ||
+                  (!editToolAmount && !editMaterialAmount && !editMiscAmount)
+                }
+                className="flex-1 rounded-lg bg-yellow-500 px-4 py-3 font-medium text-gray-900 transition-colors hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+              >
+                {isUpdating ? 'Saving...' : 'Save Changes'}
+              </button>
+              <button
+                type="button"
+                onClick={closeEditModal}
+                className="rounded-lg bg-[var(--card-border)] px-6 py-3 text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)]"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
       )}
 
