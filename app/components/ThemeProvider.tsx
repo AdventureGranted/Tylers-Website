@@ -65,19 +65,11 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('theme', theme);
 
     // Update theme-color meta tag for browser UI (Safari address bar, etc.)
-    // Safari requires removing and re-adding the meta tag to recognize changes
     const themeColor = theme === 'light' ? '#f3f4f6' : '#111827';
     const existingMeta = document.querySelector('meta[name="theme-color"]');
     if (existingMeta) {
-      existingMeta.remove();
+      existingMeta.setAttribute('content', themeColor);
     }
-    // Small delay helps Safari recognize the change
-    setTimeout(() => {
-      const newMeta = document.createElement('meta');
-      newMeta.setAttribute('name', 'theme-color');
-      newMeta.setAttribute('content', themeColor);
-      document.head.appendChild(newMeta);
-    }, 10);
 
     // Reset the toggle flag
     isUserToggle.current = false;

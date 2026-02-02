@@ -17,13 +17,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
 
-// Static nav links - defined outside component to avoid recreation
-const NAV_LINKS = [
-  { href: '/projects', label: 'Projects', icon: <HiOutlineLightBulb /> },
-  { href: '/hobbies', label: 'Hobbies', icon: <IoColorPaletteOutline /> },
-  { href: '/contact', label: 'Contact', icon: <IoIosContact /> },
-];
-
 // Custom hook for click outside detection
 function useClickOutside(
   ref: RefObject<HTMLElement | null>,
@@ -351,6 +344,7 @@ function MobileDrawer({
   status,
   pathname,
   unreadCount,
+  navLinks,
 }: {
   isOpen: boolean;
   onClose: () => void;
@@ -358,6 +352,7 @@ function MobileDrawer({
   status: ReturnType<typeof useSession>['status'];
   pathname: string;
   unreadCount: number;
+  navLinks: Array<{ href: string; label: string; icon: React.ReactNode }>;
 }) {
   const isAdmin = session?.user?.role === 'admin';
 
@@ -369,7 +364,7 @@ function MobileDrawer({
           : 'pointer-events-none max-h-0 opacity-0'
       }`}
     >
-      {NAV_LINKS.map((link) => (
+      {navLinks.map((link) => (
         <NavLink
           key={link.label}
           href={link.href}
@@ -483,6 +478,13 @@ function Navbar() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
 
+  // Nav links defined inside component to ensure proper hydration
+  const NAV_LINKS = [
+    { href: '/projects', label: 'Projects', icon: <HiOutlineLightBulb /> },
+    { href: '/hobbies', label: 'Hobbies', icon: <IoColorPaletteOutline /> },
+    { href: '/contact', label: 'Contact', icon: <IoIosContact /> },
+  ];
+
   const closeMobileMenu = useCallback(() => setIsOpen(false), []);
   const isScrolled = useScrollState(closeMobileMenu);
   const unreadCount = useUnreadCount(session?.user?.role === 'admin');
@@ -557,6 +559,7 @@ function Navbar() {
             status={status}
             pathname={pathname}
             unreadCount={unreadCount}
+            navLinks={NAV_LINKS}
           />
         </div>
       </div>

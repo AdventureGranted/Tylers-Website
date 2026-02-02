@@ -29,6 +29,9 @@ import { RiShieldKeyholeLine } from 'react-icons/ri';
 import { FaJava, FaWindows } from 'react-icons/fa';
 import { TbBrandCpp, TbBrandCSharp } from 'react-icons/tb';
 import { VscAzure } from 'react-icons/vsc';
+import { containerVariants, itemVariants } from '@/app/lib/animations';
+import { Card } from '@/app/components/ui/Card';
+import { SectionHeader } from '@/app/components/ui/SectionHeader';
 
 const skillCategories = [
   {
@@ -99,21 +102,6 @@ const subjects = [
   'Data Analysis & Statistics',
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
-
 export default function TechnicalSkills() {
   return (
     <motion.div
@@ -123,62 +111,51 @@ export default function TechnicalSkills() {
       variants={containerVariants}
       className="mt-12"
     >
-      {/* Section Header */}
-      <motion.div variants={itemVariants} className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-[var(--text-primary)]">
-          Technical Skills
-        </h2>
-        <div className="mx-auto mt-2 h-1 w-72 rounded bg-gradient-to-r from-purple-500 to-yellow-300" />
-      </motion.div>
+      <SectionHeader title="Technical Skills" variants={itemVariants} />
 
       {/* Skills Grid */}
       <div className="grid gap-8 lg:grid-cols-2">
         {skillCategories.map((category) => (
-          <motion.div
-            key={category.title}
-            variants={itemVariants}
-            className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
-            style={{ boxShadow: 'var(--card-shadow)' }}
-          >
-            <h3 className="mb-4 text-xl font-semibold text-yellow-500 dark:text-yellow-300">
-              {category.title}
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {category.skills.map((skill) => (
-                <div
-                  key={skill.name}
-                  className="group flex items-center gap-2 rounded-full bg-[var(--input-bg)] px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-[var(--nav-hover)]"
-                >
-                  <skill.icon className={`text-lg ${skill.color}`} />
-                  <span className="text-sm text-[var(--text-secondary)]">
-                    {skill.name}
-                  </span>
-                </div>
-              ))}
-            </div>
+          <motion.div key={category.title} variants={itemVariants}>
+            <Card>
+              <h3 className="mb-4 text-xl font-semibold text-yellow-500 dark:text-yellow-300">
+                {category.title}
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {category.skills.map((skill) => (
+                  <div
+                    key={skill.name}
+                    className="group flex items-center gap-2 rounded-full bg-[var(--input-bg)] px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-[var(--nav-hover)]"
+                  >
+                    <skill.icon className={`text-lg ${skill.color}`} />
+                    <span className="text-sm text-[var(--text-secondary)]">
+                      {skill.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </motion.div>
         ))}
       </div>
 
       {/* Knowledge Areas */}
-      <motion.div
-        variants={itemVariants}
-        className="mt-8 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
-        style={{ boxShadow: 'var(--card-shadow)' }}
-      >
-        <h3 className="mb-4 text-xl font-semibold text-yellow-500 dark:text-yellow-300">
-          Knowledge Areas
-        </h3>
-        <div className="flex flex-wrap gap-3">
-          {subjects.map((subject) => (
-            <span
-              key={subject}
-              className="rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-sm text-[var(--text-secondary)] transition-all duration-300 hover:border-yellow-300/50 hover:bg-[var(--nav-hover)]"
-            >
-              {subject}
-            </span>
-          ))}
-        </div>
+      <motion.div variants={itemVariants} className="mt-8">
+        <Card>
+          <h3 className="mb-4 text-xl font-semibold text-yellow-500 dark:text-yellow-300">
+            Knowledge Areas
+          </h3>
+          <div className="flex flex-wrap gap-3">
+            {subjects.map((subject) => (
+              <span
+                key={subject}
+                className="rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-sm text-[var(--text-secondary)] transition-all duration-300 hover:border-yellow-300/50 hover:bg-[var(--nav-hover)]"
+              >
+                {subject}
+              </span>
+            ))}
+          </div>
+        </Card>
       </motion.div>
     </motion.div>
   );

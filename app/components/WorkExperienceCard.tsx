@@ -2,6 +2,9 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { containerVariants, slideInLeft } from '@/app/lib/animations';
+import { Card } from '@/app/components/ui/Card';
+import { SectionHeader } from '@/app/components/ui/SectionHeader';
 
 const experiences = [
   {
@@ -67,8 +70,9 @@ const experiences = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
+// Use stagger 0.2 for work experience
+const workContainerVariants = {
+  ...containerVariants,
   visible: {
     opacity: 1,
     transition: {
@@ -77,27 +81,16 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: { opacity: 1, x: 0 },
-};
-
 export default function WorkExperienceCard() {
   return (
     <motion.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-100px' }}
-      variants={containerVariants}
+      variants={workContainerVariants}
       className="mt-12"
     >
-      {/* Section Header */}
-      <motion.div variants={itemVariants} className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-[var(--text-primary)]">
-          Work Experience
-        </h2>
-        <div className="mx-auto mt-2 h-1 w-72 rounded bg-gradient-to-r from-purple-500 to-yellow-300" />
-      </motion.div>
+      <SectionHeader title="Work Experience" variants={slideInLeft} />
 
       {/* Timeline */}
       <div className="relative">
@@ -107,17 +100,14 @@ export default function WorkExperienceCard() {
         {experiences.map((exp) => (
           <motion.div
             key={exp.company}
-            variants={itemVariants}
+            variants={slideInLeft}
             className="group relative mb-8 last:mb-0"
           >
             {/* Timeline dot */}
             <div className="absolute top-8 left-6 hidden h-5 w-5 rounded-full border-4 border-[var(--background)] bg-yellow-300 transition-all duration-300 group-hover:scale-125 group-hover:bg-purple-500 md:block" />
 
             {/* Card */}
-            <div
-              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 transition-all duration-300 hover:opacity-90 md:ml-16"
-              style={{ boxShadow: 'var(--card-shadow)' }}
-            >
+            <Card className="transition-all duration-300 hover:opacity-90 md:ml-16">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
                 {/* Logo */}
                 <div className="flex-shrink-0 self-center lg:self-start">
@@ -161,7 +151,7 @@ export default function WorkExperienceCard() {
                   </ul>
                 </div>
               </div>
-            </div>
+            </Card>
           </motion.div>
         ))}
       </div>
