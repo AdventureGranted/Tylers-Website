@@ -39,6 +39,9 @@ export default function AIChatBubble() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const chatWindowRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   // Determine if user can chat (logged in or has provided info)
   const isLoggedIn = status === 'authenticated' && session?.user;
@@ -46,6 +49,31 @@ export default function AIChatBubble() {
   const userName = isLoggedIn
     ? session.user.name || session.user.email
     : visitorInfo?.name;
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640 || 'ontouchstart' in window);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Handle visual viewport changes (keyboard show/hide on mobile)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.visualViewport) return;
+
+    const viewport = window.visualViewport;
+    const handleResize = () => {
+      // Keyboard is likely visible if viewport height is significantly smaller than window height
+      const heightDiff = window.innerHeight - viewport.height;
+      setKeyboardVisible(heightDiff > 150);
+    };
+
+    viewport.addEventListener('resize', handleResize);
+    return () => viewport.removeEventListener('resize', handleResize);
+  }, []);
 
   // Load chat history and visitor info from localStorage on mount
   useEffect(() => {
@@ -101,12 +129,12 @@ export default function AIChatBubble() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Focus input when chat opens and user can chat
+  // Focus input when chat opens and user can chat (skip on mobile to avoid keyboard popup)
   useEffect(() => {
-    if (isOpen && canChat) {
+    if (isOpen && canChat && !isMobile) {
       inputRef.current?.focus();
     }
-  }, [isOpen, canChat]);
+  }, [isOpen, canChat, isMobile]);
 
   const startSession = async (name: string, email: string, userId?: string) => {
     try {
@@ -249,15 +277,27 @@ export default function AIChatBubble() {
     setSessionId(null);
   };
 
+  // Mobile-specific styles when keyboard is visible
+  const mobileKeyboardStyles =
+    isMobile && keyboardVisible
+      ? 'fixed inset-x-0 bottom-0 top-auto w-full max-h-[50vh] rounded-b-none rounded-t-2xl'
+      : isMobile && isOpen
+        ? 'fixed inset-x-2 bottom-20 w-auto max-h-[70vh] rounded-2xl'
+        : '';
+
   return (
     <>
       {/* Chat Window */}
       <div
-        className={`fixed right-4 bottom-20 z-[9998] flex w-80 flex-col overflow-hidden rounded-2xl bg-gray-800 shadow-2xl transition-all duration-300 sm:w-96 ${
+        ref={chatWindowRef}
+        className={`z-[9998] flex flex-col overflow-hidden bg-gray-800 shadow-2xl transition-all duration-300 ${
+          mobileKeyboardStyles ||
+          'fixed right-4 bottom-20 w-80 rounded-2xl sm:w-96'
+        } ${
           isOpen
-            ? 'pointer-events-auto max-h-[500px] opacity-100'
+            ? 'pointer-events-auto opacity-100'
             : 'pointer-events-none max-h-0 opacity-0'
-        }`}
+        } ${isOpen && !keyboardVisible ? 'max-h-[500px]' : ''}`}
         role="dialog"
         aria-label="AI Chat Assistant"
         aria-hidden={!isOpen}
@@ -313,7 +353,7 @@ export default function AIChatBubble() {
                 }
                 placeholder="Your name"
                 required
-                className="w-full rounded-xl bg-gray-700 px-3 py-2 text-sm text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
+                className="w-full rounded-xl bg-gray-700 px-3 py-2 text-base text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none sm:text-sm"
               />
               <input
                 type="email"
@@ -323,7 +363,7 @@ export default function AIChatBubble() {
                 }
                 placeholder="Your email"
                 required
-                className="w-full rounded-xl bg-gray-700 px-3 py-2 text-sm text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
+                className="w-full rounded-xl bg-gray-700 px-3 py-2 text-base text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none sm:text-sm"
               />
               <button
                 type="submit"
@@ -394,7 +434,7 @@ export default function AIChatBubble() {
                 onKeyDown={handleKeyDown}
                 placeholder="Type a message..."
                 rows={1}
-                className="max-h-24 min-h-[40px] flex-1 resize-none rounded-xl bg-gray-700 px-3 py-2 text-sm text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
+                className="max-h-24 min-h-[40px] flex-1 resize-none rounded-xl bg-gray-700 px-3 py-2 text-base text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none sm:text-sm"
                 disabled={isLoading}
               />
               <button
@@ -410,21 +450,23 @@ export default function AIChatBubble() {
         )}
       </div>
 
-      {/* Floating Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed right-4 bottom-4 z-[9999] flex h-14 w-14 items-center justify-center rounded-full bg-yellow-300 shadow-lg transition-all hover:scale-110 hover:bg-yellow-400 ${
-          isOpen ? 'rotate-90' : ''
-        }`}
-        aria-label={isOpen ? 'Close chat' : 'Open AI chat assistant'}
-        aria-expanded={isOpen}
-      >
-        {isOpen ? (
-          <IoMdClose className="text-2xl text-gray-900" />
-        ) : (
-          <IoMdChatbubbles className="text-2xl text-gray-900" />
-        )}
-      </button>
+      {/* Floating Button - hide when keyboard is visible on mobile */}
+      {!(isMobile && keyboardVisible && isOpen) && (
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={`fixed right-4 bottom-4 z-[9999] flex h-14 w-14 items-center justify-center rounded-full bg-yellow-300 shadow-lg transition-all hover:scale-110 hover:bg-yellow-400 ${
+            isOpen ? 'rotate-90' : ''
+          }`}
+          aria-label={isOpen ? 'Close chat' : 'Open AI chat assistant'}
+          aria-expanded={isOpen}
+        >
+          {isOpen ? (
+            <IoMdClose className="text-2xl text-gray-900" />
+          ) : (
+            <IoMdChatbubbles className="text-2xl text-gray-900" />
+          )}
+        </button>
+      )}
     </>
   );
 }
