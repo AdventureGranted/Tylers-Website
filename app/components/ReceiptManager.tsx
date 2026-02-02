@@ -15,8 +15,15 @@ interface Receipt {
   imageUrl: string | null;
   toolAmount: number;
   materialAmount: number;
+  miscAmount: number;
   description: string | null;
   createdAt: string;
+}
+
+interface ParsedItem {
+  name: string;
+  price: number;
+  category: 'material' | 'tool' | 'misc';
 }
 
 interface ReceiptManagerProps {
@@ -34,6 +41,7 @@ export default function ReceiptManager({
   const [total, setTotal] = useState(0);
   const [toolTotal, setToolTotal] = useState(0);
   const [materialTotal, setMaterialTotal] = useState(0);
+  const [miscTotal, setMiscTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -45,10 +53,12 @@ export default function ReceiptManager({
   const [isPdfFile, setIsPdfFile] = useState(false);
   const [toolAmount, setToolAmount] = useState('');
   const [materialAmount, setMaterialAmount] = useState('');
+  const [miscAmount, setMiscAmount] = useState('');
   const [description, setDescription] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
+  const [parsedItems, setParsedItems] = useState<ParsedItem[]>([]);
 
   const fetchReceipts = useCallback(async () => {
     try {
@@ -59,6 +69,7 @@ export default function ReceiptManager({
         setTotal(data.total);
         setToolTotal(data.toolTotal);
         setMaterialTotal(data.materialTotal);
+        setMiscTotal(data.miscTotal || 0);
       }
     } catch (error) {
       console.error('Error fetching receipts:', error);
@@ -115,6 +126,34 @@ export default function ReceiptManager({
     }
   };
 
+  // Calculate totals from parsed items
+  const calculateTotalsFromItems = (items: ParsedItem[]) => {
+    const tool = items
+      .filter((i) => i.category === 'tool')
+      .reduce((sum, i) => sum + i.price, 0);
+    const material = items
+      .filter((i) => i.category === 'material')
+      .reduce((sum, i) => sum + i.price, 0);
+    const misc = items
+      .filter((i) => i.category === 'misc')
+      .reduce((sum, i) => sum + i.price, 0);
+
+    setToolAmount(tool > 0 ? tool.toFixed(2) : '');
+    setMaterialAmount(material > 0 ? material.toFixed(2) : '');
+    setMiscAmount(misc > 0 ? misc.toFixed(2) : '');
+  };
+
+  // Update a single item's category
+  const updateItemCategory = (
+    index: number,
+    category: 'material' | 'tool' | 'misc'
+  ) => {
+    const updated = [...parsedItems];
+    updated[index] = { ...updated[index], category };
+    setParsedItems(updated);
+    calculateTotalsFromItems(updated);
+  };
+
   const handleAutoParse = async () => {
     if (!imagePreview) return;
 
@@ -135,12 +174,21 @@ export default function ReceiptManager({
         return;
       }
 
-      // Pre-fill the form with parsed data
-      if (data.toolAmount > 0) {
-        setToolAmount(data.toolAmount.toFixed(2));
-      }
-      if (data.materialAmount > 0) {
-        setMaterialAmount(data.materialAmount.toFixed(2));
+      // Store parsed items for editing
+      if (data.items && data.items.length > 0) {
+        setParsedItems(data.items);
+        calculateTotalsFromItems(data.items);
+      } else {
+        // Fallback if no items parsed - use the totals directly
+        if (data.toolAmount > 0) {
+          setToolAmount(data.toolAmount.toFixed(2));
+        }
+        if (data.materialAmount > 0) {
+          setMaterialAmount(data.materialAmount.toFixed(2));
+        }
+        if (data.miscAmount > 0) {
+          setMiscAmount(data.miscAmount.toFixed(2));
+        }
       }
 
       // Build description from vendor and items
@@ -172,8 +220,9 @@ export default function ReceiptManager({
     // At least one amount must be provided
     const toolAmt = parseFloat(toolAmount) || 0;
     const materialAmt = parseFloat(materialAmount) || 0;
-    if (toolAmt === 0 && materialAmt === 0) {
-      alert('Please enter at least one amount (tool or material)');
+    const miscAmt = parseFloat(miscAmount) || 0;
+    if (toolAmt === 0 && materialAmt === 0 && miscAmt === 0) {
+      alert('Please enter at least one amount (tool, material, or misc)');
       return;
     }
 
@@ -209,6 +258,7 @@ export default function ReceiptManager({
           imageUrl,
           toolAmount: toolAmt,
           materialAmount: materialAmt,
+          miscAmount: miscAmt,
           description: description || null,
         }),
       });
@@ -220,7 +270,9 @@ export default function ReceiptManager({
         setIsPdfFile(false);
         setToolAmount('');
         setMaterialAmount('');
+        setMiscAmount('');
         setDescription('');
+        setParsedItems([]);
         setShowForm(false);
         fetchReceipts();
         // Notify other components (like BudgetTracker) that receipts changed
@@ -284,7 +336,7 @@ export default function ReceiptManager({
       </div>
 
       {/* Cost Breakdown */}
-      <div className="mb-4 grid grid-cols-2 gap-2 rounded-xl bg-[var(--card-border)] p-3">
+      <div className="mb-4 grid grid-cols-3 gap-2 rounded-xl bg-[var(--card-border)] p-3">
         <div className="text-center">
           <div className="text-xs text-[var(--text-muted)]">Materials</div>
           <div className="font-semibold text-blue-500 dark:text-blue-400">
@@ -295,6 +347,12 @@ export default function ReceiptManager({
           <div className="text-xs text-[var(--text-muted)]">Tools</div>
           <div className="font-semibold text-purple-500 dark:text-purple-400">
             ${toolTotal.toFixed(2)}
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="text-xs text-[var(--text-muted)]">Misc</div>
+          <div className="font-semibold text-orange-500 dark:text-orange-400">
+            ${miscTotal.toFixed(2)}
           </div>
         </div>
       </div>
@@ -321,7 +379,9 @@ export default function ReceiptManager({
             setIsPdfFile(false);
             setToolAmount('');
             setMaterialAmount('');
+            setMiscAmount('');
             setDescription('');
+            setParsedItems([]);
             setParseError(null);
           }}
         >
@@ -444,10 +504,54 @@ export default function ReceiptManager({
               </div>
             </div>
 
-            <div className="mb-5 grid grid-cols-2 gap-4">
+            {/* Parsed Items with Editable Categories */}
+            {parsedItems.length > 0 && (
+              <div className="mb-5">
+                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                  Parsed Items (adjust categories if needed)
+                </label>
+                <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg bg-[var(--input-bg)] p-3">
+                  {parsedItems.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 text-sm"
+                    >
+                      <span className="min-w-0 flex-1 truncate text-[var(--text-primary)]">
+                        {item.name}
+                      </span>
+                      <span className="shrink-0 font-medium text-[var(--text-secondary)]">
+                        ${item.price.toFixed(2)}
+                      </span>
+                      <select
+                        value={item.category}
+                        onChange={(e) =>
+                          updateItemCategory(
+                            index,
+                            e.target.value as 'material' | 'tool' | 'misc'
+                          )
+                        }
+                        className={`shrink-0 rounded-md border-0 px-2 py-1 text-xs font-medium focus:ring-2 focus:ring-yellow-500 focus:outline-none ${
+                          item.category === 'material'
+                            ? 'bg-blue-500/20 text-blue-400'
+                            : item.category === 'tool'
+                              ? 'bg-purple-500/20 text-purple-400'
+                              : 'bg-orange-500/20 text-orange-400'
+                        }`}
+                      >
+                        <option value="material">Material</option>
+                        <option value="tool">Tool</option>
+                        <option value="misc">Misc</option>
+                      </select>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="mb-5 grid grid-cols-3 gap-3">
               <div>
                 <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
-                  Material Cost ($)
+                  Material ($)
                 </label>
                 <input
                   type="number"
@@ -456,12 +560,12 @@ export default function ReceiptManager({
                   value={materialAmount}
                   onChange={(e) => setMaterialAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
                 />
               </div>
               <div>
                 <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
-                  Tool Cost ($)
+                  Tool ($)
                 </label>
                 <input
                   type="number"
@@ -470,7 +574,21 @@ export default function ReceiptManager({
                   value={toolAmount}
                   onChange={(e) => setToolAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                />
+              </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                  Misc ($)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={miscAmount}
+                  onChange={(e) => setMiscAmount(e.target.value)}
+                  placeholder="0.00"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
                 />
               </div>
             </div>
@@ -491,7 +609,9 @@ export default function ReceiptManager({
             <div className="flex gap-3">
               <button
                 type="submit"
-                disabled={uploading || (!toolAmount && !materialAmount)}
+                disabled={
+                  uploading || (!toolAmount && !materialAmount && !miscAmount)
+                }
                 className="flex-1 rounded-lg bg-yellow-500 px-4 py-3 font-medium text-gray-900 transition-colors hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
               >
                 {uploading ? 'Uploading...' : 'Save'}
@@ -505,7 +625,9 @@ export default function ReceiptManager({
                   setIsPdfFile(false);
                   setToolAmount('');
                   setMaterialAmount('');
+                  setMiscAmount('');
                   setDescription('');
+                  setParsedItems([]);
                   setParseError(null);
                 }}
                 className="rounded-lg bg-[var(--card-border)] px-6 py-3 text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)]"
@@ -558,9 +680,14 @@ export default function ReceiptManager({
                 </div>
               )}
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="font-semibold text-yellow-500 dark:text-yellow-300">
-                    ${(receipt.toolAmount + receipt.materialAmount).toFixed(2)}
+                    $
+                    {(
+                      receipt.toolAmount +
+                      receipt.materialAmount +
+                      (receipt.miscAmount || 0)
+                    ).toFixed(2)}
                   </span>
                   {receipt.materialAmount > 0 && (
                     <span className="rounded-full bg-blue-500/20 px-2 py-0.5 text-xs font-medium text-blue-500 dark:text-blue-400">
@@ -570,6 +697,11 @@ export default function ReceiptManager({
                   {receipt.toolAmount > 0 && (
                     <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-medium text-purple-500 dark:text-purple-400">
                       Tool: ${receipt.toolAmount.toFixed(2)}
+                    </span>
+                  )}
+                  {(receipt.miscAmount || 0) > 0 && (
+                    <span className="rounded-full bg-orange-500/20 px-2 py-0.5 text-xs font-medium text-orange-500 dark:text-orange-400">
+                      Misc: ${receipt.miscAmount.toFixed(2)}
                     </span>
                   )}
                 </div>

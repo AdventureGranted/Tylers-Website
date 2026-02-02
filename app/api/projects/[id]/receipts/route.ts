@@ -23,9 +23,16 @@ export async function GET(
 
   const toolTotal = receipts.reduce((sum, r) => sum + r.toolAmount, 0);
   const materialTotal = receipts.reduce((sum, r) => sum + r.materialAmount, 0);
-  const total = toolTotal + materialTotal;
+  const miscTotal = receipts.reduce((sum, r) => sum + r.miscAmount, 0);
+  const total = toolTotal + materialTotal + miscTotal;
 
-  return NextResponse.json({ receipts, total, toolTotal, materialTotal });
+  return NextResponse.json({
+    receipts,
+    total,
+    toolTotal,
+    materialTotal,
+    miscTotal,
+  });
 }
 
 // POST new receipt (admin only)
@@ -50,15 +57,16 @@ export async function POST(
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }
 
-  const { imageUrl, toolAmount, materialAmount, description } =
+  const { imageUrl, toolAmount, materialAmount, miscAmount, description } =
     await request.json();
 
   const toolAmt = parseFloat(toolAmount) || 0;
   const materialAmt = parseFloat(materialAmount) || 0;
+  const miscAmt = parseFloat(miscAmount) || 0;
 
-  if (toolAmt === 0 && materialAmt === 0) {
+  if (toolAmt === 0 && materialAmt === 0 && miscAmt === 0) {
     return NextResponse.json(
-      { error: 'At least one amount (tool or material) is required' },
+      { error: 'At least one amount (tool, material, or misc) is required' },
       { status: 400 }
     );
   }
@@ -69,6 +77,7 @@ export async function POST(
       imageUrl: imageUrl || null,
       toolAmount: toolAmt,
       materialAmount: materialAmt,
+      miscAmount: miscAmt,
       description,
     },
   });

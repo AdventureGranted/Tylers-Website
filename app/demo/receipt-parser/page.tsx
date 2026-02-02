@@ -19,6 +19,7 @@ import PageTransition from '@/app/components/PageTransition';
 interface ParsedItem {
   name: string;
   price: number;
+  category: 'material' | 'tool' | 'misc';
 }
 
 interface ParsedReceipt {
@@ -30,6 +31,7 @@ interface ParsedReceipt {
   total: number | null;
   toolAmount: number;
   materialAmount: number;
+  miscAmount: number;
   raw_text?: string;
   method: 'vision' | 'ocr' | 'pdf';
 }
@@ -135,6 +137,36 @@ export default function ReceiptParserDemo() {
   const formatCurrency = (amount: number | null) => {
     if (amount === null) return '—';
     return `$${amount.toFixed(2)}`;
+  };
+
+  // Update item category and recalculate totals
+  const updateItemCategory = (
+    index: number,
+    category: 'material' | 'tool' | 'misc'
+  ) => {
+    if (!result) return;
+
+    const updatedItems = [...result.items];
+    updatedItems[index] = { ...updatedItems[index], category };
+
+    // Recalculate totals
+    const toolAmount = updatedItems
+      .filter((i) => i.category === 'tool')
+      .reduce((sum, i) => sum + i.price, 0);
+    const materialAmount = updatedItems
+      .filter((i) => i.category === 'material')
+      .reduce((sum, i) => sum + i.price, 0);
+    const miscAmount = updatedItems
+      .filter((i) => i.category === 'misc')
+      .reduce((sum, i) => sum + i.price, 0);
+
+    setResult({
+      ...result,
+      items: updatedItems,
+      toolAmount,
+      materialAmount,
+      miscAmount,
+    });
   };
 
   return (
@@ -315,18 +347,40 @@ export default function ReceiptParserDemo() {
                   {result.items.length > 0 && (
                     <div>
                       <p className="mb-2 text-xs text-[var(--text-muted)]">
-                        Items ({result.items.length})
+                        Items ({result.items.length}) - click category to change
                       </p>
-                      <div className="max-h-40 space-y-1 overflow-y-auto rounded-lg bg-[var(--input-bg)] p-3">
+                      <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg bg-[var(--input-bg)] p-3">
                         {result.items.map((item, i) => (
                           <div
                             key={i}
-                            className="flex justify-between text-sm text-[var(--text-secondary)]"
+                            className="flex items-center gap-2 text-sm"
                           >
-                            <span className="truncate pr-2">{item.name}</span>
-                            <span className="shrink-0">
+                            <span className="min-w-0 flex-1 truncate text-[var(--text-secondary)]">
+                              {item.name}
+                            </span>
+                            <span className="shrink-0 text-[var(--text-primary)]">
                               {formatCurrency(item.price)}
                             </span>
+                            <select
+                              value={item.category}
+                              onChange={(e) =>
+                                updateItemCategory(
+                                  i,
+                                  e.target.value as 'material' | 'tool' | 'misc'
+                                )
+                              }
+                              className={`shrink-0 cursor-pointer rounded-md border-0 px-2 py-1 text-xs font-medium focus:ring-2 focus:ring-yellow-500 focus:outline-none ${
+                                item.category === 'material'
+                                  ? 'bg-blue-500/20 text-blue-400'
+                                  : item.category === 'tool'
+                                    ? 'bg-purple-500/20 text-purple-400'
+                                    : 'bg-orange-500/20 text-orange-400'
+                              }`}
+                            >
+                              <option value="material">Material</option>
+                              <option value="tool">Tool</option>
+                              <option value="misc">Misc</option>
+                            </select>
                           </div>
                         ))}
                       </div>
@@ -356,20 +410,26 @@ export default function ReceiptParserDemo() {
                   </div>
 
                   {/* Categories */}
-                  <div className="grid grid-cols-2 gap-4 rounded-xl bg-[var(--input-bg)] p-4">
+                  <div className="grid grid-cols-3 gap-3 rounded-xl bg-[var(--input-bg)] p-4">
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-blue-500">
-                        {formatCurrency(result.toolAmount)}
-                      </p>
-                      <p className="text-xs text-[var(--text-muted)]">Tools</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-green-500">
+                      <p className="text-xl font-bold text-blue-500">
                         {formatCurrency(result.materialAmount)}
                       </p>
                       <p className="text-xs text-[var(--text-muted)]">
                         Materials
                       </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xl font-bold text-purple-500">
+                        {formatCurrency(result.toolAmount)}
+                      </p>
+                      <p className="text-xs text-[var(--text-muted)]">Tools</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xl font-bold text-orange-500">
+                        {formatCurrency(result.miscAmount)}
+                      </p>
+                      <p className="text-xs text-[var(--text-muted)]">Misc</p>
                     </div>
                   </div>
                 </div>
@@ -507,10 +567,13 @@ export default function ReceiptParserDemo() {
                     Items
                   </span>
                   <span className="rounded-full bg-blue-500/20 px-3 py-1 text-xs text-blue-400">
+                    Materials $
+                  </span>
+                  <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs text-purple-400">
                     Tools $
                   </span>
-                  <span className="rounded-full bg-green-500/20 px-3 py-1 text-xs text-green-400">
-                    Materials $
+                  <span className="rounded-full bg-orange-500/20 px-3 py-1 text-xs text-orange-400">
+                    Misc $
                   </span>
                 </div>
               </motion.div>

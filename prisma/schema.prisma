@@ -109,6 +109,7 @@ model Receipt {
   imageUrl       String?
   toolAmount     Float    @default(0)
   materialAmount Float    @default(0)
+  miscAmount     Float    @default(0)
   description    String?
   createdAt      DateTime @default(now())
 

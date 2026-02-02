@@ -7,15 +7,22 @@ const OPENWEBUI_API_KEY = process.env.OPENWEBUI_API_KEY || '';
 const VISION_MODEL = process.env.RECEIPT_VISION_MODEL || 'llama3.2-vision';
 const FALLBACK_MODEL = process.env.AI_MODEL || 'qwen2.5:14b';
 
+interface ParsedItem {
+  name: string;
+  price: number;
+  category: 'material' | 'tool' | 'misc';
+}
+
 interface ParsedReceipt {
   vendor: string | null;
   date: string | null;
-  items: Array<{ name: string; price: number }>;
+  items: ParsedItem[];
   subtotal: number | null;
   tax: number | null;
   total: number | null;
   toolAmount: number;
   materialAmount: number;
+  miscAmount: number;
   raw_text?: string;
   method: 'vision' | 'ocr' | 'pdf';
 }
@@ -25,19 +32,27 @@ const RECEIPT_PARSE_PROMPT = `You are a receipt parsing assistant. Analyze the r
 {
   "vendor": "store/company name",
   "date": "YYYY-MM-DD format if found",
-  "items": [{"name": "item description", "price": 0.00}],
+  "items": [{"name": "item description", "price": 0.00, "category": "material"}],
   "subtotal": 0.00,
   "tax": 0.00,
   "total": 0.00,
   "toolAmount": 0.00,
-  "materialAmount": 0.00
+  "materialAmount": 0.00,
+  "miscAmount": 0.00
 }
 
-Rules:
-- For toolAmount: sum prices of POWER TOOLS and HAND TOOLS only (drills, saws, hammers, screwdrivers, wrenches, pliers, measuring tools, clamps, etc.)
-- For materialAmount: sum prices of everything else including: lumber, screws, nails, paint, sandpaper, hardware (handles, pulls, knobs, hinges, brackets), adhesives, caulk, tape, brushes, rollers, safety equipment, cleaning supplies
-- If an item doesn't clearly fit either category, put it in materialAmount
-- Cabinet/drawer pulls, handles, and knobs are ALWAYS materials, not tools
+Rules for categorizing items:
+- "tool": POWER TOOLS and HAND TOOLS only (drills, saws, hammers, screwdrivers, wrenches, pliers, measuring tools, clamps, etc.)
+- "material": construction/project materials (lumber, screws, nails, paint, sandpaper, hardware like handles/pulls/knobs/hinges/brackets, adhesives, caulk, tape, brushes, rollers)
+- "misc": everything else (warranties, protection plans, fees, taxes as line items, gift cards, rentals, services, non-construction items)
+
+Important:
+- Each item MUST have a "category" field with value "tool", "material", or "misc"
+- Cabinet/drawer pulls, handles, and knobs are ALWAYS "material"
+- INCLUDE TAX AS A LINE ITEM with category "misc" (e.g., {"name": "Tax", "price": 2.50, "category": "misc"})
+- toolAmount = sum of all items with category "tool"
+- materialAmount = sum of all items with category "material"
+- miscAmount = sum of all items with category "misc" (including tax)
 - Use 0 for any values you can't determine
 - Return ONLY valid JSON, no other text`;
 
@@ -155,15 +170,31 @@ function extractJSON(text: string): ParsedReceipt | null {
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
       const parsed = JSON.parse(jsonMatch[0]);
+      // Ensure items have categories, default to 'material' if missing
+      const items: ParsedItem[] = Array.isArray(parsed.items)
+        ? parsed.items.map(
+            (item: { name?: string; price?: number; category?: string }) => ({
+              name: item.name || 'Unknown item',
+              price: item.price || 0,
+              category: (['tool', 'material', 'misc'].includes(
+                item.category || ''
+              )
+                ? item.category
+                : 'material') as 'tool' | 'material' | 'misc',
+            })
+          )
+        : [];
+
       return {
         vendor: parsed.vendor || null,
         date: parsed.date || null,
-        items: Array.isArray(parsed.items) ? parsed.items : [],
+        items,
         subtotal: parsed.subtotal || null,
         tax: parsed.tax || null,
         total: parsed.total || null,
         toolAmount: parsed.toolAmount || 0,
         materialAmount: parsed.materialAmount || 0,
+        miscAmount: parsed.miscAmount || 0,
         method: 'vision',
       };
     }
