@@ -3,6 +3,7 @@ import { prisma } from '@/app/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/lib/auth';
 import SortableHobbyGrid from '@/app/components/SortableHobbyGrid';
+import PageTransition from '@/app/components/PageTransition';
 
 export const metadata: Metadata = {
   title: 'Hobbies & Projects',
@@ -26,8 +27,10 @@ export default async function HobbiesPage() {
   const isAdmin = session?.user?.role === 'admin';
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-gray-900 px-4 py-12">
-      <SortableHobbyGrid projects={projects} isAdmin={isAdmin} />
-    </main>
+    <PageTransition>
+      <main className="flex min-h-screen flex-col items-center px-4 py-12">
+        <SortableHobbyGrid projects={projects} isAdmin={isAdmin} />
+      </main>
+    </PageTransition>
   );
 }

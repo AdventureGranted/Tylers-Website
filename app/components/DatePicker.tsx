@@ -115,39 +115,42 @@ export default function DatePicker({
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
-        className="flex items-center gap-1 rounded bg-gray-700 px-2 py-1 text-xs text-gray-200 hover:bg-gray-600 disabled:opacity-50"
+        className="flex items-center gap-1 rounded bg-[var(--card-border)] px-2 py-1 text-xs text-[var(--text-primary)] hover:bg-[var(--nav-hover)] disabled:opacity-50"
       >
-        <HiOutlineCalendar className="text-gray-400" />
+        <HiOutlineCalendar className="text-[var(--text-muted)]" />
         <span>{value ? formatDisplayDate(value) : placeholder}</span>
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 z-50 mt-1 w-64 rounded-lg bg-gray-700 p-3 shadow-xl">
+        <div className="absolute top-full right-0 z-50 mt-1 w-64 rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] p-3 shadow-xl">
           {/* Header */}
           <div className="mb-2 flex items-center justify-between">
             <button
               type="button"
               onClick={handlePrevMonth}
-              className="rounded p-1 hover:bg-gray-600"
+              className="rounded p-1 hover:bg-[var(--nav-hover)]"
             >
-              <HiChevronLeft className="text-gray-300" />
+              <HiChevronLeft className="text-[var(--text-secondary)]" />
             </button>
-            <span className="text-sm font-medium text-gray-200">
+            <span className="text-sm font-medium text-[var(--text-primary)]">
               {MONTHS[month]} {year}
             </span>
             <button
               type="button"
               onClick={handleNextMonth}
-              className="rounded p-1 hover:bg-gray-600"
+              className="rounded p-1 hover:bg-[var(--nav-hover)]"
             >
-              <HiChevronRight className="text-gray-300" />
+              <HiChevronRight className="text-[var(--text-secondary)]" />
             </button>
           </div>
 
           {/* Day headers */}
           <div className="mb-1 grid grid-cols-7 gap-1">
             {DAYS.map((day) => (
-              <div key={day} className="text-center text-xs text-gray-500">
+              <div
+                key={day}
+                className="text-center text-xs text-[var(--text-muted)]"
+              >
                 {day}
               </div>
             ))}
@@ -166,8 +169,8 @@ export default function DatePicker({
                       selectedDate.getFullYear() === year &&
                       selectedDate.getMonth() === month &&
                       selectedDate.getDate() === day
-                        ? 'bg-yellow-300 font-medium text-gray-900'
-                        : 'text-gray-300 hover:bg-gray-600'
+                        ? 'bg-yellow-500 font-medium text-gray-900 dark:bg-yellow-300'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--nav-hover)]'
                     }`}
                   >
                     {day}
@@ -182,7 +185,7 @@ export default function DatePicker({
             <button
               type="button"
               onClick={handleClear}
-              className="mt-2 w-full rounded bg-gray-600 py-1 text-xs text-gray-300 hover:bg-gray-500"
+              className="mt-2 w-full rounded bg-[var(--input-bg)] py-1 text-xs text-[var(--text-secondary)] hover:bg-[var(--nav-hover)]"
             >
               Clear
             </button>

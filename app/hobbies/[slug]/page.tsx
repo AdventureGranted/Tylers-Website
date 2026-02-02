@@ -18,6 +18,7 @@ import DifficultyRating from '@/app/components/DifficultyRating';
 import ProjectTags from '@/app/components/ProjectTags';
 import RelatedLinks from '@/app/components/RelatedLinks';
 import BeforeAfterToggle from '@/app/components/BeforeAfterToggle';
+import Breadcrumbs from '@/app/components/Breadcrumbs';
 import Image from 'next/image';
 import { HiOutlinePhotograph } from 'react-icons/hi';
 
@@ -50,6 +51,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description:
       project.description ||
       `Check out ${project.title} - a hobby project by Tyler Grant`,
+    alternates: {
+      canonical: `${siteUrl}/hobbies/${slug}`,
+    },
     openGraph: {
       title: project.title,
       description:
@@ -154,13 +158,22 @@ export default async function HobbyDetailPage({ params }: Props) {
   );
 
   return (
-    <main className="min-h-screen bg-gray-900 px-4 py-12">
+    <main className="min-h-screen px-4 py-12">
       <div className={`mx-auto ${isAdmin ? 'max-w-[1600px]' : 'max-w-6xl'}`}>
+        {/* Breadcrumbs */}
+        <Breadcrumbs
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Hobbies', href: '/hobbies' },
+            { label: project.title },
+          ]}
+        />
+
         {/* Back Navigation - far left */}
         <div className="mb-6">
           <Link
             href="/hobbies"
-            className="inline-flex items-center text-gray-400 transition-colors hover:text-yellow-300"
+            className="inline-flex items-center text-[var(--text-muted)] transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +208,7 @@ export default async function HobbyDetailPage({ params }: Props) {
           <div className="mx-auto max-w-4xl xl:min-w-0 xl:flex-1">
             {/* Title Row - title left, edit right */}
             <div className="mb-4 flex items-start justify-between gap-4">
-              <h1 className="text-4xl font-bold text-yellow-300">
+              <h1 className="text-4xl font-bold text-yellow-500 dark:text-yellow-300">
                 {project.title}
               </h1>
               {isAdmin && (
@@ -224,7 +237,7 @@ export default async function HobbyDetailPage({ params }: Props) {
 
             {/* Description */}
             {project.description && (
-              <p className="mb-6 text-xl text-gray-400">
+              <p className="mb-6 text-xl text-[var(--text-secondary)]">
                 {project.description}
               </p>
             )}
@@ -233,14 +246,14 @@ export default async function HobbyDetailPage({ params }: Props) {
             {project.images.length >= 1 && (
               <div className="mb-8">
                 {project.compareMode === 'single' ? (
-                  <div className="rounded-2xl bg-gray-800 p-4">
+                  <div className="rounded-2xl bg-[var(--input-bg)] p-4">
                     <div className="mb-3 flex items-center">
-                      <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-200">
-                        <HiOutlinePhotograph className="text-yellow-300" />
+                      <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+                        <HiOutlinePhotograph className="text-yellow-500 dark:text-yellow-300" />
                         Featured Photo
                       </h3>
                     </div>
-                    <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-700">
+                    <div className="relative aspect-video overflow-hidden rounded-lg bg-[var(--card-border)]">
                       {(() => {
                         // Filter to images only (same as BeforeAfterToggle does)
                         const imagesOnly = project.images.filter(
@@ -276,8 +289,8 @@ export default async function HobbyDetailPage({ params }: Props) {
 
             {/* Content */}
             {project.content && (
-              <div className="prose prose-invert max-w-none">
-                <div className="whitespace-pre-wrap text-gray-200">
+              <div className="prose prose-invert dark:prose-invert max-w-none">
+                <div className="whitespace-pre-wrap text-[var(--text-primary)]">
                   {project.content}
                 </div>
               </div>
@@ -286,7 +299,7 @@ export default async function HobbyDetailPage({ params }: Props) {
             {/* Photo grid - all photos */}
             {project.images.length > 0 && (
               <div className="mt-8 mb-8">
-                <h3 className="mb-4 text-lg font-semibold text-gray-200">
+                <h3 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
                   Photos
                 </h3>
                 <PhotoGrid images={project.images} />

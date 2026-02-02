@@ -81,9 +81,9 @@ export default function RelatedLinks({
 
   if (loading) {
     return (
-      <div className="rounded-2xl bg-gray-800 p-4">
-        <div className="flex items-center gap-2 text-sm text-gray-400">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-600 border-t-yellow-300" />
+      <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+        <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
           Loading...
         </div>
       </div>
@@ -96,9 +96,9 @@ export default function RelatedLinks({
   }
 
   return (
-    <div className="rounded-2xl bg-gray-800 p-4">
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-200">
-        <HiOutlineLink className="text-yellow-300" />
+    <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+        <HiOutlineLink className="text-yellow-500 dark:text-yellow-300" />
         Related Links
       </h3>
 
@@ -107,18 +107,18 @@ export default function RelatedLinks({
           {!showForm ? (
             <button
               onClick={() => setShowForm(true)}
-              className="mb-3 flex w-full items-center justify-center gap-1 rounded-lg bg-gray-700 py-2 text-sm text-gray-300 transition-colors hover:bg-gray-600"
+              className="mb-3 flex w-full items-center justify-center gap-1 rounded-lg bg-[var(--card-border)] py-2 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--nav-hover)]"
             >
               <HiOutlinePlus /> Add Link
             </button>
           ) : (
-            <div className="mb-3 space-y-2 rounded-lg bg-gray-700 p-3">
+            <div className="mb-3 space-y-2 rounded-lg bg-[var(--card-border)] p-3">
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Link title"
-                className="w-full rounded bg-gray-600 px-2 py-1 text-sm text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
+                className="w-full rounded border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-sm text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
                 autoFocus
               />
               <input
@@ -126,19 +126,19 @@ export default function RelatedLinks({
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://..."
-                className="w-full rounded bg-gray-600 px-2 py-1 text-sm text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
+                className="w-full rounded border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-sm text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
               />
               <div className="flex gap-2">
                 <button
                   onClick={handleAdd}
                   disabled={saving || !title.trim() || !url.trim()}
-                  className="flex-1 rounded bg-yellow-300 py-1 text-sm font-medium text-gray-900 hover:bg-yellow-400 disabled:opacity-50"
+                  className="flex-1 rounded bg-yellow-500 py-1 text-sm font-medium text-gray-900 hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
                 >
                   {saving ? 'Adding...' : 'Add'}
                 </button>
                 <button
                   onClick={() => setShowForm(false)}
-                  className="rounded bg-gray-600 px-3 py-1 text-sm text-gray-300 hover:bg-gray-500"
+                  className="rounded bg-[var(--nav-hover)] px-3 py-1 text-sm text-[var(--text-secondary)] hover:bg-[var(--card-border)]"
                 >
                   Cancel
                 </button>
@@ -153,13 +153,13 @@ export default function RelatedLinks({
           {links.map((link) => (
             <div
               key={link.id}
-              className="flex items-center justify-between rounded bg-gray-700 px-2 py-1.5"
+              className="flex items-center justify-between rounded bg-[var(--card-border)] px-2 py-1.5"
             >
               <a
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300"
+                className="flex items-center gap-1 text-sm text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
               >
                 {link.title}
                 <HiOutlineExternalLink className="text-xs" />
@@ -167,7 +167,7 @@ export default function RelatedLinks({
               {!readOnly && (
                 <button
                   onClick={() => handleDelete(link.id)}
-                  className="text-gray-500 hover:text-red-400"
+                  className="text-[var(--text-muted)] hover:text-red-400"
                 >
                   <HiOutlineTrash className="text-sm" />
                 </button>

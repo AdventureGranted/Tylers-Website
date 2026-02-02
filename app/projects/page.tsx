@@ -1,11 +1,22 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import PageTransition from '@/app/components/PageTransition';
 
 export const metadata: Metadata = {
   title: 'Projects',
   description:
     'View my software development projects including full-stack applications, self-hosted infrastructure, and mobile apps.',
+};
+
+// Pre-generated blur data URLs for project images
+const blurDataURLs: Record<string, string> = {
+  '/family.jpeg':
+    'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAYH/8QAIhAAAQMEAgMBAAAAAAAAAAAAAQIDBAAFBhEhEjEHQWH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABwRAAICAgMAAAAAAAAAAAAAAAECAAMEERIhQf/aAAwDAQACEQMRAD8Ax3CseuWRY1CuV3bZS0+yh9HiCQvSgDRIPBII/ta9SlRZGTUxd+xnR5z/2Q==',
+  '/selfhosting.png':
+    'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUG/8QAIRAAAQMEAgMBAAAAAAAAAAAAAQIDBAUGAAcRIRITMUH/xAAVAQEBAAAAAAAAAAAAAAAAAAAEBf/EABwRAAICAgMAAAAAAAAAAAAAAAECAAMEERIhMf/aAAwDAQACEQMRAD8AzO2tv1K4bUpFS9bKYsSQyl9uMhwrUEqAIJUQACeeeOc5xjFLJrVAT2eO37//2Q==',
+  '/boxie.png':
+    'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAcI/8QAIhAAAQMDBAMBAAAAAAAAAAAAAQIDBAUGEQAHEiEIE0Fx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAcEQACAgIDAAAAAAAAAAAAAAABAgADBBESITH/2gAMAwEAAhEDEEA/ANS7b2JAsmyaZbcN556PBbKfcv8AKlqJJUo8QByST116x1pdWk1t+p//2Q==',
 };
 
 export default function ProjectsPage() {
@@ -52,50 +63,62 @@ export default function ProjectsPage() {
   ];
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-gray-900 px-4 py-12">
-      <h1 className="mb-8 text-4xl font-bold text-white">Projects</h1>
-      <div className="grid w-full max-w-6xl gap-8 md:grid-cols-2">
-        {projects.map((project, idx) => (
-          <div
-            key={idx}
-            className="flex flex-col rounded-3xl border border-gray-700 bg-gray-800 p-6 shadow-lg transition-shadow duration-300 hover:shadow-2xl"
-          >
-            <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl border border-gray-700 bg-gray-700">
-              <Image
-                src={project.image}
-                alt={project.title + ' image'}
-                fill
-                className={`${
-                  project.image === '/boxie.png'
-                    ? 'object-center'
-                    : 'object-cover'
-                } transition-transform duration-300 hover:scale-105`}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority={idx === 0}
-              />
-            </div>
-            <h2 className="mb-1 text-2xl font-semibold text-yellow-300">
-              {project.title}
-            </h2>
-            {project.subtitle && (
-              <div className="text-md mb-1 text-gray-400">
-                {project.subtitle}
+    <PageTransition>
+      <main className="flex min-h-screen flex-col items-center px-4 py-12">
+        <h1 className="mb-8 text-4xl font-bold text-[var(--text-primary)]">
+          Projects
+        </h1>
+        <div className="grid w-full max-w-6xl gap-8 md:grid-cols-2">
+          {projects.map((project, idx) => (
+            <div
+              key={idx}
+              className="flex flex-col rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 transition-shadow duration-300 hover:shadow-xl"
+              style={{ boxShadow: 'var(--card-shadow)' }}
+            >
+              <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl border border-[var(--card-border)] bg-gray-700">
+                <Image
+                  src={project.image}
+                  alt={project.title + ' image'}
+                  fill
+                  className={`${
+                    project.image === '/boxie.png'
+                      ? 'object-center'
+                      : 'object-cover'
+                  } transition-transform duration-300 hover:scale-105`}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority={idx === 0}
+                  placeholder="blur"
+                  blurDataURL={blurDataURLs[project.image]}
+                />
               </div>
-            )}
-            {project.link && (
-              <Link href={project.link} className="text-md mb-1 text-gray-400">
-                {project.link}
-              </Link>
-            )}
-            <div className="mb-3 text-sm text-gray-400">{project.date}</div>
-            <ul className="list-inside list-disc space-y-2 pl-2 text-gray-200">
-              {project.bullets.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </main>
+              <h2 className="mb-1 text-2xl font-semibold text-yellow-300">
+                {project.title}
+              </h2>
+              {project.subtitle && (
+                <div className="text-md mb-1 text-[var(--text-secondary)]">
+                  {project.subtitle}
+                </div>
+              )}
+              {project.link && (
+                <Link
+                  href={project.link}
+                  className="text-md mb-1 text-[var(--text-secondary)]"
+                >
+                  {project.link}
+                </Link>
+              )}
+              <div className="mb-3 text-sm text-[var(--text-secondary)]">
+                {project.date}
+              </div>
+              <ul className="list-inside list-disc space-y-2 pl-2 text-[var(--text-primary)]">
+                {project.bullets.map((b, i) => (
+                  <li key={i}>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </main>
+    </PageTransition>
   );
 }

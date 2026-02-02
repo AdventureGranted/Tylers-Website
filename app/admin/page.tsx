@@ -339,58 +339,58 @@ export default async function AdminDashboard() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4 md:p-8">
+    <div className="min-h-screen bg-[var(--background)] p-4 md:p-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-200 md:text-3xl">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] md:text-3xl">
             Admin Dashboard
           </h1>
           <Link
             href="/"
-            className="text-gray-400 transition-colors hover:text-yellow-300"
+            className="text-[var(--text-muted)] transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
           >
             View Site
           </Link>
         </div>
 
         {/* Quick Actions */}
-        <div className="mb-8 rounded-xl bg-gray-800 p-6">
-          <h2 className="mb-4 text-xl font-semibold text-gray-200">
+        <div className="mb-8 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
+          <h2 className="mb-4 text-xl font-semibold text-[var(--text-primary)]">
             Quick Actions
           </h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:flex md:flex-wrap md:gap-4">
             <Link
               href="/admin/contacts"
-              className="relative rounded-lg bg-gray-700 px-4 py-3 text-center text-gray-200 transition-colors hover:bg-gray-600 md:py-2 md:text-left"
+              className="relative rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-center text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)] md:py-2 md:text-left"
             >
               Contact Submissions
               {unreadContacts > 0 && (
-                <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-yellow-300 text-xs font-bold text-gray-900">
+                <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-yellow-500 text-xs font-bold text-gray-900 dark:bg-yellow-300">
                   {unreadContacts}
                 </span>
               )}
             </Link>
             <Link
               href="/admin/projects"
-              className="rounded-lg bg-gray-700 px-4 py-3 text-center text-gray-200 transition-colors hover:bg-gray-600 md:py-2 md:text-left"
+              className="rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-center text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)] md:py-2 md:text-left"
             >
               Manage Projects
             </Link>
             <Link
               href="/admin/members"
-              className="rounded-lg bg-gray-700 px-4 py-3 text-center text-gray-200 transition-colors hover:bg-gray-600 md:py-2 md:text-left"
+              className="rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-center text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)] md:py-2 md:text-left"
             >
               Manage Members
             </Link>
             <Link
               href="/admin/chat-sessions"
-              className="rounded-lg bg-gray-700 px-4 py-3 text-center text-gray-200 transition-colors hover:bg-gray-600 md:py-2 md:text-left"
+              className="rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-center text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)] md:py-2 md:text-left"
             >
               Chat Sessions
             </Link>
             <Link
               href="/admin/projects/new"
-              className="rounded-lg bg-yellow-300 px-4 py-3 text-center font-semibold text-gray-900 transition-colors hover:bg-yellow-400 md:py-2 md:text-left"
+              className="rounded-lg bg-yellow-500 px-4 py-3 text-center font-semibold text-gray-900 transition-colors hover:bg-yellow-600 md:py-2 md:text-left dark:bg-yellow-300 dark:hover:bg-yellow-400"
             >
               New Project
             </Link>
@@ -402,16 +402,16 @@ export default async function AdminDashboard() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className={`rounded-xl p-4 text-center ${
+              className={`rounded-xl border border-[var(--card-border)] p-4 text-center ${
                 stat.highlight
-                  ? 'border-2 border-yellow-300/50 bg-yellow-300/10'
-                  : 'bg-gray-800'
+                  ? 'border-2 border-yellow-500/50 bg-yellow-500/10 dark:border-yellow-300/50 dark:bg-yellow-300/10'
+                  : 'bg-[var(--card-bg)]'
               }`}
             >
-              <div className="text-2xl font-bold text-yellow-300 md:text-3xl">
+              <div className="text-2xl font-bold text-yellow-500 md:text-3xl dark:text-yellow-300">
                 {stat.value}
               </div>
-              <div className="text-xs text-gray-400 md:text-sm">
+              <div className="text-xs text-[var(--text-muted)] md:text-sm">
                 {stat.label}
               </div>
             </div>
@@ -421,14 +421,19 @@ export default async function AdminDashboard() {
         {/* Engagement Stats */}
         <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4">
           {engagementStats.map((stat) => (
-            <div key={stat.label} className="rounded-xl bg-gray-800 p-4">
-              <div className="text-2xl font-bold text-yellow-300">
+            <div
+              key={stat.label}
+              className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-4"
+            >
+              <div className="text-2xl font-bold text-yellow-500 dark:text-yellow-300">
                 {stat.value}
               </div>
-              <div className="text-sm font-medium text-gray-200">
+              <div className="text-sm font-medium text-[var(--text-primary)]">
                 {stat.label}
               </div>
-              <div className="text-xs text-gray-500">{stat.desc}</div>
+              <div className="text-xs text-[var(--text-muted)]">
+                {stat.desc}
+              </div>
             </div>
           ))}
         </div>
@@ -436,16 +441,16 @@ export default async function AdminDashboard() {
         {/* Charts Row */}
         <div className="mb-8 grid gap-6 lg:grid-cols-2">
           {/* Daily Traffic */}
-          <div className="rounded-xl bg-gray-800 p-6">
-            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
+            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
               Traffic
             </h2>
             <TrafficChart data={trafficChartData} referrers={uniqueReferrers} />
           </div>
 
           {/* Top Pages */}
-          <div className="rounded-xl bg-gray-800 p-6">
-            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
+            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
               Top Pages
             </h2>
             <div className="space-y-2">
@@ -456,10 +461,10 @@ export default async function AdminDashboard() {
                     key={page.page}
                     className="flex items-center justify-between"
                   >
-                    <span className="truncate text-sm text-gray-300">
+                    <span className="truncate text-sm text-[var(--text-secondary)]">
                       {page.page || '/'}
                     </span>
-                    <span className="ml-2 text-sm font-medium text-yellow-300">
+                    <span className="ml-2 text-sm font-medium text-yellow-500 dark:text-yellow-300">
                       {page._count.page}
                     </span>
                   </div>
@@ -471,8 +476,8 @@ export default async function AdminDashboard() {
         {/* Breakdown Row */}
         <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {/* Device Breakdown */}
-          <div className="rounded-xl bg-gray-800 p-6">
-            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
+            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
               Devices
             </h2>
             <div className="space-y-3">
@@ -484,14 +489,14 @@ export default async function AdminDashboard() {
                 return (
                   <div key={d.device}>
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-300 capitalize">
+                      <span className="text-[var(--text-secondary)] capitalize">
                         {d.device}
                       </span>
-                      <span className="text-gray-400">{pct}%</span>
+                      <span className="text-[var(--text-muted)]">{pct}%</span>
                     </div>
-                    <div className="mt-1 h-2 rounded-full bg-gray-700">
+                    <div className="mt-1 h-2 rounded-full bg-[var(--input-bg)]">
                       <div
-                        className="h-2 rounded-full bg-yellow-300"
+                        className="h-2 rounded-full bg-yellow-500 dark:bg-yellow-300"
                         style={{ width: `${pct}%` }}
                       />
                     </div>
@@ -502,8 +507,8 @@ export default async function AdminDashboard() {
           </div>
 
           {/* Browser Breakdown */}
-          <div className="rounded-xl bg-gray-800 p-6">
-            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
+            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
               Browsers
             </h2>
             <div className="space-y-2">
@@ -512,8 +517,10 @@ export default async function AdminDashboard() {
                   key={b.browser}
                   className="flex items-center justify-between"
                 >
-                  <span className="text-gray-300 capitalize">{b.browser}</span>
-                  <span className="text-sm text-yellow-300">
+                  <span className="text-[var(--text-secondary)] capitalize">
+                    {b.browser}
+                  </span>
+                  <span className="text-sm text-yellow-500 dark:text-yellow-300">
                     {b._count.browser}
                   </span>
                 </div>
@@ -522,8 +529,8 @@ export default async function AdminDashboard() {
           </div>
 
           {/* Referrer Sources */}
-          <div className="rounded-xl bg-gray-800 p-6">
-            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
+            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
               Traffic Sources
             </h2>
             <div className="space-y-2">
@@ -539,10 +546,12 @@ export default async function AdminDashboard() {
                       key={r.referrer}
                       className="flex items-center justify-between"
                     >
-                      <span className="text-gray-300 capitalize">
+                      <span className="text-[var(--text-secondary)] capitalize">
                         {r.referrer || 'direct'}
                       </span>
-                      <span className="text-sm text-gray-400">{pct}%</span>
+                      <span className="text-sm text-[var(--text-muted)]">
+                        {pct}%
+                      </span>
                     </div>
                   );
                 })}
@@ -550,8 +559,8 @@ export default async function AdminDashboard() {
           </div>
 
           {/* Countries */}
-          <div className="rounded-xl bg-gray-800 p-6">
-            <h2 className="mb-4 text-lg font-semibold text-gray-200">
+          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
+            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
               Countries
             </h2>
             <div className="space-y-2">
@@ -563,16 +572,16 @@ export default async function AdminDashboard() {
                       key={c.country}
                       className="flex items-center justify-between"
                     >
-                      <span className="text-gray-300">
+                      <span className="text-[var(--text-secondary)]">
                         {c.country || 'Unknown'}
                       </span>
-                      <span className="text-sm text-yellow-300">
+                      <span className="text-sm text-yellow-500 dark:text-yellow-300">
                         {c._count.country}
                       </span>
                     </div>
                   ))
               ) : (
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-[var(--text-muted)]">
                   No geo data yet (requires CDN headers)
                 </p>
               )}
@@ -581,14 +590,14 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div className="mb-8 rounded-xl bg-gray-800 p-6">
-          <h2 className="mb-4 text-lg font-semibold text-gray-200">
+        <div className="mb-8 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
+          <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
             Recent Activity
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-700 text-left text-gray-400">
+                <tr className="border-b border-[var(--card-border)] text-left text-[var(--text-muted)]">
                   <th className="pb-2">Page</th>
                   <th className="pb-2">IP</th>
                   <th className="pb-2">Device</th>
@@ -597,12 +606,15 @@ export default async function AdminDashboard() {
                   <th className="pb-2">Time</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-300">
+              <tbody className="text-[var(--text-secondary)]">
                 {(recentActivity as RecentActivityRow[]).map(
                   (event: RecentActivityRow, i: number) => (
-                    <tr key={i} className="border-b border-gray-700/50">
+                    <tr
+                      key={i}
+                      className="border-b border-[var(--card-border)]/50"
+                    >
                       <td className="py-2">{event.page || '/'}</td>
-                      <td className="py-2 font-mono text-xs text-gray-400">
+                      <td className="py-2 font-mono text-xs text-[var(--text-muted)]">
                         {event.ip || '-'}
                       </td>
                       <td className="py-2 capitalize">{event.device || '-'}</td>
@@ -610,7 +622,7 @@ export default async function AdminDashboard() {
                         {event.referrer || 'direct'}
                       </td>
                       <td className="py-2">{event.country || '-'}</td>
-                      <td className="py-2 text-gray-500">
+                      <td className="py-2 text-[var(--text-muted)]">
                         {event.createdAt.toLocaleString('en-US', {
                           month: 'short',
                           day: 'numeric',

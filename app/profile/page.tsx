@@ -5,7 +5,11 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Cropper, { Area } from 'react-easy-crop';
-import { AiOutlineCamera, AiOutlineDelete, AiOutlineClose } from 'react-icons/ai';
+import {
+  AiOutlineCamera,
+  AiOutlineDelete,
+  AiOutlineClose,
+} from 'react-icons/ai';
 
 // Helper function to create cropped image
 async function getCroppedImg(
@@ -37,11 +41,7 @@ async function getCroppedImg(
 
   // Convert to blob
   return new Promise((resolve) => {
-    canvas.toBlob(
-      (blob) => resolve(blob),
-      'image/jpeg',
-      0.95
-    );
+    canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.95);
   });
 }
 
@@ -79,17 +79,29 @@ export default function ProfilePage() {
     }
   }, [session, status, router]);
 
-  const onCropComplete = useCallback((_croppedArea: Area, croppedAreaPixels: Area) => {
-    setCroppedAreaPixels(croppedAreaPixels);
-  }, []);
+  const onCropComplete = useCallback(
+    (_croppedArea: Area, croppedAreaPixels: Area) => {
+      setCroppedAreaPixels(croppedAreaPixels);
+    },
+    []
+  );
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     // Validate file type
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/heic', 'image/heif'];
-    const isHeic = file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
+    const validTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'image/gif',
+      'image/heic',
+      'image/heif',
+    ];
+    const isHeic =
+      file.name.toLowerCase().endsWith('.heic') ||
+      file.name.toLowerCase().endsWith('.heif');
 
     if (!validTypes.includes(file.type) && !isHeic) {
       setMessage('Invalid file type. Allowed: JPG, PNG, WebP, GIF, or HEIC.');
@@ -213,8 +225,8 @@ export default function ProfilePage() {
 
   if (status === 'loading') {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-900">
-        <p className="text-gray-400">Loading...</p>
+      <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">
+        <p className="text-[var(--text-muted)]">Loading...</p>
       </div>
     );
   }
@@ -224,15 +236,19 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 px-4 py-12">
+    <div className="min-h-screen bg-[var(--background)] px-4 py-12">
       <div className="mx-auto max-w-md">
-        <h1 className="mb-8 text-3xl font-bold text-gray-200">Your Profile</h1>
+        <h1 className="mb-8 text-3xl font-bold text-[var(--text-primary)]">
+          Your Profile
+        </h1>
 
-        <div className="rounded-xl bg-gray-800 p-6">
+        <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
           {message && (
             <div
               className={`mb-6 rounded-lg p-3 ${
-                message.includes('success') || message.includes('updated') || message.includes('removed')
+                message.includes('success') ||
+                message.includes('updated') ||
+                message.includes('removed')
                   ? 'bg-green-500/20 text-green-400'
                   : 'bg-red-500/20 text-red-400'
               }`}
@@ -253,13 +269,13 @@ export default function ProfilePage() {
                   className="h-30 w-30 rounded-full object-cover"
                 />
               ) : (
-                <div className="flex h-30 w-30 items-center justify-center rounded-full bg-yellow-300 text-4xl font-bold text-gray-900">
+                <div className="flex h-30 w-30 items-center justify-center rounded-full bg-yellow-500 text-4xl font-bold text-gray-900 dark:bg-yellow-300">
                   {session.user.name?.[0]?.toUpperCase() || 'U'}
                 </div>
               )}
               {imageLoading && (
                 <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50">
-                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-yellow-300 border-t-transparent"></div>
+                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-yellow-500 border-t-transparent dark:border-yellow-300"></div>
                 </div>
               )}
             </div>
@@ -276,7 +292,7 @@ export default function ProfilePage() {
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={imageLoading}
-                className="flex items-center gap-2 rounded-lg bg-gray-700 px-4 py-2 text-sm text-gray-200 transition-colors hover:bg-gray-600 disabled:opacity-50"
+                className="flex items-center gap-2 rounded-lg bg-[var(--input-bg)] px-4 py-2 text-sm text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)] disabled:opacity-50"
               >
                 <AiOutlineCamera />
                 {session.user.profileImage ? 'Change' : 'Upload'}
@@ -293,7 +309,7 @@ export default function ProfilePage() {
                 </button>
               )}
             </div>
-            <p className="mt-2 text-xs text-gray-500">
+            <p className="mt-2 text-xs text-[var(--text-muted)]">
               Max 10MB. JPG, PNG, WebP, GIF, or HEIC.
             </p>
           </div>
@@ -302,7 +318,7 @@ export default function ProfilePage() {
             <div>
               <label
                 htmlFor="email"
-                className="mb-1 block text-sm text-gray-400"
+                className="mb-1 block text-sm text-[var(--text-muted)]"
               >
                 Email
               </label>
@@ -311,9 +327,9 @@ export default function ProfilePage() {
                 id="email"
                 value={session.user.email || ''}
                 disabled
-                className="w-full rounded-lg border border-gray-700 bg-gray-900 px-4 py-2 text-gray-400"
+                className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-[var(--text-muted)]"
               />
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Email cannot be changed
               </p>
             </div>
@@ -321,7 +337,7 @@ export default function ProfilePage() {
             <div>
               <label
                 htmlFor="name"
-                className="mb-1 block text-sm text-gray-400"
+                className="mb-1 block text-sm text-[var(--text-muted)]"
               >
                 Display Name
               </label>
@@ -330,14 +346,16 @@ export default function ProfilePage() {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
                 placeholder="Your name"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm text-gray-400">Role</label>
-              <div className="rounded-lg border border-gray-700 bg-gray-900 px-4 py-2 text-gray-400">
+              <label className="mb-1 block text-sm text-[var(--text-muted)]">
+                Role
+              </label>
+              <div className="rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-[var(--text-muted)]">
                 {session.user.role === 'admin' ? 'Administrator' : 'User'}
               </div>
             </div>
@@ -345,7 +363,7 @@ export default function ProfilePage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-yellow-300 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-50"
+              className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
             >
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
@@ -356,20 +374,20 @@ export default function ProfilePage() {
       {/* Cropper Modal */}
       {showCropper && imageSrc && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-gray-800 p-6">
+          <div className="w-full max-w-lg rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-200">
+              <h2 className="text-xl font-semibold text-[var(--text-primary)]">
                 Adjust Your Photo
               </h2>
               <button
                 onClick={handleCropCancel}
-                className="text-gray-400 transition-colors hover:text-gray-200"
+                className="text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)]"
               >
                 <AiOutlineClose className="text-2xl" />
               </button>
             </div>
 
-            <div className="relative h-80 w-full overflow-hidden rounded-xl bg-gray-900">
+            <div className="relative h-80 w-full overflow-hidden rounded-xl bg-[var(--background)]">
               <Cropper
                 image={imageSrc}
                 crop={crop}
@@ -384,7 +402,9 @@ export default function ProfilePage() {
             </div>
 
             <div className="mt-4">
-              <label className="mb-2 block text-sm text-gray-400">Zoom</label>
+              <label className="mb-2 block text-sm text-[var(--text-muted)]">
+                Zoom
+              </label>
               <input
                 type="range"
                 min={1}
@@ -392,21 +412,21 @@ export default function ProfilePage() {
                 step={0.1}
                 value={zoom}
                 onChange={(e) => setZoom(Number(e.target.value))}
-                className="w-full accent-yellow-300"
+                className="w-full accent-yellow-500 dark:accent-yellow-300"
               />
             </div>
 
             <div className="mt-6 flex gap-3">
               <button
                 onClick={handleCropCancel}
-                className="flex-1 rounded-lg border border-gray-600 py-2 text-gray-300 transition-colors hover:bg-gray-700"
+                className="flex-1 rounded-lg border border-[var(--card-border)] py-2 text-[var(--text-secondary)] transition-colors hover:bg-[var(--nav-hover)]"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCropSave}
                 disabled={imageLoading}
-                className="flex-1 rounded-lg bg-yellow-300 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-50"
+                className="flex-1 rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
               >
                 {imageLoading ? 'Saving...' : 'Save'}
               </button>

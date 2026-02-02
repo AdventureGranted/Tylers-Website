@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 function RegisterForm() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -24,7 +24,9 @@ function RegisterForm() {
   }, [status, router]);
 
   if (status === 'loading') {
-    return <div className="text-center text-gray-400">Loading...</div>;
+    return (
+      <div className="text-center text-[var(--text-muted)]">Loading...</div>
+    );
   }
 
   if (status === 'authenticated') {
@@ -82,7 +84,10 @@ function RegisterForm() {
       )}
 
       <div>
-        <label htmlFor="name" className="mb-1 block text-sm text-gray-400">
+        <label
+          htmlFor="name"
+          className="mb-1 block text-sm text-[var(--text-muted)]"
+        >
           Display Name
         </label>
         <input
@@ -90,14 +95,17 @@ function RegisterForm() {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
           placeholder="Your name"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="mb-1 block text-sm text-gray-400">
+        <label
+          htmlFor="email"
+          className="mb-1 block text-sm text-[var(--text-muted)]"
+        >
           Email
         </label>
         <input
@@ -105,13 +113,16 @@ function RegisterForm() {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="mb-1 block text-sm text-gray-400">
+        <label
+          htmlFor="password"
+          className="mb-1 block text-sm text-[var(--text-muted)]"
+        >
           Password
         </label>
         <input
@@ -119,11 +130,11 @@ function RegisterForm() {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
           required
           minLength={8}
         />
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-1 text-xs text-[var(--text-muted)]">
           Must be at least 8 characters
         </p>
       </div>
@@ -131,7 +142,7 @@ function RegisterForm() {
       <div>
         <label
           htmlFor="confirmPassword"
-          className="mb-1 block text-sm text-gray-400"
+          className="mb-1 block text-sm text-[var(--text-muted)]"
         >
           Confirm Password
         </label>
@@ -140,7 +151,7 @@ function RegisterForm() {
           id="confirmPassword"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
           required
           minLength={8}
         />
@@ -149,14 +160,17 @@ function RegisterForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-lg bg-yellow-300 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-50"
+        className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
       >
         {loading ? 'Creating account...' : 'Create Account'}
       </button>
 
-      <p className="text-center text-sm text-gray-400">
+      <p className="text-center text-sm text-[var(--text-muted)]">
         Already have an account?{' '}
-        <Link href="/login" className="text-yellow-300 hover:underline">
+        <Link
+          href="/login"
+          className="text-yellow-500 hover:underline dark:text-yellow-300"
+        >
           Sign in
         </Link>
       </p>
@@ -166,14 +180,16 @@ function RegisterForm() {
 
 export default function RegisterPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4">
       <div className="w-full max-w-md">
-        <h1 className="mb-8 text-center text-3xl font-bold text-gray-200">
+        <h1 className="mb-8 text-center text-3xl font-bold text-[var(--text-primary)]">
           Create Account
         </h1>
         <Suspense
           fallback={
-            <div className="text-center text-gray-400">Loading...</div>
+            <div className="text-center text-[var(--text-muted)]">
+              Loading...
+            </div>
           }
         >
           <RegisterForm />

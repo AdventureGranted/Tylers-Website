@@ -93,7 +93,9 @@ export default function WorkExperienceCard() {
     >
       {/* Section Header */}
       <motion.div variants={itemVariants} className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-gray-200">Work Experience</h2>
+        <h2 className="text-3xl font-bold text-[var(--text-primary)]">
+          Work Experience
+        </h2>
         <div className="mx-auto mt-2 h-1 w-72 rounded bg-gradient-to-r from-purple-500 to-yellow-300" />
       </motion.div>
 
@@ -109,10 +111,13 @@ export default function WorkExperienceCard() {
             className="group relative mb-8 last:mb-0"
           >
             {/* Timeline dot */}
-            <div className="absolute top-8 left-6 hidden h-5 w-5 rounded-full border-4 border-gray-900 bg-yellow-300 transition-all duration-300 group-hover:scale-125 group-hover:bg-purple-500 md:block" />
+            <div className="absolute top-8 left-6 hidden h-5 w-5 rounded-full border-4 border-[var(--background)] bg-yellow-300 transition-all duration-300 group-hover:scale-125 group-hover:bg-purple-500 md:block" />
 
             {/* Card */}
-            <div className="rounded-2xl bg-gray-800 p-6 transition-all duration-300 hover:bg-gray-800/80 md:ml-16">
+            <div
+              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 transition-all duration-300 hover:opacity-90 md:ml-16"
+              style={{ boxShadow: 'var(--card-shadow)' }}
+            >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
                 {/* Logo */}
                 <div className="flex-shrink-0 self-center lg:self-start">
@@ -131,19 +136,23 @@ export default function WorkExperienceCard() {
                 <div className="flex-grow">
                   <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                      <h3 className="text-xl font-bold text-gray-200">
+                      <h3 className="text-xl font-bold text-[var(--text-primary)]">
                         {exp.company}
                       </h3>
-                      <p className="text-yellow-300">{exp.role}</p>
+                      <p className="text-yellow-500 dark:text-yellow-300">
+                        {exp.role}
+                      </p>
                     </div>
-                    <span className="text-sm text-gray-400">{exp.date}</span>
+                    <span className="text-sm text-[var(--text-secondary)]">
+                      {exp.date}
+                    </span>
                   </div>
 
                   <ul className="mt-4 space-y-2">
                     {exp.bullets.map((bullet, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-gray-300"
+                        className="flex items-start gap-2 text-[var(--text-secondary)]"
                       >
                         <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400" />
                         <span>{bullet}</span>

@@ -1,19 +1,22 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BsGithub, BsLinkedin } from 'react-icons/bs';
 import { HiOutlineMail } from 'react-icons/hi';
-import Modal from './Modal';
+import { useToast } from '@/app/hooks/useToast';
 import { trackResumeDownload } from '@/app/lib/analytics';
 
+// Pre-generated blur data URL for profile image (10x10 placeholder)
+const profileBlurDataURL =
+  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgcI/8QAIhAAAQMEAQUBAAAAAAAAAAAAAQIDBAAFBhEHEiExQVFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAwT/xAAcEQACAgIDAAAAAAAAAAAAAAABAgADBBESIUH/2gAMAwEAAhEDEEA/AJJxnmV6wq8SLlZoUB2W7H8Il3FCy4hHWFKSgKCe4B76/NVu2c4X6Db4sNuzWVLMdpDKVeEcJ6QBv59d6rNKVTiyyzKA3zOWmjFeUx2f/9k=';
+
 export default function ProfileCard() {
-  const [showModal, setShowModal] = useState(false);
+  const { success } = useToast();
 
   const handleDownload = () => {
     trackResumeDownload();
-    setShowModal(true);
+    success('Thank you for downloading my resume!');
   };
 
   const socialLinks = [
@@ -39,7 +42,8 @@ export default function ProfileCard() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="relative mx-auto mt-4 overflow-hidden rounded-3xl bg-gray-800 p-8 shadow-xl xl:min-h-[280px] xl:py-12"
+      className="relative mx-auto mt-4 overflow-hidden rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] p-8 xl:min-h-[280px] xl:py-12"
+      style={{ boxShadow: 'var(--card-shadow)' }}
     >
       {/* Subtle gradient background decoration */}
       <div className="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
@@ -60,6 +64,8 @@ export default function ProfileCard() {
           width={200}
           height={200}
           priority
+          placeholder="blur"
+          blurDataURL={profileBlurDataURL}
           className="relative rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105"
         />
       </motion.div>
@@ -69,17 +75,20 @@ export default function ProfileCard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="max-w-2xl text-4xl font-bold text-white"
+          className="max-w-2xl text-4xl font-bold text-[var(--text-primary)]"
         >
-          Hi, I&apos;m <span className="text-yellow-300">Tyler Grant</span>.
-          Nice to meet you!
+          Hi, I&apos;m{' '}
+          <span className="text-yellow-500 dark:text-yellow-300">
+            Tyler Grant
+          </span>
+          . Nice to meet you!
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-4 max-w-xl text-xl text-gray-300"
+          className="mt-4 max-w-xl text-xl text-[var(--text-secondary)]"
         >
           I&apos;m a passionate software engineer with experience in building
           modern, responsive websites and applications. I love learning new
@@ -100,7 +109,7 @@ export default function ProfileCard() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={link.label}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-700 text-gray-300 transition-all duration-300 hover:scale-110 hover:bg-yellow-300 hover:text-gray-900"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--input-bg)] text-[var(--text-secondary)] transition-all duration-300 hover:scale-110 hover:bg-yellow-300 hover:text-gray-900"
             >
               {link.icon}
             </a>
@@ -118,13 +127,6 @@ export default function ProfileCard() {
         >
           Download Resume
         </motion.a>
-
-        <Modal show={showModal} onClose={() => setShowModal(false)}>
-          <h2 className="mb-4 text-2xl font-bold text-gray-300">Thank You!</h2>
-          <p className="mb-6 text-gray-300">
-            I hope you consider my resume for your next project or opportunity.
-          </p>
-        </Modal>
       </div>
     </motion.div>
   );

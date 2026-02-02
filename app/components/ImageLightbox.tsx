@@ -86,7 +86,7 @@ export default function ImageLightbox({
     >
       {/* Modal container */}
       <div
-        className="relative max-h-[85vh] max-w-4xl overflow-hidden rounded-2xl bg-gray-900 shadow-2xl"
+        className="relative max-h-[85vh] max-w-4xl overflow-hidden rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -197,7 +197,9 @@ export default function ImageLightbox({
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`h-2 w-2 rounded-full transition-colors ${
-                  index === currentIndex ? 'bg-yellow-300' : 'bg-white/50'
+                  index === currentIndex
+                    ? 'bg-yellow-500 dark:bg-yellow-300'
+                    : 'bg-white/50'
                 }`}
                 aria-label={`Go to image ${index + 1}`}
               />

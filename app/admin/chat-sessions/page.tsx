@@ -99,33 +99,35 @@ export default function AdminChatSessionsPage() {
 
   if (status === 'loading' || loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-gray-900">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-600 border-t-yellow-300" />
+      <main className="flex min-h-screen items-center justify-center bg-[var(--background)]">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gray-900 px-4 py-12">
+    <main className="min-h-screen bg-[var(--background)] px-4 py-12">
       <div className="mx-auto max-w-5xl">
         <div className="mb-8">
           <Link
             href="/admin"
-            className="mb-2 inline-block text-sm text-gray-400 hover:text-yellow-300"
+            className="mb-2 inline-block text-sm text-[var(--text-muted)] hover:text-yellow-500 dark:hover:text-yellow-300"
           >
             &larr; Back to Admin
           </Link>
-          <h1 className="text-3xl font-bold text-white">AI Chat Sessions</h1>
-          <p className="mt-2 text-gray-400">
+          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
+            AI Chat Sessions
+          </h1>
+          <p className="mt-2 text-[var(--text-muted)]">
             {chatSessions.length} sessions &middot; {totalMessages} total
             messages
           </p>
         </div>
 
         {chatSessions.length === 0 ? (
-          <div className="rounded-2xl bg-gray-800 p-12 text-center">
-            <IoChatbubblesOutline className="mx-auto mb-4 text-5xl text-gray-600" />
-            <p className="text-gray-400">No chat sessions yet.</p>
+          <div className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-12 text-center">
+            <IoChatbubblesOutline className="mx-auto mb-4 text-5xl text-[var(--text-muted)]" />
+            <p className="text-[var(--text-muted)]">No chat sessions yet.</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -134,12 +136,12 @@ export default function AdminChatSessionsPage() {
               return (
                 <div
                   key={chatSession.id}
-                  className="rounded-2xl border border-gray-700 bg-gray-800 p-6"
+                  className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-semibold text-gray-200">
+                        <h3 className="text-xl font-semibold text-[var(--text-primary)]">
                           {chatSession.visitorName}
                         </h3>
                         {chatSession.userId && (
@@ -148,10 +150,10 @@ export default function AdminChatSessionsPage() {
                           </span>
                         )}
                       </div>
-                      <div className="mt-1 flex flex-wrap items-center gap-4 text-sm text-gray-400">
+                      <div className="mt-1 flex flex-wrap items-center gap-4 text-sm text-[var(--text-muted)]">
                         <a
                           href={`mailto:${chatSession.visitorEmail}`}
-                          className="flex items-center gap-1 hover:text-yellow-300"
+                          className="flex items-center gap-1 hover:text-yellow-500 dark:hover:text-yellow-300"
                         >
                           <HiOutlineMail />
                           {chatSession.visitorEmail}
@@ -166,14 +168,16 @@ export default function AdminChatSessionsPage() {
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
-                        <div className="flex items-center gap-1 text-yellow-300">
+                        <div className="flex items-center gap-1 text-yellow-500 dark:text-yellow-300">
                           <IoChatbubblesOutline />
                           <span className="font-medium">
                             {chatSession.messageCount}
                           </span>
-                          <span className="text-gray-400">messages</span>
+                          <span className="text-[var(--text-muted)]">
+                            messages
+                          </span>
                         </div>
-                        <div className="mt-1 text-xs text-gray-500">
+                        <div className="mt-1 text-xs text-[var(--text-muted)]">
                           Last active:{' '}
                           {new Date(
                             chatSession.lastActiveAt
@@ -187,14 +191,14 @@ export default function AdminChatSessionsPage() {
                       </div>
                       <button
                         onClick={() => deleteSession(chatSession.id)}
-                        className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-500/20 hover:text-red-400"
+                        className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-red-500/20 hover:text-red-400"
                         title="Delete session"
                       >
                         <HiOutlineTrash className="text-lg" />
                       </button>
                     </div>
                   </div>
-                  <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
+                  <div className="mt-3 flex items-center justify-between text-xs text-[var(--text-muted)]">
                     <span>
                       Started:{' '}
                       {new Date(chatSession.createdAt).toLocaleDateString(
@@ -211,7 +215,7 @@ export default function AdminChatSessionsPage() {
                     {chatSession.messages.length > 0 && (
                       <button
                         onClick={() => toggleExpanded(chatSession.id)}
-                        className="flex items-center gap-1 text-gray-400 transition-colors hover:text-yellow-300"
+                        className="flex items-center gap-1 text-[var(--text-muted)] transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
                       >
                         {isExpanded ? (
                           <>
@@ -227,16 +231,16 @@ export default function AdminChatSessionsPage() {
                     )}
                   </div>
                   {isExpanded && chatSession.messages.length > 0 && (
-                    <div className="mt-4 space-y-2 border-t border-gray-700 pt-4">
+                    <div className="mt-4 space-y-2 border-t border-[var(--card-border)] pt-4">
                       {chatSession.messages.map((message) => (
                         <div
                           key={message.id}
-                          className="rounded-lg bg-gray-700/50 p-3"
+                          className="rounded-lg bg-[var(--input-bg)] p-3"
                         >
-                          <p className="text-sm text-gray-300">
+                          <p className="text-sm text-[var(--text-secondary)]">
                             {message.content}
                           </p>
-                          <p className="mt-1 text-xs text-gray-500">
+                          <p className="mt-1 text-xs text-[var(--text-muted)]">
                             {new Date(message.createdAt).toLocaleDateString(
                               'en-US',
                               {

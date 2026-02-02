@@ -62,9 +62,9 @@ export default function ProjectStatus({
     STATUS_OPTIONS.find((s) => s.value === status) || STATUS_OPTIONS[0];
 
   return (
-    <div className="rounded-2xl bg-gray-800 p-4">
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-200">
-        <HiOutlineFlag className="text-yellow-300" />
+    <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+        <HiOutlineFlag className="text-yellow-500 dark:text-yellow-300" />
         Project Status
       </h3>
       {readOnly ? (
@@ -83,7 +83,7 @@ export default function ProjectStatus({
               className={`rounded-full px-3 py-1 text-xs font-medium transition-all ${
                 status === option.value
                   ? `${option.color} text-white`
-                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+                  : 'bg-[var(--card-border)] text-[var(--text-muted)] hover:bg-[var(--nav-hover)]'
               }`}
             >
               {option.label}

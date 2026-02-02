@@ -222,13 +222,15 @@ function NewProjectForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
+    <div className="min-h-screen bg-[var(--background)] p-8">
       <div className="mx-auto max-w-2xl">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-200">New Project</h1>
+          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
+            New Project
+          </h1>
           <Link
             href={fromPath || '/admin/projects'}
-            className="text-gray-400 transition-colors hover:text-yellow-300"
+            className="text-[var(--text-muted)] transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
           >
             Cancel
           </Link>
@@ -242,7 +244,10 @@ function NewProjectForm() {
           )}
 
           <div>
-            <label htmlFor="title" className="mb-1 block text-sm text-gray-400">
+            <label
+              htmlFor="title"
+              className="mb-1 block text-sm text-[var(--text-muted)]"
+            >
               Title
             </label>
             <input
@@ -250,13 +255,16 @@ function NewProjectForm() {
               id="title"
               value={title}
               onChange={handleTitleChange}
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
               required
             />
           </div>
 
           <div>
-            <label htmlFor="slug" className="mb-1 block text-sm text-gray-400">
+            <label
+              htmlFor="slug"
+              className="mb-1 block text-sm text-[var(--text-muted)]"
+            >
               Slug
             </label>
             <input
@@ -264,7 +272,7 @@ function NewProjectForm() {
               id="slug"
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
               required
             />
           </div>
@@ -272,7 +280,7 @@ function NewProjectForm() {
           <div>
             <label
               htmlFor="category"
-              className="mb-1 block text-sm text-gray-400"
+              className="mb-1 block text-sm text-[var(--text-muted)]"
             >
               Category
             </label>
@@ -280,7 +288,7 @@ function NewProjectForm() {
               id="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
             >
               <option value="hobby">Hobby</option>
               <option value="work">Work / CS Project</option>
@@ -290,7 +298,7 @@ function NewProjectForm() {
           <div>
             <label
               htmlFor="description"
-              className="mb-1 block text-sm text-gray-400"
+              className="mb-1 block text-sm text-[var(--text-muted)]"
             >
               Description
             </label>
@@ -299,14 +307,14 @@ function NewProjectForm() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
             />
           </div>
 
           <div>
             <label
               htmlFor="content"
-              className="mb-1 block text-sm text-gray-400"
+              className="mb-1 block text-sm text-[var(--text-muted)]"
             >
               Content
             </label>
@@ -315,13 +323,13 @@ function NewProjectForm() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={10}
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+              className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
             />
           </div>
 
           {/* Optional Fields Section */}
-          <div className="border-t border-gray-700 pt-6">
-            <h2 className="mb-4 text-lg font-semibold text-gray-300">
+          <div className="border-t border-[var(--card-border)] pt-6">
+            <h2 className="mb-4 text-lg font-semibold text-[var(--text-secondary)]">
               Optional Details
             </h2>
 
@@ -330,7 +338,7 @@ function NewProjectForm() {
               <div>
                 <label
                   htmlFor="status"
-                  className="mb-1 block text-sm text-gray-400"
+                  className="mb-1 block text-sm text-[var(--text-muted)]"
                 >
                   Status
                 </label>
@@ -338,7 +346,7 @@ function NewProjectForm() {
                   id="status"
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
                 >
                   <option value="planning">Planning</option>
                   <option value="in_progress">In Progress</option>
@@ -349,7 +357,7 @@ function NewProjectForm() {
               <div>
                 <label
                   htmlFor="difficulty"
-                  className="mb-1 block text-sm text-gray-400"
+                  className="mb-1 block text-sm text-[var(--text-muted)]"
                 >
                   Difficulty (1-5)
                 </label>
@@ -361,7 +369,7 @@ function NewProjectForm() {
                       e.target.value ? parseInt(e.target.value) : null
                     )
                   }
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
                 >
                   <option value="">Not rated</option>
                   <option value="1">1 - Easy</option>
@@ -378,7 +386,7 @@ function NewProjectForm() {
               <div>
                 <label
                   htmlFor="startDate"
-                  className="mb-1 block text-sm text-gray-400"
+                  className="mb-1 block text-sm text-[var(--text-muted)]"
                 >
                   Start Date
                 </label>
@@ -387,13 +395,13 @@ function NewProjectForm() {
                   id="startDate"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
                 />
               </div>
               <div>
                 <label
                   htmlFor="completionDate"
-                  className="mb-1 block text-sm text-gray-400"
+                  className="mb-1 block text-sm text-[var(--text-muted)]"
                 >
                   Completion Date
                 </label>
@@ -402,7 +410,7 @@ function NewProjectForm() {
                   id="completionDate"
                   value={completionDate}
                   onChange={(e) => setCompletionDate(e.target.value)}
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
                 />
               </div>
             </div>
@@ -411,7 +419,7 @@ function NewProjectForm() {
             <div className="mb-4">
               <label
                 htmlFor="estimatedBudget"
-                className="mb-1 block text-sm text-gray-400"
+                className="mb-1 block text-sm text-[var(--text-muted)]"
               >
                 Estimated Budget ($)
               </label>
@@ -423,7 +431,7 @@ function NewProjectForm() {
                 placeholder="0.00"
                 step="0.01"
                 min="0"
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
               />
             </div>
 
@@ -431,7 +439,7 @@ function NewProjectForm() {
             <div className="mb-4">
               <label
                 htmlFor="tags"
-                className="mb-1 block text-sm text-gray-400"
+                className="mb-1 block text-sm text-[var(--text-muted)]"
               >
                 Tags (comma-separated)
               </label>
@@ -441,7 +449,7 @@ function NewProjectForm() {
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
                 placeholder="woodworking, furniture, DIY"
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
               />
             </div>
 
@@ -449,7 +457,7 @@ function NewProjectForm() {
             <div className="mb-4">
               <label
                 htmlFor="privateNotes"
-                className="mb-1 block text-sm text-gray-400"
+                className="mb-1 block text-sm text-[var(--text-muted)]"
               >
                 Private Notes (admin only)
               </label>
@@ -459,13 +467,13 @@ function NewProjectForm() {
                 onChange={(e) => setPrivateNotes(e.target.value)}
                 rows={3}
                 placeholder="Notes only visible to admins..."
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
               />
             </div>
 
             {/* Lessons Learned */}
             <div className="mb-4">
-              <label className="mb-1 block text-sm text-gray-400">
+              <label className="mb-1 block text-sm text-[var(--text-muted)]">
                 Lessons Learned
               </label>
               <div className="flex gap-2">
@@ -477,12 +485,12 @@ function NewProjectForm() {
                     e.key === 'Enter' && (e.preventDefault(), addLesson())
                   }
                   placeholder="Add a lesson..."
-                  className="flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                  className="flex-1 rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
                 />
                 <button
                   type="button"
                   onClick={addLesson}
-                  className="rounded-lg bg-gray-700 px-3 py-2 text-gray-300 hover:bg-gray-600"
+                  className="rounded-lg bg-[var(--input-bg)] px-3 py-2 text-[var(--text-secondary)] hover:bg-[var(--nav-hover)]"
                 >
                   <HiPlus className="h-5 w-5" />
                 </button>
@@ -492,7 +500,7 @@ function NewProjectForm() {
                   {lessons.map((lesson, index) => (
                     <li
                       key={index}
-                      className="flex items-center justify-between rounded bg-gray-800 px-3 py-2 text-sm text-gray-300"
+                      className="flex items-center justify-between rounded bg-[var(--card-bg)] px-3 py-2 text-sm text-[var(--text-secondary)]"
                     >
                       <span>{lesson}</span>
                       <button
@@ -510,7 +518,7 @@ function NewProjectForm() {
 
             {/* Links */}
             <div className="mb-4">
-              <label className="mb-1 block text-sm text-gray-400">
+              <label className="mb-1 block text-sm text-[var(--text-muted)]">
                 Project Links
               </label>
               <div className="flex gap-2">
@@ -519,7 +527,7 @@ function NewProjectForm() {
                   value={newLinkTitle}
                   onChange={(e) => setNewLinkTitle(e.target.value)}
                   placeholder="Link title"
-                  className="w-1/3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                  className="w-1/3 rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
                 />
                 <input
                   type="url"
@@ -529,12 +537,12 @@ function NewProjectForm() {
                     e.key === 'Enter' && (e.preventDefault(), addLink())
                   }
                   placeholder="https://..."
-                  className="flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+                  className="flex-1 rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
                 />
                 <button
                   type="button"
                   onClick={addLink}
-                  className="rounded-lg bg-gray-700 px-3 py-2 text-gray-300 hover:bg-gray-600"
+                  className="rounded-lg bg-[var(--input-bg)] px-3 py-2 text-[var(--text-secondary)] hover:bg-[var(--nav-hover)]"
                 >
                   <HiPlus className="h-5 w-5" />
                 </button>
@@ -544,13 +552,13 @@ function NewProjectForm() {
                   {links.map((link, index) => (
                     <li
                       key={index}
-                      className="flex items-center justify-between rounded bg-gray-800 px-3 py-2 text-sm"
+                      className="flex items-center justify-between rounded bg-[var(--card-bg)] px-3 py-2 text-sm"
                     >
                       <a
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-yellow-300 hover:underline"
+                        className="text-yellow-500 hover:underline dark:text-yellow-300"
                       >
                         {link.title}
                       </a>
@@ -570,15 +578,15 @@ function NewProjectForm() {
 
           {/* Image/Video Upload */}
           <div>
-            <label className="mb-2 block text-sm text-gray-400">
+            <label className="mb-2 block text-sm text-[var(--text-muted)]">
               Media (Images & Videos)
             </label>
 
             <label
               className={`flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors ${
                 isDragging
-                  ? 'border-yellow-300 bg-yellow-300/10'
-                  : 'border-gray-700 hover:border-yellow-300'
+                  ? 'border-yellow-500 bg-yellow-500/10 dark:border-yellow-300 dark:bg-yellow-300/10'
+                  : 'border-[var(--card-border)] hover:border-yellow-500 dark:hover:border-yellow-300'
               }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
@@ -592,7 +600,7 @@ function NewProjectForm() {
                 className="hidden"
                 disabled={uploading}
               />
-              <span className="text-center text-gray-400">
+              <span className="text-center text-[var(--text-muted)]">
                 {uploading
                   ? 'Uploading...'
                   : isDragging
@@ -606,10 +614,10 @@ function NewProjectForm() {
                 {images.map((img, index) => (
                   <div
                     key={img.url}
-                    className="flex items-center gap-4 rounded-lg bg-gray-800 p-3"
+                    className="flex items-center gap-4 rounded-lg bg-[var(--card-bg)] p-3"
                   >
                     {img.type === 'video' ? (
-                      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded bg-gray-700">
+                      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded bg-[var(--input-bg)]">
                         <video
                           src={img.url}
                           className="h-full w-full object-cover"
@@ -642,7 +650,7 @@ function NewProjectForm() {
                         placeholder="Alt text / description"
                         value={img.alt}
                         onChange={(e) => updateImageAlt(index, e.target.value)}
-                        className="w-full rounded border border-gray-700 bg-gray-900 px-3 py-1 text-sm text-gray-200 focus:border-yellow-300 focus:outline-none"
+                        className="w-full rounded border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-1 text-sm text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
                       />
                       {img.type === 'video' && (
                         <span className="mt-1 inline-block rounded bg-blue-500/20 px-2 py-0.5 text-xs text-blue-400">
@@ -655,7 +663,7 @@ function NewProjectForm() {
                         type="button"
                         onClick={() => moveImage(index, 'up')}
                         disabled={index === 0}
-                        className="rounded bg-gray-700 px-2 py-1 text-gray-400 hover:bg-gray-600 disabled:opacity-30"
+                        className="rounded bg-[var(--input-bg)] px-2 py-1 text-[var(--text-muted)] hover:bg-[var(--nav-hover)] disabled:opacity-30"
                       >
                         &uarr;
                       </button>
@@ -663,7 +671,7 @@ function NewProjectForm() {
                         type="button"
                         onClick={() => moveImage(index, 'down')}
                         disabled={index === images.length - 1}
-                        className="rounded bg-gray-700 px-2 py-1 text-gray-400 hover:bg-gray-600 disabled:opacity-30"
+                        className="rounded bg-[var(--input-bg)] px-2 py-1 text-[var(--text-muted)] hover:bg-[var(--nav-hover)] disabled:opacity-30"
                       >
                         &darr;
                       </button>
@@ -687,9 +695,12 @@ function NewProjectForm() {
               id="published"
               checked={published}
               onChange={(e) => setPublished(e.target.checked)}
-              className="h-4 w-4 rounded border-gray-700 bg-gray-800"
+              className="h-4 w-4 rounded border-[var(--card-border)] bg-[var(--card-bg)]"
             />
-            <label htmlFor="published" className="text-sm text-gray-400">
+            <label
+              htmlFor="published"
+              className="text-sm text-[var(--text-muted)]"
+            >
               Publish immediately
             </label>
           </div>
@@ -697,7 +708,7 @@ function NewProjectForm() {
           <button
             type="submit"
             disabled={loading || uploading}
-            className="w-full rounded-lg bg-yellow-300 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-50"
+            className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
           >
             {loading ? 'Creating...' : 'Create Project'}
           </button>
@@ -711,8 +722,8 @@ export default function NewProject() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-gray-900">
-          <div className="text-gray-400">Loading...</div>
+        <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">
+          <div className="text-[var(--text-muted)]">Loading...</div>
         </div>
       }
     >

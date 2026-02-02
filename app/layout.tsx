@@ -6,6 +6,8 @@ import Navbar from './components/NavBar';
 import SessionProvider from './components/SessionProvider';
 import AnalyticsTracker from './components/AnalyticsTracker';
 import AIChatBubble from './components/AIChatBubble';
+import ToastProvider from './components/ToastProvider';
+import ThemeProvider from './components/ThemeProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -39,6 +41,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Tyler Grant' }],
   creator: 'Tyler Grant',
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -102,8 +107,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  if (theme === 'light') {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.classList.add('light');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -113,27 +133,26 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider>
-          <AnalyticsTracker />
-          <StarfieldWrapper
-            starCount={800}
-            starColor={[255, 255, 255]}
-            speedFactor={0.05}
-            backgroundColor="black"
-          />
-          {/* Skip to main content link for accessibility */}
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-yellow-300 focus:px-4 focus:py-2 focus:text-gray-900 focus:outline-none"
-          >
-            Skip to main content
-          </a>
-          <div className="min-h-screen bg-gray-900">
-            <Navbar />
-            <main id="main-content" className="mt-6">
-              {children}
-            </main>
-          </div>
-          <AIChatBubble />
+          <ThemeProvider>
+            <ToastProvider>
+              <AnalyticsTracker />
+              <StarfieldWrapper starCount={800} speedFactor={0.05} />
+              {/* Skip to main content link for accessibility */}
+              <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-yellow-300 focus:px-4 focus:py-2 focus:text-gray-900 focus:outline-none"
+              >
+                Skip to main content
+              </a>
+              <div className="min-h-screen bg-[var(--background)]">
+                <Navbar />
+                <main id="main-content" className="mt-6">
+                  {children}
+                </main>
+              </div>
+              <AIChatBubble />
+            </ToastProvider>
+          </ThemeProvider>
         </SessionProvider>
       </body>
     </html>

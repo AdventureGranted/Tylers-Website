@@ -192,9 +192,9 @@ export default function ReceiptManager({
 
   if (loading) {
     return (
-      <div className="rounded-2xl bg-gray-800 p-6">
-        <div className="flex items-center gap-2 text-gray-400">
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-600 border-t-yellow-300" />
+      <div className="rounded-2xl bg-[var(--input-bg)] p-6">
+        <div className="flex items-center gap-2 text-[var(--text-muted)]">
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
           Loading receipts...
         </div>
       </div>
@@ -207,31 +207,31 @@ export default function ReceiptManager({
   }
 
   return (
-    <div className="rounded-2xl bg-gray-800 p-6">
+    <div className="rounded-2xl bg-[var(--input-bg)] p-6">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-200">
-          <HiOutlineReceiptTax className="text-yellow-300" />
+        <h2 className="flex items-center gap-2 text-xl font-semibold text-[var(--text-primary)]">
+          <HiOutlineReceiptTax className="text-yellow-500 dark:text-yellow-300" />
           Project Costs
         </h2>
         <div className="text-right">
-          <div className="text-sm text-gray-400">Total</div>
-          <div className="text-2xl font-bold text-yellow-300">
+          <div className="text-sm text-[var(--text-muted)]">Total</div>
+          <div className="text-2xl font-bold text-yellow-500 dark:text-yellow-300">
             ${total.toFixed(2)}
           </div>
         </div>
       </div>
 
       {/* Cost Breakdown */}
-      <div className="mb-4 grid grid-cols-2 gap-2 rounded-xl bg-gray-700 p-3">
+      <div className="mb-4 grid grid-cols-2 gap-2 rounded-xl bg-[var(--card-border)] p-3">
         <div className="text-center">
-          <div className="text-xs text-gray-400">Materials</div>
-          <div className="font-semibold text-blue-400">
+          <div className="text-xs text-[var(--text-muted)]">Materials</div>
+          <div className="font-semibold text-blue-500 dark:text-blue-400">
             ${materialTotal.toFixed(2)}
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs text-gray-400">Tools</div>
-          <div className="font-semibold text-purple-400">
+          <div className="text-xs text-[var(--text-muted)]">Tools</div>
+          <div className="font-semibold text-purple-500 dark:text-purple-400">
             ${toolTotal.toFixed(2)}
           </div>
         </div>
@@ -264,14 +264,14 @@ export default function ReceiptManager({
           <form
             onSubmit={handleSubmit}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-lg rounded-2xl bg-gray-800 p-6 shadow-2xl"
+            className="w-full max-w-lg rounded-2xl bg-[var(--card-bg)] p-6 shadow-2xl"
           >
-            <h3 className="mb-6 text-xl font-semibold text-gray-200">
+            <h3 className="mb-6 text-xl font-semibold text-[var(--text-primary)]">
               Upload Receipt
             </h3>
 
             <div className="mb-5">
-              <label className="mb-2 block text-sm font-medium text-gray-400">
+              <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
                 Receipt Image (optional)
               </label>
               <div
@@ -280,8 +280,8 @@ export default function ReceiptManager({
                 onDrop={handleDrop}
                 className={`relative rounded-lg border-2 border-dashed transition-colors ${
                   isDragging
-                    ? 'border-yellow-300 bg-yellow-300/10'
-                    : 'border-gray-600 hover:border-gray-500'
+                    ? 'border-yellow-500 bg-yellow-300/10 dark:border-yellow-300'
+                    : 'border-[var(--card-border)] hover:border-[var(--text-muted)]'
                 }`}
               >
                 {imagePreview ? (
@@ -328,13 +328,13 @@ export default function ReceiptManager({
                       onChange={handleImageChange}
                       className="hidden"
                     />
-                    <HiOutlineUpload className="mb-2 h-10 w-10 text-gray-500" />
-                    <span className="text-sm text-gray-400">
+                    <HiOutlineUpload className="mb-2 h-10 w-10 text-[var(--text-muted)]" />
+                    <span className="text-sm text-[var(--text-muted)]">
                       {isDragging
                         ? 'Drop image here'
                         : 'Click or drag image to upload'}
                     </span>
-                    <span className="mt-1 text-xs text-gray-500">
+                    <span className="mt-1 text-xs text-[var(--text-muted)]">
                       Or leave empty to add cost without receipt
                     </span>
                   </label>
@@ -344,7 +344,7 @@ export default function ReceiptManager({
 
             <div className="mb-5 grid grid-cols-2 gap-4">
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-400">
+                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
                   Material Cost ($)
                 </label>
                 <input
@@ -354,11 +354,11 @@ export default function ReceiptManager({
                   value={materialAmount}
                   onChange={(e) => setMaterialAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg bg-gray-700 px-4 py-3 text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-400">
+                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
                   Tool Cost ($)
                 </label>
                 <input
@@ -368,13 +368,13 @@ export default function ReceiptManager({
                   value={toolAmount}
                   onChange={(e) => setToolAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg bg-gray-700 px-4 py-3 text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
                 />
               </div>
             </div>
 
             <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-gray-400">
+              <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
                 Description (optional)
               </label>
               <input
@@ -382,7 +382,7 @@ export default function ReceiptManager({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="e.g., Wood supplies, Paint, etc."
-                className="w-full rounded-lg bg-gray-700 px-4 py-3 text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
+                className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
               />
             </div>
 
@@ -390,7 +390,7 @@ export default function ReceiptManager({
               <button
                 type="submit"
                 disabled={uploading || (!toolAmount && !materialAmount)}
-                className="flex-1 rounded-lg bg-yellow-300 px-4 py-3 font-medium text-gray-900 transition-colors hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex-1 rounded-lg bg-yellow-500 px-4 py-3 font-medium text-gray-900 transition-colors hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
               >
                 {uploading ? 'Uploading...' : 'Save'}
               </button>
@@ -404,7 +404,7 @@ export default function ReceiptManager({
                   setMaterialAmount('');
                   setDescription('');
                 }}
-                className="rounded-lg bg-gray-700 px-6 py-3 text-gray-200 transition-colors hover:bg-gray-600"
+                className="rounded-lg bg-[var(--card-border)] px-6 py-3 text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)]"
               >
                 Cancel
               </button>
@@ -415,13 +415,13 @@ export default function ReceiptManager({
 
       {/* Receipts List */}
       {receipts.length === 0 ? (
-        <p className="text-gray-500">No receipts uploaded yet.</p>
+        <p className="text-[var(--text-muted)]">No receipts uploaded yet.</p>
       ) : (
         <div className="space-y-3">
           {receipts.map((receipt) => (
             <div
               key={receipt.id}
-              className="flex items-center gap-3 rounded-xl bg-gray-700 p-3"
+              className="flex items-center gap-3 rounded-xl bg-[var(--card-border)] p-3"
             >
               {receipt.imageUrl ? (
                 <button
@@ -437,39 +437,39 @@ export default function ReceiptManager({
                   />
                 </button>
               ) : (
-                <div className="flex h-[50px] w-[50px] flex-shrink-0 items-center justify-center rounded-lg bg-gray-600">
-                  <HiOutlineReceiptTax className="h-6 w-6 text-gray-400" />
+                <div className="flex h-[50px] w-[50px] flex-shrink-0 items-center justify-center rounded-lg bg-[var(--nav-hover)]">
+                  <HiOutlineReceiptTax className="h-6 w-6 text-[var(--text-muted)]" />
                 </div>
               )}
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-yellow-300">
+                  <span className="font-semibold text-yellow-500 dark:text-yellow-300">
                     ${(receipt.toolAmount + receipt.materialAmount).toFixed(2)}
                   </span>
                   {receipt.materialAmount > 0 && (
-                    <span className="rounded-full bg-blue-500/20 px-2 py-0.5 text-xs font-medium text-blue-400">
+                    <span className="rounded-full bg-blue-500/20 px-2 py-0.5 text-xs font-medium text-blue-500 dark:text-blue-400">
                       Material: ${receipt.materialAmount.toFixed(2)}
                     </span>
                   )}
                   {receipt.toolAmount > 0 && (
-                    <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-medium text-purple-400">
+                    <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-medium text-purple-500 dark:text-purple-400">
                       Tool: ${receipt.toolAmount.toFixed(2)}
                     </span>
                   )}
                 </div>
                 {receipt.description && (
-                  <div className="truncate text-sm text-gray-400">
+                  <div className="truncate text-sm text-[var(--text-muted)]">
                     {receipt.description}
                   </div>
                 )}
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-[var(--text-muted)]">
                   {new Date(receipt.createdAt).toLocaleDateString()}
                 </div>
               </div>
               {!readOnly && (
                 <button
                   onClick={() => handleDelete(receipt.id)}
-                  className="flex-shrink-0 rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-500/20 hover:text-red-400"
+                  className="flex-shrink-0 rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-red-500/20 hover:text-red-400"
                   title="Delete receipt"
                 >
                   <HiOutlineTrash className="text-lg" />

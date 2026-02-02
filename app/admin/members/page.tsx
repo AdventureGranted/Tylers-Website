@@ -71,7 +71,11 @@ export default function MembersPage() {
   }, [allUsers, search, roleFilter]);
 
   const handleRoleChange = async (userId: string, newRole: string) => {
-    if (!confirm(`Are you sure you want to change this user's role to ${newRole}?`)) {
+    if (
+      !confirm(
+        `Are you sure you want to change this user's role to ${newRole}?`
+      )
+    ) {
       return;
     }
 
@@ -100,7 +104,11 @@ export default function MembersPage() {
   };
 
   const handleDelete = async (userId: string, userName: string | null) => {
-    if (!confirm(`Are you sure you want to delete ${userName || 'this user'}? This action cannot be undone.`)) {
+    if (
+      !confirm(
+        `Are you sure you want to delete ${userName || 'this user'}? This action cannot be undone.`
+      )
+    ) {
       return;
     }
 
@@ -126,8 +134,8 @@ export default function MembersPage() {
 
   if (status === 'loading' || (status === 'authenticated' && loading)) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-900">
-        <p className="text-gray-400">Loading...</p>
+      <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">
+        <p className="text-[var(--text-muted)]">Loading...</p>
       </div>
     );
   }
@@ -137,13 +145,13 @@ export default function MembersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4 md:p-8">
+    <div className="min-h-screen bg-[var(--background)] p-4 md:p-8">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-6 flex items-center gap-4">
           <Link
             href="/admin"
-            className="flex items-center gap-2 text-gray-400 transition-colors hover:text-yellow-300"
+            className="flex items-center gap-2 text-[var(--text-muted)] transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
           >
             <AiOutlineArrowLeft />
             Back
@@ -151,28 +159,32 @@ export default function MembersPage() {
         </div>
 
         <div className="mb-8 flex items-center gap-3">
-          <HiOutlineUserGroup className="text-3xl text-yellow-300" />
-          <h1 className="text-3xl font-bold text-gray-200">Members</h1>
-          <span className="text-gray-500">({allUsers.length} total)</span>
+          <HiOutlineUserGroup className="text-3xl text-yellow-500 dark:text-yellow-300" />
+          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
+            Members
+          </h1>
+          <span className="text-[var(--text-muted)]">
+            ({allUsers.length} total)
+          </span>
         </div>
 
         {/* Filters */}
-        <div className="mb-6 flex flex-col gap-4 rounded-xl bg-gray-800 p-4 sm:flex-row sm:items-center">
+        <div className="mb-6 flex flex-col gap-4 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-4 sm:flex-row sm:items-center">
           <div className="relative flex-1">
-            <AiOutlineSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+            <AiOutlineSearch className="absolute top-1/2 left-3 -translate-y-1/2 text-[var(--text-muted)]" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or email..."
-              className="w-full rounded-lg border border-gray-700 bg-gray-900 py-2 pl-10 pr-4 text-gray-200 placeholder-gray-500 focus:border-yellow-300 focus:outline-none"
+              className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] py-2 pr-4 pl-10 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
             />
           </div>
 
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
-            className="appearance-none rounded-lg border border-gray-700 bg-gray-900 bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%239ca3af%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat py-2 pl-4 pr-10 text-gray-200 focus:border-yellow-300 focus:outline-none"
+            className="appearance-none rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%239ca3af%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat py-2 pr-10 pl-4 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
           >
             <option value="">All Roles</option>
             <option value="user">Users</option>
@@ -181,24 +193,24 @@ export default function MembersPage() {
         </div>
 
         {/* Users Table */}
-        <div className="overflow-hidden rounded-xl bg-gray-800">
+        <div className="overflow-hidden rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)]">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-700 text-left">
-                  <th className="px-4 py-3 text-sm font-semibold text-gray-400">
+                <tr className="border-b border-[var(--card-border)] text-left">
+                  <th className="px-4 py-3 text-sm font-semibold text-[var(--text-muted)]">
                     User
                   </th>
-                  <th className="px-4 py-3 text-sm font-semibold text-gray-400">
+                  <th className="px-4 py-3 text-sm font-semibold text-[var(--text-muted)]">
                     Role
                   </th>
-                  <th className="hidden px-4 py-3 text-sm font-semibold text-gray-400 sm:table-cell">
+                  <th className="hidden px-4 py-3 text-sm font-semibold text-[var(--text-muted)] sm:table-cell">
                     Comments
                   </th>
-                  <th className="hidden px-4 py-3 text-sm font-semibold text-gray-400 md:table-cell">
+                  <th className="hidden px-4 py-3 text-sm font-semibold text-[var(--text-muted)] md:table-cell">
                     Joined
                   </th>
-                  <th className="px-4 py-3 text-sm font-semibold text-gray-400">
+                  <th className="px-4 py-3 text-sm font-semibold text-[var(--text-muted)]">
                     Actions
                   </th>
                 </tr>
@@ -207,7 +219,7 @@ export default function MembersPage() {
                 {filteredUsers.map((user) => (
                   <tr
                     key={user.id}
-                    className="border-b border-gray-700/50 transition-colors hover:bg-gray-700/30"
+                    className="border-b border-[var(--card-border)]/50 transition-colors hover:bg-[var(--nav-hover)]"
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
@@ -220,15 +232,18 @@ export default function MembersPage() {
                             className="h-10 w-10 rounded-full object-cover"
                           />
                         ) : (
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-300 font-bold text-gray-900">
-                            {user.name?.[0]?.toUpperCase() || user.email[0].toUpperCase()}
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-500 font-bold text-gray-900 dark:bg-yellow-300">
+                            {user.name?.[0]?.toUpperCase() ||
+                              user.email[0].toUpperCase()}
                           </div>
                         )}
                         <div>
-                          <div className="font-medium text-gray-200">
+                          <div className="font-medium text-[var(--text-primary)]">
                             {user.name || 'No name'}
                           </div>
-                          <div className="text-sm text-gray-500">{user.email}</div>
+                          <div className="text-sm text-[var(--text-muted)]">
+                            {user.email}
+                          </div>
                         </div>
                       </div>
                     </td>
@@ -236,26 +251,30 @@ export default function MembersPage() {
                       <span
                         className={`inline-block rounded-full px-2 py-1 text-xs font-medium ${
                           user.role === 'admin'
-                            ? 'bg-yellow-300/20 text-yellow-300'
-                            : 'bg-gray-600 text-gray-300'
+                            ? 'bg-yellow-500/20 text-yellow-600 dark:bg-yellow-300/20 dark:text-yellow-300'
+                            : 'bg-[var(--card-border)] text-[var(--text-secondary)]'
                         }`}
                       >
                         {user.role}
                       </span>
                     </td>
-                    <td className="hidden px-4 py-3 text-gray-400 sm:table-cell">
+                    <td className="hidden px-4 py-3 text-[var(--text-muted)] sm:table-cell">
                       {user._count.comments}
                     </td>
-                    <td className="hidden px-4 py-3 text-gray-400 md:table-cell">
+                    <td className="hidden px-4 py-3 text-[var(--text-muted)] md:table-cell">
                       {new Date(user.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <select
                           value={user.role}
-                          onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                          disabled={updating === user.id || user.id === session.user.id}
-                          className="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-sm text-gray-200 disabled:opacity-50"
+                          onChange={(e) =>
+                            handleRoleChange(user.id, e.target.value)
+                          }
+                          disabled={
+                            updating === user.id || user.id === session.user.id
+                          }
+                          className="rounded border border-[var(--card-border)] bg-[var(--input-bg)] px-2 py-1 text-sm text-[var(--text-primary)] disabled:opacity-50"
                         >
                           <option value="user">User</option>
                           <option value="admin">Admin</option>
@@ -275,7 +294,10 @@ export default function MembersPage() {
                 ))}
                 {filteredUsers.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="px-4 py-8 text-center text-gray-500">
+                    <td
+                      colSpan={5}
+                      className="px-4 py-8 text-center text-[var(--text-muted)]"
+                    >
                       No users found
                     </td>
                   </tr>
@@ -286,7 +308,7 @@ export default function MembersPage() {
 
           {/* Results count */}
           {(search || roleFilter) && (
-            <div className="border-t border-gray-700 px-4 py-3 text-sm text-gray-500">
+            <div className="border-t border-[var(--card-border)] px-4 py-3 text-sm text-[var(--text-muted)]">
               Showing {filteredUsers.length} of {allUsers.length} members
             </div>
           )}

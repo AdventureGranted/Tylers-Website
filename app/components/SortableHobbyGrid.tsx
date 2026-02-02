@@ -160,14 +160,16 @@ export default function SortableHobbyGrid({
     <>
       {/* Header with buttons */}
       <div className="mb-8 flex items-center gap-4">
-        <h1 className="text-4xl font-bold text-white">Hobbies</h1>
+        <h1 className="text-4xl font-bold text-[var(--text-primary)]">
+          Hobbies
+        </h1>
         {isAdmin && (
           <>
             {isEditing ? (
               <>
                 <button
                   onClick={handleCancel}
-                  className="flex items-center gap-1 rounded-lg bg-gray-700 px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-gray-600"
+                  className="flex items-center gap-1 rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-2 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--nav-hover)]"
                 >
                   Cancel
                 </button>
@@ -184,7 +186,7 @@ export default function SortableHobbyGrid({
               <>
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-1 rounded-lg bg-gray-700 px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-gray-600"
+                  className="flex items-center gap-1 rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-2 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--nav-hover)]"
                 >
                   <HiPencil className="h-4 w-4" />
                   Edit
@@ -203,14 +205,14 @@ export default function SortableHobbyGrid({
       </div>
 
       {isEditing && (
-        <p className="mb-4 text-center text-sm text-gray-400">
+        <p className="mb-4 text-center text-sm text-[var(--text-secondary)]">
           Drag cards to reorder them
         </p>
       )}
 
       {/* Grid */}
       {projects.length === 0 ? (
-        <p className="text-gray-400">No hobby projects yet.</p>
+        <p className="text-[var(--text-secondary)]">No hobby projects yet.</p>
       ) : (
         <DndContext
           sensors={sensors}

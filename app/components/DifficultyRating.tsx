@@ -71,9 +71,9 @@ export default function DifficultyRating({
 
   if (loading) {
     return (
-      <div className="rounded-2xl bg-gray-800 p-4">
-        <div className="flex items-center gap-2 text-sm text-gray-400">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-600 border-t-yellow-300" />
+      <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+        <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
           Loading...
         </div>
       </div>
@@ -88,9 +88,9 @@ export default function DifficultyRating({
   const displayRating = hoverRating || rating || 0;
 
   return (
-    <div className="rounded-2xl bg-gray-800 p-4">
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-200">
-        <HiStar className="text-yellow-300" />
+    <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+        <HiStar className="text-yellow-500 dark:text-yellow-300" />
         Difficulty
       </h3>
 
@@ -101,7 +101,7 @@ export default function DifficultyRating({
               {star <= displayRating ? (
                 <HiStar className="text-yellow-400" />
               ) : (
-                <HiOutlineStar className="text-gray-600" />
+                <HiOutlineStar className="text-[var(--card-border)]" />
               )}
             </span>
           ) : (
@@ -116,13 +116,13 @@ export default function DifficultyRating({
               {star <= displayRating ? (
                 <HiStar className="text-yellow-400" />
               ) : (
-                <HiOutlineStar className="text-gray-600" />
+                <HiOutlineStar className="text-[var(--card-border)]" />
               )}
             </button>
           )
         )}
         {displayRating > 0 && (
-          <span className="ml-2 text-xs text-gray-400">
+          <span className="ml-2 text-xs text-[var(--text-muted)]">
             {getDifficultyLabel(displayRating)}
           </span>
         )}

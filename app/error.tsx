@@ -17,16 +17,16 @@ export default function Error({
     <div className="flex min-h-[50vh] items-center justify-center px-4">
       <div className="max-w-md text-center">
         <div className="mb-6 text-6xl">⚠️</div>
-        <h1 className="mb-4 text-2xl font-bold text-gray-100">
+        <h1 className="mb-4 text-2xl font-bold text-[var(--text-primary)]">
           Something went wrong
         </h1>
-        <p className="mb-6 text-gray-400">
+        <p className="mb-6 text-[var(--text-muted)]">
           An unexpected error occurred. Please try again or contact support if
           the problem persists.
         </p>
         <button
           onClick={reset}
-          className="rounded-full bg-yellow-300 px-6 py-3 font-semibold text-gray-900 transition-transform hover:scale-105"
+          className="rounded-full bg-yellow-500 px-6 py-3 font-semibold text-gray-900 transition-transform hover:scale-105 dark:bg-yellow-300"
         >
           Try Again
         </button>

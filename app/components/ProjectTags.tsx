@@ -91,9 +91,9 @@ export default function ProjectTags({
 
   if (loading) {
     return (
-      <div className="rounded-2xl bg-gray-800 p-4">
-        <div className="flex items-center gap-2 text-sm text-gray-400">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-600 border-t-yellow-300" />
+      <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+        <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
           Loading...
         </div>
       </div>
@@ -106,9 +106,9 @@ export default function ProjectTags({
   }
 
   return (
-    <div className="rounded-2xl bg-gray-800 p-4">
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-200">
-        <HiOutlineTag className="text-yellow-300" />
+    <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+        <HiOutlineTag className="text-yellow-500 dark:text-yellow-300" />
         Skills / Tags
       </h3>
 
@@ -116,7 +116,7 @@ export default function ProjectTags({
         {tags.map((tag) => (
           <span
             key={tag}
-            className="flex items-center gap-1 rounded-full bg-yellow-300/20 px-2 py-1 text-xs font-medium text-yellow-300"
+            className="flex items-center gap-1 rounded-full bg-yellow-500/20 px-2 py-1 text-xs font-medium text-yellow-600 dark:bg-yellow-300/20 dark:text-yellow-300"
           >
             {tag}
             {!readOnly && (
@@ -143,13 +143,13 @@ export default function ProjectTags({
                 else setShowInput(false);
               }}
               placeholder="Add tag..."
-              className="w-24 rounded-full bg-gray-700 px-2 py-1 text-xs text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
+              className="w-24 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-xs text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
               autoFocus
             />
           ) : (
             <button
               onClick={() => setShowInput(true)}
-              className="flex items-center gap-1 rounded-full bg-gray-700 px-2 py-1 text-xs text-gray-400 hover:bg-gray-600"
+              className="flex items-center gap-1 rounded-full bg-[var(--card-border)] px-2 py-1 text-xs text-[var(--text-muted)] hover:bg-[var(--nav-hover)]"
             >
               <HiOutlinePlus /> Add
             </button>
@@ -158,14 +158,16 @@ export default function ProjectTags({
 
       {!readOnly && unusedSuggestions.length > 0 && tags.length < 5 && (
         <div className="mt-3">
-          <div className="mb-1 text-xs text-gray-500">Suggestions:</div>
+          <div className="mb-1 text-xs text-[var(--text-muted)]">
+            Suggestions:
+          </div>
           <div className="flex flex-wrap gap-1">
             {unusedSuggestions.slice(0, 5).map((tag) => (
               <button
                 key={tag}
                 onClick={() => handleAddTag(tag)}
                 disabled={saving}
-                className="rounded-full bg-gray-700 px-2 py-0.5 text-xs text-gray-400 hover:bg-gray-600 hover:text-gray-200"
+                className="rounded-full bg-[var(--card-border)] px-2 py-0.5 text-xs text-[var(--text-muted)] hover:bg-[var(--nav-hover)] hover:text-[var(--text-primary)]"
               >
                 {tag}
               </button>

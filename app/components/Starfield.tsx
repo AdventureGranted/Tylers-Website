@@ -7,6 +7,7 @@ interface Props {
   backgroundColor?: string;
   starColor?: [number, number, number];
   starCount?: number;
+  blendMode?: 'screen' | 'multiply' | 'normal';
 }
 
 export default function Starfield(props: Props) {
@@ -15,6 +16,7 @@ export default function Starfield(props: Props) {
     backgroundColor = 'black',
     starColor = [255, 255, 255],
     starCount = 800,
+    blendMode = 'screen',
   } = props;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -180,7 +182,7 @@ export default function Starfield(props: Props) {
         zIndex: 10,
         opacity: 1,
         pointerEvents: 'none',
-        mixBlendMode: 'screen',
+        mixBlendMode: blendMode,
         willChange: prefersReducedMotion ? 'auto' : 'transform',
       }}
     />

@@ -15,6 +15,7 @@ import { HiOutlineLightBulb, HiOutlineMail } from 'react-icons/hi';
 import { UNREAD_COUNT_CHANGED } from '@/app/lib/events';
 import Link from 'next/link';
 import Image from 'next/image';
+import ThemeToggle from './ThemeToggle';
 
 // Static nav links - defined outside component to avoid recreation
 const NAV_LINKS = [
@@ -160,8 +161,8 @@ function NavLink({
       : 'flex items-center justify-center px-4 text-center text-2xl transition duration-300';
 
   const activeClasses = isActive
-    ? 'font-bold text-yellow-300'
-    : 'text-gray-200 hover:text-yellow-300';
+    ? 'font-bold text-yellow-300 dark:text-yellow-300'
+    : 'text-[var(--text-primary)] hover:text-yellow-300';
 
   return (
     <Link
@@ -233,7 +234,7 @@ function UserDropdown({
     <div className="relative" ref={menuRef}>
       <button
         onClick={onToggle}
-        className="flex items-center gap-2 rounded-lg px-3 py-2 text-lg text-gray-300 transition duration-300 hover:bg-gray-700 hover:text-yellow-300"
+        className="flex items-center gap-2 rounded-lg px-3 py-2 text-lg text-[var(--text-primary)] transition duration-300 hover:bg-[var(--nav-hover)] hover:text-yellow-300"
       >
         <div className="relative">
           <ProfileAvatar
@@ -264,11 +265,11 @@ function UserDropdown({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 z-50 mt-2 w-48 rounded-xl bg-gray-700 py-2 shadow-xl">
+        <div className="absolute right-0 z-50 mt-2 w-48 rounded-xl border border-[var(--dropdown-border)] bg-[var(--dropdown-bg)] py-2 shadow-xl">
           <Link
             href="/profile"
             onClick={onClose}
-            className="flex items-center px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600 hover:text-yellow-300"
+            className="flex items-center px-4 py-2 text-[var(--text-primary)] transition-colors hover:bg-[var(--dropdown-hover)] hover:text-yellow-300"
           >
             <AiOutlineUser className="mr-2" />
             Profile
@@ -278,7 +279,7 @@ function UserDropdown({
               <Link
                 href="/admin/contacts"
                 onClick={onClose}
-                className="flex items-center justify-between px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600 hover:text-yellow-300"
+                className="flex items-center justify-between px-4 py-2 text-[var(--text-primary)] transition-colors hover:bg-[var(--dropdown-hover)] hover:text-yellow-300"
               >
                 <span className="flex items-center">
                   <HiOutlineMail className="mr-2" />
@@ -289,20 +290,20 @@ function UserDropdown({
               <Link
                 href="/admin"
                 onClick={onClose}
-                className="flex items-center px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600 hover:text-yellow-300"
+                className="flex items-center px-4 py-2 text-[var(--text-primary)] transition-colors hover:bg-[var(--dropdown-hover)] hover:text-yellow-300"
               >
                 <AiOutlineDashboard className="mr-2" />
                 Admin Dashboard
               </Link>
             </>
           )}
-          <hr className="my-2 border-gray-600" />
+          <hr className="my-2 border-[var(--dropdown-border)]" />
           <button
             onClick={() => {
               onClose();
               signOut();
             }}
-            className="flex w-full items-center px-4 py-2 text-gray-200 transition-colors hover:bg-gray-600 hover:text-yellow-300"
+            className="flex w-full items-center px-4 py-2 text-[var(--text-primary)] transition-colors hover:bg-[var(--dropdown-hover)] hover:text-yellow-300"
           >
             <AiOutlineLogout className="mr-2" />
             Sign Out
@@ -322,7 +323,7 @@ function GuestAuthLinks({ pathname }: { pathname: string }) {
         className={`flex items-center px-3 text-lg transition duration-300 hover:scale-105 ${
           pathname === '/login'
             ? 'font-bold text-yellow-300'
-            : 'text-gray-400 hover:text-yellow-300'
+            : 'text-[var(--text-secondary)] hover:text-yellow-300'
         }`}
       >
         <AiOutlineLogin className="mr-1" />
@@ -333,7 +334,7 @@ function GuestAuthLinks({ pathname }: { pathname: string }) {
         className={`flex items-center px-3 text-lg transition duration-300 hover:scale-105 ${
           pathname === '/register'
             ? 'font-bold text-yellow-300'
-            : 'text-gray-400 hover:text-yellow-300'
+            : 'text-[var(--text-secondary)] hover:text-yellow-300'
         }`}
       >
         Register
@@ -362,7 +363,7 @@ function MobileDrawer({
 
   return (
     <div
-      className={`absolute top-full right-0 z-50 w-48 space-y-2 overflow-hidden rounded-2xl bg-gray-600 pt-4 pb-4 shadow-2xl transition-all duration-600 ${
+      className={`absolute top-full right-0 z-50 w-48 space-y-2 overflow-hidden rounded-2xl border border-[var(--dropdown-border)] bg-[var(--dropdown-bg)] pt-4 pb-4 shadow-2xl transition-all duration-600 ${
         isOpen
           ? 'max-h-[500px] opacity-100'
           : 'pointer-events-none max-h-0 opacity-0'
@@ -380,8 +381,12 @@ function MobileDrawer({
         />
       ))}
 
+      <div className="flex justify-center py-2">
+        <ThemeToggle />
+      </div>
+
       {status !== 'loading' && (
-        <div className="mt-2 border-t border-gray-500 pt-2">
+        <div className="mt-2 border-t border-[var(--dropdown-border)] pt-2">
           {session ? (
             <>
               <div className="mb-2 flex flex-col items-center gap-2 px-4">
@@ -390,14 +395,14 @@ function MobileDrawer({
                   name={session.user.name}
                   size="md"
                 />
-                <span className="text-sm text-gray-400">
+                <span className="text-sm text-[var(--text-secondary)]">
                   {session.user.name || 'User'}
                 </span>
               </div>
               <Link
                 onClick={onClose}
                 href="/profile"
-                className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
+                className="flex items-center justify-center px-4 py-1 text-center text-xl text-[var(--text-primary)] transition duration-300 hover:text-yellow-300"
               >
                 <AiOutlineUser className="mr-2" />
                 Profile
@@ -407,7 +412,7 @@ function MobileDrawer({
                   <Link
                     onClick={onClose}
                     href="/admin/contacts"
-                    className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
+                    className="flex items-center justify-center px-4 py-1 text-center text-xl text-[var(--text-primary)] transition duration-300 hover:text-yellow-300"
                   >
                     <HiOutlineMail className="mr-2" />
                     Messages
@@ -419,7 +424,7 @@ function MobileDrawer({
                   <Link
                     onClick={onClose}
                     href="/admin"
-                    className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
+                    className="flex items-center justify-center px-4 py-1 text-center text-xl text-[var(--text-primary)] transition duration-300 hover:text-yellow-300"
                   >
                     <AiOutlineDashboard className="mr-2" />
                     Admin
@@ -431,7 +436,7 @@ function MobileDrawer({
                   onClose();
                   signOut();
                 }}
-                className="flex w-full items-center justify-center px-4 py-1 text-center text-xl text-gray-300 transition duration-300 hover:text-yellow-300"
+                className="flex w-full items-center justify-center px-4 py-1 text-center text-xl text-[var(--text-primary)] transition duration-300 hover:text-yellow-300"
               >
                 <AiOutlineLogout className="mr-2" />
                 Sign Out
@@ -445,7 +450,7 @@ function MobileDrawer({
                 className={`flex items-center justify-center px-4 text-center text-xl transition duration-300 ${
                   pathname === '/login'
                     ? 'font-bold text-yellow-300'
-                    : 'text-gray-300 hover:text-yellow-300'
+                    : 'text-[var(--text-primary)] hover:text-yellow-300'
                 }`}
               >
                 <AiOutlineLogin className="mr-2" />
@@ -457,7 +462,7 @@ function MobileDrawer({
                 className={`flex items-center justify-center px-4 text-center text-xl transition duration-300 ${
                   pathname === '/register'
                     ? 'font-bold text-yellow-300'
-                    : 'text-gray-300 hover:text-yellow-300'
+                    : 'text-[var(--text-primary)] hover:text-yellow-300'
                 }`}
               >
                 Register
@@ -486,9 +491,12 @@ function Navbar() {
 
   return (
     <nav
-      className={`sticky top-2 z-50 mx-6 overflow-visible rounded-2xl shadow-2xl transition-all duration-300 lg:mx-25 ${
-        isScrolled ? 'bg-gray-800/80 backdrop-blur-md' : 'bg-gray-800'
+      className={`sticky top-2 z-50 mx-6 overflow-visible rounded-2xl border border-[var(--card-border)] transition-all duration-300 lg:mx-25 ${
+        isScrolled
+          ? 'bg-[var(--nav-bg-scrolled)] backdrop-blur-md'
+          : 'bg-[var(--nav-bg)]'
       }`}
+      style={{ boxShadow: 'var(--card-shadow)' }}
     >
       <div className="mx-4 flex h-24 items-center justify-between">
         <Logo isHome={pathname === '/'} />
@@ -505,8 +513,12 @@ function Navbar() {
             />
           ))}
 
+          <div className="ml-2">
+            <ThemeToggle />
+          </div>
+
           {status !== 'loading' && (
-            <div className="ml-4 flex items-center border-l border-gray-600 pl-4">
+            <div className="ml-4 flex items-center border-l border-[var(--card-border)] pl-4">
               {session ? (
                 <UserDropdown
                   session={session}
@@ -526,10 +538,10 @@ function Navbar() {
         {/* Mobile Navigation */}
         <div className="relative ml-auto lg:hidden">
           <button
-            className="relative px-4 text-2xl text-gray-200"
+            className="relative px-4 text-2xl text-[var(--text-primary)]"
             onClick={() => setIsOpen(!isOpen)}
           >
-            <RxHamburgerMenu className="text-4xl text-gray-200 hover:text-yellow-300" />
+            <RxHamburgerMenu className="text-4xl text-[var(--text-primary)] hover:text-yellow-300" />
             {session?.user?.role === 'admin' && (
               <UnreadBadge
                 count={unreadCount}

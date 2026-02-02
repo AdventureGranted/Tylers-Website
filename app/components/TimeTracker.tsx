@@ -81,9 +81,9 @@ export default function TimeTracker({
 
   if (loading) {
     return (
-      <div className="rounded-2xl bg-gray-800 p-4">
-        <div className="flex items-center gap-2 text-sm text-gray-400">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-600 border-t-yellow-300" />
+      <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+        <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
           Loading...
         </div>
       </div>
@@ -96,13 +96,13 @@ export default function TimeTracker({
   }
 
   return (
-    <div className="rounded-2xl bg-gray-800 p-4">
+    <div className="rounded-2xl bg-[var(--input-bg)] p-4">
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-200">
-          <HiOutlineClock className="text-yellow-300" />
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+          <HiOutlineClock className="text-yellow-500 dark:text-yellow-300" />
           Time Tracked
         </h3>
-        <div className="text-lg font-bold text-yellow-300">
+        <div className="text-lg font-bold text-yellow-500 dark:text-yellow-300">
           {totalHours.toFixed(1)}h
         </div>
       </div>
@@ -112,12 +112,12 @@ export default function TimeTracker({
           {!showForm ? (
             <button
               onClick={() => setShowForm(true)}
-              className="mb-3 flex w-full items-center justify-center gap-1 rounded-lg bg-gray-700 py-2 text-sm text-gray-300 transition-colors hover:bg-gray-600"
+              className="mb-3 flex w-full items-center justify-center gap-1 rounded-lg bg-[var(--card-border)] py-2 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--nav-hover)]"
             >
               <HiOutlinePlus /> Log Time
             </button>
           ) : (
-            <div className="mb-3 space-y-2 rounded-lg bg-gray-700 p-3">
+            <div className="mb-3 space-y-2 rounded-lg bg-[var(--card-border)] p-3">
               <div className="flex gap-2">
                 <input
                   type="number"
@@ -126,13 +126,13 @@ export default function TimeTracker({
                   value={hours}
                   onChange={(e) => setHours(e.target.value)}
                   placeholder="Hours"
-                  className="w-20 rounded bg-gray-600 px-2 py-1 text-sm text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
+                  className="w-20 rounded border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-sm text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
                 />
                 <input
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="flex-1 rounded bg-gray-600 px-2 py-1 text-sm text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
+                  className="flex-1 rounded border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-sm text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
                 />
               </div>
               <input
@@ -140,19 +140,19 @@ export default function TimeTracker({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="What did you work on?"
-                className="w-full rounded bg-gray-600 px-2 py-1 text-sm text-gray-200 focus:ring-1 focus:ring-yellow-300 focus:outline-none"
+                className="w-full rounded border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-sm text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
               />
               <div className="flex gap-2">
                 <button
                   onClick={handleAdd}
                   disabled={saving || !hours}
-                  className="flex-1 rounded bg-yellow-300 py-1 text-sm font-medium text-gray-900 hover:bg-yellow-400 disabled:opacity-50"
+                  className="flex-1 rounded bg-yellow-500 py-1 text-sm font-medium text-gray-900 hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
                 >
                   {saving ? 'Saving...' : 'Add'}
                 </button>
                 <button
                   onClick={() => setShowForm(false)}
-                  className="rounded bg-gray-600 px-3 py-1 text-sm text-gray-300 hover:bg-gray-500"
+                  className="rounded bg-[var(--nav-hover)] px-3 py-1 text-sm text-[var(--text-secondary)] hover:bg-[var(--card-border)]"
                 >
                   Cancel
                 </button>
@@ -167,26 +167,26 @@ export default function TimeTracker({
           {entries.slice(0, 5).map((entry) => (
             <div
               key={entry.id}
-              className="flex items-center justify-between rounded bg-gray-700 px-2 py-1 text-xs"
+              className="flex items-center justify-between rounded bg-[var(--card-border)] px-2 py-1 text-xs"
             >
               <div className="flex-1">
-                <span className="font-medium text-yellow-300">
+                <span className="font-medium text-yellow-500 dark:text-yellow-300">
                   {entry.hours}h
                 </span>
                 {entry.description && (
-                  <span className="ml-2 text-gray-400">
+                  <span className="ml-2 text-[var(--text-muted)]">
                     {entry.description}
                   </span>
                 )}
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-gray-500">
+                <span className="text-[var(--text-muted)]">
                   {new Date(entry.date).toLocaleDateString()}
                 </span>
                 {!readOnly && (
                   <button
                     onClick={() => handleDelete(entry.id)}
-                    className="text-gray-500 hover:text-red-400"
+                    className="text-[var(--text-muted)] hover:text-red-400"
                   >
                     <HiOutlineTrash />
                   </button>
@@ -195,7 +195,7 @@ export default function TimeTracker({
             </div>
           ))}
           {entries.length > 5 && (
-            <div className="text-center text-xs text-gray-500">
+            <div className="text-center text-xs text-[var(--text-muted)]">
               +{entries.length - 5} more entries
             </div>
           )}

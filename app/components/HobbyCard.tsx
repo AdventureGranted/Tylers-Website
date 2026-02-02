@@ -43,7 +43,8 @@ export default function HobbyCard({
   return (
     <div
       onClick={handleCardClick}
-      className="group flex cursor-pointer flex-col rounded-3xl border border-gray-700 bg-gray-800 p-6 shadow-lg transition-all duration-300 hover:border-yellow-300/50 hover:shadow-2xl"
+      className="group flex cursor-pointer flex-col rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 transition-all duration-300 hover:border-yellow-500/50 hover:shadow-xl dark:hover:border-yellow-300/50"
+      style={{ boxShadow: 'var(--card-shadow)' }}
     >
       {images.length > 0 && (
         <div
@@ -52,14 +53,14 @@ export default function HobbyCard({
           onMouseUp={(e) => e.stopPropagation()}
         >
           {compareMode === 'single' && singleImage ? (
-            <div className="rounded-2xl bg-gray-800 p-4">
+            <div className="rounded-2xl bg-[var(--input-bg)] p-4">
               <div className="mb-3 flex items-center">
-                <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-200">
-                  <HiOutlinePhotograph className="text-yellow-300" />
+                <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+                  <HiOutlinePhotograph className="text-yellow-500 dark:text-yellow-300" />
                   Featured Photo
                 </h3>
               </div>
-              <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-700">
+              <div className="relative aspect-video overflow-hidden rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)]">
                 {singleImage.type === 'video' ? (
                   <video
                     src={singleImage.url}
@@ -97,13 +98,15 @@ export default function HobbyCard({
           )}
         </div>
       )}
-      <h2 className="mb-1 text-2xl font-semibold text-yellow-300 transition-colors group-hover:text-yellow-200">
+      <h2 className="mb-1 text-2xl font-semibold text-yellow-500 transition-colors group-hover:text-yellow-600 dark:text-yellow-300 dark:group-hover:text-yellow-200">
         {title}
       </h2>
       {description && (
-        <p className="mb-3 line-clamp-2 text-gray-400">{description}</p>
+        <p className="mb-3 line-clamp-2 text-[var(--text-secondary)]">
+          {description}
+        </p>
       )}
-      <span className="mt-auto text-sm text-gray-500 transition-colors group-hover:text-yellow-300">
+      <span className="mt-auto text-sm text-[var(--text-muted)] transition-colors group-hover:text-yellow-500 dark:group-hover:text-yellow-300">
         View details →
       </span>
     </div>

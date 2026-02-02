@@ -37,7 +37,11 @@ const skillCategories = [
       { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-400' },
       { name: 'JavaScript', icon: SiJavascript, color: 'text-yellow-400' },
       { name: 'React', icon: SiReact, color: 'text-cyan-400' },
-      { name: 'Next.js', icon: SiNextdotjs, color: 'text-gray-300' },
+      {
+        name: 'Next.js',
+        icon: SiNextdotjs,
+        color: 'text-gray-800 dark:text-gray-300',
+      },
       { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-500' },
       { name: 'Tailwind CSS', icon: SiTailwindcss, color: 'text-cyan-400' },
       { name: 'NextAuth', icon: RiShieldKeyholeLine, color: 'text-purple-400' },
@@ -75,7 +79,11 @@ const skillCategories = [
       { name: 'Linux', icon: SiLinux, color: 'text-yellow-400' },
       { name: 'Debian', icon: SiDebian, color: 'text-red-400' },
       { name: 'Ubuntu', icon: SiUbuntu, color: 'text-orange-500' },
-      { name: 'macOS', icon: SiApple, color: 'text-gray-300' },
+      {
+        name: 'macOS',
+        icon: SiApple,
+        color: 'text-gray-800 dark:text-gray-300',
+      },
       { name: 'Windows', icon: FaWindows, color: 'text-blue-400' },
     ],
   },
@@ -117,7 +125,9 @@ export default function TechnicalSkills() {
     >
       {/* Section Header */}
       <motion.div variants={itemVariants} className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-gray-200">Technical Skills</h2>
+        <h2 className="text-3xl font-bold text-[var(--text-primary)]">
+          Technical Skills
+        </h2>
         <div className="mx-auto mt-2 h-1 w-72 rounded bg-gradient-to-r from-purple-500 to-yellow-300" />
       </motion.div>
 
@@ -127,19 +137,22 @@ export default function TechnicalSkills() {
           <motion.div
             key={category.title}
             variants={itemVariants}
-            className="rounded-2xl bg-gray-800 p-6"
+            className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
+            style={{ boxShadow: 'var(--card-shadow)' }}
           >
-            <h3 className="mb-4 text-xl font-semibold text-yellow-300">
+            <h3 className="mb-4 text-xl font-semibold text-yellow-500 dark:text-yellow-300">
               {category.title}
             </h3>
             <div className="flex flex-wrap gap-3">
               {category.skills.map((skill) => (
                 <div
                   key={skill.name}
-                  className="group flex items-center gap-2 rounded-full bg-gray-700/50 px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-gray-700"
+                  className="group flex items-center gap-2 rounded-full bg-[var(--input-bg)] px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-[var(--nav-hover)]"
                 >
                   <skill.icon className={`text-lg ${skill.color}`} />
-                  <span className="text-sm text-gray-300">{skill.name}</span>
+                  <span className="text-sm text-[var(--text-secondary)]">
+                    {skill.name}
+                  </span>
                 </div>
               ))}
             </div>
@@ -150,16 +163,17 @@ export default function TechnicalSkills() {
       {/* Knowledge Areas */}
       <motion.div
         variants={itemVariants}
-        className="mt-8 rounded-2xl bg-gray-800 p-6"
+        className="mt-8 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
+        style={{ boxShadow: 'var(--card-shadow)' }}
       >
-        <h3 className="mb-4 text-xl font-semibold text-yellow-300">
+        <h3 className="mb-4 text-xl font-semibold text-yellow-500 dark:text-yellow-300">
           Knowledge Areas
         </h3>
         <div className="flex flex-wrap gap-3">
           {subjects.map((subject) => (
             <span
               key={subject}
-              className="rounded-full border border-gray-600 bg-gray-700/30 px-4 py-2 text-sm text-gray-300 transition-all duration-300 hover:border-yellow-300/50 hover:bg-gray-700"
+              className="rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-sm text-[var(--text-secondary)] transition-all duration-300 hover:border-yellow-300/50 hover:bg-[var(--nav-hover)]"
             >
               {subject}
             </span>

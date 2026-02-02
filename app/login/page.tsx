@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 function LoginForm() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -30,7 +30,9 @@ function LoginForm() {
   }, [registered]);
 
   if (status === 'loading') {
-    return <div className="text-center text-gray-400">Loading...</div>;
+    return (
+      <div className="text-center text-[var(--text-muted)]">Loading...</div>
+    );
   }
 
   if (status === 'authenticated') {
@@ -71,7 +73,10 @@ function LoginForm() {
       )}
 
       <div>
-        <label htmlFor="email" className="mb-1 block text-sm text-gray-400">
+        <label
+          htmlFor="email"
+          className="mb-1 block text-sm text-[var(--text-muted)]"
+        >
           Email
         </label>
         <input
@@ -79,13 +84,16 @@ function LoginForm() {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="mb-1 block text-sm text-gray-400">
+        <label
+          htmlFor="password"
+          className="mb-1 block text-sm text-[var(--text-muted)]"
+        >
           Password
         </label>
         <input
@@ -93,7 +101,7 @@ function LoginForm() {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-gray-200 focus:border-yellow-300 focus:outline-none"
+          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
           required
         />
       </div>
@@ -101,14 +109,17 @@ function LoginForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-lg bg-yellow-300 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-50"
+        className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
       >
         {loading ? 'Signing in...' : 'Sign In'}
       </button>
 
-      <p className="text-center text-sm text-gray-400">
+      <p className="text-center text-sm text-[var(--text-muted)]">
         Don&apos;t have an account?{' '}
-        <Link href="/register" className="text-yellow-300 hover:underline">
+        <Link
+          href="/register"
+          className="text-yellow-500 hover:underline dark:text-yellow-300"
+        >
           Create one
         </Link>
       </p>
@@ -118,14 +129,16 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4">
       <div className="w-full max-w-md">
-        <h1 className="mb-8 text-center text-3xl font-bold text-gray-200">
+        <h1 className="mb-8 text-center text-3xl font-bold text-[var(--text-primary)]">
           Sign In
         </h1>
         <Suspense
           fallback={
-            <div className="text-center text-gray-400">Loading...</div>
+            <div className="text-center text-[var(--text-muted)]">
+              Loading...
+            </div>
           }
         >
           <LoginForm />

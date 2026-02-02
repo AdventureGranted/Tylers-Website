@@ -112,8 +112,8 @@ export default function TrafficChart({ data, referrers }: TrafficChartProps) {
               onClick={() => setTimeRange(range)}
               className={`rounded-lg px-3 py-1 text-sm font-medium transition-colors ${
                 timeRange === range
-                  ? 'bg-yellow-300 text-gray-900'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                  : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-[var(--nav-hover)]'
               }`}
             >
               {range === '7d'
@@ -127,7 +127,7 @@ export default function TrafficChart({ data, referrers }: TrafficChartProps) {
         <select
           value={selectedReferrer}
           onChange={(e) => setSelectedReferrer(e.target.value)}
-          className="rounded-lg bg-gray-700 px-3 py-1 text-sm text-gray-300 focus:ring-2 focus:ring-yellow-300 focus:outline-none"
+          className="rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-1 text-sm text-[var(--text-secondary)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
         >
           <option value="all">All Sources</option>
           {referrers.map((ref) => (
@@ -139,15 +139,17 @@ export default function TrafficChart({ data, referrers }: TrafficChartProps) {
       </div>
 
       {/* Total */}
-      <div className="mb-2 text-sm text-gray-400">
+      <div className="mb-2 text-sm text-[var(--text-muted)]">
         Total:{' '}
-        <span className="font-semibold text-yellow-300">{totalViews}</span>{' '}
+        <span className="font-semibold text-yellow-500 dark:text-yellow-300">
+          {totalViews}
+        </span>{' '}
         views
       </div>
 
       {/* Chart */}
       {chartData.length === 0 ? (
-        <div className="flex h-48 items-center justify-center text-gray-500">
+        <div className="flex h-48 items-center justify-center text-[var(--text-muted)]">
           No data for selected filters
         </div>
       ) : (
