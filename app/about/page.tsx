@@ -107,7 +107,7 @@ export default function AboutPage() {
                 cutting edge and make a difference.&rdquo;
               </p>
               <p className="mt-4 text-sm text-[var(--text-muted)]">
-                — A motto I live by
+                - A motto I live by
               </p>
             </div>
           </motion.div>
@@ -126,10 +126,10 @@ export default function AboutPage() {
               <div className="space-y-4 text-[var(--text-secondary)]">
                 <p>
                   When I started college, I had two parents and my best
-                  friend&apos;s dad who were all accountants—one being a partner
-                  at one of the Big Four accounting firms. I knew if I graduated
-                  with my Masters in Accounting and passed the CPA, I&apos;d
-                  easily have a job lined up.
+                  friend&apos;s dad who were all accountants (one being a
+                  partner at one of the Big Four accounting firms. I knew if I
+                  graduated with my Masters in Accounting and passed the CPA,
+                  I&apos;d easily have a job lined up.
                 </p>
 
                 <p>
@@ -149,8 +149,8 @@ export default function AboutPage() {
                 <p>
                   I decided to take some computer science classes the following
                   semester alongside accounting to see how I felt. Not soon into
-                  that semester, I met my soon-to-be wife—who was also in
-                  computer science—and everything just felt like it was put in
+                  that semester, I met my soon-to-be wife (who was also in
+                  computer science) and everything just felt like it was put in
                   place for a reason. Assignments became fun. I&apos;d complete
                   them as soon as they came out, constantly refactoring and
                   improving performance.
@@ -158,7 +158,7 @@ export default function AboutPage() {
 
                 <div className="my-6 rounded-xl bg-purple-500/10 p-4">
                   <p className="text-sm text-purple-400 italic">
-                    We&apos;ll ignore the only C I ever got—which was in
+                    We&apos;ll ignore the only C I ever got, which was in
                     accounting that semester. I had no interest in those
                     assignments or pursuing the degree anymore.
                   </p>
@@ -213,7 +213,7 @@ export default function AboutPage() {
                 <p>
                   Once I found my passion, I excelled in all my courses. I
                   became a Teaching Assistant as soon as I could and pushed
-                  myself to graduate in 4 years instead of 5—all while working
+                  myself to graduate in 4 years instead of 5, all while working
                   nearly full time.
                 </p>
 
@@ -244,7 +244,7 @@ export default function AboutPage() {
                       UGSAC Secretary
                     </h4>
                     <p className="text-sm">
-                      Undergraduate Student Advisory Committee—worked with
+                      Undergraduate Student Advisory Committee. I worked with
                       professors, participated in faculty hiring interviews, and
                       organized CS events.
                     </p>
@@ -288,8 +288,8 @@ export default function AboutPage() {
                   I&apos;m diving deep into{' '}
                   <span className="font-medium text-yellow-500 dark:text-yellow-300">
                     AI and machine learning
-                  </span>
-                  —exploring how to incorporate AI-driven features into
+                  </span>{' '}
+                  and exploring how to incorporate AI-driven features into
                   applications. The future is undeniably AI-driven, and I want
                   to be at the forefront of building these experiences.
                 </p>
@@ -302,8 +302,8 @@ export default function AboutPage() {
                   </span>
                   , which allows me to run just about any model locally. Adding
                   the AI chatbot to this website and building the AI-powered
-                  receipt parser have been incredibly fun projects—I can&apos;t
-                  wait to see what else I create with it.
+                  receipt parser have been incredibly fun projects, and I
+                  can&apos;t wait to see what else I create with it.
                 </p>
 
                 <div className="my-6 flex flex-wrap gap-3">
@@ -327,7 +327,7 @@ export default function AboutPage() {
                 <div className="rounded-xl bg-green-500/10 p-4">
                   <p className="text-sm text-green-400">
                     The best part? All of this is{' '}
-                    <strong>completely free and self-hosted</strong>—built and
+                    <strong>completely free and self-hosted</strong>, built and
                     maintained by me. Knowing I have full control over my AI
                     infrastructure just adds to the passion. No API costs, no
                     rate limits, just pure experimentation.
@@ -360,7 +360,7 @@ export default function AboutPage() {
                   <span className="font-medium text-blue-400">
                     Home Assistant
                   </span>{' '}
-                  has made a difference in my life—but that stems from being a
+                  has made a difference in my life, but that stems from being a
                   passionate software engineer. I don&apos;t like doing mundane
                   tasks if I don&apos;t have to, always looking to improve
                   automations and speed up pipelines.
@@ -383,7 +383,7 @@ export default function AboutPage() {
                   </span>
                 </div>
                 <p className="mt-4 text-sm text-[var(--text-muted)] italic">
-                  I didn&apos;t create this website to find a job—I created it
+                  I didn&apos;t create this website to find a job. I created it
                   because of my passion. I love tinkering and trying new things
                   or new tech stacks.
                 </p>
@@ -404,7 +404,7 @@ export default function AboutPage() {
                   </div>
                   <div className="mt-4 rounded-xl bg-purple-500/10 p-4">
                     <p className="text-sm text-purple-400">
-                      Yes, it&apos;s a bit messy—but it&apos;s what it{' '}
+                      Yes, it&apos;s a bit messy, but it&apos;s what it{' '}
                       <em>runs</em> that matters. 😅 My goal is to migrate
                       everything to Ubiquiti networking and get a proper
                       full-size rack to clean things up. If you&apos;d like to
@@ -417,7 +417,7 @@ export default function AboutPage() {
                       >
                         @tyler-grant47
                       </a>
-                      . No pressure—but also, imagine how clean that rack could
+                      . No pressure, but also, imagine how clean that rack could
                       look. 🙏
                     </p>
                   </div>
@@ -529,9 +529,9 @@ export default function AboutPage() {
                       is also a software engineer with her Master&apos;s degree.
                       She told me if I got a solid job that paid over a certain
                       threshold, she&apos;d let me skip getting my
-                      Master&apos;s. Challenge accepted—that&apos;s what led me
-                      to Sorenson Communications and graduating with just my
-                      Bachelor&apos;s. No regrets.
+                      Master&apos;s. Challenge accepted, and that&apos;s what
+                      led me to Sorenson Communications and graduating with just
+                      my Bachelor&apos;s. No regrets.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
@@ -541,7 +541,7 @@ export default function AboutPage() {
                         My son
                       </strong>{' '}
                       is 2 years old and means the world to me. He&apos;s like
-                      his father—non-stop energy, never stops trying to
+                      his father: non-stop energy, never stops trying to
                       accomplish whatever he sets his mind to. He&apos;s ahead
                       on just about everything and basically potty-trained
                       himself at 2¼ years. Everything he figures out amazes me.
