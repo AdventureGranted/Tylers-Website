@@ -15,6 +15,7 @@ import {
   HiOutlineLightBulb,
   HiOutlineMail,
   HiOutlineBeaker,
+  HiOutlineUser,
 } from 'react-icons/hi';
 import { UNREAD_COUNT_CHANGED } from '@/app/lib/events';
 import Link from 'next/link';
@@ -476,6 +477,7 @@ function Navbar() {
 
   // Nav links defined inside component to ensure proper hydration
   const NAV_LINKS = [
+    { href: '/about', label: 'About', icon: <HiOutlineUser /> },
     { href: '/projects', label: 'Projects', icon: <HiOutlineLightBulb /> },
     { href: '/hobbies', label: 'Hobbies', icon: <IoColorPaletteOutline /> },
     { href: '/demo/receipt-parser', label: 'Demos', icon: <HiOutlineBeaker /> },

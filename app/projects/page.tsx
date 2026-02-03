@@ -30,6 +30,8 @@ export default function ProjectsPage() {
       bullets: [
         'Built a full-stack portfolio using Next.js, TypeScript, Tailwind CSS, and Framer Motion for smooth animations',
         'Implemented user authentication with NextAuth.js including registration, role-based access control, and profile management',
+        'Integrated self-hosted AI chatbot powered by local LLM to answer visitor questions about my skills, experience, and projects',
+        'Built a receipt parser demo using self-hosted vision AI model (Llama 3.2 Vision) to extract and categorize receipt data',
         'Self-hosted S3-compatible object storage using Garage for image uploads with Cloudflare tunnel for secure access',
         'Designed PostgreSQL database with Prisma ORM for users, projects, and comments',
         'Created admin dashboard for content and member management with search and filtering',
