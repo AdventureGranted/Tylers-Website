@@ -178,6 +178,131 @@ export default function AboutPage() {
             </div>
           </motion.section>
 
+          {/* Timeline Section */}
+          <motion.section variants={itemVariants} className="mb-12">
+            <div
+              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 md:p-8"
+              style={{ boxShadow: 'var(--card-shadow)' }}
+            >
+              <h2 className="mb-8 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
+                <HiOutlineSparkles className="h-7 w-7 text-yellow-500 dark:text-yellow-300" />
+                My Journey
+              </h2>
+
+              <div className="relative">
+                {/* Timeline line */}
+                <div className="absolute top-2 bottom-2 left-4 w-0.5 bg-gradient-to-b from-purple-500 via-yellow-300 to-purple-500 md:left-1/2 md:-translate-x-1/2" />
+
+                {/* Timeline items */}
+                {[
+                  {
+                    year: '2019',
+                    title: 'Started College',
+                    desc: 'Began pursuing Accounting at University of Utah',
+                    side: 'left',
+                    color: 'bg-gray-500',
+                  },
+                  {
+                    year: '2020',
+                    title: 'The VBA Moment',
+                    desc: 'Fell in love with coding during an Excel VBA assignment',
+                    side: 'right',
+                    color: 'bg-yellow-500',
+                  },
+                  {
+                    year: '2020',
+                    title: 'Switched to CS',
+                    desc: 'Made the leap to Computer Science and met my future wife',
+                    side: 'left',
+                    color: 'bg-pink-500',
+                  },
+                  {
+                    year: '2021',
+                    title: 'Teaching Assistant',
+                    desc: 'Started TA role for Data Structures & Algorithms',
+                    side: 'right',
+                    color: 'bg-blue-500',
+                  },
+                  {
+                    year: '2021',
+                    title: 'First Internship',
+                    desc: 'Joined Zions Bank as a Software Engineer Intern',
+                    side: 'left',
+                    color: 'bg-green-500',
+                  },
+                  {
+                    year: '2022',
+                    title: 'Got Married',
+                    desc: 'Married my college sweetheart (also a software engineer!)',
+                    side: 'right',
+                    color: 'bg-red-500',
+                  },
+                  {
+                    year: '2022',
+                    title: 'Graduated',
+                    desc: 'B.S. in Computer Science from University of Utah',
+                    side: 'left',
+                    color: 'bg-purple-500',
+                  },
+                  {
+                    year: '2022',
+                    title: 'Sorenson',
+                    desc: 'Joined Sorenson Communications as a Software Engineer',
+                    side: 'right',
+                    color: 'bg-blue-500',
+                  },
+                  {
+                    year: '2023',
+                    title: 'Became a Dad',
+                    desc: 'Welcomed our son into the world',
+                    side: 'left',
+                    color: 'bg-pink-500',
+                  },
+                  {
+                    year: '2025',
+                    title: 'Signos',
+                    desc: 'Joined Signos to build health-tech solutions',
+                    side: 'right',
+                    color: 'bg-yellow-500',
+                  },
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    className={`relative mb-8 flex items-center last:mb-0 ${
+                      item.side === 'right' ? 'md:flex-row-reverse' : ''
+                    }`}
+                  >
+                    {/* Dot */}
+                    <div
+                      className={`absolute left-4 z-10 h-4 w-4 rounded-full ${item.color} ring-4 ring-[var(--card-bg)] md:left-1/2 md:-translate-x-1/2`}
+                    />
+
+                    {/* Content */}
+                    <div
+                      className={`ml-12 w-full md:ml-0 md:w-[45%] ${
+                        item.side === 'right'
+                          ? 'md:mr-auto md:pr-8 md:text-right'
+                          : 'md:ml-auto md:pl-8'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block rounded-full ${item.color} px-3 py-1 text-xs font-bold text-white`}
+                      >
+                        {item.year}
+                      </span>
+                      <h3 className="mt-2 text-lg font-semibold text-[var(--text-primary)]">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-[var(--text-secondary)]">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.section>
+
           {/* Education Section */}
           <motion.section variants={itemVariants} className="mb-12">
             <div
