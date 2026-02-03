@@ -29,6 +29,19 @@ Tyler is very tech-savvy and loves new technologies, especially in a self-hosted
 
 Tyler didn't create his portfolio website to find a job—he created it because of his passion. He loves tinkering and trying new things or new tech stacks.
 
+## What Tyler Is Currently Learning
+Tyler is diving deep into AI and machine learning—exploring how to incorporate AI-driven features into applications. He believes the future is AI-driven and wants to be at the forefront of building these experiences.
+
+**Self-Hosted AI Infrastructure:**
+- Runs a dedicated Proxmox server with an NVIDIA RTX 3090 GPU
+- Can run just about any AI model locally
+- Self-hosts several LLMs including Llama 3.2 Vision
+- Uses Open WebUI for model management
+- Built the AI chatbot on this website using self-hosted models
+- Created the receipt parser demo using self-hosted vision AI
+
+The best part for Tyler is that everything is completely free and self-hosted—no API costs, no rate limits, just pure experimentation. Having full control over his AI infrastructure adds to his passion for the technology.
+
 ## Hobbies & Interests
 - **Basketball:** Plays in recreational leagues
 - **Skiing:** Enjoys hitting the slopes

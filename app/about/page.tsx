@@ -11,8 +11,14 @@ import {
   HiOutlineUserGroup,
   HiOutlineSparkles,
 } from 'react-icons/hi';
-import { SiHomeassistant, SiPlex } from 'react-icons/si';
-import { FaBasketballBall, FaSkiing, FaBaby } from 'react-icons/fa';
+import { SiHomeassistant, SiPlex, SiNvidia, SiProxmox } from 'react-icons/si';
+import {
+  FaBasketballBall,
+  FaSkiing,
+  FaBaby,
+  FaBrain,
+  FaQuoteLeft,
+} from 'react-icons/fa';
 import { GiWoodBeam } from 'react-icons/gi';
 import { IoMdHeart } from 'react-icons/io';
 import PageTransition from '@/app/components/PageTransition';
@@ -50,6 +56,60 @@ export default function AboutPage() {
               Software engineer, self-hosting enthusiast, husband, and dad.
               Here&apos;s my story.
             </p>
+          </motion.div>
+
+          {/* Fun Facts / Quick Stats */}
+          <motion.div
+            variants={itemVariants}
+            className="mb-12 grid grid-cols-2 gap-4"
+          >
+            <div
+              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 text-center"
+              style={{ boxShadow: 'var(--card-shadow)' }}
+            >
+              <Image
+                src="/about/drPepperCan.png"
+                alt="Dr Pepper"
+                width={48}
+                height={48}
+                className="mx-auto mb-2"
+              />
+              <div className="text-3xl font-bold text-yellow-500 dark:text-yellow-300">
+                500+
+              </div>
+              <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                Cans of Dr Pepper consumed while coding
+              </p>
+            </div>
+            <div
+              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 text-center"
+              style={{ boxShadow: 'var(--card-shadow)' }}
+            >
+              <HiOutlineCode className="mx-auto mb-2 h-12 w-12 text-purple-500" />
+              <div className="text-2xl font-bold text-yellow-500 dark:text-yellow-300">
+                Too Many
+              </div>
+              <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                Times lost track of time passionately coding
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Motto */}
+          <motion.div variants={itemVariants} className="mb-12">
+            <div
+              className="relative rounded-2xl border border-[var(--card-border)] bg-gradient-to-br from-purple-500/10 to-yellow-300/10 p-8 text-center"
+              style={{ boxShadow: 'var(--card-shadow)' }}
+            >
+              <FaQuoteLeft className="mx-auto mb-4 h-8 w-8 text-yellow-500/50 dark:text-yellow-300/50" />
+              <p className="text-xl font-medium text-[var(--text-primary)] italic md:text-2xl">
+                &ldquo;You can either drown in the wake of change or ride the
+                cutting edge and make a difference.&rdquo;
+              </p>
+              <p className="mt-4 text-sm text-[var(--text-muted)]">
+                — A motto I live by
+              </p>
+            </div>
           </motion.div>
 
           {/* My Story Section */}
@@ -212,6 +272,71 @@ export default function AboutPage() {
             </div>
           </motion.section>
 
+          {/* What I'm Currently Learning Section */}
+          <motion.section variants={itemVariants} className="mb-12">
+            <div
+              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 md:p-8"
+              style={{ boxShadow: 'var(--card-shadow)' }}
+            >
+              <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
+                <FaBrain className="h-7 w-7 text-yellow-500 dark:text-yellow-300" />
+                What I&apos;m Currently Learning
+              </h2>
+
+              <div className="space-y-4 text-[var(--text-secondary)]">
+                <p>
+                  I&apos;m diving deep into{' '}
+                  <span className="font-medium text-yellow-500 dark:text-yellow-300">
+                    AI and machine learning
+                  </span>
+                  —exploring how to incorporate AI-driven features into
+                  applications. The future is undeniably AI-driven, and I want
+                  to be at the forefront of building these experiences.
+                </p>
+
+                <p>
+                  I self-host several AI models on my dedicated Proxmox server
+                  equipped with an{' '}
+                  <span className="font-medium text-green-400">
+                    NVIDIA RTX 3090
+                  </span>
+                  , which allows me to run just about any model locally. Adding
+                  the AI chatbot to this website and building the AI-powered
+                  receipt parser have been incredibly fun projects—I can&apos;t
+                  wait to see what else I create with it.
+                </p>
+
+                <div className="my-6 flex flex-wrap gap-3">
+                  <span className="flex items-center gap-2 rounded-full bg-green-500/20 px-4 py-2 text-sm text-green-400">
+                    <SiNvidia /> RTX 3090
+                  </span>
+                  <span className="flex items-center gap-2 rounded-full bg-orange-500/20 px-4 py-2 text-sm text-orange-400">
+                    <SiProxmox /> Proxmox
+                  </span>
+                  <span className="rounded-full bg-purple-500/20 px-4 py-2 text-sm text-purple-400">
+                    Llama 3.2 Vision
+                  </span>
+                  <span className="rounded-full bg-blue-500/20 px-4 py-2 text-sm text-blue-400">
+                    Local LLMs
+                  </span>
+                  <span className="rounded-full bg-yellow-500/20 px-4 py-2 text-sm text-yellow-400">
+                    Open WebUI
+                  </span>
+                </div>
+
+                <div className="rounded-xl bg-green-500/10 p-4">
+                  <p className="text-sm text-green-400">
+                    The best part? All of this is{' '}
+                    <strong>completely free and self-hosted</strong>—built and
+                    maintained by me. Knowing I have full control over my AI
+                    infrastructure just adds to the passion. No API costs, no
+                    rate limits, just pure experimentation.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.section>
+
           {/* Outside of Coding Section */}
           <motion.section variants={itemVariants} className="mb-12">
             <div
@@ -262,6 +387,41 @@ export default function AboutPage() {
                   because of my passion. I love tinkering and trying new things
                   or new tech stacks.
                 </p>
+
+                {/* Server Rack Photo */}
+                <div className="mt-6">
+                  <div className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl sm:mx-auto sm:w-[70%]">
+                    <Image
+                      src="/about/server.jpg"
+                      alt="Tyler's self-hosted server, NAS, and networking rack"
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <p className="absolute bottom-3 left-3 text-sm font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      The Heart of the Operation
+                    </p>
+                  </div>
+                  <div className="mt-4 rounded-xl bg-purple-500/10 p-4">
+                    <p className="text-sm text-purple-400">
+                      Yes, it&apos;s a bit messy—but it&apos;s what it{' '}
+                      <em>runs</em> that matters. 😅 My goal is to migrate
+                      everything to Ubiquiti networking and get a proper
+                      full-size rack to clean things up. If you&apos;d like to
+                      contribute to my future homelab dreams, feel free to Venmo{' '}
+                      <a
+                        href="https://venmo.com/u/tyler-grant47"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-yellow-500 hover:text-yellow-400 dark:text-yellow-300"
+                      >
+                        @tyler-grant47
+                      </a>
+                      . No pressure—but also, imagine how clean that rack could
+                      look. 🙏
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Hobbies */}

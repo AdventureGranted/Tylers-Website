@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BsGithub, BsLinkedin } from 'react-icons/bs';
 import { HiOutlineMail } from 'react-icons/hi';
@@ -106,17 +107,27 @@ export default function ProfileCard() {
           ))}
         </motion.div>
 
-        <motion.a
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          href="/Tyler_Grant_Resume_2025.pdf"
-          download
-          onClick={handleDownload}
-          className="mt-6 inline-block rounded-full bg-yellow-300 px-12 py-5 text-lg font-bold text-gray-900 shadow-lg shadow-yellow-300/25 transition-all duration-300 hover:scale-105 hover:bg-yellow-400 hover:shadow-yellow-300/40"
+          className="mt-6 flex flex-wrap justify-center gap-4"
         >
-          Download Resume
-        </motion.a>
+          <a
+            href="/Tyler_Grant_Resume_2025.pdf"
+            download
+            onClick={handleDownload}
+            className="inline-block rounded-full bg-yellow-300 px-8 py-4 text-lg font-bold text-gray-900 shadow-lg shadow-yellow-300/25 transition-all duration-300 hover:scale-105 hover:bg-yellow-400 hover:shadow-yellow-300/40"
+          >
+            Download Resume
+          </a>
+          <Link
+            href="/about"
+            className="inline-block rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-8 py-4 text-lg font-bold text-[var(--text-primary)] transition-all duration-300 hover:scale-105 hover:border-yellow-300/50 hover:bg-[var(--nav-hover)]"
+          >
+            Learn More About Me
+          </Link>
+        </motion.div>
       </div>
     </motion.div>
   );
