@@ -20,7 +20,7 @@ import {
   FaQuoteLeft,
 } from 'react-icons/fa';
 import { GiWoodBeam } from 'react-icons/gi';
-import { IoMdHeart } from 'react-icons/io';
+import { IoMdHeart, IoMdChatbubbles } from 'react-icons/io';
 import PageTransition from '@/app/components/PageTransition';
 
 const containerVariants = {
@@ -103,8 +103,8 @@ export default function AboutPage() {
             >
               <FaQuoteLeft className="mx-auto mb-4 h-8 w-8 text-yellow-500/50 dark:text-yellow-300/50" />
               <p className="text-xl font-medium text-[var(--text-primary)] italic md:text-2xl">
-                &ldquo;You can either drown in the wake of change or ride the
-                cutting edge and make a difference.&rdquo;
+                &ldquo;When change comes, you can either drown behind it or ride
+                the edge and shape what&apos;s next.&rdquo;
               </p>
               <p className="mt-4 text-sm text-[var(--text-muted)]">
                 — A motto I live by
@@ -560,6 +560,66 @@ export default function AboutPage() {
               </div>
             </div>
           </motion.section>
+
+          {/* Ask Me About */}
+          <motion.div variants={itemVariants} className="mb-12">
+            <div
+              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 text-center md:p-8"
+              style={{ boxShadow: 'var(--card-shadow)' }}
+            >
+              <h2 className="mb-2 flex items-center justify-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
+                <IoMdChatbubbles className="h-7 w-7 text-yellow-500 dark:text-yellow-300" />
+                Ask Me About...
+              </h2>
+              <p className="mb-6 text-[var(--text-secondary)]">
+                Click a topic to start a conversation with my AI assistant
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {[
+                  {
+                    label: 'Home Assistant',
+                    question: 'Tell me about your Home Assistant setup',
+                  },
+                  {
+                    label: 'Self-Hosting',
+                    question: 'What services do you self-host?',
+                  },
+                  {
+                    label: 'Career Switch',
+                    question:
+                      'How did you switch from accounting to software engineering?',
+                  },
+                  {
+                    label: 'AI Projects',
+                    question: 'What AI projects have you built?',
+                  },
+                  {
+                    label: 'Work Experience',
+                    question: 'Tell me about your work experience',
+                  },
+                  { label: 'Family', question: 'Tell me about your family' },
+                  {
+                    label: 'Woodworking',
+                    question: 'What woodworking projects have you done?',
+                  },
+                ].map((topic) => (
+                  <button
+                    key={topic.label}
+                    onClick={() => {
+                      window.dispatchEvent(
+                        new CustomEvent('openChat', {
+                          detail: { message: topic.question },
+                        })
+                      );
+                    }}
+                    className="rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] transition-all hover:scale-105 hover:border-yellow-300/50 hover:bg-yellow-500/10 hover:text-yellow-500 dark:hover:text-yellow-300"
+                  >
+                    {topic.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
 
           {/* CTA */}
           <motion.div variants={itemVariants} className="text-center">

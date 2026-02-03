@@ -136,6 +136,20 @@ export default function AIChatBubble() {
     }
   }, [isOpen, canChat, isMobile]);
 
+  // Listen for custom "openChat" event to open chat with optional pre-filled message
+  useEffect(() => {
+    const handleOpenChat = (e: CustomEvent<{ message?: string }>) => {
+      setIsOpen(true);
+      if (e.detail?.message) {
+        setInput(e.detail.message);
+      }
+    };
+
+    window.addEventListener('openChat', handleOpenChat as EventListener);
+    return () =>
+      window.removeEventListener('openChat', handleOpenChat as EventListener);
+  }, []);
+
   const startSession = async (name: string, email: string, userId?: string) => {
     try {
       const response = await fetch('/api/chat/session', {
