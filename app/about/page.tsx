@@ -1,7 +1,8 @@
 'use client';
 
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import {
   HiOutlineAcademicCap,
   HiOutlineLightBulb,
@@ -35,6 +36,83 @@ const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
+
+// Animated counter component
+function AnimatedCounter({
+  target,
+  duration = 2000,
+  suffix = '',
+}: {
+  target: number;
+  duration?: number;
+  suffix?: string;
+}) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    let startTime: number;
+    let animationFrame: number;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+
+      // Easing function for smooth deceleration
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(easeOut * target));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isInView, target, duration]);
+
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
+}
+
+// Animated text that counts up then shows final text
+function AnimatedTooMany() {
+  const [phase, setPhase] = useState<'counting' | 'done'>('counting');
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    // Fast count up
+    const countInterval = setInterval(() => {
+      setCount((prev) => {
+        if (prev >= 999) {
+          clearInterval(countInterval);
+          setTimeout(() => setPhase('done'), 200);
+          return 999;
+        }
+        return prev + Math.floor(Math.random() * 50) + 20;
+      });
+    }, 50);
+
+    return () => clearInterval(countInterval);
+  }, [isInView]);
+
+  return (
+    <span ref={ref} className="inline-block min-w-[120px]">
+      {phase === 'counting' ? count : 'Too Many'}
+    </span>
+  );
+}
 
 export default function AboutPage() {
   return (
@@ -75,7 +153,7 @@ export default function AboutPage() {
                 className="mx-auto mb-2"
               />
               <div className="text-3xl font-bold text-yellow-500 dark:text-yellow-300">
-                500+
+                <AnimatedCounter target={500} suffix="+" />
               </div>
               <p className="mt-1 text-sm text-[var(--text-secondary)]">
                 Cans of Dr Pepper consumed while coding
@@ -87,7 +165,7 @@ export default function AboutPage() {
             >
               <HiOutlineCode className="mx-auto mb-2 h-12 w-12 text-purple-500" />
               <div className="text-2xl font-bold text-yellow-500 dark:text-yellow-300">
-                Too Many
+                <AnimatedTooMany />
               </div>
               <p className="mt-1 text-sm text-[var(--text-secondary)]">
                 Times lost track of time passionately coding
