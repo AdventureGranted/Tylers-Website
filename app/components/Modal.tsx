@@ -88,7 +88,7 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, children, title }) => {
           ref={closeButtonRef}
           onClick={onClose}
           aria-label="Close modal"
-          className="mt-6 rounded-full bg-[var(--input-bg)] px-6 py-2 font-bold text-[var(--text-primary)] shadow transition-colors duration-200 hover:scale-105 hover:bg-yellow-500 hover:text-gray-900 dark:hover:bg-yellow-300"
+          className="mt-6 rounded-full bg-[var(--input-bg)] px-6 py-2 font-bold text-[var(--text-primary)] shadow transition-colors duration-200 hover:scale-105 hover:bg-yellow-500 hover:text-gray-900 active:scale-95 dark:hover:bg-yellow-300"
         >
           Close
         </button>

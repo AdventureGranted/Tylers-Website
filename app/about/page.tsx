@@ -128,7 +128,7 @@ export default function AboutPage() {
           <motion.div variants={itemVariants} className="mb-12 text-center">
             <h1 className="mb-4 text-4xl font-bold text-[var(--text-primary)] md:text-5xl">
               About{' '}
-              <span className="text-yellow-500 dark:text-yellow-300">Me</span>
+              <span className="text-teal-600 dark:text-yellow-300">Me</span>
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-[var(--text-secondary)]">
               Software engineer, self-hosting enthusiast, husband, and dad.
@@ -152,7 +152,7 @@ export default function AboutPage() {
                 height={48}
                 className="mx-auto mb-2"
               />
-              <div className="text-3xl font-bold text-yellow-500 dark:text-yellow-300">
+              <div className="text-3xl font-bold text-teal-600 dark:text-yellow-300">
                 <AnimatedCounter target={500} suffix="+" />
               </div>
               <p className="mt-1 text-sm text-[var(--text-secondary)]">
@@ -164,7 +164,7 @@ export default function AboutPage() {
               style={{ boxShadow: 'var(--card-shadow)' }}
             >
               <HiOutlineCode className="mx-auto mb-2 h-12 w-12 text-purple-500" />
-              <div className="text-2xl font-bold text-yellow-500 dark:text-yellow-300">
+              <div className="text-2xl font-bold text-teal-600 dark:text-yellow-300">
                 <AnimatedTooMany />
               </div>
               <p className="mt-1 text-sm text-[var(--text-secondary)]">
@@ -179,7 +179,7 @@ export default function AboutPage() {
               className="relative rounded-2xl border border-[var(--card-border)] bg-gradient-to-br from-purple-500/10 to-yellow-300/10 p-8 text-center"
               style={{ boxShadow: 'var(--card-shadow)' }}
             >
-              <FaQuoteLeft className="mx-auto mb-4 h-8 w-8 text-yellow-500/50 dark:text-yellow-300/50" />
+              <FaQuoteLeft className="mx-auto mb-4 h-8 w-8 text-teal-600/50 dark:text-yellow-300/50" />
               <p className="text-xl font-medium text-[var(--text-primary)] italic md:text-2xl">
                 &ldquo;When change comes, you can either drown behind it or ride
                 the edge and shape what&apos;s next.&rdquo;
@@ -197,7 +197,7 @@ export default function AboutPage() {
               style={{ boxShadow: 'var(--card-shadow)' }}
             >
               <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
-                <HiOutlineLightBulb className="h-7 w-7 text-yellow-500 dark:text-yellow-300" />
+                <HiOutlineLightBulb className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 My Journey into Software Engineering
               </h2>
 
@@ -215,7 +215,7 @@ export default function AboutPage() {
                   an advanced Excel course that everything changed. We had one
                   assignment where we had to create macros and automate Excel
                   using VBA (Visual Basic for Applications).{' '}
-                  <span className="font-medium text-yellow-500 dark:text-yellow-300">
+                  <span className="font-medium text-teal-600 dark:text-yellow-300">
                     That was the first time I didn&apos;t hate a homework
                     assignment.
                   </span>{' '}
@@ -247,7 +247,7 @@ export default function AboutPage() {
                   years of classes (only a few generals transferred,
                   unfortunately). To this day, I love my job and my decision to
                   become a software engineer.{' '}
-                  <span className="font-medium text-yellow-500 dark:text-yellow-300">
+                  <span className="font-medium text-teal-600 dark:text-yellow-300">
                     I love that my wife also shares the same passion for
                     software engineering.
                   </span>
@@ -263,7 +263,7 @@ export default function AboutPage() {
               style={{ boxShadow: 'var(--card-shadow)' }}
             >
               <h2 className="mb-8 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
-                <HiOutlineSparkles className="h-7 w-7 text-yellow-500 dark:text-yellow-300" />
+                <HiOutlineSparkles className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 My Journey
               </h2>
 
@@ -388,7 +388,7 @@ export default function AboutPage() {
               style={{ boxShadow: 'var(--card-shadow)' }}
             >
               <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
-                <HiOutlineAcademicCap className="h-7 w-7 text-yellow-500 dark:text-yellow-300" />
+                <HiOutlineAcademicCap className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 Education & Achievements
               </h2>
 
@@ -406,7 +406,7 @@ export default function AboutPage() {
                   <h3 className="text-xl font-bold text-[var(--text-primary)]">
                     University of Utah
                   </h3>
-                  <p className="text-yellow-500 dark:text-yellow-300">
+                  <p className="text-teal-600 dark:text-yellow-300">
                     B.S. in Computer Science
                   </p>
                 </div>
@@ -482,14 +482,14 @@ export default function AboutPage() {
               style={{ boxShadow: 'var(--card-shadow)' }}
             >
               <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
-                <FaBrain className="h-7 w-7 text-yellow-500 dark:text-yellow-300" />
+                <FaBrain className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 What I&apos;m Currently Learning
               </h2>
 
               <div className="space-y-4 text-[var(--text-secondary)]">
                 <p>
                   I&apos;m diving deep into{' '}
-                  <span className="font-medium text-yellow-500 dark:text-yellow-300">
+                  <span className="font-medium text-teal-600 dark:text-yellow-300">
                     AI and machine learning
                   </span>
                   —exploring how to incorporate AI-driven features into
@@ -547,14 +547,14 @@ export default function AboutPage() {
               style={{ boxShadow: 'var(--card-shadow)' }}
             >
               <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
-                <HiOutlineSparkles className="h-7 w-7 text-yellow-500 dark:text-yellow-300" />
+                <HiOutlineSparkles className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 Outside of Coding
               </h2>
 
               {/* Self-Hosting */}
               <div className="mb-8">
                 <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)]">
-                  <HiOutlineHome className="h-5 w-5 text-purple-500" />
+                  <HiOutlineHome className="h-5 w-5 text-blue-500" />
                   Self-Hosting Enthusiast
                 </h3>
                 <p className="mb-4 text-[var(--text-secondary)]">
@@ -607,7 +607,7 @@ export default function AboutPage() {
                   </div>
                   <div className="mt-4 rounded-xl bg-purple-500/10 p-4">
                     <p className="text-sm text-purple-400">
-                      Yes, it&apos;s a bit messy—but it&apos;s what it{' '}
+                      Yes, it&apos;s a bit messy, but it&apos;s what it{' '}
                       <em>runs</em> that matters. 😅 My goal is to migrate
                       everything to Ubiquiti networking and get a proper
                       full-size rack to clean things up. If you&apos;d like to
@@ -616,11 +616,11 @@ export default function AboutPage() {
                         href="https://venmo.com/u/Tyler-Grant-47"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-medium text-yellow-500 hover:text-yellow-400 dark:text-yellow-300"
+                        className="font-medium text-teal-600 hover:text-teal-500 dark:text-yellow-300 dark:hover:text-yellow-400"
                       >
                         @tyler-grant-47
                       </a>
-                      . No pressure—but also, imagine how clean that rack could
+                      . No pressure, but also, imagine how clean that rack could
                       look. 🙏
                     </p>
                   </div>
@@ -690,7 +690,7 @@ export default function AboutPage() {
               {/* Family */}
               <div>
                 <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)]">
-                  <HiOutlineUserGroup className="h-5 w-5 text-yellow-500 dark:text-yellow-300" />
+                  <HiOutlineUserGroup className="h-5 w-5 text-teal-600 dark:text-yellow-300" />
                   Family
                 </h3>
 
@@ -752,8 +752,8 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 rounded-xl bg-yellow-500/10 p-4">
-                  <p className="text-sm text-yellow-600 dark:text-yellow-300">
+                <div className="mt-6 rounded-xl bg-teal-500/10 p-4 dark:bg-yellow-500/10">
+                  <p className="text-sm text-teal-700 dark:text-yellow-300">
                     I&apos;m a go-getter who can function with just about no
                     sleep if it means helping someone else. I&apos;m constantly
                     trying to make memories with my wife and kid outside of
@@ -771,7 +771,7 @@ export default function AboutPage() {
               style={{ boxShadow: 'var(--card-shadow)' }}
             >
               <h2 className="mb-2 flex items-center justify-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
-                <IoMdChatbubbles className="h-7 w-7 text-yellow-500 dark:text-yellow-300" />
+                <IoMdChatbubbles className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 Ask Me About...
               </h2>
               <p className="mb-6 text-[var(--text-secondary)]">
@@ -815,7 +815,7 @@ export default function AboutPage() {
                         })
                       );
                     }}
-                    className="rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] transition-all hover:scale-105 hover:border-yellow-300/50 hover:bg-yellow-500/10 hover:text-yellow-500 dark:hover:text-yellow-300"
+                    className="rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] transition-all hover:scale-105 hover:border-teal-500/50 hover:bg-teal-500/10 hover:text-teal-600 active:scale-95 dark:hover:border-yellow-300/50 dark:hover:bg-yellow-500/10 dark:hover:text-yellow-300"
                   >
                     {topic.label}
                   </button>
@@ -832,13 +832,13 @@ export default function AboutPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <a
                 href="/contact"
-                className="rounded-full bg-yellow-500 px-8 py-3 font-medium text-gray-900 transition-all hover:scale-105 hover:bg-yellow-400 dark:bg-yellow-300"
+                className="rounded-full bg-teal-500 px-8 py-3 font-medium text-white transition-all hover:scale-105 hover:bg-teal-600 active:scale-95 dark:bg-yellow-300 dark:text-gray-900 dark:hover:bg-yellow-400"
               >
                 Get in Touch
               </a>
               <a
                 href="/projects"
-                className="rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] px-8 py-3 font-medium text-[var(--text-primary)] transition-all hover:scale-105 hover:bg-[var(--nav-hover)]"
+                className="rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] px-8 py-3 font-medium text-[var(--text-primary)] transition-all hover:scale-105 hover:bg-[var(--nav-hover)] active:scale-95"
               >
                 View Projects
               </a>

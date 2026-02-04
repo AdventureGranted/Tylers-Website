@@ -74,7 +74,7 @@ export default function ProjectsPage() {
           {projects.map((project, idx) => (
             <div
               key={idx}
-              className="flex flex-col rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 transition-shadow duration-300 hover:shadow-xl"
+              className="flex flex-col rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               style={{ boxShadow: 'var(--card-shadow)' }}
             >
               <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl border border-[var(--card-border)] bg-gray-700">

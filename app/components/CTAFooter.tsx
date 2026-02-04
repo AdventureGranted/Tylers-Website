@@ -49,7 +49,7 @@ export default function CTAFooter() {
         >
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-3 rounded-full bg-yellow-300 px-10 py-4 text-lg font-bold text-gray-900 shadow-lg shadow-yellow-300/25 transition-all duration-300 hover:scale-105 hover:bg-yellow-400 hover:shadow-yellow-300/40"
+            className="group inline-flex items-center gap-3 rounded-full bg-yellow-300 px-10 py-4 text-lg font-bold text-gray-900 shadow-lg shadow-yellow-300/25 transition-all duration-300 hover:scale-105 hover:bg-yellow-400 hover:shadow-yellow-300/40 active:scale-95"
           >
             Get In Touch
             <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />

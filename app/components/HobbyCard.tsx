@@ -43,7 +43,7 @@ export default function HobbyCard({
   return (
     <div
       onClick={handleCardClick}
-      className="group flex cursor-pointer flex-col rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 transition-all duration-300 hover:border-yellow-500/50 hover:shadow-xl dark:hover:border-yellow-300/50"
+      className="group flex cursor-pointer flex-col rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-yellow-500/50 hover:shadow-xl dark:hover:border-yellow-300/50"
       style={{ boxShadow: 'var(--card-shadow)' }}
     >
       {images.length > 0 && (
@@ -56,7 +56,7 @@ export default function HobbyCard({
             <div className="rounded-2xl bg-[var(--input-bg)] p-4">
               <div className="mb-3 flex items-center">
                 <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
-                  <HiOutlinePhotograph className="text-yellow-500 dark:text-yellow-300" />
+                  <HiOutlinePhotograph className="text-teal-600 dark:text-yellow-300" />
                   Featured Photo
                 </h3>
               </div>

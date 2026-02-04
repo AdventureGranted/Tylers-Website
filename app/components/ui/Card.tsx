@@ -6,6 +6,7 @@ interface CardProps {
   style?: CSSProperties;
   rounded?: '2xl' | '3xl';
   padding?: string;
+  hover?: boolean;
 }
 
 export function Card({
@@ -14,11 +15,15 @@ export function Card({
   style,
   rounded = '2xl',
   padding = 'p-6',
+  hover = false,
 }: CardProps) {
   const roundedClass = rounded === '3xl' ? 'rounded-3xl' : 'rounded-2xl';
+  const hoverClass = hover
+    ? 'transition-all duration-300 hover:-translate-y-1 hover:shadow-xl'
+    : '';
   return (
     <div
-      className={`${roundedClass} border border-[var(--card-border)] bg-[var(--card-bg)] ${padding} ${className}`}
+      className={`${roundedClass} border border-[var(--card-border)] bg-[var(--card-bg)] ${padding} ${hoverClass} ${className}`}
       style={{ boxShadow: 'var(--card-shadow)', ...style }}
     >
       {children}

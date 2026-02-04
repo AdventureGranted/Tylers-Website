@@ -155,7 +155,7 @@ function NavLink({
 }) {
   const baseClasses =
     variant === 'desktop'
-      ? 'flex items-center px-4 text-2xl transition duration-300 hover:scale-105'
+      ? 'flex items-center px-2 text-xl transition duration-300 hover:scale-105'
       : 'flex items-center justify-center px-4 text-center text-2xl transition duration-300';
 
   const activeClasses = isActive
@@ -169,33 +169,22 @@ function NavLink({
       className={`${baseClasses} ${activeClasses}`}
     >
       {icon}
-      <span className="ml-2">{label}</span>
+      <span className="ml-1">{label}</span>
     </Link>
   );
 }
 
 // Logo component
-function Logo({ isHome }: { isHome: boolean }) {
+function Logo() {
   return (
     <div className="px-4">
       <Link href="/" className="group relative flex items-center">
         <Image
-          src={
-            isHome
-              ? '/navbar/tyler_grant_merged_logo_yellow.svg'
-              : '/navbar/tyler_grant_merged_logo.svg'
-          }
+          src="/navbar/tyler_grant_merged_logo.svg"
           alt="Tyler Grant"
           width={180}
           height={60}
-          className="h-10 w-auto group-hover:hidden"
-        />
-        <Image
-          src="/navbar/tyler_grant_merged_logo_yellow.svg"
-          alt="Tyler Grant"
-          width={180}
-          height={60}
-          className="hidden h-10 w-auto group-hover:block"
+          className="h-10 w-auto transition-all duration-300 group-hover:drop-shadow-[0_0_12px_rgba(253,224,71,0.8)]"
         />
       </Link>
     </div>
@@ -224,7 +213,7 @@ function UserDropdown({
     <div className="relative" ref={menuRef}>
       <button
         onClick={onToggle}
-        className="flex items-center gap-2 rounded-lg px-3 py-2 text-lg text-[var(--text-primary)] transition duration-300 hover:bg-[var(--nav-hover)] hover:text-yellow-300"
+        className="flex items-center gap-1 rounded-lg px-2 py-1 text-lg text-[var(--text-primary)] transition duration-300 hover:bg-[var(--nav-hover)] hover:text-yellow-300"
       >
         <div className="relative">
           <ProfileAvatar
@@ -238,7 +227,7 @@ function UserDropdown({
             />
           )}
         </div>
-        <span className="hidden lg:inline">{session.user.name || 'User'}</span>
+        <span className="hidden xl:inline">{session.user.name || 'User'}</span>
         <svg
           className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
@@ -310,7 +299,7 @@ function GuestAuthLinks({ pathname }: { pathname: string }) {
     <>
       <Link
         href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
-        className={`flex items-center px-3 text-lg transition duration-300 hover:scale-105 ${
+        className={`flex items-center px-2 text-lg transition duration-300 hover:scale-105 ${
           pathname === '/login'
             ? 'font-bold text-yellow-300'
             : 'text-[var(--text-secondary)] hover:text-yellow-300'
@@ -321,7 +310,7 @@ function GuestAuthLinks({ pathname }: { pathname: string }) {
       </Link>
       <Link
         href={`/register?callbackUrl=${encodeURIComponent(pathname)}`}
-        className={`flex items-center px-3 text-lg transition duration-300 hover:scale-105 ${
+        className={`flex items-center px-2 text-lg transition duration-300 hover:scale-105 ${
           pathname === '/register'
             ? 'font-bold text-yellow-300'
             : 'text-[var(--text-secondary)] hover:text-yellow-300'
@@ -492,7 +481,7 @@ function Navbar() {
 
   return (
     <nav
-      className={`sticky top-2 z-50 mx-6 overflow-visible rounded-2xl border border-[var(--card-border)] transition-all duration-300 lg:mx-25 ${
+      className={`sticky top-2 z-50 mx-6 overflow-visible rounded-2xl border border-[var(--card-border)] transition-all duration-300 xl:mx-25 ${
         isScrolled
           ? 'bg-[var(--nav-bg-scrolled)] backdrop-blur-md'
           : 'bg-[var(--nav-bg)]'
@@ -500,10 +489,10 @@ function Navbar() {
       style={{ boxShadow: 'var(--card-shadow)' }}
     >
       <div className="mx-4 flex h-16 items-center justify-between">
-        <Logo isHome={pathname === '/'} />
+        <Logo />
 
         {/* Desktop Navigation */}
-        <div className="ml-auto hidden items-center lg:flex">
+        <div className="ml-auto hidden items-center xl:flex">
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.label}
@@ -519,7 +508,7 @@ function Navbar() {
           </div>
 
           {status !== 'loading' && (
-            <div className="ml-4 flex items-center border-l border-[var(--card-border)] pl-4">
+            <div className="ml-2 flex items-center border-l border-[var(--card-border)] pl-2">
               {session ? (
                 <UserDropdown
                   session={session}
@@ -537,7 +526,7 @@ function Navbar() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="relative ml-auto lg:hidden">
+        <div className="relative ml-auto xl:hidden">
           <button
             className="relative px-4 text-2xl text-[var(--text-primary)]"
             onClick={() => setIsOpen(!isOpen)}

@@ -19,6 +19,8 @@
   --input-bg: #374151;
   --input-border: #4b5563;
   --accent-yellow: #fde047;
+  --accent-primary: #fde047;
+  --accent-primary-hover: #facc15;
   color-scheme: dark;
 }
 
@@ -41,6 +43,8 @@
   --input-bg: #ffffff;
   --input-border: #d1d5db;
   --accent-yellow: #ca8a04;
+  --accent-primary: #0d9488;
+  --accent-primary-hover: #0f766e;
   color-scheme: light;
 }
 
@@ -90,4 +94,77 @@ html.theme-transition * {
   50% {
     transform: rotate(1deg);
   }
+}
+
+/* Light mode: Override yellow accent colors to teal */
+.light .text-yellow-500 {
+  color: #0d9488 !important; /* teal-600 */
+}
+.light .text-yellow-300 {
+  color: #0d9488 !important; /* teal-600 */
+}
+.light .text-yellow-400 {
+  color: #0f766e !important; /* teal-700 */
+}
+.light .text-yellow-600 {
+  color: #0f766e !important; /* teal-700 */
+}
+.light .bg-yellow-500 {
+  background-color: #14b8a6 !important; /* teal-500 */
+}
+.light .bg-yellow-300 {
+  background-color: #14b8a6 !important; /* teal-500 */
+}
+.light .bg-yellow-400 {
+  background-color: #0d9488 !important; /* teal-600 */
+}
+.light .hover\:bg-yellow-400:hover {
+  background-color: #0d9488 !important; /* teal-600 */
+}
+.light .hover\:bg-yellow-600:hover {
+  background-color: #0f766e !important; /* teal-700 */
+}
+.light .hover\:text-yellow-500:hover {
+  color: #0d9488 !important; /* teal-600 */
+}
+.light .hover\:text-yellow-400:hover {
+  color: #14b8a6 !important; /* teal-500 */
+}
+.light .hover\:text-yellow-300:hover {
+  color: #14b8a6 !important; /* teal-500 */
+}
+.light .border-yellow-300\/50 {
+  border-color: rgb(20 184 166 / 0.5) !important; /* teal-500/50 */
+}
+.light .hover\:border-yellow-300\/50:hover {
+  border-color: rgb(20 184 166 / 0.5) !important; /* teal-500/50 */
+}
+.light .bg-yellow-500\/10 {
+  background-color: rgb(20 184 166 / 0.1) !important; /* teal-500/10 */
+}
+.light .hover\:bg-yellow-500\/10:hover {
+  background-color: rgb(20 184 166 / 0.1) !important; /* teal-500/10 */
+}
+.light .bg-yellow-500\/20 {
+  background-color: rgb(20 184 166 / 0.2) !important; /* teal-500/20 */
+}
+.light .ring-yellow-500 {
+  --tw-ring-color: #14b8a6 !important; /* teal-500 */
+}
+.light .focus\:ring-yellow-500:focus {
+  --tw-ring-color: #14b8a6 !important; /* teal-500 */
+}
+.light .shadow-yellow-300\/25 {
+  --tw-shadow-color: rgb(20 184 166 / 0.25) !important; /* teal-500/25 */
+}
+.light .shadow-yellow-300\/40 {
+  --tw-shadow-color: rgb(20 184 166 / 0.4) !important; /* teal-500/40 */
+}
+.light .hover\:shadow-yellow-300\/40:hover {
+  --tw-shadow-color: rgb(20 184 166 / 0.4) !important; /* teal-500/40 */
+}
+
+/* Light mode: Logo glow uses teal instead of yellow on hover */
+.light .group:hover img[class*='drop-shadow'] {
+  filter: drop-shadow(0 0 12px rgba(20, 184, 166, 0.8)) !important;
 }

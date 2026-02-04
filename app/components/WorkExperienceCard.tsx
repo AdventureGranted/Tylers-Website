@@ -159,7 +159,7 @@ export default function WorkExperienceCard() {
       >
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-2">
-            <HiOutlineBriefcase className="h-5 w-5 text-yellow-500 dark:text-yellow-300" />
+            <HiOutlineBriefcase className="h-5 w-5 text-teal-600 dark:text-yellow-300" />
             <span className="text-2xl font-bold text-yellow-500 sm:text-3xl dark:text-yellow-300">
               {experiences.length}
             </span>
@@ -229,7 +229,7 @@ export default function WorkExperienceCard() {
                       <h3 className="text-xl font-bold text-[var(--text-primary)]">
                         {exp.company}
                       </h3>
-                      <p className="text-yellow-500 dark:text-yellow-300">
+                      <p className="text-teal-600 dark:text-yellow-300">
                         {exp.role}
                       </p>
                     </div>

@@ -69,7 +69,7 @@ export default function ProfileCard() {
           className="max-w-2xl text-4xl font-bold text-[var(--text-primary)]"
         >
           Hi, I&apos;m{' '}
-          <span className="text-yellow-500 dark:text-yellow-300">
+          <span className="text-teal-600 dark:text-yellow-300">
             Tyler Grant
           </span>
           . Nice to meet you!
@@ -100,7 +100,7 @@ export default function ProfileCard() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={link.label}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--input-bg)] text-[var(--text-secondary)] transition-all duration-300 hover:scale-110 hover:bg-yellow-300 hover:text-gray-900"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--input-bg)] text-[var(--text-secondary)] transition-all duration-300 hover:scale-110 hover:bg-yellow-300 hover:text-gray-900 active:scale-95"
             >
               {iconMap[link.iconName]}
             </a>
@@ -117,13 +117,13 @@ export default function ProfileCard() {
             href="/Tyler_Grant_Resume_2025.pdf"
             download
             onClick={handleDownload}
-            className="inline-block rounded-full bg-yellow-300 px-8 py-4 text-lg font-bold text-gray-900 shadow-lg shadow-yellow-300/25 transition-all duration-300 hover:scale-105 hover:bg-yellow-400 hover:shadow-yellow-300/40"
+            className="inline-block rounded-full bg-yellow-300 px-8 py-4 text-lg font-bold text-gray-900 shadow-lg shadow-yellow-300/25 transition-all duration-300 hover:scale-105 hover:bg-yellow-400 hover:shadow-yellow-300/40 active:scale-95"
           >
             Download Resume
           </a>
           <Link
             href="/about"
-            className="inline-block rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-8 py-4 text-lg font-bold text-[var(--text-primary)] transition-all duration-300 hover:scale-105 hover:border-yellow-300/50 hover:bg-[var(--nav-hover)]"
+            className="inline-block rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-8 py-4 text-lg font-bold text-[var(--text-primary)] transition-all duration-300 hover:scale-105 hover:border-yellow-300/50 hover:bg-[var(--nav-hover)] active:scale-95"
           >
             Learn More About Me
           </Link>

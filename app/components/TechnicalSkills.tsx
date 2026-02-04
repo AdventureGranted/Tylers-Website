@@ -126,7 +126,7 @@ export default function TechnicalSkills() {
             className="h-full"
           >
             <Card className="h-full">
-              <h3 className="mb-4 text-xl font-semibold text-yellow-500 dark:text-yellow-300">
+              <h3 className="mb-4 text-xl font-semibold text-teal-600 dark:text-yellow-300">
                 {category.title}
               </h3>
               <div className="flex flex-wrap gap-3">
@@ -150,7 +150,7 @@ export default function TechnicalSkills() {
       {/* Knowledge Areas */}
       <motion.div variants={itemVariants} className="mt-8">
         <Card>
-          <h3 className="mb-4 text-xl font-semibold text-yellow-500 dark:text-yellow-300">
+          <h3 className="mb-4 text-xl font-semibold text-teal-600 dark:text-yellow-300">
             Knowledge Areas
           </h3>
           <div className="flex flex-wrap gap-3">
