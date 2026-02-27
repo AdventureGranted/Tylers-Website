@@ -15,11 +15,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.tyler-grant.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'cdn.tyler-grant.com',
         pathname: '/**',
       },
