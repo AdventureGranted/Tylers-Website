@@ -74,11 +74,13 @@ Uploads are stored on a NAS for persistence. To set up locally:
 3. **Create a Windows junction (required for Next.js):**
 
    In **PowerShell (as Administrator)**:
+
    ```powershell
    New-Item -ItemType Junction -Path "C:\Users\YourUser\path\to\project\public\uploads" -Target "U:\"
    ```
 
    Or in **CMD (as Administrator)**:
+
    ```cmd
    mklink /D "C:\Users\YourUser\path\to\project\public\uploads" "U:\"
    ```
@@ -124,7 +126,7 @@ pct set <container_id> --mp0 /mnt/pve/NAS/uploads,mp=/mnt/nas/uploads
 
 ## Customization
 
-- **Update your resume:** Replace `public/Tyler_Grant_Resume_2025.pdf`.
+- **Update your resume:** Replace `public/Tyler_Grant_Resume_2026.pdf`.
 - **Add projects:** Edit `app/projects/page.tsx` and add to the `projects` array.
 - **Edit About/Contact:** Update `app/about/page.tsx` and `app/contact/page.tsx`.
 

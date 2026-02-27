@@ -114,7 +114,7 @@ export default function ProfileCard() {
           className="mt-6 flex flex-wrap justify-center gap-4"
         >
           <a
-            href="/Tyler_Grant_Resume_2025.pdf"
+            href="/Tyler_Grant_Resume_2026.pdf"
             download
             onClick={handleDownload}
             className="inline-block rounded-full bg-yellow-300 px-8 py-4 text-lg font-bold text-gray-900 shadow-lg shadow-yellow-300/25 transition-all duration-300 hover:scale-105 hover:bg-yellow-400 hover:shadow-yellow-300/40 active:scale-95"
