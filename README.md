@@ -1,16 +1,21 @@
 # Tyler Grant's Portfolio
 
-A modern, responsive portfolio website built with [Next.js](https://nextjs.org/), [React](https://react.dev/), and [Tailwind CSS](https://tailwindcss.com/).
+A modern, full-stack portfolio website built with [Next.js](https://nextjs.org/), [React](https://react.dev/), and [Tailwind CSS](https://tailwindcss.com/).
 
 ## Features
 
-- **Responsive Design:** Mobile-first, dark-themed, and fully responsive.
-- **Animated UI:** Mobile menu transitions, animated banners, and modals.
-- **Component-Based:** Reusable components for cards, modals, navigation, and more.
-- **Project Showcase:** Expandable project cards with images and details.
-- **Work Experience:** Data-driven, visually organized experience cards.
-- **Contact & About Pages:** Easy-to-update sections for personal info and contact.
-- **Resume Download:** Downloadable PDF with a custom thank-you modal.
+- **Responsive Design** — Mobile-first, dark-themed (with light mode toggle), and fully responsive
+- **Animated UI** — Page transitions, animated banners, and modals powered by Framer Motion
+- **Project Showcase** — Expandable project cards with image carousels, timelines, budget tracking, materials checklists, and lessons learned
+- **Hobbies Section** — Dynamic hobby pages with photo grids, before/after comparisons, and difficulty ratings
+- **AI Chat Bubble** — Interactive chat assistant on the home page
+- **Admin Dashboard** — Manage projects, members, contacts, and chat sessions
+- **User Authentication** — Registration, login, and profile management via NextAuth.js
+- **Contact Form** — Email notifications via Nodemailer with admin inbox
+- **Analytics** — Traffic tracking and charts in the admin panel
+- **Receipt Parser** — AI-powered receipt scanning demo
+- **PWA Support** — Installable as a progressive web app
+- **Resume Download** — Downloadable PDF with a custom thank-you modal
 
 ## Getting Started
 
@@ -51,94 +56,71 @@ A modern, responsive portfolio website built with [Next.js](https://nextjs.org/)
 
 6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## NAS Storage Setup (Optional)
-
-Uploads are stored on a NAS for persistence. To set up locally:
-
-### Windows (WSL Development)
-
-1. **Map NAS share to a drive letter in Windows:**
-   - File Explorer → Right-click "This PC" → Map network drive
-   - Map `\\your-nas\path\to\uploads` to `U:`
-
-2. **Mount the drive in WSL:**
-
-   ```bash
-   sudo mkdir -p /mnt/u
-   sudo mount -t drvfs U: /mnt/u
-
-   # Add to /etc/fstab for persistence:
-   echo "U: /mnt/u drvfs defaults 0 0" | sudo tee -a /etc/fstab
-   ```
-
-3. **Create a Windows junction (required for Next.js):**
-
-   In **PowerShell (as Administrator)**:
-
-   ```powershell
-   New-Item -ItemType Junction -Path "C:\Users\YourUser\path\to\project\public\uploads" -Target "U:\"
-   ```
-
-   Or in **CMD (as Administrator)**:
-
-   ```cmd
-   mklink /D "C:\Users\YourUser\path\to\project\public\uploads" "U:\"
-   ```
-
-### Linux Server (Production)
-
-1. **Mount NAS:**
-
-   ```bash
-   sudo mkdir -p /mnt/nas/uploads
-   sudo mount -t nfs your-nas-ip:/path/to/share /mnt/nas/uploads
-   ```
-
-2. **Symlink to public folder:**
-
-   ```bash
-   ln -s /mnt/nas/uploads /path/to/app/public/uploads
-   ```
-
-### Proxmox LXC Container
-
-Pass through the NAS mount to the container:
-
-```bash
-pct set <container_id> --mp0 /mnt/pve/NAS/uploads,mp=/mnt/nas/uploads
-```
-
 ## Project Structure
 
-- `app/`
-  - `page.tsx` – Home page (Profile, Skills, Experience, animated chat bubble)
-  - `about/page.tsx` – About Me (Family, Hobbies, Other)
-  - `projects/page.tsx` – Projects grid with images and details
-  - `contact/page.tsx` – Contact info (email, phone)
-  - `components/`
-    - `NavBar.tsx` – Responsive navigation bar with animated mobile dropdown
-    - `ProfileCard.tsx` – Profile and resume download with modal
-    - `WorkExperienceCard.tsx` – Work experience cards
-    - `TechnicalSkills.tsx` – Skills and technologies
-    - `Card.tsx` – Reusable card component
-    - `Modal.tsx` – Reusable modal dialog
-- `public/` – Static assets (images, resume PDF, favicon)
-
-## Customization
-
-- **Update your resume:** Replace `public/Tyler_Grant_Resume_2026.pdf`.
-- **Add projects:** Edit `app/projects/page.tsx` and add to the `projects` array.
-- **Edit About/Contact:** Update `app/about/page.tsx` and `app/contact/page.tsx`.
+```
+app/
+├── page.tsx                  # Home (Profile, Skills, Experience, AI Chat)
+├── about/page.tsx            # About Me
+├── projects/page.tsx         # Projects showcase
+├── hobbies/                  # Hobbies with dynamic [slug] routes
+├── contact/page.tsx          # Contact form
+├── profile/page.tsx          # User profile management
+├── login/page.tsx            # Login
+├── register/page.tsx         # Registration
+├── demo/receipt-parser/      # Receipt parser demo
+├── admin/                    # Admin dashboard
+│   ├── page.tsx              # Dashboard overview & analytics
+│   ├── projects/             # Project management (CRUD)
+│   ├── members/              # Member management
+│   ├── contacts/             # Contact message inbox
+│   └── chat-sessions/        # AI chat session logs
+├── api/                      # API routes
+│   ├── auth/                 # NextAuth + registration
+│   ├── projects/             # Project CRUD, comments, materials, time entries
+│   ├── chat/                 # AI chat endpoints
+│   ├── contact/              # Contact form + admin
+│   ├── analytics/            # Traffic analytics
+│   ├── upload/               # S3 file uploads
+│   └── receipts/             # Receipt parsing
+├── components/               # 38 reusable components
+│   ├── NavBar.tsx            # Responsive nav with mobile dropdown
+│   ├── ProfileCard.tsx       # Profile card with resume download
+│   ├── AIChatBubble.tsx      # AI chat assistant
+│   ├── ImageCarousel.tsx     # Image carousel with lightbox
+│   ├── ContactForm.tsx       # Contact form with validation
+│   ├── ThemeToggle.tsx       # Light/dark mode toggle
+│   ├── TrafficChart.tsx      # Analytics charts (Recharts)
+│   └── ...                   # And many more
+└── layout.tsx                # Root layout with Starfield background
+```
 
 ## Tech Stack
 
-- Next.js 16
-- React 19
-- Tailwind CSS 4
-- TypeScript
-- PostgreSQL + Prisma
-- NextAuth.js
-- React Icons
+- **Framework:** Next.js 16 / React 19
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4
+- **Database:** PostgreSQL + Prisma
+- **Auth:** NextAuth.js
+- **Animations:** Framer Motion
+- **Storage:** AWS S3
+- **Email:** Nodemailer
+- **Charts:** Recharts
+- **PWA:** next-pwa
+
+## Scripts
+
+```bash
+npm run dev       # Start development server
+npm run build     # Production build
+npm run start     # Start production server
+npm run lint      # Run ESLint
+npm run format    # Run Prettier
+```
+
+## Deployment
+
+GitHub Actions (`.github/workflows/deploy.yml`) deploys on push to `main` — builds in an isolated temp directory, syncs to the live directory, and restarts via PM2.
 
 ## License
 
