@@ -17,14 +17,51 @@ const blurDataURLs: Record<string, string> = {
     'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUG/8QAIRAAAQMEAgMBAAAAAAAAAAAAAQIDBAUGAAcRIRITMUH/xAAVAQEBAAAAAAAAAAAAAAAAAAAEBf/EABwRAAICAgMAAAAAAAAAAAAAAAECAAMEERIhMf/aAAwDAQACEQMRAD8AzO2tv1K4bUpFS9bKYsSQyl9uMhwrUEqAIJUQACeeeOc5xjFLJrVAT2eO37//2Q==',
   '/boxie.png':
     'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAcI/8QAIhAAAQMDBAMBAAAAAAAAAAAAAQIDBAUGEQAHEiEIE0Fx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAcEQACAgIDAAAAAAAAAAAAAAABAgADBBESITH/2gAMAwEAAhEDEEA/ANS7b2JAsmyaZbcN556PBbKfcv8AKlqJJUo8QByST116x1pdWk1t+p//2Q==',
+  '/balancely.png':
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAOklEQVQYV2PU+M/wn4EIwMjAxPCfgRhFDMRoYmBiIKyIkYGJgaAiRgYmBoKKGBmYGAgqYmRgYgAAe4oFC/sMFDkAAAAASUVORK5CYII=',
+  '/backup.png':
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAARklEQVQYV2NkYPj/n4EIwMjIxPCfgRhFjIxMDAQVMTIyMRBUxMjIxEBQESMjEwNBRYyMTAwEFTEyMjEQVMTIyMRAUBEAZk0FC1VB1B0AAAAASUVORK5CYII=',
 };
 
 export default function ProjectsPage() {
   const projects = [
     {
+      title: 'Balancely',
+      subtitle: 'Personal Finance Management App',
+      link: 'https://github.com/AdventureGranted/balancely-web',
+      demo: 'https://budget.adventuregranted.com',
+      date: '2025 – Present',
+      image: '/balancely.png',
+      bullets: [
+        'Built a comprehensive budgeting app with Next.js, React 19, TypeScript, Tailwind CSS, and shadcn/ui',
+        'Tracks transactions, budgets, savings goals, net worth, and recurring expenses with real-time alerts',
+        'Integrated AI-powered receipt scanning and email receipt import for automatic transaction entry',
+        'Supports multi-user households with role-based access, activity logs, and spending limits',
+        'Features dashboard with spending insights, merchant analytics, forecasting, and annual reports using Recharts',
+        'PostgreSQL database with Prisma ORM, NextAuth.js v5 authentication, and S3-compatible file storage',
+      ],
+    },
+    {
+      title: 'Back Up – Card Board Game',
+      subtitle: 'Multiplayer Mobile Game',
+      link: 'https://github.com/AdventureGranted/backup',
+      demo: null,
+      date: '2025 – Present',
+      image: '/backup.png',
+      bullets: [
+        'Developed a card-driven board game for 2, 4, or 6 players using React Native, Expo, and TypeScript',
+        'Built real-time multiplayer with Socket.IO and async turn-based mode with push notifications',
+        'Implemented pure TypeScript game engine with immutable state, legal move validation, and bot AI with difficulty levels',
+        'Created Node.js backend with Express, PostgreSQL, Redis, JWT auth, and ELO rating system',
+        'Features spectator mode, replay viewer, friends system, animated pieces, sound effects, and haptic feedback',
+        'Comprehensive test suite with 271 Jest tests covering game engine and server logic',
+      ],
+    },
+    {
       title: 'Tyler-Grant.com',
       subtitle: 'Full-Stack Portfolio & Authentication System',
       link: 'https://github.com/AdventureGranted/Tylers-Website',
+      demo: 'http://tyler-grant.com/demo/receipt-parser',
       date: 'June 2024 – Present',
       image: '/family.jpeg',
       bullets: [
@@ -42,6 +79,7 @@ export default function ProjectsPage() {
       title: 'Self Hosted Media & Automation Platform',
       subtitle: 'Full-Stack Infrastructure Development',
       link: null,
+      demo: null,
       date: 'September 2022 – Present',
       image: '/selfhosting.png',
       bullets: [
@@ -55,6 +93,7 @@ export default function ProjectsPage() {
       title: 'Boxy – Senior Project',
       subtitle: null,
       link: null,
+      demo: null,
       date: 'January 2022 – December 2022',
       image: '/boxie.png',
       bullets: [
@@ -112,6 +151,31 @@ export default function ProjectsPage() {
               <div className="mb-3 text-sm text-[var(--text-secondary)]">
                 {project.date}
               </div>
+              {project.demo && (
+                <Link
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mb-3 inline-flex w-fit items-center gap-2 rounded-lg bg-yellow-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400"
+                >
+                  Live Demo
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </Link>
+              )}
               <ul className="list-inside list-disc space-y-2 pl-2 text-[var(--text-primary)]">
                 {project.bullets.map((b, i) => (
                   <li key={i}>{b}</li>

@@ -346,7 +346,7 @@ function MobileDrawer({
     <div
       className={`absolute top-full right-0 z-50 w-48 space-y-2 overflow-hidden rounded-2xl border border-[var(--dropdown-border)] bg-[var(--dropdown-bg)] pt-4 pb-4 shadow-2xl transition-all duration-600 ${
         isOpen
-          ? 'max-h-[500px] opacity-100'
+          ? 'max-h-[80vh] opacity-100'
           : 'pointer-events-none max-h-0 opacity-0'
       }`}
     >
