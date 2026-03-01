@@ -1,13 +1,12 @@
-import { Metadata } from 'next';
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import PageTransition from '@/app/components/PageTransition';
-
-export const metadata: Metadata = {
-  title: 'Projects',
-  description:
-    'View my software development projects including full-stack applications, self-hosted infrastructure, and mobile apps.',
-};
+import ArchitectureDiagram, {
+  balancelyArchitecture,
+  portfolioArchitecture,
+} from '@/app/components/ArchitectureDiagram';
 
 // Pre-generated blur data URLs for project images
 const blurDataURLs: Record<string, string> = {
@@ -181,6 +180,12 @@ export default function ProjectsPage() {
                   <li key={i}>{b}</li>
                 ))}
               </ul>
+              {project.title === 'Balancely' && (
+                <ArchitectureDiagram {...balancelyArchitecture} />
+              )}
+              {project.title === 'Tyler-Grant.com' && (
+                <ArchitectureDiagram {...portfolioArchitecture} />
+              )}
             </div>
           ))}
         </div>
