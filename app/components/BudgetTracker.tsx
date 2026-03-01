@@ -92,9 +92,9 @@ export default function BudgetTracker({
 
   if (loading) {
     return (
-      <div className="rounded-2xl bg-[var(--input-bg)] p-4">
-        <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
+      <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
           Loading...
         </div>
       </div>
@@ -107,35 +107,33 @@ export default function BudgetTracker({
   }
 
   return (
-    <div className="rounded-2xl bg-[var(--input-bg)] p-4">
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+    <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
         <HiOutlineCurrencyDollar className="text-yellow-500 dark:text-yellow-300" />
         Budget vs Actual
       </h3>
 
       <div className="mb-3 flex items-center justify-between">
-        <span className="text-xs text-[var(--text-muted)]">
-          Estimated Budget
-        </span>
+        <span className="text-xs text-gray-500">Estimated Budget</span>
         {readOnly ? (
-          <span className="text-sm text-[var(--text-secondary)]">
+          <span className="text-sm text-gray-700 dark:text-gray-400">
             {estimatedBudget ? `$${estimatedBudget.toFixed(2)}` : '—'}
           </span>
         ) : editing ? (
           <div className="flex items-center gap-1">
-            <span className="text-[var(--text-muted)]">$</span>
+            <span className="text-gray-500">$</span>
             <input
               type="number"
               step="0.01"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className="w-20 rounded border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-sm text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+              className="w-20 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
               autoFocus
             />
             <button
               onClick={handleSave}
               disabled={saving}
-              className="rounded p-1 text-green-400 hover:bg-[var(--nav-hover)]"
+              className="rounded p-1 text-green-400 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <HiOutlineCheck />
             </button>
@@ -143,7 +141,7 @@ export default function BudgetTracker({
         ) : (
           <button
             onClick={() => setEditing(true)}
-            className="flex items-center gap-1 text-sm text-[var(--text-secondary)] hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="flex items-center gap-1 text-sm text-gray-700 hover:text-yellow-500 dark:text-gray-400 dark:hover:text-yellow-300"
           >
             {estimatedBudget ? `$${estimatedBudget.toFixed(2)}` : 'Set budget'}
             <HiOutlinePencil className="text-xs" />
@@ -152,7 +150,7 @@ export default function BudgetTracker({
       </div>
 
       <div className="mb-2 flex items-center justify-between">
-        <span className="text-xs text-[var(--text-muted)]">Actual Spent</span>
+        <span className="text-xs text-gray-500">Actual Spent</span>
         <span className="text-sm font-medium text-yellow-500 dark:text-yellow-300">
           ${actualCost.toFixed(2)}
         </span>
@@ -160,7 +158,7 @@ export default function BudgetTracker({
 
       {estimatedBudget && (
         <>
-          <div className="mb-2 h-2 overflow-hidden rounded-full bg-[var(--card-border)]">
+          <div className="mb-2 h-2 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-700">
             <div
               className={`h-full transition-all ${
                 percentUsed > 100
@@ -173,7 +171,7 @@ export default function BudgetTracker({
             />
           </div>
           <div className="flex items-center justify-between text-xs">
-            <span className="text-[var(--text-muted)]">
+            <span className="text-gray-500">
               {percentUsed.toFixed(0)}% used
             </span>
             <span

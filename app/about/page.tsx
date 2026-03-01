@@ -117,7 +117,7 @@ function AnimatedTooMany() {
 export default function AboutPage() {
   return (
     <PageTransition>
-      <main className="min-h-screen bg-[var(--background)] px-4 py-12">
+      <main className="min-h-screen bg-gray-100 px-4 py-12 dark:bg-gray-900">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -126,11 +126,11 @@ export default function AboutPage() {
         >
           {/* Hero Section */}
           <motion.div variants={itemVariants} className="mb-12 text-center">
-            <h1 className="mb-4 text-4xl font-bold text-[var(--text-primary)] md:text-5xl">
+            <h1 className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl dark:text-gray-200">
               About{' '}
               <span className="text-teal-600 dark:text-yellow-300">Me</span>
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-[var(--text-secondary)]">
+            <p className="mx-auto max-w-2xl text-lg text-gray-700 dark:text-gray-400">
               Software engineer, self-hosting enthusiast, husband, and dad.
               Here&apos;s my story.
             </p>
@@ -141,10 +141,7 @@ export default function AboutPage() {
             variants={itemVariants}
             className="mb-12 grid grid-cols-2 gap-4"
           >
-            <div
-              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 text-center"
-              style={{ boxShadow: 'var(--card-shadow)' }}
-            >
+            <div className="rounded-2xl border border-gray-300 bg-white p-6 text-center shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
               <Image
                 src="/about/drPepperCan.png"
                 alt="Dr Pepper"
@@ -155,19 +152,16 @@ export default function AboutPage() {
               <div className="text-3xl font-bold text-teal-600 dark:text-yellow-300">
                 <AnimatedCounter target={500} suffix="+" />
               </div>
-              <p className="mt-1 text-sm text-[var(--text-secondary)]">
+              <p className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                 Cans of Dr Pepper consumed while coding
               </p>
             </div>
-            <div
-              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 text-center"
-              style={{ boxShadow: 'var(--card-shadow)' }}
-            >
+            <div className="rounded-2xl border border-gray-300 bg-white p-6 text-center shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
               <HiOutlineCode className="mx-auto mb-2 h-12 w-12 text-purple-500" />
               <div className="text-2xl font-bold text-teal-600 dark:text-yellow-300">
                 <AnimatedTooMany />
               </div>
-              <p className="mt-1 text-sm text-[var(--text-secondary)]">
+              <p className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                 Times lost track of time passionately coding
               </p>
             </div>
@@ -175,33 +169,25 @@ export default function AboutPage() {
 
           {/* Motto */}
           <motion.div variants={itemVariants} className="mb-12">
-            <div
-              className="relative rounded-2xl border border-[var(--card-border)] bg-gradient-to-br from-purple-500/10 to-yellow-300/10 p-8 text-center"
-              style={{ boxShadow: 'var(--card-shadow)' }}
-            >
+            <div className="relative rounded-2xl border border-gray-300 bg-gradient-to-br from-purple-500/10 to-yellow-300/10 p-8 text-center shadow-md dark:border-gray-700 dark:shadow-lg">
               <FaQuoteLeft className="mx-auto mb-4 h-8 w-8 text-teal-600/50 dark:text-yellow-300/50" />
-              <p className="text-xl font-medium text-[var(--text-primary)] italic md:text-2xl">
+              <p className="text-xl font-medium text-gray-900 italic md:text-2xl dark:text-gray-200">
                 &ldquo;When change comes, you can either drown behind it or ride
                 the edge and shape what&apos;s next.&rdquo;
               </p>
-              <p className="mt-4 text-sm text-[var(--text-muted)]">
-                — A motto I live by
-              </p>
+              <p className="mt-4 text-sm text-gray-500">— A motto I live by</p>
             </div>
           </motion.div>
 
           {/* My Story Section */}
           <motion.section variants={itemVariants} className="mb-12">
-            <div
-              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 md:p-8"
-              style={{ boxShadow: 'var(--card-shadow)' }}
-            >
-              <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
+            <div className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
+              <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
                 <HiOutlineLightBulb className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 My Journey into Software Engineering
               </h2>
 
-              <div className="space-y-4 text-[var(--text-secondary)]">
+              <div className="space-y-4 text-gray-700 dark:text-gray-400">
                 <p>
                   When I started college, I had two parents and my best
                   friend&apos;s dad who were all accountants—one being a partner
@@ -258,11 +244,8 @@ export default function AboutPage() {
 
           {/* Timeline Section */}
           <motion.section variants={itemVariants} className="mb-12">
-            <div
-              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 md:p-8"
-              style={{ boxShadow: 'var(--card-shadow)' }}
-            >
-              <h2 className="mb-8 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
+            <div className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
+              <h2 className="mb-8 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
                 <HiOutlineSparkles className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 My Journey
               </h2>
@@ -352,7 +335,7 @@ export default function AboutPage() {
                   >
                     {/* Dot */}
                     <div
-                      className={`absolute left-4 z-10 h-4 w-4 rounded-full ${item.color} ring-4 ring-[var(--card-bg)] md:left-1/2 md:-translate-x-1/2`}
+                      className={`absolute left-4 z-10 h-4 w-4 rounded-full ${item.color} ring-4 ring-white md:left-1/2 md:-translate-x-1/2 dark:ring-gray-800`}
                     />
 
                     {/* Content */}
@@ -368,10 +351,10 @@ export default function AboutPage() {
                       >
                         {item.year}
                       </span>
-                      <h3 className="mt-2 text-lg font-semibold text-[var(--text-primary)]">
+                      <h3 className="mt-2 text-lg font-semibold text-gray-900 dark:text-gray-200">
                         {item.title}
                       </h3>
-                      <p className="text-sm text-[var(--text-secondary)]">
+                      <p className="text-sm text-gray-700 dark:text-gray-400">
                         {item.desc}
                       </p>
                     </div>
@@ -383,11 +366,8 @@ export default function AboutPage() {
 
           {/* Education Section */}
           <motion.section variants={itemVariants} className="mb-12">
-            <div
-              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 md:p-8"
-              style={{ boxShadow: 'var(--card-shadow)' }}
-            >
-              <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
+            <div className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
+              <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
                 <HiOutlineAcademicCap className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 Education & Achievements
               </h2>
@@ -403,7 +383,7 @@ export default function AboutPage() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[var(--text-primary)]">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-200">
                     University of Utah
                   </h3>
                   <p className="text-teal-600 dark:text-yellow-300">
@@ -412,7 +392,7 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <div className="space-y-4 text-[var(--text-secondary)]">
+              <div className="space-y-4 text-gray-700 dark:text-gray-400">
                 <p>
                   Once I found my passion, I excelled in all my courses. I
                   became a Teaching Assistant as soon as I could and pushed
@@ -422,8 +402,8 @@ export default function AboutPage() {
 
                 {/* Achievements Grid */}
                 <div className="my-6 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-xl bg-[var(--input-bg)] p-4">
-                    <h4 className="mb-2 font-semibold text-[var(--text-primary)]">
+                  <div className="rounded-xl bg-white p-4 dark:bg-gray-700">
+                    <h4 className="mb-2 font-semibold text-gray-900 dark:text-gray-200">
                       Teaching Assistant
                     </h4>
                     <p className="text-sm">
@@ -432,8 +412,8 @@ export default function AboutPage() {
                       <strong>CS 3500</strong> - Software Practice 1
                     </p>
                   </div>
-                  <div className="rounded-xl bg-[var(--input-bg)] p-4">
-                    <h4 className="mb-2 font-semibold text-[var(--text-primary)]">
+                  <div className="rounded-xl bg-white p-4 dark:bg-gray-700">
+                    <h4 className="mb-2 font-semibold text-gray-900 dark:text-gray-200">
                       Retention TA
                     </h4>
                     <p className="text-sm">
@@ -442,8 +422,8 @@ export default function AboutPage() {
                       guidance.
                     </p>
                   </div>
-                  <div className="rounded-xl bg-[var(--input-bg)] p-4">
-                    <h4 className="mb-2 font-semibold text-[var(--text-primary)]">
+                  <div className="rounded-xl bg-white p-4 dark:bg-gray-700">
+                    <h4 className="mb-2 font-semibold text-gray-900 dark:text-gray-200">
                       UGSAC Secretary
                     </h4>
                     <p className="text-sm">
@@ -452,8 +432,8 @@ export default function AboutPage() {
                       organized CS events.
                     </p>
                   </div>
-                  <div className="rounded-xl bg-[var(--input-bg)] p-4">
-                    <h4 className="mb-2 font-semibold text-[var(--text-primary)]">
+                  <div className="rounded-xl bg-white p-4 dark:bg-gray-700">
+                    <h4 className="mb-2 font-semibold text-gray-900 dark:text-gray-200">
                       Work-Life Balance
                     </h4>
                     <p className="text-sm">
@@ -477,16 +457,13 @@ export default function AboutPage() {
 
           {/* What I'm Currently Learning Section */}
           <motion.section variants={itemVariants} className="mb-12">
-            <div
-              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 md:p-8"
-              style={{ boxShadow: 'var(--card-shadow)' }}
-            >
-              <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
+            <div className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
+              <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
                 <FaBrain className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 What I&apos;m Currently Learning
               </h2>
 
-              <div className="space-y-4 text-[var(--text-secondary)]">
+              <div className="space-y-4 text-gray-700 dark:text-gray-400">
                 <p>
                   I&apos;m diving deep into{' '}
                   <span className="font-medium text-teal-600 dark:text-yellow-300">
@@ -542,22 +519,19 @@ export default function AboutPage() {
 
           {/* Outside of Coding Section */}
           <motion.section variants={itemVariants} className="mb-12">
-            <div
-              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 md:p-8"
-              style={{ boxShadow: 'var(--card-shadow)' }}
-            >
-              <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
+            <div className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
+              <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
                 <HiOutlineSparkles className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 Outside of Coding
               </h2>
 
               {/* Self-Hosting */}
               <div className="mb-8">
-                <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)]">
+                <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-gray-200">
                   <HiOutlineHome className="h-5 w-5 text-blue-500" />
                   Self-Hosting Enthusiast
                 </h3>
-                <p className="mb-4 text-[var(--text-secondary)]">
+                <p className="mb-4 text-gray-700 dark:text-gray-400">
                   I&apos;m very tech-savvy and love new technologies, especially
                   in a self-hosted aspect. I could talk for hours about how{' '}
                   <span className="font-medium text-blue-400">
@@ -581,11 +555,11 @@ export default function AboutPage() {
                   <span className="rounded-full bg-purple-500/20 px-4 py-2 text-sm text-purple-400">
                     Mealie (Recipes)
                   </span>
-                  <span className="rounded-full bg-[var(--input-bg)] px-4 py-2 text-sm text-[var(--text-muted)]">
+                  <span className="rounded-full bg-white px-4 py-2 text-sm text-gray-500 dark:bg-gray-700">
                     + tons more
                   </span>
                 </div>
-                <p className="mt-4 text-sm text-[var(--text-muted)] italic">
+                <p className="mt-4 text-sm text-gray-500 italic">
                   I didn&apos;t create this website to find a job—I created it
                   because of my passion. I love tinkering and trying new things
                   or new tech stacks.
@@ -629,30 +603,32 @@ export default function AboutPage() {
 
               {/* Hobbies */}
               <div className="mb-8">
-                <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)]">
+                <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-gray-200">
                   <HiOutlineHeart className="h-5 w-5 text-red-500" />
                   Hobbies & Interests
                 </h3>
                 <div className="mb-4 flex flex-wrap gap-4">
-                  <div className="flex items-center gap-2 rounded-xl bg-[var(--input-bg)] px-4 py-3">
+                  <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-3 dark:bg-gray-700">
                     <FaBasketballBall className="text-orange-500" />
-                    <span className="text-[var(--text-secondary)]">
+                    <span className="text-gray-700 dark:text-gray-400">
                       Basketball (Rec Leagues)
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 rounded-xl bg-[var(--input-bg)] px-4 py-3">
+                  <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-3 dark:bg-gray-700">
                     <FaSkiing className="text-blue-400" />
-                    <span className="text-[var(--text-secondary)]">Skiing</span>
+                    <span className="text-gray-700 dark:text-gray-400">
+                      Skiing
+                    </span>
                   </div>
-                  <div className="flex items-center gap-2 rounded-xl bg-[var(--input-bg)] px-4 py-3">
+                  <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-3 dark:bg-gray-700">
                     <HiOutlineCode className="text-green-500" />
-                    <span className="text-[var(--text-secondary)]">
+                    <span className="text-gray-700 dark:text-gray-400">
                       Tinkering with Tech
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 rounded-xl bg-[var(--input-bg)] px-4 py-3">
+                  <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-3 dark:bg-gray-700">
                     <GiWoodBeam className="text-amber-600" />
-                    <span className="text-[var(--text-secondary)]">
+                    <span className="text-gray-700 dark:text-gray-400">
                       Cabinetry & Woodworking
                     </span>
                   </div>
@@ -689,7 +665,7 @@ export default function AboutPage() {
 
               {/* Family */}
               <div>
-                <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)]">
+                <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-gray-200">
                   <HiOutlineUserGroup className="h-5 w-5 text-teal-600 dark:text-yellow-300" />
                   Family
                 </h3>
@@ -722,11 +698,11 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                <div className="space-y-4 text-[var(--text-secondary)]">
+                <div className="space-y-4 text-gray-700 dark:text-gray-400">
                   <div className="flex items-start gap-3">
                     <IoMdHeart className="mt-1 h-5 w-5 flex-shrink-0 text-red-500" />
                     <p>
-                      <strong className="text-[var(--text-primary)]">
+                      <strong className="text-gray-900 dark:text-gray-200">
                         My wife
                       </strong>{' '}
                       is also a software engineer with her Master&apos;s degree.
@@ -740,7 +716,7 @@ export default function AboutPage() {
                   <div className="flex items-start gap-3">
                     <FaBaby className="mt-1 h-5 w-5 flex-shrink-0 text-blue-400" />
                     <p>
-                      <strong className="text-[var(--text-primary)]">
+                      <strong className="text-gray-900 dark:text-gray-200">
                         My son
                       </strong>{' '}
                       is 2 years old and means the world to me. He&apos;s like
@@ -766,15 +742,12 @@ export default function AboutPage() {
 
           {/* Ask Me About */}
           <motion.div variants={itemVariants} className="mb-12">
-            <div
-              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 text-center md:p-8"
-              style={{ boxShadow: 'var(--card-shadow)' }}
-            >
-              <h2 className="mb-2 flex items-center justify-center gap-3 text-2xl font-bold text-[var(--text-primary)]">
+            <div className="rounded-2xl border border-gray-300 bg-white p-6 text-center shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
+              <h2 className="mb-2 flex items-center justify-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
                 <IoMdChatbubbles className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
                 Ask Me About...
               </h2>
-              <p className="mb-6 text-[var(--text-secondary)]">
+              <p className="mb-6 text-gray-700 dark:text-gray-400">
                 Click a topic to start a conversation with my AI assistant
               </p>
               <div className="flex flex-wrap justify-center gap-3">
@@ -815,7 +788,7 @@ export default function AboutPage() {
                         })
                       );
                     }}
-                    className="rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] transition-all hover:scale-105 hover:border-teal-500/50 hover:bg-teal-500/10 hover:text-teal-600 active:scale-95 dark:hover:border-yellow-300/50 dark:hover:bg-yellow-500/10 dark:hover:text-yellow-300"
+                    className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:scale-105 hover:border-teal-500/50 hover:bg-teal-500/10 hover:text-teal-600 active:scale-95 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:border-yellow-300/50 dark:hover:bg-yellow-500/10 dark:hover:text-yellow-300"
                   >
                     {topic.label}
                   </button>
@@ -826,7 +799,7 @@ export default function AboutPage() {
 
           {/* CTA */}
           <motion.div variants={itemVariants} className="text-center">
-            <p className="mb-4 text-[var(--text-secondary)]">
+            <p className="mb-4 text-gray-700 dark:text-gray-400">
               Want to connect or learn more about my work?
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -838,7 +811,7 @@ export default function AboutPage() {
               </a>
               <a
                 href="/projects"
-                className="rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] px-8 py-3 font-medium text-[var(--text-primary)] transition-all hover:scale-105 hover:bg-[var(--nav-hover)] active:scale-95"
+                className="rounded-full border border-gray-300 bg-white px-8 py-3 font-medium text-gray-900 transition-all hover:scale-105 hover:bg-gray-100 active:scale-95 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
               >
                 View Projects
               </a>

@@ -10,12 +10,14 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
   const registered = searchParams.get('registered');
+  const [success, setSuccess] = useState(() =>
+    registered === 'true' ? 'Account created successfully! Please sign in.' : ''
+  );
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -23,16 +25,8 @@ function LoginForm() {
     }
   }, [status, router]);
 
-  useEffect(() => {
-    if (registered === 'true') {
-      setSuccess('Account created successfully! Please sign in.');
-    }
-  }, [registered]);
-
   if (status === 'loading') {
-    return (
-      <div className="text-center text-[var(--text-muted)]">Loading...</div>
-    );
+    return <div className="text-center text-gray-500">Loading...</div>;
   }
 
   if (status === 'authenticated') {
@@ -73,10 +67,7 @@ function LoginForm() {
       )}
 
       <div>
-        <label
-          htmlFor="email"
-          className="mb-1 block text-sm text-[var(--text-muted)]"
-        >
+        <label htmlFor="email" className="mb-1 block text-sm text-gray-500">
           Email
         </label>
         <input
@@ -84,16 +75,13 @@ function LoginForm() {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
           required
         />
       </div>
 
       <div>
-        <label
-          htmlFor="password"
-          className="mb-1 block text-sm text-[var(--text-muted)]"
-        >
+        <label htmlFor="password" className="mb-1 block text-sm text-gray-500">
           Password
         </label>
         <input
@@ -101,7 +89,7 @@ function LoginForm() {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
           required
         />
       </div>
@@ -114,7 +102,7 @@ function LoginForm() {
         {loading ? 'Signing in...' : 'Sign In'}
       </button>
 
-      <p className="text-center text-sm text-[var(--text-muted)]">
+      <p className="text-center text-sm text-gray-500">
         Don&apos;t have an account?{' '}
         <Link
           href="/register"
@@ -129,17 +117,13 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 dark:bg-gray-900">
       <div className="w-full max-w-md">
-        <h1 className="mb-8 text-center text-3xl font-bold text-[var(--text-primary)]">
+        <h1 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-gray-200">
           Sign In
         </h1>
         <Suspense
-          fallback={
-            <div className="text-center text-[var(--text-muted)]">
-              Loading...
-            </div>
-          }
+          fallback={<div className="text-center text-gray-500">Loading...</div>}
         >
           <LoginForm />
         </Suspense>

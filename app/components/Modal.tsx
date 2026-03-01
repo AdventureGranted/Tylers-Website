@@ -76,7 +76,7 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, children, title }) => {
     >
       <div
         ref={modalRef}
-        className="relative max-w-xs rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-8 text-center shadow-xl"
+        className="relative max-w-xs rounded-2xl border border-gray-300 bg-white p-8 text-center shadow-xl dark:border-gray-700 dark:bg-gray-800"
       >
         {title && (
           <h2 id="modal-title" className="sr-only">
@@ -88,7 +88,7 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, children, title }) => {
           ref={closeButtonRef}
           onClick={onClose}
           aria-label="Close modal"
-          className="mt-6 rounded-full bg-[var(--input-bg)] px-6 py-2 font-bold text-[var(--text-primary)] shadow transition-colors duration-200 hover:scale-105 hover:bg-yellow-500 hover:text-gray-900 active:scale-95 dark:hover:bg-yellow-300"
+          className="mt-6 rounded-full bg-white px-6 py-2 font-bold text-gray-900 shadow transition-colors duration-200 hover:scale-105 hover:bg-yellow-500 hover:text-gray-900 active:scale-95 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-yellow-300"
         >
           Close
         </button>

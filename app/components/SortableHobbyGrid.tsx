@@ -48,6 +48,8 @@ function SortableHobbyCard({ project, isEditing }: SortableHobbyCardProps) {
     isDragging,
   } = useSortable({ id: project.id, disabled: !isEditing });
 
+  const [animationDelay] = useState(() => `${Math.random() * 0.2}s`);
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -63,7 +65,7 @@ function SortableHobbyCard({ project, isEditing }: SortableHobbyCardProps) {
           isEditing && !isDragging
             ? 'wiggle 0.3s ease-in-out infinite'
             : undefined,
-        animationDelay: `${Math.random() * 0.2}s`,
+        animationDelay,
       }}
       className={isEditing ? 'cursor-grab active:cursor-grabbing' : ''}
       {...(isEditing ? { ...attributes, ...listeners } : {})}
@@ -160,7 +162,7 @@ export default function SortableHobbyGrid({
     <>
       {/* Header with buttons */}
       <div className="mb-8 flex items-center gap-4">
-        <h1 className="text-4xl font-bold text-[var(--text-primary)]">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-200">
           Hobbies
         </h1>
         {isAdmin && (
@@ -169,7 +171,7 @@ export default function SortableHobbyGrid({
               <>
                 <button
                   onClick={handleCancel}
-                  className="flex items-center gap-1 rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-2 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--nav-hover)]"
+                  className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700"
                 >
                   Cancel
                 </button>
@@ -186,7 +188,7 @@ export default function SortableHobbyGrid({
               <>
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-1 rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-2 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--nav-hover)]"
+                  className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700"
                 >
                   <HiPencil className="h-4 w-4" />
                   Edit
@@ -205,14 +207,16 @@ export default function SortableHobbyGrid({
       </div>
 
       {isEditing && (
-        <p className="mb-4 text-center text-sm text-[var(--text-secondary)]">
+        <p className="mb-4 text-center text-sm text-gray-700 dark:text-gray-400">
           Drag cards to reorder them
         </p>
       )}
 
       {/* Grid */}
       {projects.length === 0 ? (
-        <p className="text-[var(--text-secondary)]">No hobby projects yet.</p>
+        <p className="text-gray-700 dark:text-gray-400">
+          No hobby projects yet.
+        </p>
       ) : (
         <DndContext
           sensors={sensors}

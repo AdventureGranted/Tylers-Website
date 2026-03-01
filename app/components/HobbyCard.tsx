@@ -43,8 +43,7 @@ export default function HobbyCard({
   return (
     <div
       onClick={handleCardClick}
-      className="group flex cursor-pointer flex-col rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-yellow-500/50 hover:shadow-xl dark:hover:border-yellow-300/50"
-      style={{ boxShadow: 'var(--card-shadow)' }}
+      className="group flex cursor-pointer flex-col rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-yellow-500/50 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50"
     >
       {images.length > 0 && (
         <div
@@ -53,14 +52,14 @@ export default function HobbyCard({
           onMouseUp={(e) => e.stopPropagation()}
         >
           {compareMode === 'single' && singleImage ? (
-            <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+            <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
               <div className="mb-3 flex items-center">
-                <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+                <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
                   <HiOutlinePhotograph className="text-teal-600 dark:text-yellow-300" />
                   Featured Photo
                 </h3>
               </div>
-              <div className="relative aspect-video overflow-hidden rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)]">
+              <div className="relative aspect-video overflow-hidden rounded-lg border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-700">
                 {singleImage.type === 'video' ? (
                   <video
                     src={singleImage.url}
@@ -102,11 +101,11 @@ export default function HobbyCard({
         {title}
       </h2>
       {description && (
-        <p className="mb-3 line-clamp-2 text-[var(--text-secondary)]">
+        <p className="mb-3 line-clamp-2 text-gray-700 dark:text-gray-400">
           {description}
         </p>
       )}
-      <span className="mt-auto text-sm text-[var(--text-muted)] transition-colors group-hover:text-yellow-500 dark:group-hover:text-yellow-300">
+      <span className="mt-auto text-sm text-gray-500 transition-colors group-hover:text-yellow-500 dark:group-hover:text-yellow-300">
         View details →
       </span>
     </div>

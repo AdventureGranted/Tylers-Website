@@ -22,16 +22,16 @@ export default async function ProjectsAdmin() {
   });
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-8">
+    <div className="min-h-screen bg-gray-100 p-8 dark:bg-gray-900">
       <div className="mx-auto max-w-4xl">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">
             Manage Projects
           </h1>
           <div className="flex gap-4">
             <Link
               href="/admin"
-              className="text-[var(--text-muted)] transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+              className="text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
             >
               Dashboard
             </Link>
@@ -45,8 +45,8 @@ export default async function ProjectsAdmin() {
         </div>
 
         {projects.length === 0 ? (
-          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-8 text-center">
-            <p className="text-[var(--text-muted)]">No projects yet.</p>
+          <div className="rounded-xl border border-gray-300 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+            <p className="text-gray-500">No projects yet.</p>
             <Link
               href="/admin/projects/new"
               className="mt-4 inline-block text-yellow-500 hover:underline dark:text-yellow-300"
@@ -59,13 +59,13 @@ export default async function ProjectsAdmin() {
             {projects.map((project: ProjectWithImages) => (
               <div
                 key={project.id}
-                className="flex items-center justify-between rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-4"
+                className="flex items-center justify-between rounded-xl border border-gray-300 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
               >
                 <div>
-                  <h2 className="text-xl font-semibold text-[var(--text-primary)]">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-200">
                     {project.title}
                   </h2>
-                  <p className="text-sm text-[var(--text-muted)]">
+                  <p className="text-sm text-gray-500">
                     {project.published ? 'Published' : 'Draft'} &middot;{' '}
                     {project.images.length} images
                   </p>
@@ -73,7 +73,7 @@ export default async function ProjectsAdmin() {
                 <div className="flex gap-2">
                   <Link
                     href={`/admin/projects/${project.id}`}
-                    className="rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)]"
+                    className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-700"
                   >
                     Edit
                   </Link>

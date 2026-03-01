@@ -339,29 +339,29 @@ export default async function AdminDashboard() {
   );
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-4 md:p-8">
+    <div className="min-h-screen bg-gray-100 p-4 md:p-8 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] md:text-3xl">
+          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl dark:text-gray-200">
             Admin Dashboard
           </h1>
           <Link
             href="/"
-            className="text-[var(--text-muted)] transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
           >
             View Site
           </Link>
         </div>
 
         {/* Quick Actions */}
-        <div className="mb-8 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
-          <h2 className="mb-4 text-xl font-semibold text-[var(--text-primary)]">
+        <div className="mb-8 rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+          <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-200">
             Quick Actions
           </h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:flex md:flex-wrap md:gap-4">
             <Link
               href="/admin/contacts"
-              className="relative rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-center text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)] md:py-2 md:text-left"
+              className="relative rounded-lg border border-gray-300 bg-white px-4 py-3 text-center text-gray-900 transition-colors hover:bg-gray-100 md:py-2 md:text-left dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-700"
             >
               Contact Submissions
               {unreadContacts > 0 && (
@@ -372,19 +372,19 @@ export default async function AdminDashboard() {
             </Link>
             <Link
               href="/admin/projects"
-              className="rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-center text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)] md:py-2 md:text-left"
+              className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-center text-gray-900 transition-colors hover:bg-gray-100 md:py-2 md:text-left dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-700"
             >
               Manage Projects
             </Link>
             <Link
               href="/admin/members"
-              className="rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-center text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)] md:py-2 md:text-left"
+              className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-center text-gray-900 transition-colors hover:bg-gray-100 md:py-2 md:text-left dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-700"
             >
               Manage Members
             </Link>
             <Link
               href="/admin/chat-sessions"
-              className="rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-center text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)] md:py-2 md:text-left"
+              className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-center text-gray-900 transition-colors hover:bg-gray-100 md:py-2 md:text-left dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-700"
             >
               Chat Sessions
             </Link>
@@ -402,16 +402,16 @@ export default async function AdminDashboard() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className={`rounded-xl border border-[var(--card-border)] p-4 text-center ${
+              className={`rounded-xl border border-gray-300 p-4 text-center dark:border-gray-700 ${
                 stat.highlight
                   ? 'border-2 border-yellow-500/50 bg-yellow-500/10 dark:border-yellow-300/50 dark:bg-yellow-300/10'
-                  : 'bg-[var(--card-bg)]'
+                  : 'bg-white dark:bg-gray-800'
               }`}
             >
               <div className="text-2xl font-bold text-yellow-500 md:text-3xl dark:text-yellow-300">
                 {stat.value}
               </div>
-              <div className="text-xs text-[var(--text-muted)] md:text-sm">
+              <div className="text-xs text-gray-500 md:text-sm">
                 {stat.label}
               </div>
             </div>
@@ -423,17 +423,15 @@ export default async function AdminDashboard() {
           {engagementStats.map((stat) => (
             <div
               key={stat.label}
-              className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-4"
+              className="rounded-xl border border-gray-300 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
             >
               <div className="text-2xl font-bold text-yellow-500 dark:text-yellow-300">
                 {stat.value}
               </div>
-              <div className="text-sm font-medium text-[var(--text-primary)]">
+              <div className="text-sm font-medium text-gray-900 dark:text-gray-200">
                 {stat.label}
               </div>
-              <div className="text-xs text-[var(--text-muted)]">
-                {stat.desc}
-              </div>
+              <div className="text-xs text-gray-500">{stat.desc}</div>
             </div>
           ))}
         </div>
@@ -441,16 +439,16 @@ export default async function AdminDashboard() {
         {/* Charts Row */}
         <div className="mb-8 grid gap-6 lg:grid-cols-2">
           {/* Daily Traffic */}
-          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
-            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
+          <div className="rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+            <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-200">
               Traffic
             </h2>
             <TrafficChart data={trafficChartData} referrers={uniqueReferrers} />
           </div>
 
           {/* Top Pages */}
-          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
-            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
+          <div className="rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+            <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-200">
               Top Pages
             </h2>
             <div className="space-y-2">
@@ -461,7 +459,7 @@ export default async function AdminDashboard() {
                     key={page.page}
                     className="flex items-center justify-between"
                   >
-                    <span className="truncate text-sm text-[var(--text-secondary)]">
+                    <span className="truncate text-sm text-gray-700 dark:text-gray-400">
                       {page.page || '/'}
                     </span>
                     <span className="ml-2 text-sm font-medium text-yellow-500 dark:text-yellow-300">
@@ -476,8 +474,8 @@ export default async function AdminDashboard() {
         {/* Breakdown Row */}
         <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {/* Device Breakdown */}
-          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
-            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
+          <div className="rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+            <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-200">
               Devices
             </h2>
             <div className="space-y-3">
@@ -489,12 +487,12 @@ export default async function AdminDashboard() {
                 return (
                   <div key={d.device}>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[var(--text-secondary)] capitalize">
+                      <span className="text-gray-700 capitalize dark:text-gray-400">
                         {d.device}
                       </span>
-                      <span className="text-[var(--text-muted)]">{pct}%</span>
+                      <span className="text-gray-500">{pct}%</span>
                     </div>
-                    <div className="mt-1 h-2 rounded-full bg-[var(--input-bg)]">
+                    <div className="mt-1 h-2 rounded-full bg-white dark:bg-gray-700">
                       <div
                         className="h-2 rounded-full bg-yellow-500 dark:bg-yellow-300"
                         style={{ width: `${pct}%` }}
@@ -507,8 +505,8 @@ export default async function AdminDashboard() {
           </div>
 
           {/* Browser Breakdown */}
-          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
-            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
+          <div className="rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+            <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-200">
               Browsers
             </h2>
             <div className="space-y-2">
@@ -517,7 +515,7 @@ export default async function AdminDashboard() {
                   key={b.browser}
                   className="flex items-center justify-between"
                 >
-                  <span className="text-[var(--text-secondary)] capitalize">
+                  <span className="text-gray-700 capitalize dark:text-gray-400">
                     {b.browser}
                   </span>
                   <span className="text-sm text-yellow-500 dark:text-yellow-300">
@@ -529,8 +527,8 @@ export default async function AdminDashboard() {
           </div>
 
           {/* Referrer Sources */}
-          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
-            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
+          <div className="rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+            <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-200">
               Traffic Sources
             </h2>
             <div className="space-y-2">
@@ -546,12 +544,10 @@ export default async function AdminDashboard() {
                       key={r.referrer}
                       className="flex items-center justify-between"
                     >
-                      <span className="text-[var(--text-secondary)] capitalize">
+                      <span className="text-gray-700 capitalize dark:text-gray-400">
                         {r.referrer || 'direct'}
                       </span>
-                      <span className="text-sm text-[var(--text-muted)]">
-                        {pct}%
-                      </span>
+                      <span className="text-sm text-gray-500">{pct}%</span>
                     </div>
                   );
                 })}
@@ -559,8 +555,8 @@ export default async function AdminDashboard() {
           </div>
 
           {/* Countries */}
-          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
-            <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
+          <div className="rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+            <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-200">
               Countries
             </h2>
             <div className="space-y-2">
@@ -572,7 +568,7 @@ export default async function AdminDashboard() {
                       key={c.country}
                       className="flex items-center justify-between"
                     >
-                      <span className="text-[var(--text-secondary)]">
+                      <span className="text-gray-700 dark:text-gray-400">
                         {c.country || 'Unknown'}
                       </span>
                       <span className="text-sm text-yellow-500 dark:text-yellow-300">
@@ -581,7 +577,7 @@ export default async function AdminDashboard() {
                     </div>
                   ))
               ) : (
-                <p className="text-sm text-[var(--text-muted)]">
+                <p className="text-sm text-gray-500">
                   No geo data yet (requires CDN headers)
                 </p>
               )}
@@ -590,14 +586,14 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div className="mb-8 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
-          <h2 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
+        <div className="mb-8 rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+          <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-200">
             Recent Activity
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[var(--card-border)] text-left text-[var(--text-muted)]">
+                <tr className="border-b border-gray-300 text-left text-gray-500 dark:border-gray-700">
                   <th className="pb-2">Page</th>
                   <th className="pb-2">IP</th>
                   <th className="pb-2">Device</th>
@@ -606,15 +602,15 @@ export default async function AdminDashboard() {
                   <th className="pb-2">Time</th>
                 </tr>
               </thead>
-              <tbody className="text-[var(--text-secondary)]">
+              <tbody className="text-gray-700 dark:text-gray-400">
                 {(recentActivity as RecentActivityRow[]).map(
                   (event: RecentActivityRow, i: number) => (
                     <tr
                       key={i}
-                      className="border-b border-[var(--card-border)]/50"
+                      className="border-b border-gray-300 dark:border-gray-700/50"
                     >
                       <td className="py-2">{event.page || '/'}</td>
-                      <td className="py-2 font-mono text-xs text-[var(--text-muted)]">
+                      <td className="py-2 font-mono text-xs text-gray-500">
                         {event.ip || '-'}
                       </td>
                       <td className="py-2 capitalize">{event.device || '-'}</td>
@@ -622,7 +618,7 @@ export default async function AdminDashboard() {
                         {event.referrer || 'direct'}
                       </td>
                       <td className="py-2">{event.country || '-'}</td>
-                      <td className="py-2 text-[var(--text-muted)]">
+                      <td className="py-2 text-gray-500">
                         {event.createdAt.toLocaleString('en-US', {
                           month: 'short',
                           day: 'numeric',

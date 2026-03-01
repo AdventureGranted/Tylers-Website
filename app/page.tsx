@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <PageTransition>
       <div className="relative min-h-screen">
-        <main className="mx-6 pt-4 pb-16 text-[var(--text-primary)] lg:mx-25">
+        <main className="mx-6 pt-4 pb-16 text-gray-900 lg:mx-25 dark:text-gray-200">
           <ProfileCard />
           <TechnicalSkills />
           <WorkExperienceCard />

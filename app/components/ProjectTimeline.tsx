@@ -70,9 +70,9 @@ export default function ProjectTimeline({
 
   if (loading) {
     return (
-      <div className="rounded-2xl bg-[var(--input-bg)] p-4">
-        <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
+      <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
           Loading...
         </div>
       </div>
@@ -93,24 +93,22 @@ export default function ProjectTimeline({
   };
 
   return (
-    <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+    <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           <HiOutlineCalendar className="text-yellow-500 dark:text-yellow-300" />
           Timeline
         </h3>
         {getDuration() && (
-          <span className="text-xs text-[var(--text-muted)]">
-            {getDuration()}
-          </span>
+          <span className="text-xs text-gray-500">{getDuration()}</span>
         )}
       </div>
 
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-xs text-[var(--text-muted)]">Started</span>
+          <span className="text-xs text-gray-500">Started</span>
           {readOnly ? (
-            <span className="text-xs text-[var(--text-primary)]">
+            <span className="text-xs text-gray-900 dark:text-gray-200">
               {startDate ? formatDate(startDate) : '—'}
             </span>
           ) : (
@@ -126,9 +124,9 @@ export default function ProjectTimeline({
           )}
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-xs text-[var(--text-muted)]">Completed</span>
+          <span className="text-xs text-gray-500">Completed</span>
           {readOnly ? (
-            <span className="text-xs text-[var(--text-primary)]">
+            <span className="text-xs text-gray-900 dark:text-gray-200">
               {completionDate ? formatDate(completionDate) : '—'}
             </span>
           ) : (

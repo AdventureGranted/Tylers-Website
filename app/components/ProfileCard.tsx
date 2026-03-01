@@ -33,8 +33,7 @@ export default function ProfileCard() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="relative mx-auto mt-4 overflow-hidden rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] p-8 xl:min-h-[280px] xl:py-12"
-      style={{ boxShadow: 'var(--card-shadow)' }}
+      className="relative mx-auto mt-4 overflow-hidden rounded-3xl border border-gray-300 bg-white p-8 shadow-md xl:min-h-[280px] xl:py-12 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
     >
       {/* Subtle gradient background decoration */}
       <div className="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
@@ -66,7 +65,7 @@ export default function ProfileCard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="max-w-2xl text-4xl font-bold text-[var(--text-primary)]"
+          className="max-w-2xl text-4xl font-bold text-gray-900 dark:text-gray-200"
         >
           Hi, I&apos;m{' '}
           <span className="text-teal-600 dark:text-yellow-300">
@@ -79,7 +78,7 @@ export default function ProfileCard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-4 max-w-xl text-xl text-[var(--text-secondary)]"
+          className="mt-4 max-w-xl text-xl text-gray-700 dark:text-gray-400"
         >
           I&apos;m a passionate software engineer with experience in building
           modern, responsive websites and applications. I love learning new
@@ -100,7 +99,7 @@ export default function ProfileCard() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={link.label}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--input-bg)] text-[var(--text-secondary)] transition-all duration-300 hover:scale-110 hover:bg-yellow-300 hover:text-gray-900 active:scale-95"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 transition-all duration-300 hover:scale-110 hover:bg-yellow-300 hover:text-gray-900 active:scale-95 dark:bg-gray-700 dark:text-gray-400"
             >
               {iconMap[link.iconName]}
             </a>
@@ -123,7 +122,7 @@ export default function ProfileCard() {
           </a>
           <Link
             href="/about"
-            className="inline-block rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-8 py-4 text-lg font-bold text-[var(--text-primary)] transition-all duration-300 hover:scale-105 hover:border-yellow-300/50 hover:bg-[var(--nav-hover)] active:scale-95"
+            className="inline-block rounded-full border border-gray-300 bg-white px-8 py-4 text-lg font-bold text-gray-900 transition-all duration-300 hover:scale-105 hover:border-yellow-300/50 hover:bg-gray-100 active:scale-95 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-700"
           >
             Learn More About Me
           </Link>

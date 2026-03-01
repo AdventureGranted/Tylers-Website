@@ -33,13 +33,13 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="flex min-h-[200px] items-center justify-center rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6">
+        <div className="flex min-h-[200px] items-center justify-center rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
           <div className="text-center">
             <div className="mb-3 text-3xl">⚠️</div>
-            <h3 className="mb-2 text-lg font-semibold text-[var(--text-primary)]">
+            <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-200">
               Something went wrong
             </h3>
-            <p className="mb-4 text-sm text-[var(--text-muted)]">
+            <p className="mb-4 text-sm text-gray-500">
               This section failed to load.
             </p>
             <button

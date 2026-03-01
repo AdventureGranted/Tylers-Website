@@ -496,9 +496,9 @@ export default function ReceiptManager({
 
   if (loading) {
     return (
-      <div className="rounded-2xl bg-[var(--input-bg)] p-6">
-        <div className="flex items-center gap-2 text-[var(--text-muted)]">
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
+      <div className="rounded-2xl bg-white p-6 dark:bg-gray-700">
+        <div className="flex items-center gap-2 text-gray-500">
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
           Loading receipts...
         </div>
       </div>
@@ -511,14 +511,14 @@ export default function ReceiptManager({
   }
 
   return (
-    <div className="rounded-2xl bg-[var(--input-bg)] p-6">
+    <div className="rounded-2xl bg-white p-6 dark:bg-gray-700">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="flex items-center gap-2 text-xl font-semibold text-[var(--text-primary)]">
+        <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900 dark:text-gray-200">
           <HiOutlineReceiptTax className="text-yellow-500 dark:text-yellow-300" />
           Project Costs
         </h2>
         <div className="text-right">
-          <div className="text-sm text-[var(--text-muted)]">Total</div>
+          <div className="text-sm text-gray-500">Total</div>
           <div className="text-2xl font-bold text-yellow-500 dark:text-yellow-300">
             ${total.toFixed(2)}
           </div>
@@ -526,21 +526,21 @@ export default function ReceiptManager({
       </div>
 
       {/* Cost Breakdown */}
-      <div className="mb-4 grid grid-cols-3 gap-2 rounded-xl bg-[var(--card-border)] p-3">
+      <div className="mb-4 grid grid-cols-3 gap-2 rounded-xl bg-gray-300 p-3 dark:bg-gray-700">
         <div className="text-center">
-          <div className="text-xs text-[var(--text-muted)]">Materials</div>
+          <div className="text-xs text-gray-500">Materials</div>
           <div className="font-semibold text-blue-500 dark:text-blue-400">
             ${materialTotal.toFixed(2)}
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs text-[var(--text-muted)]">Tools</div>
+          <div className="text-xs text-gray-500">Tools</div>
           <div className="font-semibold text-purple-500 dark:text-purple-400">
             ${toolTotal.toFixed(2)}
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs text-[var(--text-muted)]">Misc</div>
+          <div className="text-xs text-gray-500">Misc</div>
           <div className="font-semibold text-orange-500 dark:text-orange-400">
             ${miscTotal.toFixed(2)}
           </div>
@@ -578,14 +578,14 @@ export default function ReceiptManager({
           <form
             onSubmit={handleSubmit}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-lg rounded-2xl bg-[var(--card-bg)] p-6 shadow-2xl"
+            className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-800"
           >
-            <h3 className="mb-6 text-xl font-semibold text-[var(--text-primary)]">
+            <h3 className="mb-6 text-xl font-semibold text-gray-900 dark:text-gray-200">
               Upload Receipt
             </h3>
 
             <div className="mb-5">
-              <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+              <label className="mb-2 block text-sm font-medium text-gray-500">
                 Receipt Image (optional)
               </label>
               <div
@@ -595,7 +595,7 @@ export default function ReceiptManager({
                 className={`relative rounded-lg border-2 border-dashed transition-colors ${
                   isDragging
                     ? 'border-yellow-500 bg-yellow-300/10 dark:border-yellow-300'
-                    : 'border-[var(--card-border)] hover:border-[var(--text-muted)]'
+                    : 'border-gray-300 hover:border-gray-500 dark:border-gray-700'
                 }`}
               >
                 {imagePreview ? (
@@ -603,12 +603,12 @@ export default function ReceiptManager({
                     <div className="flex justify-center">
                       <div className="relative">
                         {isPdfFile ? (
-                          <div className="flex h-[250px] w-[250px] flex-col items-center justify-center rounded-lg bg-[var(--nav-hover)]">
+                          <div className="flex h-[250px] w-[250px] flex-col items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700">
                             <HiOutlineReceiptTax className="mb-2 h-16 w-16 text-red-500" />
-                            <span className="text-sm font-medium text-[var(--text-primary)]">
+                            <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
                               PDF Document
                             </span>
-                            <span className="text-xs text-[var(--text-muted)]">
+                            <span className="text-xs text-gray-500">
                               Ready to parse
                             </span>
                           </div>
@@ -680,13 +680,13 @@ export default function ReceiptManager({
                       onChange={handleImageChange}
                       className="hidden"
                     />
-                    <HiOutlineUpload className="mb-2 h-10 w-10 text-[var(--text-muted)]" />
-                    <span className="text-sm text-[var(--text-muted)]">
+                    <HiOutlineUpload className="mb-2 h-10 w-10 text-gray-500" />
+                    <span className="text-sm text-gray-500">
                       {isDragging
                         ? 'Drop file here'
                         : 'Click or drag image/PDF to upload'}
                     </span>
-                    <span className="mt-1 text-xs text-[var(--text-muted)]">
+                    <span className="mt-1 text-xs text-gray-500">
                       Or leave empty to add cost without receipt
                     </span>
                   </label>
@@ -697,7 +697,7 @@ export default function ReceiptManager({
             {/* Line Items Editor */}
             <div className="mb-5">
               <div className="mb-2 flex items-center justify-between">
-                <label className="text-sm font-medium text-[var(--text-muted)]">
+                <label className="text-sm font-medium text-gray-500">
                   Line Items
                 </label>
                 <button
@@ -709,7 +709,7 @@ export default function ReceiptManager({
                 </button>
               </div>
               {formItems.length > 0 ? (
-                <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg bg-[var(--input-bg)] p-3">
+                <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg bg-white p-3 dark:bg-gray-700">
                   {formItems.map((item, index) => (
                     <div
                       key={index}
@@ -722,10 +722,10 @@ export default function ReceiptManager({
                           updateFormItem(index, 'name', e.target.value)
                         }
                         placeholder="Item name"
-                        className="min-w-0 flex-1 rounded-md border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-1 focus:ring-yellow-500 focus:outline-none"
+                        className="min-w-0 flex-1 rounded-md border border-gray-300 bg-white px-2 py-1 text-gray-900 placeholder-gray-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                       />
                       <div className="relative shrink-0">
-                        <span className="absolute top-1/2 left-2 -translate-y-1/2 text-[var(--text-muted)]">
+                        <span className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-500">
                           $
                         </span>
                         <input
@@ -737,7 +737,7 @@ export default function ReceiptManager({
                             updateFormItem(index, 'price', e.target.value)
                           }
                           placeholder="0.00"
-                          className="w-20 rounded-md border border-[var(--card-border)] bg-[var(--card-bg)] py-1 pr-2 pl-5 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-1 focus:ring-yellow-500 focus:outline-none"
+                          className="w-20 rounded-md border border-gray-300 bg-white py-1 pr-2 pl-5 text-gray-900 placeholder-gray-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                         />
                       </div>
                       <select
@@ -771,7 +771,7 @@ export default function ReceiptManager({
                   ))}
                 </div>
               ) : (
-                <p className="rounded-lg bg-[var(--input-bg)] p-3 text-center text-sm text-[var(--text-muted)]">
+                <p className="rounded-lg bg-white p-3 text-center text-sm text-gray-500 dark:bg-gray-700">
                   No items yet. Add items manually or use AI to parse from
                   receipt.
                 </p>
@@ -780,7 +780,7 @@ export default function ReceiptManager({
 
             <div className="mb-5 grid grid-cols-3 gap-3">
               <div>
-                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                <label className="mb-2 block text-sm font-medium text-gray-500">
                   Material ($)
                 </label>
                 <input
@@ -790,11 +790,11 @@ export default function ReceiptManager({
                   value={materialAmount}
                   onChange={(e) => setMaterialAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                <label className="mb-2 block text-sm font-medium text-gray-500">
                   Tool ($)
                 </label>
                 <input
@@ -804,11 +804,11 @@ export default function ReceiptManager({
                   value={toolAmount}
                   onChange={(e) => setToolAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                <label className="mb-2 block text-sm font-medium text-gray-500">
                   Misc ($)
                 </label>
                 <input
@@ -818,13 +818,13 @@ export default function ReceiptManager({
                   value={miscAmount}
                   onChange={(e) => setMiscAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
                 />
               </div>
             </div>
 
             <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+              <label className="mb-2 block text-sm font-medium text-gray-500">
                 Description (optional)
               </label>
               <input
@@ -832,7 +832,7 @@ export default function ReceiptManager({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="e.g., Wood supplies, Paint, etc."
-                className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
               />
             </div>
 
@@ -860,7 +860,7 @@ export default function ReceiptManager({
                   setFormItems([]);
                   setParseError(null);
                 }}
-                className="rounded-lg bg-[var(--card-border)] px-6 py-3 text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)]"
+                className="rounded-lg bg-gray-300 px-6 py-3 text-gray-900 transition-colors hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200"
               >
                 Cancel
               </button>
@@ -871,13 +871,13 @@ export default function ReceiptManager({
 
       {/* Receipts List */}
       {receipts.length === 0 ? (
-        <p className="text-[var(--text-muted)]">No receipts uploaded yet.</p>
+        <p className="text-gray-500">No receipts uploaded yet.</p>
       ) : (
         <div className="space-y-3">
           {receipts.map((receipt) => (
             <div
               key={receipt.id}
-              className="flex items-center gap-3 rounded-xl bg-[var(--card-border)] p-3"
+              className="flex items-center gap-3 rounded-xl bg-gray-300 p-3 dark:bg-gray-700"
             >
               {receipt.imageUrl ? (
                 receipt.imageUrl.toLowerCase().endsWith('.pdf') ? (
@@ -905,8 +905,8 @@ export default function ReceiptManager({
                   </button>
                 )
               ) : (
-                <div className="flex h-[50px] w-[50px] flex-shrink-0 items-center justify-center rounded-lg bg-[var(--nav-hover)]">
-                  <HiOutlineReceiptTax className="h-6 w-6 text-[var(--text-muted)]" />
+                <div className="flex h-[50px] w-[50px] flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700">
+                  <HiOutlineReceiptTax className="h-6 w-6 text-gray-500" />
                 </div>
               )}
               <div className="min-w-0 flex-1">
@@ -936,11 +936,11 @@ export default function ReceiptManager({
                   )}
                 </div>
                 {receipt.description && (
-                  <div className="truncate text-sm text-[var(--text-muted)]">
+                  <div className="truncate text-sm text-gray-500">
                     {receipt.description}
                   </div>
                 )}
-                <div className="text-xs text-[var(--text-muted)]">
+                <div className="text-xs text-gray-500">
                   {new Date(receipt.createdAt).toLocaleDateString()}
                 </div>
               </div>
@@ -948,14 +948,14 @@ export default function ReceiptManager({
                 <div className="flex shrink-0 gap-1">
                   <button
                     onClick={() => openEditModal(receipt)}
-                    className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-yellow-500/20 hover:text-yellow-500"
+                    className="rounded-lg p-2 text-gray-500 transition-colors hover:bg-yellow-500/20 hover:text-yellow-500"
                     title="Edit receipt"
                   >
                     <HiOutlinePencil className="text-lg" />
                   </button>
                   <button
                     onClick={() => handleDelete(receipt.id)}
-                    className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-red-500/20 hover:text-red-400"
+                    className="rounded-lg p-2 text-gray-500 transition-colors hover:bg-red-500/20 hover:text-red-400"
                     title="Delete receipt"
                   >
                     <HiOutlineTrash className="text-lg" />
@@ -976,9 +976,9 @@ export default function ReceiptManager({
           <form
             onSubmit={handleUpdate}
             onClick={(e) => e.stopPropagation()}
-            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-[var(--card-bg)] p-6 shadow-2xl"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-800"
           >
-            <h3 className="mb-4 text-xl font-semibold text-[var(--text-primary)]">
+            <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-200">
               Edit Receipt
             </h3>
 
@@ -990,10 +990,10 @@ export default function ReceiptManager({
                     href={editingReceipt.imageUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-2 rounded-xl bg-[var(--input-bg)] p-4 transition-colors hover:bg-[var(--nav-hover)]"
+                    className="flex flex-col items-center gap-2 rounded-xl bg-white p-4 transition-colors hover:bg-gray-100 dark:bg-gray-700"
                   >
                     <HiOutlineDocumentDownload className="h-12 w-12 text-red-500" />
-                    <span className="text-sm text-[var(--text-muted)]">
+                    <span className="text-sm text-gray-500">
                       View PDF Receipt
                     </span>
                   </a>
@@ -1023,7 +1023,7 @@ export default function ReceiptManager({
             {/* Line Items Editor */}
             <div className="mb-5">
               <div className="mb-2 flex items-center justify-between">
-                <label className="text-sm font-medium text-[var(--text-muted)]">
+                <label className="text-sm font-medium text-gray-500">
                   Line Items
                 </label>
                 <button
@@ -1035,7 +1035,7 @@ export default function ReceiptManager({
                 </button>
               </div>
               {editItems.length > 0 ? (
-                <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg bg-[var(--input-bg)] p-3">
+                <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg bg-white p-3 dark:bg-gray-700">
                   {editItems.map((item, index) => (
                     <div
                       key={index}
@@ -1048,10 +1048,10 @@ export default function ReceiptManager({
                           updateEditItem(index, 'name', e.target.value)
                         }
                         placeholder="Item name"
-                        className="min-w-0 flex-1 rounded-md border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-1 focus:ring-yellow-500 focus:outline-none"
+                        className="min-w-0 flex-1 rounded-md border border-gray-300 bg-white px-2 py-1 text-gray-900 placeholder-gray-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                       />
                       <div className="relative shrink-0">
-                        <span className="absolute top-1/2 left-2 -translate-y-1/2 text-[var(--text-muted)]">
+                        <span className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-500">
                           $
                         </span>
                         <input
@@ -1063,7 +1063,7 @@ export default function ReceiptManager({
                             updateEditItem(index, 'price', e.target.value)
                           }
                           placeholder="0.00"
-                          className="w-20 rounded-md border border-[var(--card-border)] bg-[var(--card-bg)] py-1 pr-2 pl-5 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-1 focus:ring-yellow-500 focus:outline-none"
+                          className="w-20 rounded-md border border-gray-300 bg-white py-1 pr-2 pl-5 text-gray-900 placeholder-gray-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                         />
                       </div>
                       <select
@@ -1097,7 +1097,7 @@ export default function ReceiptManager({
                   ))}
                 </div>
               ) : (
-                <p className="rounded-lg bg-[var(--input-bg)] p-3 text-center text-sm text-[var(--text-muted)]">
+                <p className="rounded-lg bg-white p-3 text-center text-sm text-gray-500 dark:bg-gray-700">
                   No items. Add items to track individual purchases.
                 </p>
               )}
@@ -1105,7 +1105,7 @@ export default function ReceiptManager({
 
             <div className="mb-5 grid grid-cols-3 gap-3">
               <div>
-                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                <label className="mb-2 block text-sm font-medium text-gray-500">
                   Material ($)
                 </label>
                 <input
@@ -1115,11 +1115,11 @@ export default function ReceiptManager({
                   value={editMaterialAmount}
                   onChange={(e) => setEditMaterialAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                <label className="mb-2 block text-sm font-medium text-gray-500">
                   Tool ($)
                 </label>
                 <input
@@ -1129,11 +1129,11 @@ export default function ReceiptManager({
                   value={editToolAmount}
                   onChange={(e) => setEditToolAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+                <label className="mb-2 block text-sm font-medium text-gray-500">
                   Misc ($)
                 </label>
                 <input
@@ -1143,13 +1143,13 @@ export default function ReceiptManager({
                   value={editMiscAmount}
                   onChange={(e) => setEditMiscAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
                 />
               </div>
             </div>
 
             <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-[var(--text-muted)]">
+              <label className="mb-2 block text-sm font-medium text-gray-500">
                 Description
               </label>
               <input
@@ -1157,7 +1157,7 @@ export default function ReceiptManager({
                 value={editDescription}
                 onChange={(e) => setEditDescription(e.target.value)}
                 placeholder="e.g., Wood supplies, Paint, etc."
-                className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
               />
             </div>
 
@@ -1175,7 +1175,7 @@ export default function ReceiptManager({
               <button
                 type="button"
                 onClick={closeEditModal}
-                className="rounded-lg bg-[var(--card-border)] px-6 py-3 text-[var(--text-primary)] transition-colors hover:bg-[var(--nav-hover)]"
+                className="rounded-lg bg-gray-300 px-6 py-3 text-gray-900 transition-colors hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200"
               >
                 Cancel
               </button>

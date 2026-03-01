@@ -24,9 +24,7 @@ function RegisterForm() {
   }, [status, router]);
 
   if (status === 'loading') {
-    return (
-      <div className="text-center text-[var(--text-muted)]">Loading...</div>
-    );
+    return <div className="text-center text-gray-500">Loading...</div>;
   }
 
   if (status === 'authenticated') {
@@ -84,10 +82,7 @@ function RegisterForm() {
       )}
 
       <div>
-        <label
-          htmlFor="name"
-          className="mb-1 block text-sm text-[var(--text-muted)]"
-        >
+        <label htmlFor="name" className="mb-1 block text-sm text-gray-500">
           Display Name
         </label>
         <input
@@ -95,17 +90,14 @@ function RegisterForm() {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
           placeholder="Your name"
           required
         />
       </div>
 
       <div>
-        <label
-          htmlFor="email"
-          className="mb-1 block text-sm text-[var(--text-muted)]"
-        >
+        <label htmlFor="email" className="mb-1 block text-sm text-gray-500">
           Email
         </label>
         <input
@@ -113,16 +105,13 @@ function RegisterForm() {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
           required
         />
       </div>
 
       <div>
-        <label
-          htmlFor="password"
-          className="mb-1 block text-sm text-[var(--text-muted)]"
-        >
+        <label htmlFor="password" className="mb-1 block text-sm text-gray-500">
           Password
         </label>
         <input
@@ -130,11 +119,11 @@ function RegisterForm() {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
           required
           minLength={8}
         />
-        <p className="mt-1 text-xs text-[var(--text-muted)]">
+        <p className="mt-1 text-xs text-gray-500">
           Must be at least 8 characters
         </p>
       </div>
@@ -142,7 +131,7 @@ function RegisterForm() {
       <div>
         <label
           htmlFor="confirmPassword"
-          className="mb-1 block text-sm text-[var(--text-muted)]"
+          className="mb-1 block text-sm text-gray-500"
         >
           Confirm Password
         </label>
@@ -151,7 +140,7 @@ function RegisterForm() {
           id="confirmPassword"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
           required
           minLength={8}
         />
@@ -165,7 +154,7 @@ function RegisterForm() {
         {loading ? 'Creating account...' : 'Create Account'}
       </button>
 
-      <p className="text-center text-sm text-[var(--text-muted)]">
+      <p className="text-center text-sm text-gray-500">
         Already have an account?{' '}
         <Link
           href="/login"
@@ -180,17 +169,13 @@ function RegisterForm() {
 
 export default function RegisterPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 dark:bg-gray-900">
       <div className="w-full max-w-md">
-        <h1 className="mb-8 text-center text-3xl font-bold text-[var(--text-primary)]">
+        <h1 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-gray-200">
           Create Account
         </h1>
         <Suspense
-          fallback={
-            <div className="text-center text-[var(--text-muted)]">
-              Loading...
-            </div>
-          }
+          fallback={<div className="text-center text-gray-500">Loading...</div>}
         >
           <RegisterForm />
         </Suspense>

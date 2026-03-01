@@ -134,8 +134,8 @@ export default function MembersPage() {
 
   if (status === 'loading' || (status === 'authenticated' && loading)) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">
-        <p className="text-[var(--text-muted)]">Loading...</p>
+      <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
+        <p className="text-gray-500">Loading...</p>
       </div>
     );
   }
@@ -145,13 +145,13 @@ export default function MembersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-4 md:p-8">
+    <div className="min-h-screen bg-gray-100 p-4 md:p-8 dark:bg-gray-900">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-6 flex items-center gap-4">
           <Link
             href="/admin"
-            className="flex items-center gap-2 text-[var(--text-muted)] transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="flex items-center gap-2 text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
           >
             <AiOutlineArrowLeft />
             Back
@@ -160,31 +160,29 @@ export default function MembersPage() {
 
         <div className="mb-8 flex items-center gap-3">
           <HiOutlineUserGroup className="text-3xl text-yellow-500 dark:text-yellow-300" />
-          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">
             Members
           </h1>
-          <span className="text-[var(--text-muted)]">
-            ({allUsers.length} total)
-          </span>
+          <span className="text-gray-500">({allUsers.length} total)</span>
         </div>
 
         {/* Filters */}
-        <div className="mb-6 flex flex-col gap-4 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-4 sm:flex-row sm:items-center">
+        <div className="mb-6 flex flex-col gap-4 rounded-xl border border-gray-300 bg-white p-4 sm:flex-row sm:items-center dark:border-gray-700 dark:bg-gray-800">
           <div className="relative flex-1">
-            <AiOutlineSearch className="absolute top-1/2 left-3 -translate-y-1/2 text-[var(--text-muted)]" />
+            <AiOutlineSearch className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-500" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or email..."
-              className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] py-2 pr-4 pl-10 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+              className="w-full rounded-lg border border-gray-300 bg-white py-2 pr-4 pl-10 text-gray-900 placeholder-gray-500 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
             />
           </div>
 
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
-            className="appearance-none rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%239ca3af%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat py-2 pr-10 pl-4 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+            className="appearance-none rounded-lg border border-gray-300 bg-white bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%239ca3af%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat py-2 pr-10 pl-4 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
           >
             <option value="">All Roles</option>
             <option value="user">Users</option>
@@ -193,24 +191,24 @@ export default function MembersPage() {
         </div>
 
         {/* Users Table */}
-        <div className="overflow-hidden rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)]">
+        <div className="overflow-hidden rounded-xl border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-[var(--card-border)] text-left">
-                  <th className="px-4 py-3 text-sm font-semibold text-[var(--text-muted)]">
+                <tr className="border-b border-gray-300 text-left dark:border-gray-700">
+                  <th className="px-4 py-3 text-sm font-semibold text-gray-500">
                     User
                   </th>
-                  <th className="px-4 py-3 text-sm font-semibold text-[var(--text-muted)]">
+                  <th className="px-4 py-3 text-sm font-semibold text-gray-500">
                     Role
                   </th>
-                  <th className="hidden px-4 py-3 text-sm font-semibold text-[var(--text-muted)] sm:table-cell">
+                  <th className="hidden px-4 py-3 text-sm font-semibold text-gray-500 sm:table-cell">
                     Comments
                   </th>
-                  <th className="hidden px-4 py-3 text-sm font-semibold text-[var(--text-muted)] md:table-cell">
+                  <th className="hidden px-4 py-3 text-sm font-semibold text-gray-500 md:table-cell">
                     Joined
                   </th>
-                  <th className="px-4 py-3 text-sm font-semibold text-[var(--text-muted)]">
+                  <th className="px-4 py-3 text-sm font-semibold text-gray-500">
                     Actions
                   </th>
                 </tr>
@@ -219,7 +217,7 @@ export default function MembersPage() {
                 {filteredUsers.map((user) => (
                   <tr
                     key={user.id}
-                    className="border-b border-[var(--card-border)]/50 transition-colors hover:bg-[var(--nav-hover)]"
+                    className="border-b border-gray-300 transition-colors hover:bg-gray-100 dark:border-gray-700/50 dark:hover:bg-gray-700"
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
@@ -238,10 +236,10 @@ export default function MembersPage() {
                           </div>
                         )}
                         <div>
-                          <div className="font-medium text-[var(--text-primary)]">
+                          <div className="font-medium text-gray-900 dark:text-gray-200">
                             {user.name || 'No name'}
                           </div>
-                          <div className="text-sm text-[var(--text-muted)]">
+                          <div className="text-sm text-gray-500">
                             {user.email}
                           </div>
                         </div>
@@ -252,16 +250,16 @@ export default function MembersPage() {
                         className={`inline-block rounded-full px-2 py-1 text-xs font-medium ${
                           user.role === 'admin'
                             ? 'bg-yellow-500/20 text-yellow-600 dark:bg-yellow-300/20 dark:text-yellow-300'
-                            : 'bg-[var(--card-border)] text-[var(--text-secondary)]'
+                            : 'bg-gray-300 text-gray-700 dark:bg-gray-700 dark:text-gray-400'
                         }`}
                       >
                         {user.role}
                       </span>
                     </td>
-                    <td className="hidden px-4 py-3 text-[var(--text-muted)] sm:table-cell">
+                    <td className="hidden px-4 py-3 text-gray-500 sm:table-cell">
                       {user._count.comments}
                     </td>
-                    <td className="hidden px-4 py-3 text-[var(--text-muted)] md:table-cell">
+                    <td className="hidden px-4 py-3 text-gray-500 md:table-cell">
                       {new Date(user.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-3">
@@ -274,7 +272,7 @@ export default function MembersPage() {
                           disabled={
                             updating === user.id || user.id === session.user.id
                           }
-                          className="rounded border border-[var(--card-border)] bg-[var(--input-bg)] px-2 py-1 text-sm text-[var(--text-primary)] disabled:opacity-50"
+                          className="rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
                         >
                           <option value="user">User</option>
                           <option value="admin">Admin</option>
@@ -296,7 +294,7 @@ export default function MembersPage() {
                   <tr>
                     <td
                       colSpan={5}
-                      className="px-4 py-8 text-center text-[var(--text-muted)]"
+                      className="px-4 py-8 text-center text-gray-500"
                     >
                       No users found
                     </td>
@@ -308,7 +306,7 @@ export default function MembersPage() {
 
           {/* Results count */}
           {(search || roleFilter) && (
-            <div className="border-t border-[var(--card-border)] px-4 py-3 text-sm text-[var(--text-muted)]">
+            <div className="border-t border-gray-300 px-4 py-3 text-sm text-gray-500 dark:border-gray-700">
               Showing {filteredUsers.length} of {allUsers.length} members
             </div>
           )}

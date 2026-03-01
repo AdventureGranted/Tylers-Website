@@ -47,24 +47,21 @@ export default function BeforeAfterToggle({
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
 
-  // Sync with initial values when they change
-  useEffect(() => {
-    if (initialBeforeIndex !== undefined) {
-      setBeforeIndex(initialBeforeIndex);
-    }
-  }, [initialBeforeIndex]);
+  // Sync with initial values when parent props change
+  const beforeIndex_ = initialBeforeIndex ?? 0;
+  const afterIndex_ =
+    initialAfterIndex ?? (images.length > 1 ? images.length - 1 : 0);
+  const mode_ = initialMode ?? 'toggle';
 
   useEffect(() => {
-    if (initialAfterIndex !== undefined) {
-      setAfterIndex(initialAfterIndex);
-    }
-  }, [initialAfterIndex]);
-
+    setBeforeIndex(beforeIndex_);
+  }, [beforeIndex_]);
   useEffect(() => {
-    if (initialMode !== undefined) {
-      setMode(initialMode);
-    }
-  }, [initialMode]);
+    setAfterIndex(afterIndex_);
+  }, [afterIndex_]);
+  useEffect(() => {
+    setMode(mode_);
+  }, [mode_]);
 
   // Handle mode change
   const handleModeChange = (newMode: 'toggle' | 'slider' | 'single') => {
@@ -147,12 +144,12 @@ export default function BeforeAfterToggle({
 
   if (images.length < 2) {
     return (
-      <div className="rounded-2xl bg-[var(--input-bg)] p-4">
-        <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+      <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
+        <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           <HiOutlinePhotograph className="text-yellow-500 dark:text-yellow-300" />
           Before / After
         </h3>
-        <p className="text-xs text-[var(--text-muted)]">
+        <p className="text-xs text-gray-500">
           Need at least 2 images for comparison
         </p>
       </div>
@@ -164,13 +161,13 @@ export default function BeforeAfterToggle({
 
   return (
     <div
-      className="rounded-2xl bg-[var(--input-bg)] p-4"
+      className="rounded-2xl bg-white p-4 dark:bg-gray-700"
       role="region"
       aria-label="Before and after image comparison"
     >
       {/* Header */}
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           <HiOutlinePhotograph
             className="text-yellow-500 dark:text-yellow-300"
             aria-hidden="true"
@@ -181,7 +178,7 @@ export default function BeforeAfterToggle({
         {/* Mode toggle for toggle mode, or labels for slider mode */}
         {mode === 'toggle' ? (
           <div
-            className="flex overflow-hidden rounded-lg bg-[var(--card-border)]"
+            className="flex overflow-hidden rounded-lg bg-gray-300 dark:bg-gray-700"
             role="tablist"
             aria-label="Image view selection"
           >
@@ -194,7 +191,7 @@ export default function BeforeAfterToggle({
               className={`px-3 py-1.5 text-xs font-medium transition-colors ${
                 !showAfter
                   ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
-                  : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                  : 'text-gray-500 hover:text-gray-900 dark:text-gray-200'
               }`}
             >
               Before
@@ -208,14 +205,14 @@ export default function BeforeAfterToggle({
               className={`px-3 py-1.5 text-xs font-medium transition-colors ${
                 showAfter
                   ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
-                  : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                  : 'text-gray-500 hover:text-gray-900 dark:text-gray-200'
               }`}
             >
               After
             </button>
           </div>
         ) : (
-          <span className="text-xs text-[var(--text-muted)]" aria-live="polite">
+          <span className="text-xs text-gray-500" aria-live="polite">
             Drag to compare
           </span>
         )}
@@ -226,7 +223,7 @@ export default function BeforeAfterToggle({
         <div
           id="comparison-image"
           role="tabpanel"
-          className="relative aspect-video overflow-hidden rounded-lg bg-[var(--card-border)]"
+          className="relative aspect-video overflow-hidden rounded-lg bg-gray-300 dark:bg-gray-700"
         >
           {/* Before image (base layer) */}
           <Image
@@ -263,7 +260,7 @@ export default function BeforeAfterToggle({
           aria-valuetext={`Showing ${Math.round(sliderPosition)}% before image, ${Math.round(100 - sliderPosition)}% after image`}
           tabIndex={0}
           onKeyDown={handleSliderKeyDown}
-          className="relative aspect-video cursor-ew-resize touch-none overflow-hidden rounded-lg bg-[var(--card-border)] select-none focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+          className="relative aspect-video cursor-ew-resize touch-none overflow-hidden rounded-lg bg-gray-300 select-none focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:bg-gray-700 dark:focus:ring-yellow-300"
           onMouseDown={() => {
             isDragging.current = true;
             setIsSliding(true);
@@ -336,14 +333,11 @@ export default function BeforeAfterToggle({
         <div className="mt-3 space-y-3">
           {/* Mode selector */}
           <div>
-            <label
-              className="mb-1 block text-xs text-[var(--text-muted)]"
-              id="mode-label"
-            >
+            <label className="mb-1 block text-xs text-gray-500" id="mode-label">
               Display Mode
             </label>
             <div
-              className="flex overflow-hidden rounded-lg bg-[var(--card-border)]"
+              className="flex overflow-hidden rounded-lg bg-gray-300 dark:bg-gray-700"
               role="radiogroup"
               aria-labelledby="mode-label"
             >
@@ -355,7 +349,7 @@ export default function BeforeAfterToggle({
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'toggle'
                     ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
-                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                    : 'text-gray-500 hover:text-gray-900 dark:text-gray-200'
                 }`}
               >
                 Toggle
@@ -368,7 +362,7 @@ export default function BeforeAfterToggle({
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'slider'
                     ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
-                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                    : 'text-gray-500 hover:text-gray-900 dark:text-gray-200'
                 }`}
               >
                 Slider
@@ -381,7 +375,7 @@ export default function BeforeAfterToggle({
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'single'
                     ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
-                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                    : 'text-gray-500 hover:text-gray-900 dark:text-gray-200'
                 }`}
               >
                 Single
@@ -394,7 +388,7 @@ export default function BeforeAfterToggle({
             <div>
               <label
                 htmlFor="display-image-select"
-                className="mb-1 block text-xs text-[var(--text-muted)]"
+                className="mb-1 block text-xs text-gray-500"
               >
                 Display Image
               </label>
@@ -404,7 +398,7 @@ export default function BeforeAfterToggle({
                 onChange={(e) =>
                   handleAfterIndexChange(parseInt(e.target.value))
                 }
-                className="w-full rounded border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-xs text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                className="w-full rounded border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
               >
                 {images.map((img, i) => (
                   <option key={img.id} value={i}>
@@ -418,7 +412,7 @@ export default function BeforeAfterToggle({
               <div>
                 <label
                   htmlFor="before-image-select"
-                  className="mb-1 block text-xs text-[var(--text-muted)]"
+                  className="mb-1 block text-xs text-gray-500"
                 >
                   Before Image
                 </label>
@@ -428,7 +422,7 @@ export default function BeforeAfterToggle({
                   onChange={(e) =>
                     handleBeforeIndexChange(parseInt(e.target.value))
                   }
-                  className="w-full rounded border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-xs text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                  className="w-full rounded border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
                 >
                   {images.map((img, i) => (
                     <option key={img.id} value={i}>
@@ -440,7 +434,7 @@ export default function BeforeAfterToggle({
               <div>
                 <label
                   htmlFor="after-image-select"
-                  className="mb-1 block text-xs text-[var(--text-muted)]"
+                  className="mb-1 block text-xs text-gray-500"
                 >
                   After Image
                 </label>
@@ -450,7 +444,7 @@ export default function BeforeAfterToggle({
                   onChange={(e) =>
                     handleAfterIndexChange(parseInt(e.target.value))
                   }
-                  className="w-full rounded border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-xs text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                  className="w-full rounded border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
                 >
                   {images.map((img, i) => (
                     <option key={img.id} value={i}>

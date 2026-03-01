@@ -108,9 +108,9 @@ export default function LessonsLearned({
 
   if (loading) {
     return (
-      <div className="rounded-2xl bg-[var(--input-bg)] p-4">
-        <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
+      <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
           Loading...
         </div>
       </div>
@@ -123,8 +123,8 @@ export default function LessonsLearned({
   }
 
   return (
-    <div className="rounded-2xl bg-[var(--input-bg)] p-4">
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+    <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
         <HiOutlineLightBulb className="text-yellow-500 dark:text-yellow-300" />
         Lessons Learned
       </h3>
@@ -138,7 +138,7 @@ export default function LessonsLearned({
             onChange={(e) => setNewLesson(e.target.value)}
             onKeyDown={(e) => handleKeyDown(e, 'add')}
             placeholder="Add lesson..."
-            className="min-w-0 flex-1 rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-1.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+            className="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 placeholder-gray-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
             disabled={saving}
           />
           <button
@@ -153,15 +153,13 @@ export default function LessonsLearned({
 
       {/* Lessons list */}
       {lessons.length === 0 ? (
-        <p className="text-xs text-[var(--text-muted)]">
-          No lessons recorded yet.
-        </p>
+        <p className="text-xs text-gray-500">No lessons recorded yet.</p>
       ) : (
         <ul className="space-y-1">
           {lessons.map((lesson, index) => (
             <li
               key={index}
-              className="flex items-start gap-2 rounded-lg bg-[var(--card-border)] p-2"
+              className="flex items-start gap-2 rounded-lg bg-gray-300 p-2 dark:bg-gray-700"
             >
               {editingIndex === index ? (
                 <>
@@ -170,7 +168,7 @@ export default function LessonsLearned({
                     value={editingText}
                     onChange={(e) => setEditingText(e.target.value)}
                     onKeyDown={(e) => handleKeyDown(e, 'edit')}
-                    className="min-w-0 flex-1 rounded border border-[var(--card-border)] bg-[var(--card-bg)] px-2 py-1 text-sm text-[var(--text-primary)] focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+                    className="min-w-0 flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
                     autoFocus
                     disabled={saving}
                   />
@@ -185,7 +183,7 @@ export default function LessonsLearned({
                   <button
                     onClick={handleCancelEdit}
                     disabled={saving}
-                    className="shrink-0 p-1 text-[var(--text-muted)] transition-colors hover:bg-[var(--nav-hover)]"
+                    className="shrink-0 p-1 text-gray-500 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
                     title="Cancel"
                   >
                     <HiOutlineX />
@@ -196,7 +194,7 @@ export default function LessonsLearned({
                   <span className="text-yellow-500 dark:text-yellow-300">
                     •
                   </span>
-                  <span className="min-w-0 flex-1 text-sm break-words text-[var(--text-primary)]">
+                  <span className="min-w-0 flex-1 text-sm break-words text-gray-900 dark:text-gray-200">
                     {lesson}
                   </span>
                   {!readOnly && (
@@ -204,7 +202,7 @@ export default function LessonsLearned({
                       <button
                         onClick={() => handleStartEdit(index)}
                         disabled={saving}
-                        className="shrink-0 p-1 text-[var(--text-muted)] transition-colors hover:bg-[var(--nav-hover)] hover:text-yellow-500 dark:hover:text-yellow-300"
+                        className="shrink-0 p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-yellow-500 dark:hover:bg-gray-700 dark:hover:text-yellow-300"
                         title="Edit"
                       >
                         <HiOutlinePencil className="text-sm" />
@@ -212,7 +210,7 @@ export default function LessonsLearned({
                       <button
                         onClick={() => handleDeleteLesson(index)}
                         disabled={saving}
-                        className="shrink-0 p-1 text-[var(--text-muted)] transition-colors hover:bg-red-500/20 hover:text-red-400"
+                        className="shrink-0 p-1 text-gray-500 transition-colors hover:bg-red-500/20 hover:text-red-400"
                         title="Delete"
                       >
                         <HiOutlineTrash className="text-sm" />
@@ -227,8 +225,8 @@ export default function LessonsLearned({
       )}
 
       {!readOnly && saving && (
-        <div className="mt-3 flex items-center gap-2 text-sm text-[var(--text-muted)]">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
+        <div className="mt-3 flex items-center gap-2 text-sm text-gray-500">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
           Saving...
         </div>
       )}

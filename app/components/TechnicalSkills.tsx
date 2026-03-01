@@ -133,10 +133,10 @@ export default function TechnicalSkills() {
                 {category.skills.map((skill) => (
                   <div
                     key={skill.name}
-                    className="group flex items-center gap-2 rounded-full bg-[var(--input-bg)] px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-[var(--nav-hover)]"
+                    className="group flex items-center gap-2 rounded-full bg-white px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-700"
                   >
                     <skill.icon className={`text-lg ${skill.color}`} />
-                    <span className="text-sm text-[var(--text-secondary)]">
+                    <span className="text-sm text-gray-700 dark:text-gray-400">
                       {skill.name}
                     </span>
                   </div>
@@ -157,7 +157,7 @@ export default function TechnicalSkills() {
             {subjects.map((subject) => (
               <span
                 key={subject}
-                className="rounded-full border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-sm text-[var(--text-secondary)] transition-all duration-300 hover:border-yellow-300/50 hover:bg-[var(--nav-hover)]"
+                className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-all duration-300 hover:border-yellow-300/50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700"
               >
                 {subject}
               </span>

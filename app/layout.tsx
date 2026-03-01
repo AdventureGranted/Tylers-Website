@@ -140,7 +140,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-gray-100 text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-200`}
       >
         <SessionProvider>
           <ThemeProvider>
@@ -153,7 +153,7 @@ export default function RootLayout({
               >
                 Skip to main content
               </a>
-              <div className="min-h-screen bg-[var(--background)]">
+              <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
                 <Navbar />
                 <main id="main-content" className="mt-6">
                   {children}

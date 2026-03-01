@@ -166,8 +166,7 @@ export default function WorkExperienceCard() {
       {/* Stats Bar */}
       <motion.div
         variants={slideInLeft}
-        className="mb-8 grid grid-cols-3 gap-4 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-4 sm:p-6"
-        style={{ boxShadow: 'var(--card-shadow)' }}
+        className="mb-8 grid grid-cols-3 gap-4 rounded-2xl border border-gray-300 bg-white p-4 shadow-md sm:p-6 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
       >
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-2">
@@ -176,9 +175,7 @@ export default function WorkExperienceCard() {
               {experiences.length}
             </span>
           </div>
-          <p className="text-xs text-[var(--text-muted)] sm:text-sm">
-            Companies
-          </p>
+          <p className="text-xs text-gray-500 sm:text-sm">Companies</p>
         </div>
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-2">
@@ -187,9 +184,7 @@ export default function WorkExperienceCard() {
               {calculateTotalExperience()}
             </span>
           </div>
-          <p className="text-xs text-[var(--text-muted)] sm:text-sm">
-            Years Experience
-          </p>
+          <p className="text-xs text-gray-500 sm:text-sm">Years Experience</p>
         </div>
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-2">
@@ -198,9 +193,7 @@ export default function WorkExperienceCard() {
               {uniqueTechnologies}+
             </span>
           </div>
-          <p className="text-xs text-[var(--text-muted)] sm:text-sm">
-            Technologies
-          </p>
+          <p className="text-xs text-gray-500 sm:text-sm">Technologies</p>
         </div>
       </motion.div>
 
@@ -216,7 +209,7 @@ export default function WorkExperienceCard() {
             className="group relative mb-8 last:mb-0"
           >
             {/* Timeline dot */}
-            <div className="absolute top-8 left-6 hidden h-5 w-5 rounded-full border-4 border-[var(--background)] bg-yellow-300 transition-all duration-300 group-hover:scale-125 group-hover:bg-purple-500 md:block" />
+            <div className="absolute top-8 left-6 hidden h-5 w-5 rounded-full border-4 border-gray-100 bg-yellow-300 transition-all duration-300 group-hover:scale-125 group-hover:bg-purple-500 md:block dark:border-gray-900" />
 
             {/* Card */}
             <Card className="transition-all duration-300 hover:opacity-90 md:ml-16">
@@ -238,7 +231,7 @@ export default function WorkExperienceCard() {
                 <div className="flex-grow">
                   <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                      <h3 className="text-xl font-bold text-[var(--text-primary)]">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-gray-200">
                         {exp.company}
                       </h3>
                       <p className="text-teal-600 dark:text-yellow-300">
@@ -246,7 +239,7 @@ export default function WorkExperienceCard() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-sm text-[var(--text-secondary)]">
+                      <span className="text-sm text-gray-700 dark:text-gray-400">
                         {exp.date}
                       </span>
                       <span className="ml-2 rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-medium text-purple-400">
@@ -259,7 +252,7 @@ export default function WorkExperienceCard() {
                     {exp.bullets.map((bullet, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-[var(--text-secondary)]"
+                        className="flex items-start gap-2 text-gray-700 dark:text-gray-400"
                       >
                         <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400" />
                         <span>{bullet}</span>

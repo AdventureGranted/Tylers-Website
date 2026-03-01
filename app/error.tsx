@@ -17,10 +17,10 @@ export default function Error({
     <div className="flex min-h-[50vh] items-center justify-center px-4">
       <div className="max-w-md text-center">
         <div className="mb-6 text-6xl">⚠️</div>
-        <h1 className="mb-4 text-2xl font-bold text-[var(--text-primary)]">
+        <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-200">
           Something went wrong
         </h1>
-        <p className="mb-6 text-[var(--text-muted)]">
+        <p className="mb-6 text-gray-500">
           An unexpected error occurred. Please try again or contact support if
           the problem persists.
         </p>

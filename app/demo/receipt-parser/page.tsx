@@ -431,7 +431,7 @@ export default function ReceiptParserDemo() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[var(--background)]">
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
         <main className="mx-auto max-w-4xl px-4 py-12">
           {/* Header */}
           <motion.div
@@ -443,10 +443,10 @@ export default function ReceiptParserDemo() {
               <HiSparkles />
               <span className="text-sm font-medium">AI-Powered Demo</span>
             </div>
-            <h1 className="mb-4 text-4xl font-bold text-[var(--text-primary)]">
+            <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-gray-200">
               Receipt Parser
             </h1>
-            <p className="mx-auto max-w-2xl text-[var(--text-secondary)]">
+            <p className="mx-auto max-w-2xl text-gray-700 dark:text-gray-400">
               Upload a receipt image and watch AI extract vendor info, line
               items, totals, and automatically categorize expenses into tools vs
               materials.
@@ -461,16 +461,15 @@ export default function ReceiptParserDemo() {
               transition={{ delay: 0.1 }}
             >
               <div
-                className={`relative rounded-2xl border-2 border-dashed p-8 transition-all ${
+                className={`relative rounded-2xl border-2 border-dashed p-8 shadow-md transition-all dark:shadow-lg ${
                   dragActive
                     ? 'border-yellow-500 bg-yellow-500/10'
-                    : 'border-[var(--card-border)] bg-[var(--card-bg)]'
+                    : 'border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800'
                 }`}
                 onDrop={handleDrop}
                 onDragEnter={handleDrag}
                 onDragOver={handleDrag}
                 onDragLeave={handleDrag}
-                style={{ boxShadow: 'var(--card-shadow)' }}
               >
                 {file ? (
                   <div className="relative">
@@ -481,12 +480,12 @@ export default function ReceiptParserDemo() {
                       <HiX className="h-5 w-5" />
                     </button>
                     {isPdf ? (
-                      <div className="flex aspect-[3/4] flex-col items-center justify-center rounded-xl bg-[var(--input-bg)]">
+                      <div className="flex aspect-[3/4] flex-col items-center justify-center rounded-xl bg-white dark:bg-gray-700">
                         <FaReceipt className="mb-4 h-16 w-16 text-red-500" />
-                        <p className="text-lg font-medium text-[var(--text-primary)]">
+                        <p className="text-lg font-medium text-gray-900 dark:text-gray-200">
                           PDF Document
                         </p>
-                        <p className="mb-3 text-sm text-[var(--text-muted)]">
+                        <p className="mb-3 text-sm text-gray-500">
                           Ready to parse
                         </p>
                         {file && (
@@ -513,22 +512,22 @@ export default function ReceiptParserDemo() {
                         />
                       </div>
                     )}
-                    <p className="mt-3 truncate text-center text-sm text-[var(--text-muted)]">
+                    <p className="mt-3 truncate text-center text-sm text-gray-500">
                       {fileName}
                     </p>
                   </div>
                 ) : (
                   <label className="flex cursor-pointer flex-col items-center">
-                    <div className="mb-4 rounded-full bg-[var(--input-bg)] p-4">
-                      <HiUpload className="h-8 w-8 text-[var(--text-muted)]" />
+                    <div className="mb-4 rounded-full bg-white p-4 dark:bg-gray-700">
+                      <HiUpload className="h-8 w-8 text-gray-500" />
                     </div>
-                    <p className="mb-2 text-lg font-medium text-[var(--text-primary)]">
+                    <p className="mb-2 text-lg font-medium text-gray-900 dark:text-gray-200">
                       Drop your receipt here
                     </p>
-                    <p className="mb-4 text-sm text-[var(--text-muted)]">
+                    <p className="mb-4 text-sm text-gray-500">
                       or click to browse
                     </p>
-                    <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
                       <HiPhotograph />
                       <span>PNG, JPG, PDF up to 10MB</span>
                     </div>
@@ -545,7 +544,7 @@ export default function ReceiptParserDemo() {
               {/* Sample Receipts */}
               {!file && (
                 <div className="mt-4">
-                  <p className="mb-3 text-center text-sm text-[var(--text-muted)]">
+                  <p className="mb-3 text-center text-sm text-gray-500">
                     Or try a sample receipt:
                   </p>
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -560,17 +559,17 @@ export default function ReceiptParserDemo() {
                             sample.mockData
                           )
                         }
-                        className="rounded-xl border border-[var(--card-border)] bg-[var(--input-bg)] p-3 text-left transition-all hover:border-yellow-500/50 hover:bg-[var(--card-bg)]"
+                        className="rounded-xl border border-gray-300 bg-white p-3 text-left transition-all hover:border-yellow-500/50 hover:bg-white dark:border-gray-700 dark:bg-gray-700 dark:bg-gray-800"
                       >
                         {sample.isPdf ? (
                           <HiDocumentText className="mb-2 h-5 w-5 text-red-500" />
                         ) : (
                           <FaReceipt className="mb-2 h-5 w-5 text-yellow-500 dark:text-yellow-300" />
                         )}
-                        <p className="text-xs font-medium text-[var(--text-primary)]">
+                        <p className="text-xs font-medium text-gray-900 dark:text-gray-200">
                           {sample.name}
                         </p>
-                        <p className="text-xs text-[var(--text-muted)]">
+                        <p className="text-xs text-gray-500">
                           {sample.description}
                         </p>
                       </button>
@@ -630,10 +629,9 @@ export default function ReceiptParserDemo() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
-              style={{ boxShadow: 'var(--card-shadow)' }}
+              className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
             >
-              <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-[var(--text-primary)]">
+              <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-gray-200">
                 <FaReceipt className="text-yellow-500 dark:text-yellow-300" />
                 Parsed Results
               </h2>
@@ -657,14 +655,14 @@ export default function ReceiptParserDemo() {
                   {/* Vendor & Date */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-xs text-[var(--text-muted)]">Vendor</p>
-                      <p className="font-medium text-[var(--text-primary)]">
+                      <p className="text-xs text-gray-500">Vendor</p>
+                      <p className="font-medium text-gray-900 dark:text-gray-200">
                         {result.vendor || '—'}
                       </p>
                     </div>
                     <div>
-                      <p className="text-xs text-[var(--text-muted)]">Date</p>
-                      <p className="font-medium text-[var(--text-primary)]">
+                      <p className="text-xs text-gray-500">Date</p>
+                      <p className="font-medium text-gray-900 dark:text-gray-200">
                         {result.date || '—'}
                       </p>
                     </div>
@@ -673,19 +671,19 @@ export default function ReceiptParserDemo() {
                   {/* Items */}
                   {result.items.length > 0 && (
                     <div>
-                      <p className="mb-2 text-xs text-[var(--text-muted)]">
+                      <p className="mb-2 text-xs text-gray-500">
                         Items ({result.items.length}) - click category to change
                       </p>
-                      <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg bg-[var(--input-bg)] p-3">
+                      <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg bg-white p-3 dark:bg-gray-700">
                         {result.items.map((item, i) => (
                           <div
                             key={i}
                             className="flex items-center gap-2 text-sm"
                           >
-                            <span className="min-w-0 flex-1 truncate text-[var(--text-secondary)]">
+                            <span className="min-w-0 flex-1 truncate text-gray-700 dark:text-gray-400">
                               {item.name}
                             </span>
-                            <span className="shrink-0 text-[var(--text-primary)]">
+                            <span className="shrink-0 text-gray-900 dark:text-gray-200">
                               {formatCurrency(item.price)}
                             </span>
                             <select
@@ -715,21 +713,23 @@ export default function ReceiptParserDemo() {
                   )}
 
                   {/* Totals */}
-                  <div className="space-y-2 border-t border-[var(--card-border)] pt-4">
+                  <div className="space-y-2 border-t border-gray-300 pt-4 dark:border-gray-700">
                     <div className="flex justify-between text-sm">
-                      <span className="text-[var(--text-muted)]">Subtotal</span>
-                      <span className="text-[var(--text-primary)]">
+                      <span className="text-gray-500">Subtotal</span>
+                      <span className="text-gray-900 dark:text-gray-200">
                         {formatCurrency(result.subtotal)}
                       </span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[var(--text-muted)]">Tax</span>
-                      <span className="text-[var(--text-primary)]">
+                      <span className="text-gray-500">Tax</span>
+                      <span className="text-gray-900 dark:text-gray-200">
                         {formatCurrency(result.tax)}
                       </span>
                     </div>
                     <div className="flex justify-between font-bold">
-                      <span className="text-[var(--text-primary)]">Total</span>
+                      <span className="text-gray-900 dark:text-gray-200">
+                        Total
+                      </span>
                       <span className="text-yellow-500 dark:text-yellow-300">
                         {formatCurrency(result.total)}
                       </span>
@@ -737,35 +737,33 @@ export default function ReceiptParserDemo() {
                   </div>
 
                   {/* Categories */}
-                  <div className="grid grid-cols-3 gap-3 rounded-xl bg-[var(--input-bg)] p-4">
+                  <div className="grid grid-cols-3 gap-3 rounded-xl bg-white p-4 dark:bg-gray-700">
                     <div className="text-center">
                       <p className="text-xl font-bold text-blue-500">
                         {formatCurrency(result.materialAmount)}
                       </p>
-                      <p className="text-xs text-[var(--text-muted)]">
-                        Materials
-                      </p>
+                      <p className="text-xs text-gray-500">Materials</p>
                     </div>
                     <div className="text-center">
                       <p className="text-xl font-bold text-purple-500">
                         {formatCurrency(result.toolAmount)}
                       </p>
-                      <p className="text-xs text-[var(--text-muted)]">Tools</p>
+                      <p className="text-xs text-gray-500">Tools</p>
                     </div>
                     <div className="text-center">
                       <p className="text-xl font-bold text-orange-500">
                         {formatCurrency(result.miscAmount)}
                       </p>
-                      <p className="text-xs text-[var(--text-muted)]">Misc</p>
+                      <p className="text-xs text-gray-500">Misc</p>
                     </div>
                   </div>
                 </div>
               ) : (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <div className="mb-4 rounded-full bg-[var(--input-bg)] p-4">
-                    <FaReceipt className="h-8 w-8 text-[var(--text-muted)]" />
+                  <div className="mb-4 rounded-full bg-white p-4 dark:bg-gray-700">
+                    <FaReceipt className="h-8 w-8 text-gray-500" />
                   </div>
-                  <p className="text-[var(--text-muted)]">
+                  <p className="text-gray-500">
                     Upload a receipt and click &quot;Parse Receipt&quot; to see
                     results
                   </p>
@@ -781,7 +779,7 @@ export default function ReceiptParserDemo() {
             transition={{ delay: 0.3 }}
             className="mt-12"
           >
-            <h2 className="mb-8 text-center text-2xl font-bold text-[var(--text-primary)]">
+            <h2 className="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-gray-200">
               How it works
             </h2>
 
@@ -792,8 +790,7 @@ export default function ReceiptParserDemo() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="group relative rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
-                style={{ boxShadow: 'var(--card-shadow)' }}
+                className="group relative rounded-2xl border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
               >
                 <div className="mb-4 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg">
@@ -803,17 +800,17 @@ export default function ReceiptParserDemo() {
                     <span className="text-xs font-medium text-blue-500">
                       Step 1
                     </span>
-                    <h3 className="font-semibold text-[var(--text-primary)]">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-200">
                       Upload
                     </h3>
                   </div>
                 </div>
-                <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-400">
                   Drop your receipt image (PNG, JPG) or PDF document. We support
                   both digital and scanned receipts.
                 </p>
                 {/* Arrow on desktop */}
-                <div className="absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 text-[var(--text-muted)] md:block">
+                <div className="absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 text-gray-500 md:block">
                   →
                 </div>
               </motion.div>
@@ -823,8 +820,7 @@ export default function ReceiptParserDemo() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="group relative rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
-                style={{ boxShadow: 'var(--card-shadow)' }}
+                className="group relative rounded-2xl border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
               >
                 <div className="mb-4 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg">
@@ -834,12 +830,12 @@ export default function ReceiptParserDemo() {
                     <span className="text-xs font-medium text-purple-500">
                       Step 2
                     </span>
-                    <h3 className="font-semibold text-[var(--text-primary)]">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-200">
                       AI Processing
                     </h3>
                   </div>
                 </div>
-                <div className="space-y-2 text-sm text-[var(--text-secondary)]">
+                <div className="space-y-2 text-sm text-gray-700 dark:text-gray-400">
                   <div className="flex items-center gap-2">
                     <HiEye className="h-4 w-4 text-purple-400" />
                     <span>Vision AI reads images directly</span>
@@ -854,7 +850,7 @@ export default function ReceiptParserDemo() {
                   </div>
                 </div>
                 {/* Arrow on desktop */}
-                <div className="absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 text-[var(--text-muted)] md:block">
+                <div className="absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 text-gray-500 md:block">
                   →
                 </div>
               </motion.div>
@@ -864,8 +860,7 @@ export default function ReceiptParserDemo() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="group rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6"
-                style={{ boxShadow: 'var(--card-shadow)' }}
+                className="group rounded-2xl border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
               >
                 <div className="mb-4 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-500 to-yellow-600 text-white shadow-lg">
@@ -875,22 +870,22 @@ export default function ReceiptParserDemo() {
                     <span className="text-xs font-medium text-yellow-500">
                       Step 3
                     </span>
-                    <h3 className="font-semibold text-[var(--text-primary)]">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-200">
                       Structured Data
                     </h3>
                   </div>
                 </div>
-                <p className="mb-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                <p className="mb-3 text-sm leading-relaxed text-gray-700 dark:text-gray-400">
                   Get organized data ready to use:
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs text-[var(--text-muted)]">
+                  <span className="rounded-full bg-white px-3 py-1 text-xs text-gray-500 dark:bg-gray-700">
                     Vendor
                   </span>
-                  <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs text-[var(--text-muted)]">
+                  <span className="rounded-full bg-white px-3 py-1 text-xs text-gray-500 dark:bg-gray-700">
                     Date
                   </span>
-                  <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs text-[var(--text-muted)]">
+                  <span className="rounded-full bg-white px-3 py-1 text-xs text-gray-500 dark:bg-gray-700">
                     Items
                   </span>
                   <span className="rounded-full bg-blue-500/20 px-3 py-1 text-xs text-blue-400">
@@ -913,13 +908,11 @@ export default function ReceiptParserDemo() {
               transition={{ delay: 0.7 }}
               className="mt-6 flex flex-wrap items-center justify-center gap-3"
             >
-              <span className="text-xs text-[var(--text-muted)]">
-                Powered by:
-              </span>
-              <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
+              <span className="text-xs text-gray-500">Powered by:</span>
+              <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                 Vision AI
               </span>
-              <span className="rounded-full bg-[var(--input-bg)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
+              <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                 Self-hosted LLM
               </span>
             </motion.div>

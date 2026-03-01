@@ -23,8 +23,8 @@ export function Card({
     : '';
   return (
     <div
-      className={`${roundedClass} border border-[var(--card-border)] bg-[var(--card-bg)] ${padding} ${hoverClass} ${className}`}
-      style={{ boxShadow: 'var(--card-shadow)', ...style }}
+      className={`${roundedClass} border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800 ${padding} ${hoverClass} shadow-md dark:shadow-lg ${className}`}
+      style={style}
     >
       {children}
     </div>

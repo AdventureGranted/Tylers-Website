@@ -11,8 +11,7 @@ export default function CTAFooter() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.6 }}
-      className="relative mt-16 overflow-hidden rounded-3xl border border-[var(--card-border)] bg-[var(--card-bg)] px-8 py-16 text-center md:px-16 md:py-20"
-      style={{ boxShadow: 'var(--card-shadow)' }}
+      className="relative mt-16 overflow-hidden rounded-3xl border border-gray-300 bg-white px-8 py-16 text-center shadow-md md:px-16 md:py-20 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
     >
       {/* Background decorations */}
       <div className="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
@@ -24,7 +23,7 @@ export default function CTAFooter() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="mb-4 text-3xl font-bold text-[var(--text-primary)] md:text-4xl"
+          className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl dark:text-gray-200"
         >
           Let&apos;s Work Together
         </motion.h2>
@@ -34,7 +33,7 @@ export default function CTAFooter() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mx-auto mb-8 max-w-2xl text-lg text-[var(--text-secondary)]"
+          className="mx-auto mb-8 max-w-2xl text-lg text-gray-700 dark:text-gray-400"
         >
           I&apos;m always interested in hearing about new projects and
           opportunities. Whether you have a question or just want to say hi,

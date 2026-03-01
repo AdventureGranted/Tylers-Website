@@ -86,7 +86,7 @@ export default function ImageLightbox({
     >
       {/* Modal container */}
       <div
-        className="relative max-h-[85vh] max-w-4xl overflow-hidden rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] shadow-2xl"
+        className="relative max-h-[85vh] max-w-4xl overflow-hidden rounded-2xl border border-gray-300 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-800"
         onClick={(e) => e.stopPropagation()}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}

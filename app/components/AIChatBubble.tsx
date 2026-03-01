@@ -313,7 +313,7 @@ export default function AIChatBubble() {
       {/* Chat Window */}
       <div
         ref={chatWindowRef}
-        className={`z-[9998] flex flex-col overflow-hidden border border-[var(--card-border)] bg-[var(--card-bg)] shadow-2xl transition-all duration-300 ${
+        className={`z-[9998] flex flex-col overflow-hidden border border-gray-300 bg-white shadow-2xl transition-all duration-300 dark:border-gray-700 dark:bg-gray-800 ${
           mobileKeyboardStyles || 'fixed right-4 w-80 rounded-2xl sm:w-96'
         } ${
           isOpen
@@ -326,16 +326,16 @@ export default function AIChatBubble() {
         aria-hidden={!isOpen}
       >
         {/* Header */}
-        <div className="flex items-center justify-between bg-[var(--input-bg)] px-4 py-3">
+        <div className="flex items-center justify-between bg-white px-4 py-3 dark:bg-gray-700">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-500 dark:bg-yellow-300">
               <IoMdChatbubbles className="text-lg text-gray-900" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-[var(--text-primary)]">
+              <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-200">
                 Tyler&apos;s AI Assistant
               </h3>
-              <p className="text-xs text-[var(--text-muted)]">
+              <p className="text-xs text-gray-500">
                 {canChat && userName
                   ? `Chatting as ${userName}`
                   : 'Ask me anything!'}
@@ -345,7 +345,7 @@ export default function AIChatBubble() {
           <div className="flex items-center gap-1">
             <button
               onClick={clearChat}
-              className="rounded-lg p-1 text-[var(--text-muted)] transition-colors hover:bg-[var(--nav-hover)] hover:text-[var(--text-primary)]"
+              className="rounded-lg p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-200"
               aria-label="Clear chat history"
               title="Clear chat"
             >
@@ -353,7 +353,7 @@ export default function AIChatBubble() {
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-lg p-1 text-[var(--text-muted)] transition-colors hover:bg-[var(--nav-hover)] hover:text-[var(--text-primary)]"
+              className="rounded-lg p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-200"
               aria-label="Close chat"
             >
               <IoMdClose className="text-xl" />
@@ -364,7 +364,7 @@ export default function AIChatBubble() {
         {/* Visitor Info Form (if not logged in and no info provided) */}
         {!canChat && status !== 'loading' && (
           <div className="flex-1 p-4">
-            <p className="mb-4 text-sm text-[var(--text-secondary)]">
+            <p className="mb-4 text-sm text-gray-700 dark:text-gray-400">
               Please enter your info to start chatting:
             </p>
             <form onSubmit={handleVisitorSubmit} className="space-y-3">
@@ -376,7 +376,7 @@ export default function AIChatBubble() {
                 }
                 placeholder="Your name"
                 required
-                className="w-full rounded-xl border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-2 text-base text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none sm:text-sm dark:focus:ring-yellow-300"
+                className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none sm:text-sm dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
               />
               <input
                 type="email"
@@ -386,7 +386,7 @@ export default function AIChatBubble() {
                 }
                 placeholder="Your email"
                 required
-                className="w-full rounded-xl border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-2 text-base text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none sm:text-sm dark:focus:ring-yellow-300"
+                className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none sm:text-sm dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
               />
               <button
                 type="submit"
@@ -410,7 +410,7 @@ export default function AIChatBubble() {
                   className={`max-w-[85%] rounded-2xl px-4 py-2 ${
                     message.role === 'user'
                       ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
-                      : 'bg-[var(--input-bg)] text-[var(--text-primary)]'
+                      : 'bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-200'
                   }`}
                 >
                   {message.role === 'user' ? (
@@ -427,15 +427,15 @@ export default function AIChatBubble() {
             ))}
             {isLoading && messages[messages.length - 1]?.content === '' && (
               <div className="flex justify-start">
-                <div className="rounded-2xl bg-[var(--input-bg)] px-4 py-2">
+                <div className="rounded-2xl bg-white px-4 py-2 dark:bg-gray-700">
                   <div className="flex gap-1">
-                    <div className="h-2 w-2 animate-bounce rounded-full bg-[var(--text-muted)]" />
+                    <div className="h-2 w-2 animate-bounce rounded-full bg-gray-500" />
                     <div
-                      className="h-2 w-2 animate-bounce rounded-full bg-[var(--text-muted)]"
+                      className="h-2 w-2 animate-bounce rounded-full bg-gray-500"
                       style={{ animationDelay: '0.1s' }}
                     />
                     <div
-                      className="h-2 w-2 animate-bounce rounded-full bg-[var(--text-muted)]"
+                      className="h-2 w-2 animate-bounce rounded-full bg-gray-500"
                       style={{ animationDelay: '0.2s' }}
                     />
                   </div>
@@ -448,7 +448,7 @@ export default function AIChatBubble() {
 
         {/* Input */}
         {canChat && (
-          <div className="border-t border-[var(--card-border)] p-3">
+          <div className="border-t border-gray-300 p-3 dark:border-gray-700">
             <div className="flex items-end gap-2">
               <textarea
                 ref={inputRef}
@@ -457,7 +457,7 @@ export default function AIChatBubble() {
                 onKeyDown={handleKeyDown}
                 placeholder="Type a message..."
                 rows={1}
-                className="max-h-24 min-h-[40px] flex-1 resize-none rounded-xl border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-2 text-base text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-yellow-500 focus:outline-none sm:text-sm dark:focus:ring-yellow-300"
+                className="max-h-24 min-h-[40px] flex-1 resize-none rounded-xl border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none sm:text-sm dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
                 disabled={isLoading}
               />
               <button

@@ -32,9 +32,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">
-      <div className="w-full max-w-md rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-8 shadow-lg">
-        <h1 className="mb-6 text-center text-2xl font-bold text-[var(--text-primary)]">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
+      <div className="w-full max-w-md rounded-2xl border border-gray-300 bg-white p-8 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+        <h1 className="mb-6 text-center text-2xl font-bold text-gray-900 dark:text-gray-200">
           Admin Login
         </h1>
 
@@ -46,10 +46,7 @@ export default function LoginPage() {
           )}
 
           <div>
-            <label
-              htmlFor="email"
-              className="mb-1 block text-sm text-[var(--text-muted)]"
-            >
+            <label htmlFor="email" className="mb-1 block text-sm text-gray-500">
               Email
             </label>
             <input
@@ -57,7 +54,7 @@ export default function LoginPage() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
               required
             />
           </div>
@@ -65,7 +62,7 @@ export default function LoginPage() {
           <div>
             <label
               htmlFor="password"
-              className="mb-1 block text-sm text-[var(--text-muted)]"
+              className="mb-1 block text-sm text-gray-500"
             >
               Password
             </label>
@@ -74,7 +71,7 @@ export default function LoginPage() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
               required
             />
           </div>

@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
   useRef,
+  useSyncExternalStore,
   ReactNode,
 } from 'react';
 
@@ -27,19 +28,28 @@ export function useTheme() {
   return context;
 }
 
-export default function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('dark');
-  const [mounted, setMounted] = useState(false);
-  const isUserToggle = useRef(false);
+const subscribeNoop = () => () => {};
+const getSnapshotClient = () => true;
+const getSnapshotServer = () => false;
 
-  useEffect(() => {
-    setMounted(true);
-    // Check localStorage for saved preference, default to dark
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme === 'light' || savedTheme === 'dark') {
-      setThemeState(savedTheme);
-    }
-  }, []);
+function getInitialTheme(): Theme {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+  } catch {}
+  return 'dark';
+}
+
+export default function ThemeProvider({ children }: { children: ReactNode }) {
+  const mounted = useSyncExternalStore(
+    subscribeNoop,
+    getSnapshotClient,
+    getSnapshotServer
+  );
+  const [theme, setThemeState] = useState<Theme>(
+    mounted ? getInitialTheme : 'dark'
+  );
+  const isUserToggle = useRef(false);
 
   useEffect(() => {
     if (!mounted) return;

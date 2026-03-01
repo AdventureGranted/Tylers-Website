@@ -96,7 +96,7 @@ export default async function HobbyDetailPage({ params }: Props) {
   );
 
   // Public info sidebar (read-only for everyone)
-  const PublicInfoSidebar = () => (
+  const publicInfoSidebar = (
     <div className="space-y-4">
       <ProjectStatus
         projectId={project.id}
@@ -110,7 +110,7 @@ export default async function HobbyDetailPage({ params }: Props) {
   );
 
   // Admin left sidebar - Project info (read-only view)
-  const AdminLeftSidebar = () => (
+  const adminLeftSidebar = (
     <div className="space-y-4">
       <ProjectStatus
         projectId={project.id}
@@ -126,7 +126,7 @@ export default async function HobbyDetailPage({ params }: Props) {
   );
 
   // Admin right sidebar - Costs & tracking (read-only view)
-  const AdminRightSidebar = () => (
+  const adminRightSidebar = (
     <div className="space-y-4">
       <BudgetTracker projectId={project.id} actualCost={actualCost} readOnly />
       <TimeTracker projectId={project.id} readOnly />
@@ -137,7 +137,7 @@ export default async function HobbyDetailPage({ params }: Props) {
   );
 
   // Combined for mobile (admin) - read-only view
-  const AdminMobileSidebar = () => (
+  const adminMobileSidebar = (
     <div className="space-y-4">
       <ProjectStatus
         projectId={project.id}
@@ -173,7 +173,7 @@ export default async function HobbyDetailPage({ params }: Props) {
         <div className="mb-6">
           <Link
             href="/hobbies"
-            className="inline-flex items-center text-[var(--text-muted)] transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="inline-flex items-center text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -198,9 +198,7 @@ export default async function HobbyDetailPage({ params }: Props) {
           {/* Left Sidebar on desktop (Admin Only) */}
           {isAdmin && (
             <div className="hidden w-96 shrink-0 xl:block">
-              <div className="sticky top-24">
-                <AdminLeftSidebar />
-              </div>
+              <div className="sticky top-24">{adminLeftSidebar}</div>
             </div>
           )}
 
@@ -237,7 +235,7 @@ export default async function HobbyDetailPage({ params }: Props) {
 
             {/* Description */}
             {project.description && (
-              <p className="mb-6 text-xl text-[var(--text-secondary)]">
+              <p className="mb-6 text-xl text-gray-700 dark:text-gray-400">
                 {project.description}
               </p>
             )}
@@ -246,14 +244,14 @@ export default async function HobbyDetailPage({ params }: Props) {
             {project.images.length >= 1 && (
               <div className="mb-8">
                 {project.compareMode === 'single' ? (
-                  <div className="rounded-2xl bg-[var(--input-bg)] p-4">
+                  <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
                     <div className="mb-3 flex items-center">
-                      <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+                      <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
                         <HiOutlinePhotograph className="text-yellow-500 dark:text-yellow-300" />
                         Featured Photo
                       </h3>
                     </div>
-                    <div className="relative aspect-video overflow-hidden rounded-lg bg-[var(--card-border)]">
+                    <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-300 dark:bg-gray-700">
                       {(() => {
                         // Filter to images only (same as BeforeAfterToggle does)
                         const imagesOnly = project.images.filter(
@@ -290,7 +288,7 @@ export default async function HobbyDetailPage({ params }: Props) {
             {/* Content */}
             {project.content && (
               <div className="prose prose-invert dark:prose-invert max-w-none">
-                <div className="whitespace-pre-wrap text-[var(--text-primary)]">
+                <div className="whitespace-pre-wrap text-gray-900 dark:text-gray-200">
                   {project.content}
                 </div>
               </div>
@@ -299,7 +297,7 @@ export default async function HobbyDetailPage({ params }: Props) {
             {/* Photo grid - all photos */}
             {project.images.length > 0 && (
               <div className="mt-8 mb-8">
-                <h3 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
+                <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-200">
                   Photos
                 </h3>
                 <PhotoGrid images={project.images} />
@@ -308,7 +306,7 @@ export default async function HobbyDetailPage({ params }: Props) {
 
             {/* Sidebar on mobile */}
             <div className="mt-8 mb-8 xl:hidden">
-              {isAdmin ? <AdminMobileSidebar /> : <PublicInfoSidebar />}
+              {isAdmin ? adminMobileSidebar : publicInfoSidebar}
             </div>
 
             {/* Comments */}
@@ -318,7 +316,7 @@ export default async function HobbyDetailPage({ params }: Props) {
           {/* Right Sidebar on desktop */}
           <div className="hidden w-96 shrink-0 xl:block">
             <div className="sticky top-24">
-              {isAdmin ? <AdminRightSidebar /> : <PublicInfoSidebar />}
+              {isAdmin ? adminRightSidebar : publicInfoSidebar}
             </div>
           </div>
         </div>

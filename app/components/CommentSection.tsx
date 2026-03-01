@@ -109,15 +109,15 @@ export default function CommentSection({ projectId }: CommentSectionProps) {
   };
 
   return (
-    <div className="mt-12 border-t border-[var(--card-border)] pt-8">
-      <h2 className="mb-6 text-2xl font-bold text-[var(--text-primary)]">
+    <div className="mt-12 border-t border-gray-300 pt-8 dark:border-gray-700">
+      <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-200">
         Comments
       </h2>
 
       {/* Comment Form */}
       {status === 'loading' ? (
-        <div className="mb-6 rounded-lg bg-[var(--input-bg)] p-4">
-          <p className="text-[var(--text-muted)]">Loading...</p>
+        <div className="mb-6 rounded-lg bg-white p-4 dark:bg-gray-700">
+          <p className="text-gray-500">Loading...</p>
         </div>
       ) : session ? (
         <form onSubmit={handleSubmit} className="mb-6">
@@ -131,7 +131,7 @@ export default function CommentSection({ projectId }: CommentSectionProps) {
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Write a comment..."
             rows={3}
-            className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-4 py-2 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 placeholder-gray-500 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
           />
           <div className="mt-2 flex justify-end">
             <button
@@ -144,8 +144,8 @@ export default function CommentSection({ projectId }: CommentSectionProps) {
           </div>
         </form>
       ) : (
-        <div className="mb-6 rounded-lg bg-[var(--input-bg)] p-4 text-center">
-          <p className="text-[var(--text-muted)]">
+        <div className="mb-6 rounded-lg bg-white p-4 text-center dark:bg-gray-700">
+          <p className="text-gray-500">
             <Link
               href="/login"
               className="text-yellow-500 hover:underline dark:text-yellow-300"
@@ -159,9 +159,9 @@ export default function CommentSection({ projectId }: CommentSectionProps) {
 
       {/* Comments List */}
       {loading ? (
-        <p className="text-[var(--text-muted)]">Loading comments...</p>
+        <p className="text-gray-500">Loading comments...</p>
       ) : comments.length === 0 ? (
-        <p className="text-[var(--text-muted)]">
+        <p className="text-gray-500">
           No comments yet. Be the first to comment!
         </p>
       ) : (
@@ -169,14 +169,14 @@ export default function CommentSection({ projectId }: CommentSectionProps) {
           {comments.map((comment) => (
             <div
               key={comment.id}
-              className="rounded-lg bg-[var(--input-bg)] p-4"
+              className="rounded-lg bg-white p-4 dark:bg-gray-700"
             >
               <div className="mb-2 flex items-start justify-between">
                 <div>
-                  <span className="font-semibold text-[var(--text-primary)]">
+                  <span className="font-semibold text-gray-900 dark:text-gray-200">
                     {comment.author.name || comment.author.email}
                   </span>
-                  <span className="ml-2 text-sm text-[var(--text-muted)]">
+                  <span className="ml-2 text-sm text-gray-500">
                     {formatDate(comment.createdAt)}
                   </span>
                 </div>
@@ -189,7 +189,7 @@ export default function CommentSection({ projectId }: CommentSectionProps) {
                   </button>
                 )}
               </div>
-              <p className="whitespace-pre-wrap text-[var(--text-secondary)]">
+              <p className="whitespace-pre-wrap text-gray-700 dark:text-gray-400">
                 {comment.content}
               </p>
             </div>

@@ -65,14 +65,14 @@ export default function ImageCarousel({
   return (
     <div className="relative w-full">
       <div
-        className={`relative ${aspectClass} w-full overflow-hidden rounded-2xl border border-[var(--card-border)] bg-[var(--input-bg)]`}
+        className={`relative ${aspectClass} w-full overflow-hidden rounded-2xl border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-700`}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
         {/* Loading skeleton */}
         {!isCurrentLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-[var(--input-bg)]">
-            <div className="h-12 w-12 animate-spin rounded-full border-4 border-[var(--card-border)] border-t-yellow-500 dark:border-t-yellow-300" />
+          <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-700">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
           </div>
         )}
 
@@ -154,7 +154,7 @@ export default function ImageCarousel({
               className={`h-2 w-2 rounded-full transition-colors ${
                 index === currentIndex
                   ? 'bg-yellow-500 dark:bg-yellow-300'
-                  : 'bg-[var(--card-border)]'
+                  : 'bg-gray-300 dark:bg-gray-700'
               }`}
               aria-label={`Go to image ${index + 1}`}
             />

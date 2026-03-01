@@ -113,7 +113,7 @@ export default function TrafficChart({ data, referrers }: TrafficChartProps) {
               className={`rounded-lg px-3 py-1 text-sm font-medium transition-colors ${
                 timeRange === range
                   ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
-                  : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-[var(--nav-hover)]'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700'
               }`}
             >
               {range === '7d'
@@ -127,7 +127,7 @@ export default function TrafficChart({ data, referrers }: TrafficChartProps) {
         <select
           value={selectedReferrer}
           onChange={(e) => setSelectedReferrer(e.target.value)}
-          className="rounded-lg border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-1 text-sm text-[var(--text-secondary)] focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:focus:ring-yellow-300"
+          className="rounded-lg border border-gray-300 bg-white px-3 py-1 text-sm text-gray-700 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:focus:ring-yellow-300"
         >
           <option value="all">All Sources</option>
           {referrers.map((ref) => (
@@ -139,7 +139,7 @@ export default function TrafficChart({ data, referrers }: TrafficChartProps) {
       </div>
 
       {/* Total */}
-      <div className="mb-2 text-sm text-[var(--text-muted)]">
+      <div className="mb-2 text-sm text-gray-500">
         Total:{' '}
         <span className="font-semibold text-yellow-500 dark:text-yellow-300">
           {totalViews}
@@ -149,7 +149,7 @@ export default function TrafficChart({ data, referrers }: TrafficChartProps) {
 
       {/* Chart */}
       {chartData.length === 0 ? (
-        <div className="flex h-48 items-center justify-center text-[var(--text-muted)]">
+        <div className="flex h-48 items-center justify-center text-gray-500">
           No data for selected filters
         </div>
       ) : (

@@ -31,11 +31,14 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <nav aria-label="Breadcrumb" className="mb-4">
-        <ol className="flex flex-wrap items-center gap-2 text-sm text-[var(--text-muted)]">
+        <ol className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
           {items.map((item, index) => (
             <li key={index} className="flex items-center gap-2">
               {index > 0 && (
-                <span className="text-[var(--card-border)]" aria-hidden="true">
+                <span
+                  className="text-gray-300 dark:text-gray-700"
+                  aria-hidden="true"
+                >
                   /
                 </span>
               )}
@@ -48,7 +51,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                 </Link>
               ) : (
                 <span
-                  className="text-[var(--text-secondary)]"
+                  className="text-gray-700 dark:text-gray-400"
                   aria-current="page"
                 >
                   {item.label}

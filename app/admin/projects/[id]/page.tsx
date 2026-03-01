@@ -250,17 +250,17 @@ export default function EditProject({
 
   if (fetching) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">
-        <p className="text-[var(--text-muted)]">Loading...</p>
+      <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
+        <p className="text-gray-500">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-8">
+    <div className="min-h-screen bg-gray-100 p-8 dark:bg-gray-900">
       <div className="mx-auto max-w-[1600px]">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">
             Edit Project
           </h1>
           <div className="flex gap-4">
@@ -272,7 +272,7 @@ export default function EditProject({
             </button>
             <Link
               href={returnUrl}
-              className="text-[var(--text-muted)] transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+              className="text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
             >
               Cancel
             </Link>
@@ -288,7 +288,7 @@ export default function EditProject({
         <div className="flex flex-col gap-8 xl:flex-row xl:items-start">
           {/* Left column - Project Info */}
           <div className="hidden w-96 shrink-0 space-y-4 xl:block">
-            <h2 className="text-lg font-semibold text-[var(--text-primary)]">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-200">
               Project Info
             </h2>
             <ProjectStatus projectId={id} initialStatus={status} />
@@ -305,7 +305,7 @@ export default function EditProject({
               <div>
                 <label
                   htmlFor="title"
-                  className="mb-1 block text-sm text-[var(--text-muted)]"
+                  className="mb-1 block text-sm text-gray-500"
                 >
                   Title
                 </label>
@@ -314,7 +314,7 @@ export default function EditProject({
                   id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
                   required
                 />
               </div>
@@ -322,7 +322,7 @@ export default function EditProject({
               <div>
                 <label
                   htmlFor="slug"
-                  className="mb-1 block text-sm text-[var(--text-muted)]"
+                  className="mb-1 block text-sm text-gray-500"
                 >
                   Slug
                 </label>
@@ -331,7 +331,7 @@ export default function EditProject({
                   id="slug"
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
                   required
                 />
               </div>
@@ -339,7 +339,7 @@ export default function EditProject({
               <div>
                 <label
                   htmlFor="category"
-                  className="mb-1 block text-sm text-[var(--text-muted)]"
+                  className="mb-1 block text-sm text-gray-500"
                 >
                   Category
                 </label>
@@ -347,7 +347,7 @@ export default function EditProject({
                   id="category"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
                 >
                   <option value="hobby">Hobby</option>
                   <option value="work">Work / CS Project</option>
@@ -357,7 +357,7 @@ export default function EditProject({
               <div>
                 <label
                   htmlFor="description"
-                  className="mb-1 block text-sm text-[var(--text-muted)]"
+                  className="mb-1 block text-sm text-gray-500"
                 >
                   Description
                 </label>
@@ -366,14 +366,14 @@ export default function EditProject({
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={3}
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="content"
-                  className="mb-1 block text-sm text-[var(--text-muted)]"
+                  className="mb-1 block text-sm text-gray-500"
                 >
                   Content
                 </label>
@@ -382,13 +382,13 @@ export default function EditProject({
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   rows={10}
-                  className="w-full rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-2 text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
                 />
               </div>
 
               {/* Image/Video Upload */}
               <div>
-                <label className="mb-2 block text-sm text-[var(--text-muted)]">
+                <label className="mb-2 block text-sm text-gray-500">
                   Media (Images & Videos)
                 </label>
 
@@ -396,7 +396,7 @@ export default function EditProject({
                   className={`flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors ${
                     isDragging
                       ? 'border-yellow-500 bg-yellow-500/10 dark:border-yellow-300 dark:bg-yellow-300/10'
-                      : 'border-[var(--card-border)] hover:border-yellow-500 dark:hover:border-yellow-300'
+                      : 'border-gray-300 hover:border-yellow-500 dark:border-gray-700 dark:hover:border-yellow-300'
                   }`}
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
@@ -410,7 +410,7 @@ export default function EditProject({
                     className="hidden"
                     disabled={uploading}
                   />
-                  <span className="text-center text-[var(--text-muted)]">
+                  <span className="text-center text-gray-500">
                     {uploading
                       ? 'Uploading...'
                       : isDragging
@@ -424,10 +424,10 @@ export default function EditProject({
                     {images.map((img, index) => (
                       <div
                         key={img.url}
-                        className="flex items-center gap-4 rounded-lg bg-[var(--card-bg)] p-3"
+                        className="flex items-center gap-4 rounded-lg bg-white p-3 dark:bg-gray-800"
                       >
                         {img.type === 'video' ? (
-                          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded bg-[var(--input-bg)]">
+                          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded bg-white dark:bg-gray-700">
                             <video
                               src={img.url}
                               className="h-full w-full object-cover"
@@ -462,7 +462,7 @@ export default function EditProject({
                             onChange={(e) =>
                               updateImageAlt(index, e.target.value)
                             }
-                            className="w-full rounded border border-[var(--card-border)] bg-[var(--input-bg)] px-3 py-1 text-sm text-[var(--text-primary)] focus:border-yellow-500 focus:outline-none dark:focus:border-yellow-300"
+                            className="w-full rounded border border-gray-300 bg-white px-3 py-1 text-sm text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
                           />
                           {img.type === 'video' && (
                             <span className="mt-1 inline-block rounded bg-blue-500/20 px-2 py-0.5 text-xs text-blue-400">
@@ -475,7 +475,7 @@ export default function EditProject({
                             type="button"
                             onClick={() => moveImage(index, 'up')}
                             disabled={index === 0}
-                            className="rounded bg-[var(--input-bg)] px-2 py-1 text-[var(--text-muted)] hover:bg-[var(--nav-hover)] disabled:opacity-30"
+                            className="rounded bg-white px-2 py-1 text-gray-500 hover:bg-gray-100 disabled:opacity-30 dark:bg-gray-700 dark:hover:bg-gray-700"
                           >
                             &uarr;
                           </button>
@@ -483,7 +483,7 @@ export default function EditProject({
                             type="button"
                             onClick={() => moveImage(index, 'down')}
                             disabled={index === images.length - 1}
-                            className="rounded bg-[var(--input-bg)] px-2 py-1 text-[var(--text-muted)] hover:bg-[var(--nav-hover)] disabled:opacity-30"
+                            className="rounded bg-white px-2 py-1 text-gray-500 hover:bg-gray-100 disabled:opacity-30 dark:bg-gray-700 dark:hover:bg-gray-700"
                           >
                             &darr;
                           </button>
@@ -507,12 +507,9 @@ export default function EditProject({
                   id="published"
                   checked={published}
                   onChange={(e) => setPublished(e.target.checked)}
-                  className="h-4 w-4 rounded border-[var(--card-border)] bg-[var(--card-bg)]"
+                  className="h-4 w-4 rounded border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800"
                 />
-                <label
-                  htmlFor="published"
-                  className="text-sm text-[var(--text-muted)]"
-                >
+                <label htmlFor="published" className="text-sm text-gray-500">
                   Published
                 </label>
               </div>
@@ -552,7 +549,7 @@ export default function EditProject({
 
           {/* Right column - Costs & Tracking */}
           <div className="hidden w-96 shrink-0 space-y-4 xl:block">
-            <h2 className="text-lg font-semibold text-[var(--text-primary)]">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-200">
               Costs & Tracking
             </h2>
             <BudgetTracker projectId={id} actualCost={actualCost} />
@@ -564,7 +561,7 @@ export default function EditProject({
 
           {/* Mobile: All management components */}
           <div className="space-y-4 xl:hidden">
-            <h2 className="text-lg font-semibold text-[var(--text-primary)]">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-200">
               Project Management
             </h2>
             <ProjectStatus projectId={id} initialStatus={status} />
