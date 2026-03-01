@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { HiPaperAirplane } from 'react-icons/hi';
 import { useToast } from '@/app/hooks/useToast';
+import { containerVariants, itemVariants } from '@/app/lib/animations';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -57,7 +59,11 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="rounded-2xl border border-green-500/50 bg-green-500/10 p-8 text-center md:rounded-3xl md:p-10">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="rounded-2xl border border-green-500/50 bg-green-500/10 p-8 text-center md:rounded-3xl md:p-10"
+      >
         <div className="mb-4 text-4xl">✓</div>
         <h3 className="mb-2 text-xl font-semibold text-green-400">
           Message Sent!
@@ -72,7 +78,7 @@ export default function ContactForm() {
         >
           Send another message
         </button>
-      </div>
+      </motion.div>
     );
   }
 
@@ -91,8 +97,16 @@ export default function ContactForm() {
         </div>
       )}
 
-      <div className="space-y-4 md:space-y-6">
-        <div className="grid gap-4 sm:grid-cols-2 md:gap-6">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="space-y-4 md:space-y-6"
+      >
+        <motion.div
+          variants={itemVariants}
+          className="grid gap-4 sm:grid-cols-2 md:gap-6"
+        >
           <div>
             <label
               htmlFor="name"
@@ -107,7 +121,7 @@ export default function ContactForm() {
               required
               value={formData.name}
               onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
               placeholder="Your name"
             />
           </div>
@@ -125,13 +139,13 @@ export default function ContactForm() {
               required
               value={formData.email}
               onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
               placeholder="your@email.com"
             />
           </div>
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div variants={itemVariants}>
           <label
             htmlFor="phone"
             className="mb-2 block text-sm text-gray-700 dark:text-gray-400"
@@ -144,12 +158,12 @@ export default function ContactForm() {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
             placeholder="(123) 456-7890"
           />
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div variants={itemVariants}>
           <label
             htmlFor="message"
             className="mb-2 block text-sm text-gray-700 dark:text-gray-400"
@@ -163,29 +177,31 @@ export default function ContactForm() {
             rows={5}
             value={formData.message}
             onChange={handleChange}
-            className="w-full resize-none rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+            className="w-full resize-none rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
             placeholder="How can I help you?"
           />
-        </div>
+        </motion.div>
 
-        <button
-          type="submit"
-          disabled={status === 'loading'}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-300 px-6 py-4 font-bold text-gray-900 transition-all duration-300 hover:bg-yellow-400 hover:shadow-lg hover:shadow-yellow-300/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {status === 'loading' ? (
-            <>
-              <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-900 border-t-transparent" />
-              Sending...
-            </>
-          ) : (
-            <>
-              Send Message
-              <HiPaperAirplane className="text-lg" />
-            </>
-          )}
-        </button>
-      </div>
+        <motion.div variants={itemVariants}>
+          <button
+            type="submit"
+            disabled={status === 'loading'}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-300 px-6 py-4 font-bold text-gray-900 transition-all duration-300 hover:bg-yellow-400 hover:shadow-lg hover:shadow-yellow-300/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {status === 'loading' ? (
+              <>
+                <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-900 border-t-transparent" />
+                Sending...
+              </>
+            ) : (
+              <>
+                Send Message
+                <HiPaperAirplane className="text-lg" />
+              </>
+            )}
+          </button>
+        </motion.div>
+      </motion.div>
     </form>
   );
 }

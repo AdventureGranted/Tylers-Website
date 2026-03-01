@@ -3,14 +3,15 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { HiArrowRight } from 'react-icons/hi';
+import { containerVariants, itemVariants } from '@/app/lib/animations';
 
 export default function CTAFooter() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.6 }}
+      variants={containerVariants}
       className="relative mt-16 overflow-hidden rounded-3xl border border-gray-300 bg-white px-8 py-16 text-center shadow-md md:px-16 md:py-20 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
     >
       {/* Background decorations */}
@@ -19,20 +20,14 @@ export default function CTAFooter() {
 
       <div className="relative z-10">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          variants={itemVariants}
           className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl dark:text-gray-200"
         >
           Let&apos;s Work Together
         </motion.h2>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          variants={itemVariants}
           className="mx-auto mb-8 max-w-2xl text-lg text-gray-700 dark:text-gray-400"
         >
           I&apos;m always interested in hearing about new projects and
@@ -40,12 +35,7 @@ export default function CTAFooter() {
           feel free to reach out!
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
+        <motion.div variants={itemVariants}>
           <Link
             href="/contact"
             className="group inline-flex items-center gap-3 rounded-full bg-yellow-300 px-10 py-4 text-lg font-bold text-gray-900 shadow-lg shadow-yellow-300/25 transition-all duration-300 hover:scale-105 hover:bg-yellow-400 hover:shadow-yellow-300/40 active:scale-95"

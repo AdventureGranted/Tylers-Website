@@ -222,8 +222,8 @@ export default function SortableHobbyGrid({
           variants={containerVariants}
         >
           {/* Blurred gradient orbs */}
-          <div className="pointer-events-none absolute -top-16 -left-24 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
-          <div className="pointer-events-none absolute -right-24 -bottom-16 h-48 w-48 rounded-full bg-yellow-300/10 blur-3xl" />
+          <div className="pointer-events-none absolute -top-24 left-1/3 h-64 w-96 -translate-x-1/2 rounded-full bg-purple-500/15 blur-[100px]" />
+          <div className="pointer-events-none absolute -right-1/3 -bottom-20 h-56 w-80 translate-x-1/2 rounded-full bg-yellow-300/15 blur-[100px]" />
 
           <motion.div
             className="rounded-xl border border-white/5 bg-gradient-to-br from-purple-500/10 to-yellow-300/10 p-6"

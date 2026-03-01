@@ -121,8 +121,8 @@ export default function ProjectsPage() {
             className="relative mb-10 text-center md:mb-14"
           >
             {/* Blurred gradient orbs */}
-            <div className="pointer-events-none absolute -top-16 left-1/4 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
-            <div className="pointer-events-none absolute -top-10 right-1/4 h-40 w-40 rounded-full bg-yellow-300/20 blur-3xl" />
+            <div className="pointer-events-none absolute -top-24 left-1/3 h-64 w-96 -translate-x-1/2 rounded-full bg-purple-500/15 blur-[100px]" />
+            <div className="pointer-events-none absolute -top-20 right-1/3 h-56 w-80 translate-x-1/2 rounded-full bg-yellow-300/15 blur-[100px]" />
 
             <div className="relative">
               <h1 className="mb-4 flex items-center justify-center gap-3 text-4xl font-bold text-gray-900 md:mb-6 md:text-5xl dark:text-gray-200">
@@ -138,7 +138,7 @@ export default function ProjectsPage() {
               <motion.div
                 key={idx}
                 variants={itemVariants}
-                className="flex flex-col rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
+                className="group flex flex-col rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-yellow-500/50 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50"
               >
                 <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl border border-gray-300 bg-gray-700 dark:border-gray-700">
                   <Image
@@ -149,12 +149,13 @@ export default function ProjectsPage() {
                       project.image === '/boxie.png'
                         ? 'object-center'
                         : 'object-cover'
-                    } transition-transform duration-300 hover:scale-105`}
+                    } transition-transform duration-300 group-hover:scale-105`}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     priority={idx === 0}
                     placeholder="blur"
                     blurDataURL={blurDataURLs[project.image]}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </div>
                 <h2 className="mb-1 text-2xl font-semibold text-yellow-300">
                   {project.title}

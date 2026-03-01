@@ -51,8 +51,8 @@ export default function ContactPage() {
             className="relative mb-10 text-center md:mb-14"
           >
             {/* Blurred gradient orbs */}
-            <div className="pointer-events-none absolute -top-16 left-1/4 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
-            <div className="pointer-events-none absolute -top-10 right-1/4 h-40 w-40 rounded-full bg-yellow-300/20 blur-3xl" />
+            <div className="pointer-events-none absolute -top-24 left-1/3 h-64 w-96 -translate-x-1/2 rounded-full bg-purple-500/15 blur-[100px]" />
+            <div className="pointer-events-none absolute -top-20 right-1/3 h-56 w-80 translate-x-1/2 rounded-full bg-yellow-300/15 blur-[100px]" />
 
             <div className="relative">
               <h1 className="mb-4 flex items-center justify-center gap-3 text-4xl font-bold text-gray-900 md:mb-6 md:text-5xl dark:text-gray-200">

@@ -5,11 +5,14 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Cropper, { Area } from 'react-easy-crop';
+import { motion } from 'framer-motion';
+import { HiOutlineUser } from 'react-icons/hi';
 import {
   AiOutlineCamera,
   AiOutlineDelete,
   AiOutlineClose,
 } from 'react-icons/ai';
+import { containerVariants, itemVariants } from '@/app/lib/animations';
 
 // Helper function to create cropped image
 async function getCroppedImg(
@@ -236,13 +239,29 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 px-4 py-12 dark:bg-gray-900">
-      <div className="mx-auto max-w-md">
-        <h1 className="mb-8 text-3xl font-bold text-gray-900 dark:text-gray-200">
-          Your Profile
-        </h1>
+    <div className="relative min-h-screen bg-gray-100 px-4 py-12 dark:bg-gray-900">
+      {/* Gradient orbs */}
+      <div className="pointer-events-none absolute -top-24 left-1/3 h-64 w-96 -translate-x-1/2 rounded-full bg-purple-500/15 blur-[100px]" />
+      <div className="pointer-events-none absolute -top-20 right-1/3 h-56 w-80 translate-x-1/2 rounded-full bg-yellow-300/15 blur-[100px]" />
 
-        <div className="rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="mx-auto max-w-md"
+      >
+        <motion.div variants={itemVariants} className="mb-8 text-center">
+          <h1 className="flex items-center justify-center gap-3 text-3xl font-bold text-gray-900 dark:text-gray-200">
+            <HiOutlineUser className="h-8 w-8 text-purple-500 dark:text-purple-400" />
+            Your Profile
+          </h1>
+          <div className="mx-auto mt-4 h-1 w-full max-w-[8rem] rounded-full bg-gradient-to-r from-purple-500 to-yellow-300" />
+        </motion.div>
+
+        <motion.div
+          variants={itemVariants}
+          className="rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800"
+        >
           {message && (
             <div
               className={`mb-6 rounded-lg p-3 ${
@@ -346,7 +365,7 @@ export default function ProfilePage() {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
                 placeholder="Your name"
               />
             </div>
@@ -366,8 +385,8 @@ export default function ProfilePage() {
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
           </form>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Cropper Modal */}
       {showCropper && imageSrc && (

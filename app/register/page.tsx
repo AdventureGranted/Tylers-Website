@@ -4,6 +4,9 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { HiOutlineUserAdd } from 'react-icons/hi';
+import { containerVariants, itemVariants } from '@/app/lib/animations';
 
 function RegisterForm() {
   const { status } = useSession();
@@ -76,12 +79,18 @@ function RegisterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <motion.form
+      onSubmit={handleSubmit}
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="space-y-6"
+    >
       {error && (
         <div className="rounded-lg bg-red-500/20 p-3 text-red-400">{error}</div>
       )}
 
-      <div>
+      <motion.div variants={itemVariants}>
         <label htmlFor="name" className="mb-1 block text-sm text-gray-500">
           Display Name
         </label>
@@ -90,13 +99,13 @@ function RegisterForm() {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
           placeholder="Your name"
           required
         />
-      </div>
+      </motion.div>
 
-      <div>
+      <motion.div variants={itemVariants}>
         <label htmlFor="email" className="mb-1 block text-sm text-gray-500">
           Email
         </label>
@@ -105,12 +114,12 @@ function RegisterForm() {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
           required
         />
-      </div>
+      </motion.div>
 
-      <div>
+      <motion.div variants={itemVariants}>
         <label htmlFor="password" className="mb-1 block text-sm text-gray-500">
           Password
         </label>
@@ -119,16 +128,16 @@ function RegisterForm() {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
           required
           minLength={8}
         />
         <p className="mt-1 text-xs text-gray-500">
           Must be at least 8 characters
         </p>
-      </div>
+      </motion.div>
 
-      <div>
+      <motion.div variants={itemVariants}>
         <label
           htmlFor="confirmPassword"
           className="mb-1 block text-sm text-gray-500"
@@ -140,21 +149,26 @@ function RegisterForm() {
           id="confirmPassword"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
           required
           minLength={8}
         />
-      </div>
+      </motion.div>
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+      <motion.div variants={itemVariants}>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+        >
+          {loading ? 'Creating account...' : 'Create Account'}
+        </button>
+      </motion.div>
+
+      <motion.p
+        variants={itemVariants}
+        className="text-center text-sm text-gray-500"
       >
-        {loading ? 'Creating account...' : 'Create Account'}
-      </button>
-
-      <p className="text-center text-sm text-gray-500">
         Already have an account?{' '}
         <Link
           href="/login"
@@ -162,24 +176,45 @@ function RegisterForm() {
         >
           Sign in
         </Link>
-      </p>
-    </form>
+      </motion.p>
+    </motion.form>
   );
 }
 
 export default function RegisterPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 dark:bg-gray-900">
-      <div className="w-full max-w-md">
-        <h1 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-gray-200">
-          Create Account
-        </h1>
-        <Suspense
-          fallback={<div className="text-center text-gray-500">Loading...</div>}
+    <div className="relative flex min-h-screen items-center justify-center bg-gray-100 px-4 dark:bg-gray-900">
+      {/* Gradient orbs — top-left & bottom-right of section */}
+      <div className="pointer-events-none absolute top-1/4 left-1/4 h-64 w-96 -translate-x-1/2 rounded-full bg-purple-500/15 blur-[100px]" />
+      <div className="pointer-events-none absolute right-1/4 bottom-1/4 h-56 w-80 translate-x-1/2 rounded-full bg-yellow-300/15 blur-[100px]" />
+
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="w-full max-w-md"
+      >
+        <motion.div variants={itemVariants} className="mb-8 text-center">
+          <h1 className="flex items-center justify-center gap-3 text-3xl font-bold text-gray-900 dark:text-gray-200">
+            <HiOutlineUserAdd className="h-8 w-8 text-purple-500 dark:text-purple-400" />
+            Create Account
+          </h1>
+          <div className="mx-auto mt-4 h-1 w-full max-w-[8rem] rounded-full bg-gradient-to-r from-purple-500 to-yellow-300" />
+        </motion.div>
+
+        <motion.div
+          variants={itemVariants}
+          className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800"
         >
-          <RegisterForm />
-        </Suspense>
-      </div>
+          <Suspense
+            fallback={
+              <div className="text-center text-gray-500">Loading...</div>
+            }
+          >
+            <RegisterForm />
+          </Suspense>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
