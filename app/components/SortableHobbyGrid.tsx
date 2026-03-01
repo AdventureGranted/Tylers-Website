@@ -18,9 +18,12 @@ import {
 } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { motion } from 'framer-motion';
+import { containerVariants, itemVariants } from '../lib/animations';
 import HobbyCard from './HobbyCard';
 import Link from 'next/link';
 import { HiPlus, HiPencil, HiCheck } from 'react-icons/hi';
+import { GiHandSaw, GiWoodBeam } from 'react-icons/gi';
 
 interface Project {
   id: string;
@@ -161,50 +164,93 @@ export default function SortableHobbyGrid({
   return (
     <>
       {/* Header with buttons */}
-      <div className="mb-8 flex items-center gap-4">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-200">
-          Hobbies
-        </h1>
-        {isAdmin && (
-          <>
-            {isEditing ? (
-              <>
-                <button
-                  onClick={handleCancel}
-                  className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleSave}
-                  disabled={saving}
-                  className="flex items-center gap-1 rounded-lg bg-green-500 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600 disabled:opacity-50"
-                >
-                  <HiCheck className="h-4 w-4" />
-                  {saving ? 'Saving...' : 'Save'}
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700"
-                >
-                  <HiPencil className="h-4 w-4" />
-                  Edit
-                </button>
-                <Link
-                  href="/admin/projects/new?from=/hobbies"
-                  className="flex items-center gap-1 rounded-lg bg-yellow-300 px-3 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-yellow-400"
-                >
-                  <HiPlus className="h-4 w-4" />
-                  Add
-                </Link>
-              </>
-            )}
-          </>
-        )}
+      <div className="mb-8">
+        <div className="flex items-center gap-4">
+          <GiHandSaw className="h-8 w-8 text-yellow-300" />
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-200">
+            Hobbies
+          </h1>
+          {isAdmin && (
+            <>
+              {isEditing ? (
+                <>
+                  <button
+                    onClick={handleCancel}
+                    className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    disabled={saving}
+                    className="flex items-center gap-1 rounded-lg bg-green-500 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600 disabled:opacity-50"
+                  >
+                    <HiCheck className="h-4 w-4" />
+                    {saving ? 'Saving...' : 'Save'}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700"
+                  >
+                    <HiPencil className="h-4 w-4" />
+                    Edit
+                  </button>
+                  <Link
+                    href="/admin/projects/new?from=/hobbies"
+                    className="flex items-center gap-1 rounded-lg bg-yellow-300 px-3 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-yellow-400"
+                  >
+                    <HiPlus className="h-4 w-4" />
+                    Add
+                  </Link>
+                </>
+              )}
+            </>
+          )}
+        </div>
+        <div className="mt-2 h-1 w-full rounded-full bg-gradient-to-r from-purple-500 to-yellow-300" />
       </div>
+
+      {/* Woodworking intro */}
+      {!isEditing && (
+        <motion.div
+          className="relative mb-10 max-w-3xl text-center"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
+          {/* Blurred gradient orbs */}
+          <div className="pointer-events-none absolute -top-16 -left-24 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
+          <div className="pointer-events-none absolute -right-24 -bottom-16 h-48 w-48 rounded-full bg-yellow-300/10 blur-3xl" />
+
+          <motion.div
+            className="rounded-xl border border-white/5 bg-gradient-to-br from-purple-500/10 to-yellow-300/10 p-6"
+            variants={itemVariants}
+          >
+            <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+              Woodworking is where I step away from the screen and build
+              something I can hold. There&apos;s a unique satisfaction in
+              transforming raw lumber into something functional and beautiful —
+              measuring twice, cutting once, and seeing a project come together
+              piece by piece. From furniture builds to smaller shop projects, I
+              enjoy the entire process: planning the design, choosing the right
+              wood, and working through each step by hand and machine.
+            </p>
+          </motion.div>
+
+          <motion.div className="mx-auto mt-8 w-fit" variants={itemVariants}>
+            <div className="flex items-center justify-center gap-2">
+              <GiWoodBeam className="h-5 w-5 text-yellow-300" />
+              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-200">
+                Recent Projects
+              </h2>
+            </div>
+            <div className="mt-2 h-0.5 w-full rounded-full bg-gradient-to-r from-purple-500 to-yellow-300" />
+          </motion.div>
+        </motion.div>
+      )}
 
       {isEditing && (
         <p className="mb-4 text-center text-sm text-gray-700 dark:text-gray-400">
@@ -227,15 +273,19 @@ export default function SortableHobbyGrid({
             items={projects.map((p) => p.id)}
             strategy={rectSortingStrategy}
           >
-            <div className="grid w-full max-w-6xl gap-8 md:grid-cols-2">
+            <motion.div
+              className="grid w-full max-w-6xl gap-8 md:grid-cols-2"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-100px' }}
+            >
               {projects.map((project) => (
-                <SortableHobbyCard
-                  key={project.id}
-                  project={project}
-                  isEditing={isEditing}
-                />
+                <motion.div key={project.id} variants={itemVariants}>
+                  <SortableHobbyCard project={project} isEditing={isEditing} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </SortableContext>
         </DndContext>
       )}
