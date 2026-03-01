@@ -48,16 +48,17 @@ export default function ProfileCard() {
       >
         {/* Glow effect behind image */}
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-500 to-yellow-300 opacity-50 blur-xl" />
-        <Image
-          src="/profile.jpg"
-          alt="Profile Picture of Tyler"
-          width={200}
-          height={200}
-          priority
-          placeholder="blur"
-          blurDataURL={profileBlurDataURL}
-          className="relative rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105"
-        />
+        <div className="relative h-40 w-48 overflow-hidden rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105 xl:h-[200px] xl:w-[200px]">
+          <Image
+            src="/profile.jpg"
+            alt="Profile Picture of Tyler"
+            fill
+            priority
+            placeholder="blur"
+            blurDataURL={profileBlurDataURL}
+            className="object-cover object-top"
+          />
+        </div>
       </motion.div>
 
       <div className="relative z-10 flex flex-col items-center justify-center text-center">
