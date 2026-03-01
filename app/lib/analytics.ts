@@ -46,6 +46,15 @@ function scheduleFlush() {
 }
 
 export async function trackEvent(event: string, page?: string) {
+  // Skip tracking on localhost
+  if (
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1')
+  ) {
+    return;
+  }
+
   eventQueue.push({
     event,
     page,
