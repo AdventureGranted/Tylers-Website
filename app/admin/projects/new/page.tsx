@@ -43,6 +43,9 @@ function NewProjectForm() {
   const [links, setLinks] = useState<ProjectLink[]>([]);
   const [newLinkTitle, setNewLinkTitle] = useState('');
   const [newLinkUrl, setNewLinkUrl] = useState('');
+  const [compareMode, setCompareMode] = useState('toggle');
+  const [beforeImageIndex, setBeforeImageIndex] = useState<number>(0);
+  const [afterImageIndex, setAfterImageIndex] = useState<number>(1);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -198,6 +201,9 @@ function NewProjectForm() {
             : [],
           lessonsLearned: lessons,
           links,
+          compareMode,
+          beforeImageIndex,
+          afterImageIndex,
           images: images.map((img, i) => ({
             url: img.url,
             alt: img.alt,
@@ -682,6 +688,82 @@ function NewProjectForm() {
               </div>
             )}
           </div>
+
+          {/* Display Mode */}
+          <div>
+            <label
+              htmlFor="compareMode"
+              className="mb-1 block text-sm text-gray-500"
+            >
+              Display Mode
+            </label>
+            <select
+              id="compareMode"
+              value={compareMode}
+              onChange={(e) => setCompareMode(e.target.value)}
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+            >
+              <option value="toggle">Toggle (Before/After)</option>
+              <option value="slider">Slider (Before/After)</option>
+              <option value="single">Single Image</option>
+            </select>
+          </div>
+
+          {(compareMode === 'toggle' || compareMode === 'slider') &&
+            images.filter((img) => img.type !== 'video').length >= 2 && (
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    htmlFor="beforeImageIndex"
+                    className="mb-1 block text-sm text-gray-500"
+                  >
+                    Before Image
+                  </label>
+                  <select
+                    id="beforeImageIndex"
+                    value={beforeImageIndex}
+                    onChange={(e) =>
+                      setBeforeImageIndex(parseInt(e.target.value))
+                    }
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  >
+                    {images
+                      .filter((img) => img.type !== 'video')
+                      .map((img, i) => (
+                        <option key={i} value={i}>
+                          Image {i + 1}
+                          {img.alt ? ` - ${img.alt}` : ''}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <div>
+                  <label
+                    htmlFor="afterImageIndex"
+                    className="mb-1 block text-sm text-gray-500"
+                  >
+                    After Image
+                  </label>
+                  <select
+                    id="afterImageIndex"
+                    value={afterImageIndex}
+                    onChange={(e) =>
+                      setAfterImageIndex(parseInt(e.target.value))
+                    }
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  >
+                    {images
+                      .filter((img) => img.type !== 'video')
+                      .map((img, i) => (
+                        <option key={i} value={i}>
+                          Image {i + 1}
+                          {img.alt ? ` - ${img.alt}` : ''}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+            )}
 
           <div className="flex items-center gap-2">
             <input

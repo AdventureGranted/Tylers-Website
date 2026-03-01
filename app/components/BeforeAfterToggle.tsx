@@ -212,7 +212,7 @@ export default function BeforeAfterToggle({
             </button>
           </div>
         ) : (
-          <span className="text-xs text-gray-500" aria-live="polite">
+          <span className="py-1.5 text-xs text-gray-500" aria-live="polite">
             Drag to compare
           </span>
         )}

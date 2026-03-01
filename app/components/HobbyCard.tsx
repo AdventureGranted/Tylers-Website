@@ -14,6 +14,7 @@ interface HobbyCardProps {
   beforeImageIndex?: number | null;
   afterImageIndex?: number | null;
   compareMode?: string | null;
+  published?: boolean;
 }
 
 export default function HobbyCard({
@@ -24,6 +25,7 @@ export default function HobbyCard({
   beforeImageIndex,
   afterImageIndex,
   compareMode,
+  published = true,
 }: HobbyCardProps) {
   const router = useRouter();
 
@@ -43,8 +45,17 @@ export default function HobbyCard({
   return (
     <div
       onClick={handleCardClick}
-      className="group flex cursor-pointer flex-col rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-yellow-500/50 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50"
+      className={`group relative flex h-full cursor-pointer flex-col rounded-3xl border bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-gray-800 dark:shadow-lg ${
+        !published
+          ? 'border-yellow-500/50 opacity-75 dark:border-yellow-300/50'
+          : 'border-gray-300 hover:border-yellow-500/50 dark:border-gray-700 dark:hover:border-yellow-300/50'
+      }`}
     >
+      {!published && (
+        <span className="absolute top-3 right-3 z-10 rounded-full bg-yellow-500 px-2.5 py-0.5 text-xs font-semibold text-gray-900 dark:bg-yellow-300">
+          Draft
+        </span>
+      )}
       {images.length > 0 && (
         <div
           className="mb-4"

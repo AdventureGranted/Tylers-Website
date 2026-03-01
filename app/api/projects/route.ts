@@ -39,6 +39,9 @@ export async function POST(request: NextRequest) {
       tags,
       lessonsLearned,
       links,
+      compareMode,
+      beforeImageIndex,
+      afterImageIndex,
     } = await request.json();
 
     if (!title || !slug) {
@@ -72,6 +75,9 @@ export async function POST(request: NextRequest) {
         privateNotes: privateNotes ?? null,
         tags: tags ?? [],
         lessonsLearned: lessonsLearned ?? [],
+        compareMode: compareMode ?? null,
+        beforeImageIndex: beforeImageIndex ?? null,
+        afterImageIndex: afterImageIndex ?? null,
         images: {
           create: (images || []).map(
             (img: {

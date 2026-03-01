@@ -33,6 +33,7 @@ interface Project {
   beforeImageIndex: number | null;
   afterImageIndex: number | null;
   compareMode: string | null;
+  published: boolean;
   images: { url: string; alt: string | null; type?: string }[];
 }
 
@@ -64,16 +65,18 @@ function SortableHobbyCard({ project, isEditing }: SortableHobbyCardProps) {
       ref={setNodeRef}
       style={{
         ...style,
-        animation:
-          isEditing && !isDragging
-            ? 'wiggle 0.3s ease-in-out infinite'
-            : undefined,
+        animationName: isEditing && !isDragging ? 'wiggle' : undefined,
+        animationDuration: isEditing && !isDragging ? '0.3s' : undefined,
+        animationTimingFunction:
+          isEditing && !isDragging ? 'ease-in-out' : undefined,
+        animationIterationCount:
+          isEditing && !isDragging ? 'infinite' : undefined,
         animationDelay,
       }}
-      className={isEditing ? 'cursor-grab active:cursor-grabbing' : ''}
+      className={`h-full ${isEditing ? 'cursor-grab active:cursor-grabbing' : ''}`}
       {...(isEditing ? { ...attributes, ...listeners } : {})}
     >
-      <div className={isEditing ? 'pointer-events-none' : ''}>
+      <div className={`h-full ${isEditing ? 'pointer-events-none' : ''}`}>
         <HobbyCard
           slug={project.slug}
           title={project.title}
@@ -82,6 +85,7 @@ function SortableHobbyCard({ project, isEditing }: SortableHobbyCardProps) {
           beforeImageIndex={project.beforeImageIndex}
           afterImageIndex={project.afterImageIndex}
           compareMode={project.compareMode}
+          published={project.published}
         />
       </div>
     </div>
@@ -281,7 +285,11 @@ export default function SortableHobbyGrid({
               viewport={{ once: true, margin: '-100px' }}
             >
               {projects.map((project) => (
-                <motion.div key={project.id} variants={itemVariants}>
+                <motion.div
+                  key={project.id}
+                  variants={itemVariants}
+                  className="h-full"
+                >
                   <SortableHobbyCard project={project} isEditing={isEditing} />
                 </motion.div>
               ))}

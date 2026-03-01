@@ -15,16 +15,17 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function HobbiesPage() {
-  const [projects, session] = await Promise.all([
-    prisma.project.findMany({
-      where: { published: true, category: 'hobby' },
-      orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
-      include: { images: { orderBy: { sortOrder: 'asc' } } },
-    }),
-    getServerSession(authOptions),
-  ]);
-
+  const session = await getServerSession(authOptions);
   const isAdmin = session?.user?.role === 'admin';
+
+  const projects = await prisma.project.findMany({
+    where: {
+      category: 'hobby',
+      ...(isAdmin ? {} : { published: true }),
+    },
+    orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
+    include: { images: { orderBy: { sortOrder: 'asc' } } },
+  });
 
   return (
     <PageTransition>
