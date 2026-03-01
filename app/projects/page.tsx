@@ -5,6 +5,7 @@ import Link from 'next/link';
 import PageTransition from '@/app/components/PageTransition';
 import ArchitectureDiagram, {
   balancelyArchitecture,
+  backupArchitecture,
   portfolioArchitecture,
 } from '@/app/components/ArchitectureDiagram';
 
@@ -181,6 +182,9 @@ export default function ProjectsPage() {
               </ul>
               {project.title === 'Balancely' && (
                 <ArchitectureDiagram {...balancelyArchitecture} />
+              )}
+              {project.title === 'Back Up – Card Board Game' && (
+                <ArchitectureDiagram {...backupArchitecture} />
               )}
               {project.title === 'Tyler-Grant.com' && (
                 <ArchitectureDiagram {...portfolioArchitecture} />

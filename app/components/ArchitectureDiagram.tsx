@@ -426,6 +426,180 @@ export const balancelyArchitecture: ArchitectureDiagramProps = {
   ],
 };
 
+// ─── Back Up Architecture Data ────────────────────────────────────────────────
+
+export const backupArchitecture: ArchitectureDiagramProps = {
+  layers: [
+    {
+      title: 'Client (React Native + Expo)',
+      layerColor: BLUE_LAYER,
+      cardColor: BLUE_CARD,
+      services: [
+        svc(
+          'App Routes (Expo Router)',
+          HiCollection,
+          [
+            'Home, Tutorial, Auth',
+            'Local: Setup, Game, Results',
+            'Online: Lobby, Game, Spectate',
+            'Replay, Leaderboard, Profile',
+          ],
+          BLUE_LAYER,
+          BLUE_CARD
+        ),
+        svc(
+          'UI Components',
+          HiDeviceMobile,
+          [
+            'BoardView, AnimatedPiece, ZoomableBoard',
+            'CardView, HandView, HandoffScreen',
+            'TurnIndicator, EmojiReaction',
+            'ReplayViewer, EloChart',
+          ],
+          BLUE_LAYER,
+          BLUE_CARD
+        ),
+        svc(
+          'Hooks & Services',
+          HiCog,
+          [
+            'useOnlineGame (Socket.IO sync)',
+            'useBotTurns, useGameAnimations',
+            'useSpectate, useAsyncGame',
+            'Sound, haptics, push notifications',
+          ],
+          BLUE_LAYER,
+          BLUE_CARD
+        ),
+      ],
+    },
+    {
+      title: 'Game Engine (Pure TypeScript)',
+      layerColor: PURPLE_LAYER,
+      cardColor: PURPLE_CARD,
+      services: [
+        svc(
+          'Core Engine',
+          HiChip,
+          [
+            'Immutable state: GameState in → new GameState out',
+            'Board config, deck, shuffle, deal',
+            'Game init, round dealing, turn advancement',
+          ],
+          PURPLE_LAYER,
+          PURPLE_CARD
+        ),
+        svc(
+          'Movement & Rules',
+          HiCode,
+          [
+            'Legal move generation for all card types',
+            'Forward/backward destination calc',
+            'Knock-outs, swaps, execute-move',
+            'Win condition & team detection',
+          ],
+          PURPLE_LAYER,
+          PURPLE_CARD
+        ),
+        svc(
+          'Bot AI',
+          HiLightningBolt,
+          [
+            'Move scoring heuristics',
+            'Exit home priority, safe zone logic',
+            'Ace conservation strategy',
+          ],
+          PURPLE_LAYER,
+          PURPLE_CARD
+        ),
+      ],
+    },
+    {
+      title: 'Server (Node.js + Express + Socket.IO)',
+      layerColor: GREEN_LAYER,
+      cardColor: GREEN_CARD,
+      services: [
+        svc(
+          'Auth',
+          HiLockClosed,
+          [
+            'JWT access/refresh tokens',
+            'Bcrypt password hashing',
+            'HTTP & Socket.IO middleware',
+          ],
+          GREEN_LAYER,
+          GREEN_CARD
+        ),
+        svc(
+          'Game Rooms',
+          HiServer,
+          [
+            'Socket.IO room management',
+            'Server-side move validation',
+            'GameState storage & sync',
+            'Turn timer with auto-drop',
+          ],
+          GREEN_LAYER,
+          GREEN_CARD
+        ),
+        svc(
+          'Online Features',
+          HiGlobe,
+          [
+            'Matchmaking & lobby',
+            'ELO rating system',
+            'Spectator mode, replays',
+            'Async (correspondence) games',
+          ],
+          GREEN_LAYER,
+          GREEN_CARD
+        ),
+        svc(
+          'Social & Safety',
+          HiShieldCheck,
+          [
+            'Friends system',
+            'Push notifications (Expo)',
+            'Socket rate limiting',
+            'Game history & stats',
+          ],
+          GREEN_LAYER,
+          GREEN_CARD
+        ),
+      ],
+    },
+    {
+      title: 'Data & Infrastructure',
+      layerColor: ORANGE_LAYER,
+      cardColor: ORANGE_CARD,
+      services: [
+        svc(
+          'PostgreSQL',
+          HiDatabase,
+          ['Users, games, history', 'ELO ratings & stats', '5 SQL migrations'],
+          ORANGE_LAYER,
+          ORANGE_CARD
+        ),
+        svc(
+          'Redis',
+          HiClock,
+          ['Session storage', 'Ephemeral game state', 'Async game timers'],
+          ORANGE_LAYER,
+          ORANGE_CARD
+        ),
+      ],
+    },
+  ],
+  stats: [
+    '2/4/6 Players',
+    'Real-Time Multiplayer',
+    'Async Turn-Based',
+    'Pure TS Engine',
+    '271 Jest Tests',
+    'Bot AI with Heuristics',
+  ],
+};
+
 // ─── Tyler-Grant.com Architecture Data ────────────────────────────────────────
 
 export const portfolioArchitecture: ArchitectureDiagramProps = {
