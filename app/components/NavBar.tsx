@@ -308,16 +308,6 @@ function GuestAuthLinks({ pathname }: { pathname: string }) {
         <AiOutlineLogin className="mr-1" />
         Sign In
       </Link>
-      <Link
-        href={`/register?callbackUrl=${encodeURIComponent(pathname)}`}
-        className={`flex items-center px-2 text-lg transition duration-300 hover:scale-105 ${
-          pathname === '/register'
-            ? 'font-bold text-yellow-300'
-            : 'text-gray-700 hover:text-yellow-300 dark:text-gray-400'
-        }`}
-      >
-        Register
-      </Link>
     </>
   );
 }
@@ -436,17 +426,6 @@ function MobileDrawer({
               >
                 <AiOutlineLogin className="mr-2" />
                 Sign In
-              </Link>
-              <Link
-                onClick={onClose}
-                href={`/register?callbackUrl=${encodeURIComponent(pathname)}`}
-                className={`flex items-center justify-center px-4 text-center text-xl transition duration-300 ${
-                  pathname === '/register'
-                    ? 'font-bold text-yellow-300'
-                    : 'text-gray-900 hover:text-yellow-300 dark:text-gray-200'
-                }`}
-              >
-                Register
               </Link>
             </>
           )}

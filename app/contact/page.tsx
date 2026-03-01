@@ -1,14 +1,11 @@
-import { Metadata } from 'next';
-import { HiOutlineMail } from 'react-icons/hi';
+'use client';
+
+import { motion } from 'framer-motion';
+import { HiOutlineMail, HiOutlineChatAlt2 } from 'react-icons/hi';
 import { BsTelephone, BsLinkedin, BsGithub } from 'react-icons/bs';
 import ContactForm from '@/app/components/ContactForm';
 import PageTransition from '@/app/components/PageTransition';
-
-export const metadata: Metadata = {
-  title: 'Contact',
-  description:
-    'Get in touch with Tyler Grant. Reach out for job opportunities, project collaborations, or just to say hello.',
-};
+import { containerVariants, itemVariants } from '@/app/lib/animations';
 
 export default function ContactPage() {
   const contactMethods = [
@@ -42,17 +39,39 @@ export default function ContactPage() {
   return (
     <PageTransition>
       <main className="flex min-h-screen flex-col items-center px-4 py-12 md:py-20">
-        <div className="w-full max-w-2xl md:max-w-4xl">
-          <h1 className="mb-4 text-center text-4xl font-bold text-gray-900 md:mb-6 md:text-5xl dark:text-gray-200">
-            Get In Touch
-          </h1>
-          <p className="mb-10 text-center text-lg text-gray-700 md:mb-14 md:text-xl dark:text-gray-400">
-            Feel free to reach out! I&apos;m always open to discussing new
-            opportunities, projects, or just having a chat.
-          </p>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="w-full max-w-2xl md:max-w-4xl"
+        >
+          {/* Hero Section */}
+          <motion.div
+            variants={itemVariants}
+            className="relative mb-10 text-center md:mb-14"
+          >
+            {/* Blurred gradient orbs */}
+            <div className="pointer-events-none absolute -top-16 left-1/4 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
+            <div className="pointer-events-none absolute -top-10 right-1/4 h-40 w-40 rounded-full bg-yellow-300/20 blur-3xl" />
+
+            <div className="relative">
+              <h1 className="mb-4 flex items-center justify-center gap-3 text-4xl font-bold text-gray-900 md:mb-6 md:text-5xl dark:text-gray-200">
+                <HiOutlineChatAlt2 className="h-9 w-9 text-purple-500 md:h-11 md:w-11 dark:text-purple-400" />
+                Get In Touch
+              </h1>
+              <div className="mx-auto mb-6 h-1 w-full max-w-xs rounded-full bg-gradient-to-r from-purple-500 to-yellow-300 md:max-w-sm" />
+              <p className="text-lg text-gray-700 md:text-xl dark:text-gray-400">
+                Feel free to reach out! I&apos;m always open to discussing new
+                opportunities, projects, or just having a chat.
+              </p>
+            </div>
+          </motion.div>
 
           {/* Contact Methods */}
-          <div className="mb-8 grid gap-4 sm:grid-cols-2 md:mb-10 md:gap-6">
+          <motion.div
+            variants={itemVariants}
+            className="mb-8 grid gap-4 sm:grid-cols-2 md:mb-10 md:gap-6"
+          >
             {contactMethods.map((method) => (
               <a
                 key={method.label}
@@ -72,13 +91,17 @@ export default function ContactPage() {
                 </div>
               </a>
             ))}
-          </div>
+          </motion.div>
 
           {/* Social Links */}
-          <div className="mb-8 rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:mb-10 md:rounded-3xl md:p-10 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
-            <h2 className="mb-4 text-center text-lg font-semibold text-gray-700 md:mb-6 md:text-xl dark:text-gray-400">
+          <motion.div
+            variants={itemVariants}
+            className="mb-8 rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:mb-10 md:rounded-3xl md:p-10 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
+          >
+            <h2 className="mb-2 text-center text-lg font-semibold text-gray-700 md:text-xl dark:text-gray-400">
               Connect With Me
             </h2>
+            <div className="mx-auto mb-4 h-0.5 w-24 rounded-full bg-gradient-to-r from-purple-500 to-yellow-300 md:mb-6" />
             <div className="flex justify-center gap-4 md:gap-6">
               {socialLinks.map((link) => (
                 <a
@@ -93,11 +116,13 @@ export default function ContactPage() {
                 </a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <ContactForm />
-        </div>
+          <motion.div variants={itemVariants}>
+            <ContactForm />
+          </motion.div>
+        </motion.div>
       </main>
     </PageTransition>
   );

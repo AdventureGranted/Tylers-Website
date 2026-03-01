@@ -2,7 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { HiOutlineFolder } from 'react-icons/hi';
 import PageTransition from '@/app/components/PageTransition';
+import { containerVariants, itemVariants } from '@/app/lib/animations';
 import ArchitectureDiagram, {
   balancelyArchitecture,
   backupArchitecture,
@@ -105,93 +108,116 @@ export default function ProjectsPage() {
 
   return (
     <PageTransition>
-      <main className="flex min-h-screen flex-col items-center px-4 py-12">
-        <h1 className="mb-8 text-4xl font-bold text-gray-900 dark:text-gray-200">
-          Projects
-        </h1>
-        <div className="grid w-full max-w-6xl gap-8 md:grid-cols-2">
-          {projects.map((project, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
-            >
-              <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl border border-gray-300 bg-gray-700 dark:border-gray-700">
-                <Image
-                  src={project.image}
-                  alt={project.title + ' image'}
-                  fill
-                  className={`${
-                    project.image === '/boxie.png'
-                      ? 'object-center'
-                      : 'object-cover'
-                  } transition-transform duration-300 hover:scale-105`}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority={idx === 0}
-                  placeholder="blur"
-                  blurDataURL={blurDataURLs[project.image]}
-                />
-              </div>
-              <h2 className="mb-1 text-2xl font-semibold text-yellow-300">
-                {project.title}
-              </h2>
-              {project.subtitle && (
-                <div className="text-md mb-1 text-gray-700 dark:text-gray-400">
-                  {project.subtitle}
-                </div>
-              )}
-              {project.link && (
-                <Link
-                  href={project.link}
-                  className="text-md mb-1 text-gray-700 dark:text-gray-400"
-                >
-                  {project.link}
-                </Link>
-              )}
-              <div className="mb-3 text-sm text-gray-700 dark:text-gray-400">
-                {project.date}
-              </div>
-              {project.demo && (
-                <Link
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mb-3 inline-flex w-fit items-center gap-2 rounded-lg bg-yellow-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400"
-                >
-                  Live Demo
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
-                </Link>
-              )}
-              <ul className="list-inside list-disc space-y-2 pl-2 text-gray-900 dark:text-gray-200">
-                {project.bullets.map((b, i) => (
-                  <li key={i}>{b}</li>
-                ))}
-              </ul>
-              {project.title === 'Balancely' && (
-                <ArchitectureDiagram {...balancelyArchitecture} />
-              )}
-              {project.title === 'Back Up – Card Board Game' && (
-                <ArchitectureDiagram {...backupArchitecture} />
-              )}
-              {project.title === 'Tyler-Grant.com' && (
-                <ArchitectureDiagram {...portfolioArchitecture} />
-              )}
+      <main className="flex min-h-screen flex-col items-center px-4 py-12 md:py-20">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="w-full max-w-6xl"
+        >
+          {/* Hero Section */}
+          <motion.div
+            variants={itemVariants}
+            className="relative mb-10 text-center md:mb-14"
+          >
+            {/* Blurred gradient orbs */}
+            <div className="pointer-events-none absolute -top-16 left-1/4 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
+            <div className="pointer-events-none absolute -top-10 right-1/4 h-40 w-40 rounded-full bg-yellow-300/20 blur-3xl" />
+
+            <div className="relative">
+              <h1 className="mb-4 flex items-center justify-center gap-3 text-4xl font-bold text-gray-900 md:mb-6 md:text-5xl dark:text-gray-200">
+                <HiOutlineFolder className="h-9 w-9 text-purple-500 md:h-11 md:w-11 dark:text-purple-400" />
+                Projects
+              </h1>
+              <div className="mx-auto mb-6 h-1 w-full max-w-xs rounded-full bg-gradient-to-r from-purple-500 to-yellow-300 md:max-w-sm" />
             </div>
-          ))}
-        </div>
+          </motion.div>
+
+          <div className="grid w-full gap-8 md:grid-cols-2">
+            {projects.map((project, idx) => (
+              <motion.div
+                key={idx}
+                variants={itemVariants}
+                className="flex flex-col rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
+              >
+                <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl border border-gray-300 bg-gray-700 dark:border-gray-700">
+                  <Image
+                    src={project.image}
+                    alt={project.title + ' image'}
+                    fill
+                    className={`${
+                      project.image === '/boxie.png'
+                        ? 'object-center'
+                        : 'object-cover'
+                    } transition-transform duration-300 hover:scale-105`}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={idx === 0}
+                    placeholder="blur"
+                    blurDataURL={blurDataURLs[project.image]}
+                  />
+                </div>
+                <h2 className="mb-1 text-2xl font-semibold text-yellow-300">
+                  {project.title}
+                </h2>
+                {project.subtitle && (
+                  <div className="text-md mb-1 text-gray-700 dark:text-gray-400">
+                    {project.subtitle}
+                  </div>
+                )}
+                {project.link && (
+                  <Link
+                    href={project.link}
+                    className="text-md mb-1 text-gray-700 dark:text-gray-400"
+                  >
+                    {project.link}
+                  </Link>
+                )}
+                <div className="mb-3 text-sm text-gray-700 dark:text-gray-400">
+                  {project.date}
+                </div>
+                {project.demo && (
+                  <Link
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mb-3 inline-flex w-fit items-center gap-2 rounded-lg bg-yellow-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400"
+                  >
+                    Live Demo
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </Link>
+                )}
+                <ul className="list-inside list-disc space-y-2 pl-2 text-gray-900 dark:text-gray-200">
+                  {project.bullets.map((b, i) => (
+                    <li key={i}>{b}</li>
+                  ))}
+                </ul>
+                {project.title === 'Balancely' && (
+                  <ArchitectureDiagram {...balancelyArchitecture} />
+                )}
+                {project.title === 'Back Up – Card Board Game' && (
+                  <ArchitectureDiagram {...backupArchitecture} />
+                )}
+                {project.title === 'Tyler-Grant.com' && (
+                  <ArchitectureDiagram {...portfolioArchitecture} />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </main>
     </PageTransition>
   );
