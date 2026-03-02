@@ -23,14 +23,15 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tyler-grant.com';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Tyler Grant | Software Developer',
+    default: 'Tyler Grant | Software Engineer',
     template: '%s | Tyler Grant',
   },
   description:
-    'A portfolio website showcasing my skills, projects, and experience as a computer scientist. Explore my work in software development, algorithms, and problem-solving, and learn more about my passion for building innovative and efficient solutions.',
+    'A portfolio website showcasing my skills, projects, and experience as a computer scientist. Explore my work in software engeineering, algorithms, and problem-solving, and learn more about my passion for building innovative and efficient solutions.',
   keywords: [
     'Tyler Grant',
     'Software Developer',
+    'Software Engineer',
     'Portfolio',
     'Web Development',
     'Computer Science',
