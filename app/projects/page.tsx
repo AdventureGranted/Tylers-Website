@@ -33,7 +33,7 @@ export default function ProjectsPage() {
       subtitle: 'Personal Finance Management App',
       link: 'https://github.com/AdventureGranted/balancely-web',
       demo: 'https://budget.adventuregranted.com',
-      date: '2025 – Present',
+      date: 'January 2026 – Present',
       image: '/balancely.png',
       bullets: [
         'Built a comprehensive budgeting app with Next.js, React 19, TypeScript, Tailwind CSS, and shadcn/ui',
@@ -49,7 +49,7 @@ export default function ProjectsPage() {
       subtitle: 'Multiplayer Mobile Game',
       link: 'https://github.com/AdventureGranted/backup',
       demo: null,
-      date: '2025 – Present',
+      date: 'January 2026 – Present',
       image: '/backup.png',
       bullets: [
         'Developed a card-driven board game for 2, 4, or 6 players using React Native, Expo, and TypeScript',
@@ -65,7 +65,7 @@ export default function ProjectsPage() {
       subtitle: 'Full-Stack Portfolio & Authentication System',
       link: 'https://github.com/AdventureGranted/Tylers-Website',
       demo: 'http://tyler-grant.com/demo/receipt-parser',
-      date: 'June 2024 – Present',
+      date: 'June 2025 – Present',
       image: '/family.jpeg',
       bullets: [
         'Built a full-stack portfolio using Next.js, TypeScript, Tailwind CSS, and Framer Motion for smooth animations',

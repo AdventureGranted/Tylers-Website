@@ -117,7 +117,23 @@ Tyler's previous full-time role where he:
 
 ## Personal Projects
 
-### Tyler-Grant.com (June 2024 – Present)
+### Balancely (January 2026 – Present)
+- Built a comprehensive budgeting app with Next.js, React 19, TypeScript, Tailwind CSS, and shadcn/ui
+- Tracks transactions, budgets, savings goals, net worth, and recurring expenses with real-time alerts
+- Integrated AI-powered receipt scanning and email receipt import for automatic transaction entry
+- Supports multi-user households with role-based access, activity logs, and spending limits
+- Features dashboard with spending insights, merchant analytics, forecasting, and annual reports using Recharts
+- PostgreSQL database with Prisma ORM, NextAuth.js v5 authentication, and S3-compatible file storage
+
+### Back Up – Card Board Game (January 2026 – Present)
+- Developed a card-driven board game for 2, 4, or 6 players using React Native, Expo, and TypeScript
+- Built real-time multiplayer with Socket.IO and async turn-based mode with push notifications
+- Implemented pure TypeScript game engine with immutable state, legal move validation, and bot AI with difficulty levels
+- Created Node.js backend with Express, PostgreSQL, Redis, JWT auth, and ELO rating system
+- Features spectator mode, replay viewer, friends system, animated pieces, sound effects, and haptic feedback
+- Comprehensive test suite with 271 Jest tests covering game engine and server logic
+
+### Tyler-Grant.com (June 2025 – Present)
 - Built a full-stack portfolio using Next.js, TypeScript, Tailwind CSS, and Framer Motion
 - Implemented user authentication with NextAuth.js including registration, role-based access control, and profile management
 - Integrated self-hosted AI chatbot powered by local LLM to answer visitor questions about Tyler's skills, experience, and projects
