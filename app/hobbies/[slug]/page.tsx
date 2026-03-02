@@ -85,7 +85,11 @@ export default async function HobbyDetailPage({ params }: Props) {
     },
   });
 
-  if (!project || !project.published || project.category !== 'hobby') {
+  if (!project || project.category !== 'hobby') {
+    notFound();
+  }
+
+  if (!project.published && !isAdmin) {
     notFound();
   }
 
