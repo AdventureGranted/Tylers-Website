@@ -23,6 +23,7 @@ import {
 import { GiWoodBeam } from 'react-icons/gi';
 import { IoMdHeart, IoMdChatbubbles } from 'react-icons/io';
 import PageTransition from '@/app/components/PageTransition';
+import HorizontalTimeline from '@/app/components/HorizontalTimeline';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -250,117 +251,100 @@ export default function AboutPage() {
                 My Journey
               </h2>
 
-              <div className="relative">
-                {/* Timeline line */}
-                <div className="absolute top-2 bottom-2 left-4 w-0.5 bg-gradient-to-b from-purple-500 via-yellow-300 to-purple-500 md:left-1/2 md:-translate-x-1/2" />
-
-                {/* Timeline items */}
-                {[
+              <HorizontalTimeline
+                items={[
                   {
                     year: '2019',
                     title: 'Started College',
                     desc: 'Began pursuing Accounting at University of Utah',
-                    side: 'left',
                     color: 'bg-gray-500',
                   },
                   {
                     year: '2020',
                     title: 'The VBA Moment',
                     desc: 'Fell in love with coding during an Excel VBA assignment',
-                    side: 'right',
                     color: 'bg-yellow-500',
                   },
                   {
                     year: '2020',
                     title: 'Switched to CS',
                     desc: 'Made the leap to Computer Science and met my future wife',
-                    side: 'left',
                     color: 'bg-pink-500',
                   },
                   {
                     year: '2021',
                     title: 'Teaching Assistant',
                     desc: 'Started TA role for Data Structures & Algorithms',
-                    side: 'right',
                     color: 'bg-blue-500',
                   },
                   {
                     year: '2021',
                     title: 'First Internship',
                     desc: 'Joined Zions Bank as a Software Engineer Intern',
-                    side: 'left',
                     color: 'bg-green-500',
                   },
                   {
                     year: '2022',
                     title: 'Got Married',
                     desc: 'Married my college sweetheart (also a software engineer!)',
-                    side: 'right',
                     color: 'bg-red-500',
                   },
                   {
                     year: '2022',
                     title: 'Graduated',
                     desc: 'B.S. in Computer Science from University of Utah',
-                    side: 'left',
                     color: 'bg-purple-500',
+                  },
+                  {
+                    year: '2022',
+                    title: 'Boxy – Senior Project',
+                    desc: 'Built a mobile app for tracking bin-stored items with React Native & AWS',
+                    color: 'bg-teal-500',
+                  },
+                  {
+                    year: '2022',
+                    title: 'Self-Hosting Journey',
+                    desc: 'Started building a self-hosted ecosystem with Docker, Plex, Home Assistant, and more',
+                    color: 'bg-orange-500',
                   },
                   {
                     year: '2022',
                     title: 'Sorenson',
                     desc: 'Joined Sorenson Communications as a Software Engineer',
-                    side: 'right',
                     color: 'bg-blue-500',
                   },
                   {
                     year: '2023',
                     title: 'Became a Dad',
                     desc: 'Welcomed our son into the world',
-                    side: 'left',
                     color: 'bg-pink-500',
+                  },
+                  {
+                    year: '2025',
+                    title: 'Tyler-Grant.com',
+                    desc: 'Launched my portfolio website with Next.js, AI chatbot, and receipt parser demo',
+                    color: 'bg-purple-500',
                   },
                   {
                     year: '2025',
                     title: 'Signos',
                     desc: 'Joined Signos to build health-tech solutions',
-                    side: 'right',
                     color: 'bg-yellow-500',
                   },
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    className={`relative mb-8 flex items-center last:mb-0 ${
-                      item.side === 'right' ? 'md:flex-row-reverse' : ''
-                    }`}
-                  >
-                    {/* Dot */}
-                    <div
-                      className={`absolute left-4 z-10 h-4 w-4 rounded-full ${item.color} ring-4 ring-white md:left-1/2 md:-translate-x-1/2 dark:ring-gray-800`}
-                    />
-
-                    {/* Content */}
-                    <div
-                      className={`ml-12 w-full md:ml-0 md:w-[45%] ${
-                        item.side === 'right'
-                          ? 'md:mr-auto md:pr-8 md:text-right'
-                          : 'md:ml-auto md:pl-8'
-                      }`}
-                    >
-                      <span
-                        className={`inline-block rounded-full ${item.color} px-3 py-1 text-xs font-bold text-white`}
-                      >
-                        {item.year}
-                      </span>
-                      <h3 className="mt-2 text-lg font-semibold text-gray-900 dark:text-gray-200">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-gray-700 dark:text-gray-400">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  {
+                    year: '2026',
+                    title: 'Balancely',
+                    desc: 'Built a comprehensive budgeting app with Next.js, AI receipt scanning, and household support',
+                    color: 'bg-green-500',
+                  },
+                  {
+                    year: '2026',
+                    title: 'Back Up',
+                    desc: 'Created a multiplayer card board game with React Native, real-time Socket.IO, and bot AI',
+                    color: 'bg-red-500',
+                  },
+                ]}
+              />
             </div>
           </motion.section>
 
