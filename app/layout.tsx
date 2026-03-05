@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     'A portfolio website showcasing my skills, projects, and experience as a computer scientist. Explore my work in software engeineering, algorithms, and problem-solving, and learn more about my passion for building innovative and efficient solutions.',
   keywords: [
     'Tyler Grant',
-    'Software Developer',
+    'Software Engineer',
     'Software Engineer',
     'Portfolio',
     'Web Development',
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: siteUrl,
     siteName: 'Tyler Grant',
-    title: 'Tyler Grant | Software Developer',
+    title: 'Tyler Grant | Software Engineer',
     description:
       'A portfolio showcasing skills, projects, and experience in software development.',
     images: [
@@ -57,13 +57,13 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Tyler Grant - Software Developer',
+        alt: 'Tyler Grant - Software Engineer',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tyler Grant | Software Developer',
+    title: 'Tyler Grant | Software Engineer',
     description:
       'A portfolio showcasing skills, projects, and experience in software development.',
     images: ['/og-image.png'],
@@ -98,9 +98,9 @@ const jsonLd = {
   '@type': 'Person',
   name: 'Tyler Grant',
   url: siteUrl,
-  jobTitle: 'Software Developer',
+  jobTitle: 'Software Engineer',
   description:
-    'A software developer passionate about building innovative and efficient solutions.',
+    'A software engineer passionate about building innovative and efficient solutions.',
   email: 'recruit.tyler.grant@gmail.com',
   sameAs: [
     'https://github.com/tylerbb812',
