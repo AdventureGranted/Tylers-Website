@@ -95,6 +95,7 @@ export async function POST(request: NextRequest) {
             lastActiveAt: new Date(),
             messages: {
               create: {
+                role: 'user',
                 content: latestUserMessage.content,
               },
             },
@@ -154,6 +155,32 @@ export async function POST(request: NextRequest) {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
 
+    let fullAssistantResponse = '';
+    let responseSaved = false;
+
+    const saveAssistantResponse = () => {
+      if (sessionId && fullAssistantResponse && !responseSaved) {
+        responseSaved = true;
+        prisma.chatSession
+          .update({
+            where: { id: sessionId },
+            data: {
+              messageCount: { increment: 1 },
+              lastActiveAt: new Date(),
+              messages: {
+                create: {
+                  role: 'assistant',
+                  content: fullAssistantResponse,
+                },
+              },
+            },
+          })
+          .catch((err) =>
+            console.error('Failed to save assistant response:', err)
+          );
+      }
+    };
+
     const stream = new ReadableStream({
       async start(controller) {
         const reader = response.body?.getReader();
@@ -174,6 +201,7 @@ export async function POST(request: NextRequest) {
               if (line.startsWith('data: ')) {
                 const data = line.slice(6);
                 if (data === '[DONE]') {
+                  saveAssistantResponse();
                   controller.close();
                   return;
                 }
@@ -181,6 +209,7 @@ export async function POST(request: NextRequest) {
                   const json = JSON.parse(data);
                   const content = json.choices?.[0]?.delta?.content;
                   if (content) {
+                    fullAssistantResponse += content;
                     controller.enqueue(encoder.encode(content));
                   }
                 } catch {
@@ -192,6 +221,7 @@ export async function POST(request: NextRequest) {
         } catch (error) {
           console.error('Stream error:', error);
         } finally {
+          saveAssistantResponse();
           controller.close();
         }
       },

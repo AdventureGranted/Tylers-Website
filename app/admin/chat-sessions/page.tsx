@@ -15,6 +15,7 @@ import { IoChatbubblesOutline } from 'react-icons/io5';
 
 interface ChatMessage {
   id: string;
+  role: string;
   content: string;
   createdAt: string;
 }
@@ -217,11 +218,11 @@ export default function AdminChatSessionsPage() {
                       >
                         {isExpanded ? (
                           <>
-                            Hide questions <HiChevronUp />
+                            Hide conversation <HiChevronUp />
                           </>
                         ) : (
                           <>
-                            View questions ({chatSession.messages.length}){' '}
+                            View conversation ({chatSession.messages.length}){' '}
                             <HiChevronDown />
                           </>
                         )}
@@ -233,21 +234,38 @@ export default function AdminChatSessionsPage() {
                       {chatSession.messages.map((message) => (
                         <div
                           key={message.id}
-                          className="rounded-lg bg-white p-3 dark:bg-gray-700"
+                          className={`rounded-lg p-3 ${
+                            message.role === 'assistant'
+                              ? 'ml-4 border border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700/50'
+                              : 'bg-white dark:bg-gray-700'
+                          }`}
                         >
-                          <p className="text-sm text-gray-700 dark:text-gray-400">
+                          <div className="mb-1 flex items-center gap-2">
+                            <span
+                              className={`text-xs font-medium ${
+                                message.role === 'assistant'
+                                  ? 'text-yellow-500 dark:text-yellow-300'
+                                  : 'text-blue-500 dark:text-blue-400'
+                              }`}
+                            >
+                              {message.role === 'assistant'
+                                ? 'AI Assistant'
+                                : chatSession.visitorName}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              {new Date(message.createdAt).toLocaleDateString(
+                                'en-US',
+                                {
+                                  month: 'short',
+                                  day: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit',
+                                }
+                              )}
+                            </span>
+                          </div>
+                          <p className="text-sm whitespace-pre-wrap text-gray-700 dark:text-gray-400">
                             {message.content}
-                          </p>
-                          <p className="mt-1 text-xs text-gray-500">
-                            {new Date(message.createdAt).toLocaleDateString(
-                              'en-US',
-                              {
-                                month: 'short',
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                              }
-                            )}
                           </p>
                         </div>
                       ))}

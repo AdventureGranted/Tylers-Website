@@ -24,6 +24,7 @@ export async function GET() {
           orderBy: { createdAt: 'asc' },
           select: {
             id: true,
+            role: true,
             content: true,
             createdAt: true,
           },
