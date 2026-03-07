@@ -448,7 +448,7 @@ function Navbar() {
     { href: '/about', label: 'About', icon: <HiOutlineUser /> },
     { href: '/projects', label: 'Projects', icon: <HiOutlineLightBulb /> },
     { href: '/hobbies', label: 'Hobbies', icon: <IoColorPaletteOutline /> },
-    { href: '/demo/receipt-parser', label: 'Demos', icon: <HiOutlineBeaker /> },
+    { href: '/demo', label: 'Demos', icon: <HiOutlineBeaker /> },
     { href: '/contact', label: 'Contact', icon: <IoIosContact /> },
   ];
 

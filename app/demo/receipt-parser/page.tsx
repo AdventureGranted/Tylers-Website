@@ -447,9 +447,11 @@ export default function ReceiptParserDemo() {
               Receipt Parser
             </h1>
             <p className="mx-auto max-w-2xl text-gray-700 dark:text-gray-400">
-              Upload a receipt image and watch AI extract vendor info, line
-              items, totals, and automatically categorize expenses into tools vs
-              materials.
+              Built for home improvement and woodworking projects. Upload a
+              receipt and AI extracts line items, categorizing them into
+              materials, tools, and misc — so you know exactly how much that
+              bookshelf build cost in lumber vs tools. Track spending across
+              hobby projects and keep a running tally of your costs.
             </p>
           </motion.div>
 
