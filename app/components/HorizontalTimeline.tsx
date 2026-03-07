@@ -5,6 +5,7 @@ import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
 interface TimelineItem {
   year: string;
+  month?: string;
   title: string;
   desc: string;
   color: string;
@@ -169,16 +170,21 @@ export default function HorizontalTimeline({ items }: HorizontalTimelineProps) {
                   />
                 </div>
 
-                {/* Year label */}
-                <span
-                  className={`absolute text-[10px] font-bold ${
-                    i % 2 === 0
-                      ? 'top-full mt-0.5 text-gray-500 dark:text-gray-400'
-                      : 'bottom-full mb-0.5 text-gray-500 dark:text-gray-400'
+                {/* Date label */}
+                <div
+                  className={`absolute flex flex-col items-center ${
+                    i % 2 === 0 ? 'top-full mt-0.5' : 'bottom-full mb-0.5'
                   }`}
                 >
-                  {item.year}
-                </span>
+                  {item.month && (
+                    <span className="text-[9px] font-medium text-gray-400 dark:text-gray-500">
+                      {item.month}
+                    </span>
+                  )}
+                  <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">
+                    {item.year}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
