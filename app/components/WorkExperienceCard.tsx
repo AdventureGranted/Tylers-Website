@@ -238,11 +238,11 @@ export default function WorkExperienceCard() {
                         {exp.role}
                       </p>
                     </div>
-                    <div className="text-right">
-                      <span className="text-sm text-gray-700 dark:text-gray-400">
+                    <div className="flex flex-wrap items-center gap-2 lg:flex-nowrap lg:justify-end">
+                      <span className="text-sm whitespace-nowrap text-gray-700 dark:text-gray-400">
                         {exp.date}
                       </span>
-                      <span className="ml-2 rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-medium text-purple-400">
+                      <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-purple-400">
                         {calculateDuration(exp.startDate, exp.endDate)}
                       </span>
                     </div>
