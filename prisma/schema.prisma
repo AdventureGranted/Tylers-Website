@@ -217,3 +217,107 @@ model ChatMessage {
 
   @@index([sessionId])
 }
+
+// Job Application Tracker
+enum JobStatus {
+  APPLIED
+  PHONE_SCREEN
+  ONLINE_ASSESSMENT
+  BEHAVIORAL_INTERVIEW
+  TECHNICAL_INTERVIEW
+  ONSITE
+  OFFER
+  NEGOTIATING
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum JobSource {
+  LINKEDIN
+  COMPANY_SITE
+  REFERRAL
+  INDEED
+  RECRUITER_OUTREACH
+  OTHER
+}
+
+enum LocationType {
+  REMOTE
+  HYBRID
+  ONSITE
+}
+
+enum InterviewType {
+  PHONE_SCREEN
+  ONLINE_ASSESSMENT
+  BEHAVIORAL
+  TECHNICAL
+  ONSITE
+  OTHER
+}
+
+model JobApplication {
+  id              String       @id @default(cuid())
+  company         String
+  position        String
+  status          JobStatus    @default(APPLIED)
+  applicationDate DateTime
+  postingUrl      String?
+  salaryMin       Int?
+  salaryMax       Int?
+  salaryNotes     String?
+  location        String?
+  locationType    LocationType?
+  source          JobSource    @default(LINKEDIN)
+  sourceDetail    String?
+  resumeVersion   String?
+  coverLetterUrl  String?
+  customResumeUrl String?
+  notes           String?
+  followUpDate    DateTime?
+  followUpNotes   String?
+  interviews      Interview[]
+  contacts        JobContact[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([status])
+  @@index([applicationDate])
+  @@index([followUpDate])
+}
+
+model Interview {
+  id                   String         @id @default(cuid())
+  jobApplicationId     String
+  jobApplication       JobApplication @relation(fields: [jobApplicationId], references: [id], onDelete: Cascade)
+  type                 InterviewType  @default(OTHER)
+  scheduledDate        DateTime
+  interviewerNames     String?
+  prepNotes            String?
+  questionsAsked       String?
+  yourAnswers          String?
+  debriefNotes         String?
+  rating               Int?
+  followUpSentAt       DateTime?
+  expectedResponseDate DateTime?
+  responseReceivedAt   DateTime?
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  @@index([jobApplicationId])
+}
+
+model JobContact {
+  id               String         @id @default(cuid())
+  jobApplicationId String
+  jobApplication   JobApplication @relation(fields: [jobApplicationId], references: [id], onDelete: Cascade)
+  name             String
+  title            String?
+  email            String?
+  phone            String?
+  notes            String?
+  createdAt        DateTime       @default(now())
+
+  @@index([jobApplicationId])
+}

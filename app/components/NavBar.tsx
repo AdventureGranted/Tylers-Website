@@ -16,6 +16,7 @@ import {
   HiOutlineMail,
   HiOutlineBeaker,
   HiOutlineUser,
+  HiOutlineBriefcase,
 } from 'react-icons/hi';
 import { UNREAD_COUNT_CHANGED } from '@/app/lib/events';
 import Link from 'next/link';
@@ -267,6 +268,14 @@ function UserDropdown({
                 <UnreadBadge count={unreadCount} className="px-2 py-0.5" />
               </Link>
               <Link
+                href="/admin/jobs"
+                onClick={onClose}
+                className="flex items-center px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 hover:text-yellow-300 dark:text-gray-200 dark:hover:bg-gray-600"
+              >
+                <HiOutlineBriefcase className="mr-2" />
+                Jobs
+              </Link>
+              <Link
                 href="/admin"
                 onClick={onClose}
                 className="flex items-center px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 hover:text-yellow-300 dark:text-gray-200 dark:hover:bg-gray-600"
@@ -391,6 +400,14 @@ function MobileDrawer({
                       count={unreadCount}
                       className="ml-2 px-2 py-0.5"
                     />
+                  </Link>
+                  <Link
+                    onClick={onClose}
+                    href="/admin/jobs"
+                    className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 hover:text-yellow-300 dark:text-gray-200"
+                  >
+                    <HiOutlineBriefcase className="mr-2" />
+                    Jobs
                   </Link>
                   <Link
                     onClick={onClose}
