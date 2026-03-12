@@ -36,6 +36,7 @@ export default function ProjectsPage() {
       date: 'January 2026 – Present',
       image: '/balancely.png',
       bullets: [
+        'Born from a passion for personal finance developed over nearly 4 years in consumer lending at EnerBank USA',
         'Built a comprehensive budgeting app with Next.js, React 19, TypeScript, Tailwind CSS, and shadcn/ui',
         'Tracks transactions, budgets, savings goals, net worth, and recurring expenses with real-time alerts',
         'Integrated AI-powered receipt scanning and email receipt import for automatic transaction entry',

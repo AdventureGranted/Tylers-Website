@@ -21,6 +21,7 @@ interface Experience {
   logoAlt: string;
   bullets: string[];
   skills: string[];
+  category?: 'engineering' | 'prior';
 }
 
 function calculateDuration(start: Date, end: Date | null): string {
@@ -38,7 +39,7 @@ function calculateDuration(start: Date, end: Date | null): string {
 
 function calculateTotalExperience(): string {
   const now = new Date();
-  const start = new Date('2021-10-01'); // First job
+  const start = new Date('2021-10-01'); // First software engineering role
   const months =
     (now.getFullYear() - start.getFullYear()) * 12 +
     (now.getMonth() - start.getMonth());
@@ -135,11 +136,50 @@ const experiences: Experience[] = [
       'Automated redaction of PII from financial documents, saving manual processing time and increasing compliance',
     ],
   },
+  {
+    company: 'EnerBank USA',
+    role: 'Senior Lender Support Specialist',
+    date: 'June 2020 - August 2022',
+    startDate: new Date('2020-06-01'),
+    endDate: new Date('2022-08-01'),
+    logo: '/enerbank.png',
+    logoAlt: 'EnerBank USA Logo',
+    category: 'prior',
+    skills: ['Loan Processing', 'Compliance', 'Training', 'Communication'],
+    bullets: [
+      'Answered complex inquiries about loan applications and verification documents to assist customers and support internal lenders',
+      'Provided training for new lenders on application workflows, documentation standards, and internal tools',
+      'Processed complex verification paperwork by following advanced procedures with a focus on accuracy and compliance',
+      'De-escalated challenging customer interactions with empathy and professionalism, ensuring a high standard of service',
+    ],
+  },
+  {
+    company: 'EnerBank USA',
+    role: 'Inbound Customer Service Representative',
+    date: 'December 2018 - June 2020',
+    startDate: new Date('2018-12-01'),
+    endDate: new Date('2020-06-01'),
+    logo: '/enerbank.png',
+    logoAlt: 'EnerBank USA Logo',
+    category: 'prior',
+    skills: ['Loan Processing', 'Compliance', 'Customer Service', 'Training'],
+    bullets: [
+      'Processed and managed customer and contractor loan applications with strict adherence to bank procedures and compliance standards',
+      'Trained and mentored several new employees to accelerate onboarding and maintain team performance',
+      'Achieved and maintained a >90% accuracy rate over several consecutive months',
+    ],
+  },
 ];
 
-// Calculate unique technologies count
-const uniqueTechnologies = [...new Set(experiences.flatMap((e) => e.skills))]
-  .length;
+const engineeringExperiences = experiences.filter(
+  (e) => e.category !== 'prior'
+);
+const priorExperiences = experiences.filter((e) => e.category === 'prior');
+
+// Calculate unique technologies count (engineering roles only)
+const uniqueTechnologies = [
+  ...new Set(engineeringExperiences.flatMap((e) => e.skills)),
+].length;
 
 // Use stagger 0.2 for work experience
 const workContainerVariants = {
@@ -172,7 +212,7 @@ export default function WorkExperienceCard() {
           <div className="mb-1 flex items-center justify-center gap-2">
             <HiOutlineBriefcase className="h-5 w-5 text-teal-600 dark:text-yellow-300" />
             <span className="text-2xl font-bold text-yellow-500 sm:text-3xl dark:text-yellow-300">
-              {experiences.length}
+              {engineeringExperiences.length}
             </span>
           </div>
           <p className="text-xs text-gray-500 sm:text-sm">Companies</p>
@@ -197,14 +237,14 @@ export default function WorkExperienceCard() {
         </div>
       </motion.div>
 
-      {/* Timeline */}
+      {/* Engineering Timeline */}
       <div className="relative">
         {/* Timeline line */}
         <div className="absolute top-0 left-8 hidden h-full w-0.5 bg-gradient-to-b from-purple-500 via-yellow-300 to-purple-500 md:block" />
 
-        {experiences.map((exp) => (
+        {engineeringExperiences.map((exp) => (
           <motion.div
-            key={exp.company}
+            key={`${exp.company}-${exp.role}`}
             variants={slideInLeft}
             className="group relative mb-8 last:mb-0"
           >
@@ -265,6 +305,81 @@ export default function WorkExperienceCard() {
           </motion.div>
         ))}
       </div>
+
+      {/* Prior Experience */}
+      {priorExperiences.length > 0 && (
+        <>
+          <motion.div variants={slideInLeft} className="mt-12 mb-6">
+            <h3 className="text-lg font-semibold text-gray-500 dark:text-gray-400">
+              Prior Experience
+            </h3>
+            <div className="mt-2 h-px bg-gray-300 dark:bg-gray-700" />
+          </motion.div>
+
+          <div className="relative">
+            <div className="absolute top-0 left-8 hidden h-full w-0.5 bg-gradient-to-b from-gray-500 via-gray-400 to-gray-500 md:block" />
+
+            {priorExperiences.map((exp) => (
+              <motion.div
+                key={`${exp.company}-${exp.role}`}
+                variants={slideInLeft}
+                className="group relative mb-8 last:mb-0"
+              >
+                <div className="absolute top-8 left-6 hidden h-5 w-5 rounded-full border-4 border-gray-100 bg-gray-400 transition-all duration-300 group-hover:scale-125 group-hover:bg-gray-500 md:block dark:border-gray-900" />
+
+                <Card className="transition-all duration-300 hover:opacity-90 md:ml-16">
+                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
+                    <div className="flex-shrink-0 self-center lg:self-start">
+                      <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl bg-white p-2">
+                        <Image
+                          src={exp.logo}
+                          alt={exp.logoAlt}
+                          width={64}
+                          height={64}
+                          className="h-auto max-h-16 w-auto object-contain"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex-grow">
+                      <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between">
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900 dark:text-gray-200">
+                            {exp.company}
+                          </h3>
+                          <p className="text-teal-600 dark:text-yellow-300">
+                            {exp.role}
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2 lg:flex-nowrap lg:justify-end">
+                          <span className="text-sm whitespace-nowrap text-gray-700 dark:text-gray-400">
+                            {exp.date}
+                          </span>
+                          <span className="rounded-full bg-gray-500/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-gray-400">
+                            {calculateDuration(exp.startDate, exp.endDate)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <ul className="mt-4 space-y-2">
+                        {exp.bullets.map((bullet, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-2 text-gray-700 dark:text-gray-400"
+                          >
+                            <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gray-400" />
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </>
+      )}
     </motion.div>
   );
 }
