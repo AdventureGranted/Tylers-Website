@@ -457,6 +457,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { data: session, status } = useSession();
 
@@ -474,6 +475,7 @@ function Navbar() {
   const unreadCount = useUnreadCount(session?.user?.role === 'admin');
 
   useClickOutside(userMenuRef, () => setUserMenuOpen(false));
+  useClickOutside(mobileMenuRef, () => setIsOpen(false));
 
   return (
     <nav
@@ -521,7 +523,7 @@ function Navbar() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="relative ml-auto xl:hidden">
+        <div className="relative ml-auto xl:hidden" ref={mobileMenuRef}>
           <button
             className="relative px-4 text-2xl text-gray-900 dark:text-gray-200"
             onClick={() => setIsOpen(!isOpen)}
