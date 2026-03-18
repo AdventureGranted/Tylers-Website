@@ -87,7 +87,7 @@ const experiences: Experience[] = [
     logoAlt: 'Sorenson Communications Logo',
     skills: ['React', 'Node.js', 'AWS Lambda', 'DynamoDB', 'TypeScript'],
     bullets: [
-      'Designed and deployed a full-stack, real-time ASL interpretation platform using React, Node.js, AWS (Lambda, DynamoDB), and Netlify',
+      'Architected and built a real-time ASL interpretation platform from the ground up using React, Node.js, and AWS (Lambda, DynamoDB), from initial planning through production deployment',
       'Enabled in-store QR-based access to interpreters for deaf and hard-of-hearing users, enhancing accessibility in retail environments',
       'Implemented dynamic geofencing and automated billing logic to support location-aware access and accurate usage tracking',
       'Built an SSO-enabled bypass flow to extend service access outside geofenced areas as an enterprise accessibility benefit',
