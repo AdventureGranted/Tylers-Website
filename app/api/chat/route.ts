@@ -22,6 +22,32 @@ function sanitizeUserName(name: string): string {
     .slice(0, MAX_USERNAME_LENGTH);
 }
 
+// Detect prompt injection patterns in user input
+const INJECTION_PATTERNS = [
+  /ignore\s+(all\s+)?(previous|prior|above|earlier)\s+(instructions?|prompts?|rules?)/i,
+  /disregard\s+(all\s+)?(previous|prior|above|earlier)\s+(instructions?|prompts?|rules?)/i,
+  /forget\s+(all\s+)?(previous|prior|above|earlier)\s+(instructions?|prompts?|rules?)/i,
+  /override\s+(all\s+)?(previous|prior|above|earlier)\s+(instructions?|prompts?|rules?)/i,
+  /you\s+are\s+now\s+(a|an|my)\s+/i,
+  /new\s+instructions?:/i,
+  /system\s*prompt/i,
+  /\bact\s+as\s+(a|an|if)\b/i,
+  /\bpretend\s+(to\s+be|you'?re?)\b/i,
+  /\brole\s*play\s+as\b/i,
+  /\byou\s+must\s+now\b/i,
+  /\bdo\s+not\s+follow\b.*\binstructions?\b/i,
+  /\bsystem:\s/i,
+  /\bassistant:\s/i,
+  /\b(before|first)\s+(you\s+)?(do|answer)\s+that\b/i,
+];
+
+function detectInjection(content: string): boolean {
+  return INJECTION_PATTERNS.some((pattern) => pattern.test(content));
+}
+
+const INJECTION_RESPONSE =
+  "I'm here to answer questions about Tyler's skills, experience, projects, and hobbies. Could you ask me something about those topics instead?";
+
 // Only allow user and assistant roles from client — never system
 function sanitizeMessages(messages: ChatMessage[]): ChatMessage[] {
   return messages
@@ -110,6 +136,40 @@ export async function POST(request: NextRequest) {
     const latestUserMessage = sanitizedMessages
       .filter((m: ChatMessage) => m.role === 'user')
       .pop();
+
+    // Check for prompt injection in the latest user message
+    if (latestUserMessage && detectInjection(latestUserMessage.content)) {
+      // Still save the attempt for admin review, but don't send to AI
+      if (sessionId) {
+        prisma.chatSession
+          .update({
+            where: { id: sessionId },
+            data: {
+              messageCount: { increment: 2 },
+              lastActiveAt: new Date(),
+              messages: {
+                createMany: {
+                  data: [
+                    { role: 'user', content: latestUserMessage.content },
+                    { role: 'assistant', content: INJECTION_RESPONSE },
+                  ],
+                },
+              },
+            },
+          })
+          .catch((err) =>
+            console.error('Failed to save injection attempt:', err)
+          );
+      }
+
+      // Return canned response without calling the AI
+      return new Response(INJECTION_RESPONSE, {
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Cache-Control': 'no-cache',
+        },
+      });
+    }
 
     // Update session message count and save the user's question
     if (sessionId && latestUserMessage) {
