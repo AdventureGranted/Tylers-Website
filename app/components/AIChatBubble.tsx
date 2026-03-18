@@ -411,14 +411,14 @@ export default function AIChatBubble() {
 
         {/* Messages */}
         {canChat && (
-          <div className="flex-1 space-y-3 overflow-y-auto p-4">
+          <div className="flex-1 space-y-3 overflow-x-hidden overflow-y-auto p-4">
             {messages.map((message, index) => (
               <div
                 key={index}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-2 ${
+                  className={`max-w-[85%] overflow-hidden rounded-2xl px-4 py-2 ${
                     message.role === 'user'
                       ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
                       : 'bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-200'
@@ -429,7 +429,7 @@ export default function AIChatBubble() {
                       {message.content}
                     </p>
                   ) : (
-                    <div className="prose prose-sm dark:prose-invert max-w-none text-sm [&_a]:text-yellow-500 [&_a]:underline dark:[&_a]:text-yellow-300 [&_a:hover]:text-yellow-600 dark:[&_a:hover]:text-yellow-400 [&_strong]:text-yellow-500 dark:[&_strong]:text-yellow-300 [&>li]:mb-1 [&>ol]:mb-2 [&>ol]:list-decimal [&>ol]:pl-4 [&>p]:mb-2 [&>p:last-child]:mb-0 [&>ul]:mb-2 [&>ul]:list-disc [&>ul]:pl-4">
+                    <div className="prose prose-sm dark:prose-invert max-w-none text-sm break-words [&_a]:text-yellow-500 [&_a]:underline dark:[&_a]:text-yellow-300 [&_a:hover]:text-yellow-600 dark:[&_a:hover]:text-yellow-400 [&_code]:break-all [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_strong]:text-yellow-500 dark:[&_strong]:text-yellow-300 [&>li]:mb-1 [&>ol]:mb-2 [&>ol]:list-decimal [&>ol]:pl-4 [&>p]:mb-2 [&>p:last-child]:mb-0 [&>ul]:mb-2 [&>ul]:list-disc [&>ul]:pl-4">
                       <ReactMarkdown>{message.content}</ReactMarkdown>
                     </div>
                   )}
