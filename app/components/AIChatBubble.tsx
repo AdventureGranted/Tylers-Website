@@ -24,6 +24,7 @@ interface VisitorInfo {
 const STORAGE_KEY = 'ai-chat-history';
 const CHAT_OPEN_KEY = 'ai-chat-open';
 const VISITOR_KEY = 'ai-chat-visitor';
+const MAX_CONTEXT_MESSAGES = 20; // Only send last N messages to the AI
 
 export default function AIChatBubble() {
   const { data: session, status } = useSession();
@@ -212,13 +213,17 @@ export default function AIChatBubble() {
     setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
 
     try {
+      // Only send the last N messages as context to avoid overloading the model
+      const allMessages = [...messages, { role: 'user', content: userMessage }];
+      const contextMessages = allMessages
+        .slice(-MAX_CONTEXT_MESSAGES)
+        .map((m) => ({ role: m.role, content: m.content }));
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: [...messages, { role: 'user', content: userMessage }].map(
-            (m) => ({ role: m.role, content: m.content })
-          ),
+          messages: contextMessages,
           userName,
           sessionId: currentSessionId,
         }),
@@ -289,6 +294,12 @@ export default function AIChatBubble() {
     setMessages([{ role: 'assistant', content: AI_WELCOME_MESSAGE }]);
     localStorage.removeItem(STORAGE_KEY);
     setSessionId(null);
+    // Also clear visitor info so guests can re-identify or start fresh
+    if (!isLoggedIn) {
+      setVisitorInfo(null);
+      setVisitorForm({ name: '', email: '' });
+      localStorage.removeItem(VISITOR_KEY);
+    }
   };
 
   // Mobile-specific styles when keyboard is visible

@@ -6,9 +6,31 @@ const OPENWEBUI_URL = process.env.OPENWEBUI_URL || 'http://192.168.1.203:8080';
 const OPENWEBUI_API_KEY = process.env.OPENWEBUI_API_KEY || '';
 const AI_MODEL = process.env.AI_MODEL || 'qwen2.5:14b';
 
+const MAX_MESSAGE_LENGTH = 2000;
+const MAX_MESSAGES = 20;
+const MAX_USERNAME_LENGTH = 50;
+
 interface ChatMessage {
   role: 'user' | 'assistant' | 'system';
   content: string;
+}
+
+// Strip anything that isn't alphanumeric, spaces, hyphens, or basic punctuation
+function sanitizeUserName(name: string): string {
+  return name
+    .replace(/[^\p{L}\p{N}\s\-'.]/gu, '')
+    .slice(0, MAX_USERNAME_LENGTH);
+}
+
+// Only allow user and assistant roles from client — never system
+function sanitizeMessages(messages: ChatMessage[]): ChatMessage[] {
+  return messages
+    .filter((m) => m.role === 'user' || m.role === 'assistant')
+    .slice(-MAX_MESSAGES)
+    .map((m) => ({
+      ...m,
+      content: m.content.slice(0, MAX_MESSAGE_LENGTH),
+    }));
 }
 
 // Fetch hobby projects from database and format for AI context
@@ -80,8 +102,12 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Sanitize inputs — strip system roles, enforce length limits
+    const sanitizedMessages = sanitizeMessages(messages);
+    const sanitizedUserName = userName ? sanitizeUserName(userName) : '';
+
     // Get the latest user message to save
-    const latestUserMessage = messages
+    const latestUserMessage = sanitizedMessages
       .filter((m: ChatMessage) => m.role === 'user')
       .pop();
 
@@ -108,17 +134,18 @@ export async function POST(request: NextRequest) {
     const hobbiesContext = await getHobbiesContext();
 
     // Build user context if we have a name
-    const userContext = userName
-      ? `\n\n## Current Visitor\nYou are chatting with ${userName}. Address them by name when appropriate to make the conversation personal.`
+    const userContext = sanitizedUserName
+      ? `\n\n## Current Visitor\nYou are chatting with ${sanitizedUserName}. Address them by name when appropriate to make the conversation personal.`
       : '';
 
     // Build the full message history with system prompt + dynamic hobbies + user context
+    // Only the server adds the system message — client messages are restricted to user/assistant roles
     const fullMessages: ChatMessage[] = [
       {
         role: 'system',
         content: AI_SYSTEM_PROMPT + hobbiesContext + userContext,
       },
-      ...messages,
+      ...sanitizedMessages,
     ];
 
     // Call OpenWebUI API (OpenAI-compatible endpoint)
