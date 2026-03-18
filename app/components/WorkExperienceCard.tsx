@@ -74,6 +74,7 @@ const experiences: Experience[] = [
       'Architected server-side feature flags and A/B testing with PostHog to optimize landing pages, pricing, and navigation conversion',
       'Contributed to a large-scale Python/FastAPI backend for a metabolic health platform, building Shopify webhooks, subscription billing integrations, and async pipelines processing ~250 glucose readings per user daily',
       'Developed CMS-driven landing pages with Payload CMS and a dual partner/consumer dashboard supporting subscriptions, health analytics, and 14+ locales',
+      'Diagnosed and resolved AWS routing misconfiguration in the admin panel, reducing API response times by 2-3x for customer service operations while maintaining VPN-gated access for security',
     ],
   },
   {
