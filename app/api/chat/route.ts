@@ -4,7 +4,7 @@ import { AI_SYSTEM_PROMPT } from '@/app/lib/ai-context';
 
 const OPENWEBUI_URL = process.env.OPENWEBUI_URL || 'http://192.168.1.203:8080';
 const OPENWEBUI_API_KEY = process.env.OPENWEBUI_API_KEY || '';
-const AI_MODEL = process.env.AI_MODEL || 'qwen2.5:14b';
+const AI_MODEL = process.env.AI_MODEL || 'qwen2.5:32b';
 
 const MAX_MESSAGE_LENGTH = 2000;
 const MAX_MESSAGES = 20;
