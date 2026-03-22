@@ -48,6 +48,9 @@ function detectInjection(content: string): boolean {
 const INJECTION_RESPONSE =
   "I'm here to answer questions about Tyler's skills, experience, projects, and hobbies. Could you ask me something about those topics instead?";
 
+const CODE_BLOCK_REDIRECT =
+  "\n\nI'm not able to provide code examples — I'm only here to answer questions about Tyler! What would you like to know about his experience or projects?";
+
 // Only allow user and assistant roles from client — never system
 function sanitizeMessages(messages: ChatMessage[]): ChatMessage[] {
   return messages
@@ -244,6 +247,7 @@ export async function POST(request: NextRequest) {
 
     let fullAssistantResponse = '';
     let responseSaved = false;
+    let codeBlockDetected = false;
 
     const saveAssistantResponse = () => {
       if (sessionId && fullAssistantResponse && !responseSaved) {
@@ -297,6 +301,24 @@ export async function POST(request: NextRequest) {
                   const content = json.choices?.[0]?.delta?.content;
                   if (content) {
                     fullAssistantResponse += content;
+
+                    // If we already cut off, skip remaining chunks
+                    if (codeBlockDetected) continue;
+
+                    // Detect code fences in the accumulated response
+                    if (fullAssistantResponse.includes('```')) {
+                      codeBlockDetected = true;
+                      // Strip everything from the code fence onward
+                      const beforeCode = fullAssistantResponse
+                        .split('```')[0]
+                        .trimEnd();
+                      // Re-send just the clean part + redirect message
+                      // (controller already has prior chunks, so send the redirect)
+                      controller.enqueue(encoder.encode(CODE_BLOCK_REDIRECT));
+                      fullAssistantResponse = beforeCode + CODE_BLOCK_REDIRECT;
+                      continue;
+                    }
+
                     controller.enqueue(encoder.encode(content));
                   }
                 } catch {
