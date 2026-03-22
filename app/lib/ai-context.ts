@@ -78,7 +78,7 @@ The best part for Tyler is that everything is completely free and self-hosted—
 
 ## Work Experience
 
-### Signos - Software Engineer (July 2025 - February 2026)
+### Signos - Software Engineer (July 2025 - March 2026)
 Tyler's role at a health-tech company:
 - Develops and maintains backend services in Python powering the Signos iOS and Android mobile applications
 - Builds and enhances features for signos.com using React and TypeScript, delivering a seamless user experience

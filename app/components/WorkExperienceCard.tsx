@@ -51,9 +51,9 @@ const experiences: Experience[] = [
   {
     company: 'Signos',
     role: 'Software Engineer',
-    date: 'July 2025 - February 2026',
+    date: 'July 2025 - March 2026',
     startDate: new Date('2025-07-01'),
-    endDate: new Date('2026-02-01'),
+    endDate: new Date('2026-03-01'),
     logo: '/signos.webp',
     logoAlt: 'Signos Logo',
     skills: [
