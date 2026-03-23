@@ -54,6 +54,7 @@ export default function ProfileCard() {
             alt="Profile Picture of Tyler"
             fill
             priority
+            sizes="(min-width: 1280px) 200px, 192px"
             placeholder="blur"
             blurDataURL={profileBlurDataURL}
             className="object-cover object-top"

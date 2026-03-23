@@ -25,6 +25,9 @@ import { IoMdHeart, IoMdChatbubbles } from 'react-icons/io';
 import PageTransition from '@/app/components/PageTransition';
 import HorizontalTimeline from '@/app/components/HorizontalTimeline';
 
+const genericBlurDataURL =
+  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQQG/8QAIRAAAgIBBAIDAAAAAAAAAAAAAQIDBAAFBhEHEiExQVFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAMAwEAAhEDEEA/AM9F1fVK+mpBatCOxBFwZ1UlVBJA3/e8h1HW69rUZYrVuWeWNijnJJIPog++8YxUFLYjLduf/9k=';
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -571,6 +574,9 @@ export default function AboutPage() {
                       src="/about/server.jpg"
                       alt="Tyler's self-hosted server, NAS, and networking rack"
                       fill
+                      sizes="(min-width: 640px) 70vw, 100vw"
+                      placeholder="blur"
+                      blurDataURL={genericBlurDataURL}
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -640,6 +646,9 @@ export default function AboutPage() {
                       src="/about/skiing.jpg"
                       alt="Tyler skiing"
                       fill
+                      sizes="(min-width: 640px) 48vw, 100vw"
+                      placeholder="blur"
+                      blurDataURL={genericBlurDataURL}
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -652,6 +661,9 @@ export default function AboutPage() {
                       src="/about/workshop.jpg"
                       alt="Tyler's woodworking workshop"
                       fill
+                      sizes="(min-width: 640px) 48vw, 100vw"
+                      placeholder="blur"
+                      blurDataURL={genericBlurDataURL}
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -676,6 +688,10 @@ export default function AboutPage() {
                       src="/about/family.jpg"
                       alt="Tyler with his family"
                       fill
+                      priority
+                      sizes="(min-width: 640px) 60vw, 100vw"
+                      placeholder="blur"
+                      blurDataURL={genericBlurDataURL}
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -688,6 +704,9 @@ export default function AboutPage() {
                       src="/about/tyler_ashton.jpg"
                       alt="Tyler with his son Ashton"
                       fill
+                      sizes="(min-width: 640px) 35vw, 70vw"
+                      placeholder="blur"
+                      blurDataURL={genericBlurDataURL}
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
