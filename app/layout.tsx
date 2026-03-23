@@ -93,7 +93,7 @@ export const viewport: Viewport = {
 };
 
 // JSON-LD structured data
-const jsonLd = {
+const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Tyler Grant',
@@ -106,6 +106,16 @@ const jsonLd = {
     'https://github.com/tylerbb812',
     'https://www.linkedin.com/in/tyler-james-grant/',
   ],
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Tyler Grant',
+  url: siteUrl,
+  description:
+    'A portfolio showcasing skills, projects, and experience in software development.',
+  author: { '@type': 'Person', name: 'Tyler Grant' },
 };
 
 export default function RootLayout({
@@ -137,7 +147,9 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([personJsonLd, websiteJsonLd]),
+          }}
         />
       </head>
       <body
