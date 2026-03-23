@@ -6,11 +6,12 @@ import { motion } from 'framer-motion';
 import { HiOutlineFolder } from 'react-icons/hi';
 import PageTransition from '@/app/components/PageTransition';
 import { containerVariants, itemVariants } from '@/app/lib/animations';
-import ArchitectureDiagram, {
+import LazyArchitectureDiagram from '@/app/components/LazyArchitectureDiagram';
+import {
   balancelyArchitecture,
   backupArchitecture,
   portfolioArchitecture,
-} from '@/app/components/ArchitectureDiagram';
+} from '@/app/components/architectureDiagramData';
 
 // Pre-generated blur data URLs for project images
 const blurDataURLs: Record<string, string> = {
@@ -208,13 +209,13 @@ export default function ProjectsPage() {
                   ))}
                 </ul>
                 {project.title === 'Balancely' && (
-                  <ArchitectureDiagram {...balancelyArchitecture} />
+                  <LazyArchitectureDiagram {...balancelyArchitecture} />
                 )}
                 {project.title === 'Back Up – Card Board Game' && (
-                  <ArchitectureDiagram {...backupArchitecture} />
+                  <LazyArchitectureDiagram {...backupArchitecture} />
                 )}
                 {project.title === 'Tyler-Grant.com' && (
-                  <ArchitectureDiagram {...portfolioArchitecture} />
+                  <LazyArchitectureDiagram {...portfolioArchitecture} />
                 )}
               </motion.div>
             ))}

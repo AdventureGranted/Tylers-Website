@@ -4,7 +4,7 @@ import './globals.css';
 import Navbar from './components/NavBar';
 import SessionProvider from './components/SessionProvider';
 import AnalyticsTracker from './components/AnalyticsTracker';
-import AIChatBubble from './components/AIChatBubble';
+import LazyAIChatBubble from './components/LazyAIChatBubble';
 import ToastProvider from './components/ToastProvider';
 import ThemeProvider from './components/ThemeProvider';
 
@@ -145,6 +145,7 @@ export default function RootLayout({
             `,
           }}
         />
+        <link rel="preconnect" href="https://cdn.tyler-grant.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -172,7 +173,7 @@ export default function RootLayout({
                   {children}
                 </main>
               </div>
-              <AIChatBubble />
+              <LazyAIChatBubble />
             </ToastProvider>
           </ThemeProvider>
         </SessionProvider>
