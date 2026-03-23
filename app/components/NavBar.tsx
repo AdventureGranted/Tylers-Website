@@ -527,6 +527,7 @@ function Navbar() {
           <button
             className="relative px-4 text-2xl text-gray-900 dark:text-gray-200"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle navigation menu"
           >
             <RxHamburgerMenu className="text-4xl text-gray-900 hover:text-yellow-300 dark:text-gray-200" />
             {session?.user?.role === 'admin' && (

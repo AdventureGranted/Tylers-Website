@@ -334,7 +334,7 @@ export default function AIChatBubble() {
         style={{ bottom: getChatWindowBottom() }}
         role="dialog"
         aria-label="AI Chat Assistant"
-        aria-hidden={!isOpen}
+        {...(!isOpen ? { inert: true } : {})}
       >
         {/* Header */}
         <div className="flex items-center justify-between bg-white px-4 py-3 dark:bg-gray-700">
