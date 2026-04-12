@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { prisma } from '@/app/lib/prisma';
 import { AI_SYSTEM_PROMPT } from '@/app/lib/ai-context';
+import { getSiteSettings } from '@/app/lib/settings';
 
 const OPENWEBUI_URL = process.env.OPENWEBUI_URL || 'http://192.168.1.203:8080';
 const OPENWEBUI_API_KEY = process.env.OPENWEBUI_API_KEY || '';
@@ -193,20 +194,34 @@ export async function POST(request: NextRequest) {
         .catch((err) => console.error('Failed to update chat session:', err));
     }
 
-    // Get dynamic hobbies context
-    const hobbiesContext = await getHobbiesContext();
+    // Get dynamic hobbies context and site settings
+    const [hobbiesContext, siteSettings] = await Promise.all([
+      getHobbiesContext(),
+      getSiteSettings(),
+    ]);
 
     // Build user context if we have a name
     const userContext = sanitizedUserName
       ? `\n\n## Current Visitor\nYou are chatting with ${sanitizedUserName}. Address them by name when appropriate to make the conversation personal.`
       : '';
 
+    // Strip phone number from system prompt if hidden in settings
+    let systemPrompt = AI_SYSTEM_PROMPT;
+    if (!siteSettings.showPhone) {
+      systemPrompt = systemPrompt
+        .replace(/- Phone:.*\n/g, '')
+        .replace(
+          /If asked about hiring or job opportunities, mention Tyler is open to new opportunities - encourage them to email him at recruit\.tyler\.grant@gmail\.com/,
+          'If asked about hiring or job opportunities, mention Tyler is open to new opportunities - encourage them to email him at recruit.tyler.grant@gmail.com. Do not share a phone number.'
+        );
+    }
+
     // Build the full message history with system prompt + dynamic hobbies + user context
     // Only the server adds the system message — client messages are restricted to user/assistant roles
     const fullMessages: ChatMessage[] = [
       {
         role: 'system',
-        content: AI_SYSTEM_PROMPT + hobbiesContext + userContext,
+        content: systemPrompt + hobbiesContext + userContext,
       },
       ...sanitizedMessages,
     ];
