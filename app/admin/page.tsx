@@ -389,6 +389,12 @@ export default async function AdminDashboard() {
               Chat Sessions
             </Link>
             <Link
+              href="/admin/settings"
+              className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-center text-gray-900 transition-colors hover:bg-gray-100 md:py-2 md:text-left dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-700"
+            >
+              Site Settings
+            </Link>
+            <Link
               href="/admin/projects/new"
               className="rounded-lg bg-yellow-500 px-4 py-3 text-center font-semibold text-gray-900 transition-colors hover:bg-yellow-600 md:py-2 md:text-left dark:bg-yellow-300 dark:hover:bg-yellow-400"
             >

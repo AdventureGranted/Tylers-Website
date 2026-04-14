@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { HiOutlineMail, HiOutlineChatAlt2 } from 'react-icons/hi';
 import { BsTelephone, BsLinkedin, BsGithub } from 'react-icons/bs';
@@ -8,6 +9,15 @@ import PageTransition from '@/app/components/PageTransition';
 import { containerVariants, itemVariants } from '@/app/lib/animations';
 
 export default function ContactPage() {
+  const [showPhone, setShowPhone] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => setShowPhone(data.showPhone))
+      .catch(() => setShowPhone(true));
+  }, []);
+
   const contactMethods = [
     {
       icon: <HiOutlineMail className="text-3xl" />,
@@ -15,12 +25,16 @@ export default function ContactPage() {
       value: 'recruit.tyler.grant@gmail.com',
       href: 'mailto:recruit.tyler.grant@gmail.com',
     },
-    {
-      icon: <BsTelephone className="text-2xl" />,
-      label: 'Phone',
-      value: '(801) 608-4675',
-      href: 'tel:8016084675',
-    },
+    ...(showPhone !== false
+      ? [
+          {
+            icon: <BsTelephone className="text-2xl" />,
+            label: 'Phone',
+            value: '(801) 608-4675',
+            href: 'tel:8016084675',
+          },
+        ]
+      : []),
   ];
 
   const socialLinks = [

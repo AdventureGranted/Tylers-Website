@@ -161,6 +161,13 @@ model AnalyticsEvent {
   @@index([ip])
 }
 
+// Site Settings (singleton)
+model SiteSettings {
+  id        String   @id @default("default")
+  showPhone Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
 // Contact Submissions
 model ContactSubmission {
   id          String   @id @default(cuid())
