@@ -57,6 +57,7 @@ jobs:
 
           # Install dependencies (will reuse existing node_modules)
           npm install
+          npx prisma migrate deploy
           npx prisma generate
           npm run build
 
