@@ -58,7 +58,12 @@ jobs:
 
           # Install dependencies (will reuse existing node_modules)
           npm install
+
+          # Baseline Prisma migrations if this is the first run
+          # (creates the history table and marks existing migrations as applied)
+          npx prisma migrate resolve --applied 20260227_update_image_urls 2>/dev/null || true
           npx prisma migrate deploy
+
           npx prisma generate
           npm run build
 
