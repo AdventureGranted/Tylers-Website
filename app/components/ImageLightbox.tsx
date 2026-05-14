@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import { HiOutlineDownload } from 'react-icons/hi';
 
 interface LightboxImage {
+  id?: string;
   url: string;
   alt: string | null;
   type?: string;
@@ -91,6 +93,27 @@ export default function ImageLightbox({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
+        {/* Download button */}
+        {images[currentIndex]?.id && (
+          <a
+            href={`/api/images/${images[currentIndex].id}/download`}
+            onClick={(e) => e.stopPropagation()}
+            className="absolute top-3 right-14 z-10 rounded-full bg-black/60 p-2 text-white transition-colors hover:bg-black/80"
+            aria-label={
+              images[currentIndex].type === 'video'
+                ? 'Download video'
+                : 'Download photo'
+            }
+            title={
+              images[currentIndex].type === 'video'
+                ? 'Download video'
+                : 'Download photo'
+            }
+          >
+            <HiOutlineDownload className="h-5 w-5" />
+          </a>
+        )}
+
         {/* Close button */}
         <button
           onClick={onClose}
