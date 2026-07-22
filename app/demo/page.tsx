@@ -24,13 +24,15 @@ export default function DemosPage() {
         animate={{ opacity: 1, y: 0 }}
         className="mb-12 text-center"
       >
-        <h1 className="mb-4 text-4xl font-bold text-gray-200">Demos</h1>
-        <p className="mx-auto max-w-2xl text-gray-400">
+        <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-gray-200">
+          Demos
+        </h1>
+        <p className="mx-auto max-w-2xl text-gray-600 dark:text-gray-400">
           Interactive demos and side projects to explore.
         </p>
       </motion.div>
 
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="mx-auto grid max-w-md gap-6">
         {demos.map((demo, i) => (
           <motion.div
             key={demo.title}
@@ -43,14 +45,14 @@ export default function DemosPage() {
                 href={demo.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block h-full rounded-2xl border border-gray-700 bg-gray-800 p-6 shadow-lg transition-all hover:border-yellow-300/50 hover:shadow-yellow-300/5"
+                className="group block h-full rounded-2xl border border-gray-300 bg-white p-6 shadow-md transition-all hover:border-teal-500/50 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50 dark:hover:shadow-yellow-300/5"
               >
                 <DemoCardContent demo={demo} />
               </a>
             ) : (
               <Link
                 href={demo.href}
-                className="group block h-full rounded-2xl border border-gray-700 bg-gray-800 p-6 shadow-lg transition-all hover:border-yellow-300/50 hover:shadow-yellow-300/5"
+                className="group block h-full rounded-2xl border border-gray-300 bg-white p-6 shadow-md transition-all hover:border-teal-500/50 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50 dark:hover:shadow-yellow-300/5"
               >
                 <DemoCardContent demo={demo} />
               </Link>
@@ -66,17 +68,17 @@ function DemoCardContent({ demo }: { demo: (typeof demos)[number] }) {
   return (
     <>
       <div className="mb-4 flex items-center justify-between">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-300/10 text-yellow-300">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-500/10 text-teal-600 dark:bg-yellow-300/10 dark:text-yellow-300">
           {demo.icon}
         </div>
         {demo.external && (
-          <HiOutlineExternalLink className="text-lg text-gray-500 transition-colors group-hover:text-yellow-300" />
+          <HiOutlineExternalLink className="text-lg text-gray-500 transition-colors group-hover:text-teal-600 dark:group-hover:text-yellow-300" />
         )}
       </div>
-      <h2 className="mb-2 text-xl font-semibold text-gray-200 transition-colors group-hover:text-yellow-300">
+      <h2 className="mb-2 text-xl font-semibold text-gray-900 transition-colors group-hover:text-teal-600 dark:text-gray-200 dark:group-hover:text-yellow-300">
         {demo.title}
       </h2>
-      <p className="text-sm leading-relaxed text-gray-400">
+      <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
         {demo.description}
       </p>
     </>

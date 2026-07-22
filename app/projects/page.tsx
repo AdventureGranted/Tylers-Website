@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { HiOutlineFolder } from 'react-icons/hi';
 import PageTransition from '@/app/components/PageTransition';
+import CTAFooter from '@/app/components/CTAFooter';
 import { containerVariants, itemVariants } from '@/app/lib/animations';
 import LazyArchitectureDiagram from '@/app/components/LazyArchitectureDiagram';
 import {
@@ -208,17 +209,28 @@ export default function ProjectsPage() {
                   ))}
                 </ul>
                 {project.title === 'Balancely' && (
-                  <LazyArchitectureDiagram {...balancelyArchitecture} />
+                  <LazyArchitectureDiagram
+                    {...balancelyArchitecture}
+                    title="Balancely Architecture"
+                  />
                 )}
                 {project.title === 'Back Up – Card Board Game' && (
-                  <LazyArchitectureDiagram {...backupArchitecture} />
+                  <LazyArchitectureDiagram
+                    {...backupArchitecture}
+                    title="Back Up Architecture"
+                  />
                 )}
                 {project.title === 'Tyler-Grant.com' && (
-                  <LazyArchitectureDiagram {...portfolioArchitecture} />
+                  <LazyArchitectureDiagram
+                    {...portfolioArchitecture}
+                    title="Tyler-Grant.com Architecture"
+                  />
                 )}
               </motion.div>
             ))}
           </div>
+
+          <CTAFooter />
         </motion.div>
       </main>
     </PageTransition>

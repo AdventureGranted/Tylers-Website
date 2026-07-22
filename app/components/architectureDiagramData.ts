@@ -40,6 +40,7 @@ export interface ArchLayer {
 export interface ArchitectureDiagramProps {
   layers: ArchLayer[];
   stats?: string[];
+  title?: string;
 }
 
 // ─── Color constants ──────────────────────────────────────────────────────────

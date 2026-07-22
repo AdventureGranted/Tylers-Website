@@ -17,6 +17,11 @@ export default function ContactForm() {
     'idle' | 'loading' | 'success' | 'error'
   >('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{
+    name?: string;
+    email?: string;
+    message?: string;
+  }>({});
   const toast = useToast();
 
   const handleChange = (
@@ -26,10 +31,43 @@ export default function ContactForm() {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+    // Clear the field's error as soon as the user starts fixing it
+    setFieldErrors((prev) =>
+      prev[e.target.name as keyof typeof prev]
+        ? { ...prev, [e.target.name]: undefined }
+        : prev
+    );
+  };
+
+  const validate = () => {
+    const errors: typeof fieldErrors = {};
+    if (!formData.name.trim()) {
+      errors.name = 'Please enter your name.';
+    }
+    if (!formData.email.trim()) {
+      errors.email = 'Please enter your email address.';
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email.trim())) {
+      errors.email = 'Please enter a valid email address.';
+    }
+    if (!formData.message.trim()) {
+      errors.message = 'Please enter a message.';
+    }
+    return errors;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      const firstInvalid = ['name', 'email', 'message'].find(
+        (f) => errors[f as keyof typeof errors]
+      );
+      if (firstInvalid) document.getElementById(firstInvalid)?.focus();
+      return;
+    }
+
     setStatus('loading');
     setErrorMessage('');
 
@@ -85,6 +123,7 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
+      noValidate
       className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:rounded-3xl md:p-10 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
     >
       <h2 className="mb-6 text-center text-xl font-semibold text-gray-900 md:text-2xl dark:text-gray-200">
@@ -121,9 +160,23 @@ export default function ContactForm() {
               required
               value={formData.name}
               onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+              aria-invalid={!!fieldErrors.name}
+              aria-describedby={fieldErrors.name ? 'name-error' : undefined}
+              className={`w-full rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:bg-gray-700 dark:text-gray-200 ${
+                fieldErrors.name
+                  ? 'border-red-400 dark:border-red-500'
+                  : 'border-gray-300 dark:border-gray-600'
+              }`}
               placeholder="Your name"
             />
+            {fieldErrors.name && (
+              <p
+                id="name-error"
+                className="mt-1 text-sm text-red-500 dark:text-red-400"
+              >
+                {fieldErrors.name}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -139,9 +192,23 @@ export default function ContactForm() {
               required
               value={formData.email}
               onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+              aria-invalid={!!fieldErrors.email}
+              aria-describedby={fieldErrors.email ? 'email-error' : undefined}
+              className={`w-full rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:bg-gray-700 dark:text-gray-200 ${
+                fieldErrors.email
+                  ? 'border-red-400 dark:border-red-500'
+                  : 'border-gray-300 dark:border-gray-600'
+              }`}
               placeholder="your@email.com"
             />
+            {fieldErrors.email && (
+              <p
+                id="email-error"
+                className="mt-1 text-sm text-red-500 dark:text-red-400"
+              >
+                {fieldErrors.email}
+              </p>
+            )}
           </div>
         </motion.div>
 
@@ -177,9 +244,23 @@ export default function ContactForm() {
             rows={5}
             value={formData.message}
             onChange={handleChange}
-            className="w-full resize-none rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+            aria-invalid={!!fieldErrors.message}
+            aria-describedby={fieldErrors.message ? 'message-error' : undefined}
+            className={`w-full resize-none rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:bg-gray-700 dark:text-gray-200 ${
+              fieldErrors.message
+                ? 'border-red-400 dark:border-red-500'
+                : 'border-gray-300 dark:border-gray-600'
+            }`}
             placeholder="How can I help you?"
           />
+          {fieldErrors.message && (
+            <p
+              id="message-error"
+              className="mt-1 text-sm text-red-500 dark:text-red-400"
+            >
+              {fieldErrors.message}
+            </p>
+          )}
         </motion.div>
 
         <motion.div variants={itemVariants}>
