@@ -353,7 +353,7 @@ export default function AboutPage() {
                     year: '2026',
                     month: 'Jan',
                     title: 'Balancely',
-                    desc: 'Built a comprehensive budgeting app with Next.js, AI receipt scanning, and household support',
+                    desc: 'Built a comprehensive budgeting app — a native SwiftUI iOS app with AI receipt scanning and household support',
                     color: 'bg-yellow-400',
                   },
                   {

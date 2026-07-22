@@ -126,12 +126,12 @@ Tyler's previous full-time role where he:
 ## Personal Projects
 
 ### Balancely (January 2026 – Present)
-- Built a comprehensive budgeting app with Next.js, React 19, TypeScript, Tailwind CSS, and shadcn/ui
+- A comprehensive budgeting app, now a native SwiftUI iOS app (the original web version was retired — it is iOS-only with a backend)
+- Backed by a Next.js API (90+ routes) with PostgreSQL, Prisma ORM, JWT authentication, push notifications, and S3-compatible file storage
 - Tracks transactions, budgets, savings goals, net worth, and recurring expenses with real-time alerts
 - Integrated AI-powered receipt scanning and email receipt import for automatic transaction entry
 - Supports multi-user households with role-based access, activity logs, and spending limits
-- Features dashboard with spending insights, merchant analytics, forecasting, and annual reports using Recharts
-- PostgreSQL database with Prisma ORM, NextAuth.js v5 authentication, and S3-compatible file storage
+- Delivers spending insights, merchant analytics, forecasting, and annual reports
 
 ### Back Up – Card Board Game (January 2026 – Present)
 - Developed a card-driven board game for 2, 4, or 6 players using React Native, Expo, and TypeScript

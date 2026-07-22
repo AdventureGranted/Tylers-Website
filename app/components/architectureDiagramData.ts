@@ -97,46 +97,19 @@ export const balancelyArchitecture: ArchitectureDiagramProps = {
       cardColor: BLUE_CARD,
       services: [
         svc(
-          'Browser (React 19)',
-          HiDesktopComputer,
-          ['Next.js App Router', '20 dashboard pages', 'shadcn/ui'],
-          BLUE_LAYER,
-          BLUE_CARD
-        ),
-        svc(
-          'iOS App (JWT)',
+          'iOS App (SwiftUI)',
           HiDeviceMobile,
-          ['API authentication', 'Push notifications', 'Native app'],
-          BLUE_LAYER,
-          BLUE_CARD
-        ),
-        svc(
-          'PWA / Offline',
-          HiGlobe,
-          ['Dexie.js', 'Offline support', 'Service worker'],
+          ['Native SwiftUI', 'JWT authentication', 'Push notifications'],
           BLUE_LAYER,
           BLUE_CARD
         ),
       ],
     },
     {
-      title: 'Next.js 16 (App Router) — 90+ API Routes',
+      title: 'Next.js 16 API Backend — 90+ Routes',
       layerColor: PURPLE_LAYER,
       cardColor: PURPLE_CARD,
       services: [
-        svc(
-          'Frontend Layer',
-          HiCollection,
-          [
-            'Auth pages (login, register, reset)',
-            'Dashboard, transactions, budgets',
-            'Goals, savings, net worth, calendar',
-            'Reports, forecast, merchants',
-            'Subscriptions, settings, admin',
-          ],
-          PURPLE_LAYER,
-          PURPLE_CARD
-        ),
         svc(
           'API Layer (90+ routes)',
           HiServer,

@@ -31,19 +31,18 @@ export default function ProjectsPage() {
   const projects = [
     {
       title: 'Balancely',
-      subtitle: 'Personal Finance Management App',
+      subtitle: 'iOS Personal Finance App',
       link: 'https://github.com/AdventureGranted/balancely-web',
-      demo: 'https://budget.adventuregranted.com',
+      demo: null,
       date: 'January 2026 – Present',
       image: '/balancely.png',
       bullets: [
         'Born from a passion for personal finance developed over nearly 4 years in consumer lending at EnerBank USA',
-        'Built a comprehensive budgeting app with Next.js, React 19, TypeScript, Tailwind CSS, and shadcn/ui',
-        'Tracks transactions, budgets, savings goals, net worth, and recurring expenses with real-time alerts',
+        'Native SwiftUI iOS app tracking transactions, budgets, savings goals, net worth, and recurring expenses with real-time alerts',
+        'Backed by a Next.js API (90+ routes) with PostgreSQL, Prisma ORM, JWT auth, push notifications, and S3-compatible file storage',
         'Integrated AI-powered receipt scanning and email receipt import for automatic transaction entry',
         'Supports multi-user households with role-based access, activity logs, and spending limits',
-        'Features dashboard with spending insights, merchant analytics, forecasting, and annual reports using Recharts',
-        'PostgreSQL database with Prisma ORM, NextAuth.js v5 authentication, and S3-compatible file storage',
+        'Delivers spending insights, merchant analytics, forecasting, and annual reports',
       ],
     },
     {

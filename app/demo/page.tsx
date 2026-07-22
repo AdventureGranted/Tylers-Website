@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { FaReceipt } from 'react-icons/fa';
 import { HiOutlineExternalLink } from 'react-icons/hi';
-import { MdAccountBalance } from 'react-icons/md';
 
 const demos = [
   {
@@ -14,14 +13,6 @@ const demos = [
     href: '/demo/receipt-parser',
     icon: <FaReceipt className="text-2xl" />,
     external: false,
-  },
-  {
-    title: 'Balancely',
-    description:
-      'A budgeting app that helps you manage finances with intuitive tracking, smart categorization, and clear spending insights.',
-    href: 'https://budget.adventuregranted.com',
-    icon: <MdAccountBalance className="text-2xl" />,
-    external: true,
   },
 ];
 
