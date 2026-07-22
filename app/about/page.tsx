@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import {
   HiOutlineAcademicCap,
   HiOutlineLightBulb,
@@ -54,9 +54,10 @@ function AnimatedCounter({
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || reduceMotion) return;
 
     let startTime: number;
     let animationFrame: number;
@@ -76,11 +77,11 @@ function AnimatedCounter({
 
     animationFrame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrame);
-  }, [isInView, target, duration]);
+  }, [isInView, target, duration, reduceMotion]);
 
   return (
     <span ref={ref}>
-      {count}
+      {reduceMotion ? target : count}
       {suffix}
     </span>
   );
@@ -92,9 +93,10 @@ function AnimatedTooMany() {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || reduceMotion) return;
 
     // Fast count up
     const countInterval = setInterval(() => {
@@ -109,11 +111,11 @@ function AnimatedTooMany() {
     }, 50);
 
     return () => clearInterval(countInterval);
-  }, [isInView]);
+  }, [isInView, reduceMotion]);
 
   return (
     <span ref={ref} className="inline-block min-w-[120px]">
-      {phase === 'counting' ? count : 'Too Many'}
+      {phase === 'counting' && !reduceMotion ? count : 'Too Many'}
     </span>
   );
 }
@@ -225,7 +227,7 @@ export default function AboutPage() {
                 </p>
 
                 <div className="my-6 rounded-xl bg-purple-500/10 p-4">
-                  <p className="text-sm text-purple-400 italic">
+                  <p className="text-sm text-purple-700 italic dark:text-purple-300">
                     We&apos;ll ignore the only C I ever got—which was in
                     accounting that semester. I had no interest in those
                     assignments or pursuing the degree anymore.
@@ -261,105 +263,112 @@ export default function AboutPage() {
                     month: 'Aug',
                     title: 'Started College',
                     desc: 'Began pursuing Accounting at University of Utah',
-                    color: 'bg-gray-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2020',
                     month: 'Mar',
                     title: 'The VBA Moment',
                     desc: 'Fell in love with coding during an Excel VBA assignment',
-                    color: 'bg-yellow-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2020',
                     month: 'Aug',
                     title: 'Switched to CS',
                     desc: 'Made the leap to Computer Science and met my future wife',
-                    color: 'bg-pink-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2021',
                     month: 'Jan',
                     title: 'Teaching Assistant',
                     desc: 'Started TA role for Data Structures & Algorithms',
-                    color: 'bg-blue-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2021',
                     month: 'May',
                     title: 'First Internship',
                     desc: 'Joined Zions Bank as a Software Engineer Intern',
-                    color: 'bg-green-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2022',
                     month: 'Mar',
                     title: 'Got Married',
                     desc: 'Married my college sweetheart (also a software engineer!)',
-                    color: 'bg-red-500',
+                    color: 'bg-purple-500',
                   },
                   {
                     year: '2022',
                     month: 'Apr',
                     title: 'Boxy – Senior Project',
                     desc: 'Built a mobile app for tracking bin-stored items with React Native & AWS',
-                    color: 'bg-teal-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2022',
                     month: 'May',
                     title: 'Graduated',
                     desc: 'B.S. in Computer Science from University of Utah',
-                    color: 'bg-purple-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2022',
                     month: 'Jun',
                     title: 'Self-Hosting Journey',
                     desc: 'Started building a self-hosted ecosystem with Docker, Plex, Home Assistant, and more',
-                    color: 'bg-orange-500',
+                    color: 'bg-purple-500',
                   },
                   {
                     year: '2022',
                     month: 'Jul',
                     title: 'Sorenson',
                     desc: 'Joined Sorenson Communications as a Software Engineer',
-                    color: 'bg-blue-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2023',
                     month: 'Feb',
                     title: 'Became a Dad',
                     desc: 'Welcomed our son into the world',
-                    color: 'bg-pink-500',
+                    color: 'bg-purple-500',
                   },
                   {
                     year: '2025',
                     month: 'Jan',
                     title: 'Tyler-Grant.com',
                     desc: 'Launched my portfolio website with Next.js, AI chatbot, and receipt parser demo',
-                    color: 'bg-purple-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2025',
                     month: 'Feb',
                     title: 'Signos',
                     desc: 'Joined Signos to build health-tech solutions',
-                    color: 'bg-yellow-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2026',
                     month: 'Jan',
                     title: 'Balancely',
                     desc: 'Built a comprehensive budgeting app with Next.js, AI receipt scanning, and household support',
-                    color: 'bg-green-500',
+                    color: 'bg-yellow-400',
                   },
                   {
                     year: '2026',
                     month: 'Feb',
                     title: 'Back Up',
                     desc: 'Created a multiplayer card board game with React Native, real-time Socket.IO, and bot AI',
-                    color: 'bg-red-500',
+                    color: 'bg-yellow-400',
+                  },
+                  {
+                    year: '2026',
+                    month: 'Mar',
+                    title: 'Trove Brands',
+                    desc: 'Joined Trove Brands as a Software Developer building Shopify apps, Hydrogen storefronts, and custom functions',
+                    color: 'bg-yellow-400',
                   },
                 ]}
               />
@@ -479,7 +488,7 @@ export default function AboutPage() {
                 <p>
                   I self-host several AI models on my dedicated Proxmox server
                   equipped with an{' '}
-                  <span className="font-medium text-green-400">
+                  <span className="font-medium text-green-600 dark:text-green-400">
                     NVIDIA RTX 3090
                   </span>
                   , which allows me to run just about any model locally. Adding
@@ -489,25 +498,25 @@ export default function AboutPage() {
                 </p>
 
                 <div className="my-6 flex flex-wrap gap-3">
-                  <span className="flex items-center gap-2 rounded-full bg-green-500/20 px-4 py-2 text-sm text-green-400">
+                  <span className="flex items-center gap-2 rounded-full bg-green-500/20 px-4 py-2 text-sm text-green-700 dark:text-green-400">
                     <SiNvidia /> RTX 3090
                   </span>
-                  <span className="flex items-center gap-2 rounded-full bg-orange-500/20 px-4 py-2 text-sm text-orange-400">
+                  <span className="flex items-center gap-2 rounded-full bg-orange-500/20 px-4 py-2 text-sm text-orange-700 dark:text-orange-400">
                     <SiProxmox /> Proxmox
                   </span>
-                  <span className="rounded-full bg-purple-500/20 px-4 py-2 text-sm text-purple-400">
+                  <span className="rounded-full bg-purple-500/20 px-4 py-2 text-sm text-purple-700 dark:text-purple-300">
                     Llama 3.2 Vision
                   </span>
-                  <span className="rounded-full bg-blue-500/20 px-4 py-2 text-sm text-blue-400">
+                  <span className="rounded-full bg-purple-500/20 px-4 py-2 text-sm text-purple-700 dark:text-purple-300">
                     Local LLMs
                   </span>
-                  <span className="rounded-full bg-yellow-500/20 px-4 py-2 text-sm text-yellow-400">
+                  <span className="rounded-full bg-purple-500/20 px-4 py-2 text-sm text-purple-700 dark:text-purple-300">
                     Open WebUI
                   </span>
                 </div>
 
-                <div className="rounded-xl bg-green-500/10 p-4">
-                  <p className="text-sm text-green-400">
+                <div className="rounded-xl bg-teal-500/10 p-4 dark:bg-yellow-500/10">
+                  <p className="text-sm text-teal-700 dark:text-yellow-300">
                     The best part? All of this is{' '}
                     <strong>completely free and self-hosted</strong>—built and
                     maintained by me. Knowing I have full control over my AI
@@ -536,7 +545,7 @@ export default function AboutPage() {
                 <p className="mb-4 text-gray-700 dark:text-gray-400">
                   I&apos;m very tech-savvy and love new technologies, especially
                   in a self-hosted aspect. I could talk for hours about how{' '}
-                  <span className="font-medium text-blue-400">
+                  <span className="font-medium text-blue-600 dark:text-blue-400">
                     Home Assistant
                   </span>{' '}
                   has made a difference in my life—but that stems from being a
@@ -545,16 +554,16 @@ export default function AboutPage() {
                   automations and speed up pipelines.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <span className="flex items-center gap-2 rounded-full bg-blue-500/20 px-4 py-2 text-sm text-blue-400">
+                  <span className="flex items-center gap-2 rounded-full bg-blue-500/20 px-4 py-2 text-sm text-blue-700 dark:text-blue-400">
                     <SiHomeassistant /> Home Assistant
                   </span>
-                  <span className="flex items-center gap-2 rounded-full bg-orange-500/20 px-4 py-2 text-sm text-orange-400">
+                  <span className="flex items-center gap-2 rounded-full bg-orange-500/20 px-4 py-2 text-sm text-orange-700 dark:text-orange-400">
                     <SiPlex /> Plex Server
                   </span>
-                  <span className="rounded-full bg-green-500/20 px-4 py-2 text-sm text-green-400">
+                  <span className="rounded-full bg-purple-500/20 px-4 py-2 text-sm text-purple-700 dark:text-purple-300">
                     Immich (Photos)
                   </span>
-                  <span className="rounded-full bg-purple-500/20 px-4 py-2 text-sm text-purple-400">
+                  <span className="rounded-full bg-purple-500/20 px-4 py-2 text-sm text-purple-700 dark:text-purple-300">
                     Mealie (Recipes)
                   </span>
                   <span className="rounded-full bg-white px-4 py-2 text-sm text-gray-500 dark:bg-gray-700">
@@ -585,7 +594,7 @@ export default function AboutPage() {
                     </p>
                   </div>
                   <div className="mt-4 rounded-xl bg-purple-500/10 p-4">
-                    <p className="text-sm text-purple-400">
+                    <p className="text-sm text-purple-700 dark:text-purple-300">
                       Yes, it&apos;s a bit messy, but it&apos;s what it{' '}
                       <em>runs</em> that matters. 😅 My goal is to migrate
                       everything to Ubiquiti networking and get a proper

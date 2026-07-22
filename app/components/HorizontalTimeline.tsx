@@ -30,6 +30,8 @@ export default function HorizontalTimeline({ items }: HorizontalTimelineProps) {
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
+    // Start at the most recent milestone
+    el.scrollLeft = el.scrollWidth;
     checkScroll();
     el.addEventListener('scroll', checkScroll, { passive: true });
     window.addEventListener('resize', checkScroll);

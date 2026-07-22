@@ -133,10 +133,10 @@ export default function TechnicalSkills() {
                 {category.skills.map((skill) => (
                   <div
                     key={skill.name}
-                    className="group flex items-center gap-2 rounded-full bg-white px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-700"
+                    className="group flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600"
                   >
                     <skill.icon className={`text-lg ${skill.color}`} />
-                    <span className="text-sm text-gray-700 dark:text-gray-400">
+                    <span className="text-sm text-gray-700 dark:text-gray-200">
                       {skill.name}
                     </span>
                   </div>
@@ -157,7 +157,7 @@ export default function TechnicalSkills() {
             {subjects.map((subject) => (
               <span
                 key={subject}
-                className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-all duration-300 hover:border-yellow-300/50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700"
+                className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-all duration-300 hover:border-teal-500/50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:border-yellow-300/50 dark:hover:bg-gray-600"
               >
                 {subject}
               </span>

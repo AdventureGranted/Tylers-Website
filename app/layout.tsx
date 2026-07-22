@@ -134,6 +134,9 @@ export default function RootLayout({
               (function() {
                 try {
                   var theme = localStorage.getItem('theme');
+                  if (theme !== 'light' && theme !== 'dark') {
+                    theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+                  }
                   var themeColor = '#111827';
                   if (theme === 'light') {
                     document.documentElement.classList.remove('dark');
@@ -148,6 +151,15 @@ export default function RootLayout({
           }}
         />
         <link rel="preconnect" href="https://cdn.tyler-grant.com" />
+        {/* Framer Motion SSRs entrance states as inline opacity/transform;
+            without JS those never animate in, so force content visible.
+            Rendered via innerHTML because browsers expose noscript children
+            as raw text, which breaks React hydration if declared as JSX. */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<style>[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important}</style>`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

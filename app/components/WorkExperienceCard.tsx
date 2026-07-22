@@ -49,6 +49,30 @@ function calculateTotalExperience(): string {
 
 const experiences: Experience[] = [
   {
+    company: 'Trove Brands',
+    role: 'Software Developer',
+    date: 'March 2026 - Present',
+    startDate: new Date('2026-03-01'),
+    endDate: null,
+    logo: '/troveBrands.png',
+    logoAlt: 'Trove Brands Logo',
+    skills: [
+      'Shopify',
+      'Hydrogen',
+      'Liquid',
+      'GraphQL',
+      'React',
+      'TypeScript',
+      'Shopify Functions',
+    ],
+    bullets: [
+      'Build and maintain Shopify storefronts for the marketing team across Trove Brands’ portfolio (BlenderBottle, Owala, and more)',
+      'Develop custom Shopify apps and Shopify Functions to extend checkout, discounts, and merchandising beyond native platform capabilities',
+      'Create headless commerce experiences with Hydrogen and the Storefront API (GraphQL)',
+      'Design reusable Liquid theme components that empower the marketing team to ship landing pages and campaigns quickly',
+    ],
+  },
+  {
     company: 'Signos',
     role: 'Software Engineer',
     date: 'July 2025 - March 2026',
@@ -70,11 +94,10 @@ const experiences: Experience[] = [
       'AWS',
     ],
     bullets: [
-      'Led development of a Next.js/TypeScript e-commerce platform with Shopify Storefront API (GraphQL), delivering subscription flows, cart lifecycle management, discounts, and multi-project checkout',
-      'Architected server-side feature flags and A/B testing with PostHog to optimize landing pages, pricing, and navigation conversion',
-      'Contributed to a large-scale Python/FastAPI backend for a metabolic health platform, building Shopify webhooks, subscription billing integrations, and async pipelines processing ~250 glucose readings per user daily',
-      'Developed CMS-driven landing pages with Payload CMS and a dual partner/consumer dashboard supporting subscriptions, health analytics, and 14+ locales',
-      'Diagnosed and resolved AWS routing misconfiguration in the admin panel, reducing API response times by 2-3x for customer service operations while maintaining VPN-gated access for security',
+      'Led development of a Next.js/TypeScript e-commerce platform on the Shopify Storefront API (GraphQL), delivering subscription flows, cart lifecycle management, discounts, and checkout',
+      'Built Shopify webhooks, subscription billing integrations, and async pipelines processing ~250 glucose readings per user daily in a large-scale Python/FastAPI backend',
+      'Cut admin API response times 2-3x for customer service by diagnosing and resolving an AWS routing misconfiguration, while maintaining VPN-gated access',
+      'Drove conversion on landing pages, pricing, and navigation with server-side feature flags and A/B testing via PostHog',
     ],
   },
   {
@@ -211,8 +234,8 @@ export default function WorkExperienceCard() {
       >
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-2">
-            <HiOutlineBriefcase className="h-5 w-5 text-teal-600 dark:text-yellow-300" />
-            <span className="text-2xl font-bold text-yellow-500 sm:text-3xl dark:text-yellow-300">
+            <HiOutlineBriefcase className="h-5 w-5 text-purple-500" />
+            <span className="text-2xl font-bold text-teal-600 sm:text-3xl dark:text-yellow-300">
               {engineeringExperiences.length}
             </span>
           </div>
@@ -221,7 +244,7 @@ export default function WorkExperienceCard() {
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-2">
             <HiOutlineClock className="h-5 w-5 text-purple-500" />
-            <span className="text-2xl font-bold text-purple-500 sm:text-3xl">
+            <span className="text-2xl font-bold text-teal-600 sm:text-3xl dark:text-yellow-300">
               {calculateTotalExperience()}
             </span>
           </div>
@@ -229,9 +252,9 @@ export default function WorkExperienceCard() {
         </div>
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-2">
-            <HiOutlineCode className="h-5 w-5 text-blue-500" />
-            <span className="text-2xl font-bold text-blue-500 sm:text-3xl">
-              {uniqueTechnologies}+
+            <HiOutlineCode className="h-5 w-5 text-purple-500" />
+            <span className="text-2xl font-bold text-teal-600 sm:text-3xl dark:text-yellow-300">
+              {uniqueTechnologies}
             </span>
           </div>
           <p className="text-xs text-gray-500 sm:text-sm">Technologies</p>
