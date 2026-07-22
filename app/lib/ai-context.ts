@@ -83,6 +83,7 @@ Tyler's current role at Trove Brands (the company behind BlenderBottle, Owala, a
 - Builds and maintains Shopify storefronts across the Trove Brands portfolio
 - Develops custom Shopify apps and Shopify Functions to extend checkout, discounts, and merchandising
 - Creates headless commerce experiences with Hydrogen and the Storefront API (GraphQL)
+- Builds custom Builder.io components for the headless stores so the marketing team can visually compose and publish pages
 - Designs reusable Liquid theme components so the marketing team can ship landing pages and campaigns quickly
 
 ### Signos - Software Engineer (July 2025 - March 2026)
