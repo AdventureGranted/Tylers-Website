@@ -67,7 +67,7 @@ const experiences: Experience[] = [
       'Shopify Functions',
     ],
     bullets: [
-      'Build and maintain Shopify storefronts for the marketing team across Trove Brands’ portfolio (BlenderBottle, Owala, and more)',
+      'Build and maintain Shopify storefronts for the marketing team across Trove Brands’ portfolio (Owala, BlenderBottle, and more)',
       'Develop custom Shopify apps and Shopify Functions to extend checkout, discounts, and merchandising beyond native platform capabilities',
       'Create headless commerce experiences with Hydrogen and the Storefront API (GraphQL), building custom Builder.io components so the marketing team can visually compose pages',
       'Design reusable Liquid theme components that empower the marketing team to ship landing pages and campaigns quickly',

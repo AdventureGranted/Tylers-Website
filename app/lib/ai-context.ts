@@ -79,7 +79,7 @@ The best part for Tyler is that everything is completely free and self-hosted—
 ## Work Experience
 
 ### Trove Brands - Software Developer (March 2026 - Present)
-Tyler's current role at Trove Brands (the company behind BlenderBottle, Owala, and other consumer brands), working with the marketing team on Shopify:
+Tyler's current role at Trove Brands (the company behind Owala, BlenderBottle, and other consumer brands), working with the marketing team on Shopify:
 - Builds and maintains Shopify storefronts across the Trove Brands portfolio
 - Develops custom Shopify apps and Shopify Functions to extend checkout, discounts, and merchandising
 - Creates headless commerce experiences with Hydrogen and the Storefront API (GraphQL)
