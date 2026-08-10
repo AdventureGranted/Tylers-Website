@@ -3,7 +3,7 @@ import { prisma } from '@/app/lib/prisma';
 import { AI_SYSTEM_PROMPT } from '@/app/lib/ai-context';
 import { getSiteSettings } from '@/app/lib/settings';
 
-const OPENWEBUI_URL = process.env.OPENWEBUI_URL || 'http://192.168.1.203:8080';
+const OPENWEBUI_URL = process.env.OPENWEBUI_URL || 'http://192.168.1.221:8080';
 const OPENWEBUI_API_KEY = process.env.OPENWEBUI_API_KEY || '';
 const AI_MODEL = process.env.AI_MODEL || 'qwen2.5:32b';
 

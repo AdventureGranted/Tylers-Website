@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { extractText } from 'unpdf';
 
-const OPENWEBUI_URL = process.env.OPENWEBUI_URL || 'http://192.168.1.203:8080';
+const OPENWEBUI_URL = process.env.OPENWEBUI_URL || 'http://192.168.1.221:8080';
 const OPENWEBUI_API_KEY = process.env.OPENWEBUI_API_KEY || '';
 const VISION_MODEL = process.env.RECEIPT_VISION_MODEL || 'llama3.2-vision';
 const FALLBACK_MODEL = process.env.AI_MODEL || 'qwen2.5:32b';
