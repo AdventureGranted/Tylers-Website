@@ -117,11 +117,13 @@ Tyler's previous full-time role where he:
 
 ## Technical Skills
 
-**Languages:** C#, Java, C++, Python, TypeScript/JavaScript, React.js, Node.js, Ruby on Rails, Kotlin, ASP.Net, Jest, RSpec
+**Languages:** C#, Java, C++, Python, TypeScript/JavaScript, React.js, Node.js, Next.js, React Router, Liquid, GraphQL, Ruby on Rails, Kotlin, ASP.Net, FastAPI, Jest, RSpec
 
-**Technologies:** Ubuntu, macOS, Windows, bash/zsh/PowerShell, Git, Spring, AWS/Azure, Kubernetes, Docker, Swagger, Postman, MySQL, Salesforce, Circle CI, NewRelic/Honeycomb, Expo, MongoDB
+**Shopify & Commerce:** Shopify, Liquid theme development (Online Store 2.0 — sections, blocks, snippets, JSON templates, theme schema/settings), Hydrogen headless storefronts, Oxygen hosting, Storefront API (GraphQL), Admin API (GraphQL), Shopify Functions (custom checkout, discount, and delivery logic), Metafields & Metaobjects for custom data modeling, Checkout UI Extensions, Admin UI Extensions, Polaris, Shopify CLI and app development, Shopify webhooks, Builder.io visual CMS integration. Also familiar with Shopify Flow (merchant automation) and Klaviyo (email/SMS marketing integration).
 
-**Subjects/Concepts:** Object Oriented Programming, Data Structures, Algorithms, Databases, Web/Mobile Development, Agile Development, Test Driven Development, Pair Programming, Computer/Distributed Systems, Human-Computer Interaction, Foundations of Data Analysis, Computer Architecture, Linear Algebra, Statistics
+**Technologies:** Ubuntu, macOS, Windows, bash/zsh/PowerShell, Git, Spring, AWS/Azure, Kubernetes, Docker, Terraform, Ansible, Swagger, Postman, PostgreSQL, MySQL, MongoDB, Payload CMS, PostHog, Salesforce, Circle CI, NewRelic/Honeycomb, Expo
+
+**Subjects/Concepts:** Object Oriented Programming, Data Structures, Algorithms, Databases, Web/Mobile Development, Headless & Composable Commerce, Agile Development, Test Driven Development, Pair Programming, Computer/Distributed Systems, Human-Computer Interaction, Foundations of Data Analysis, Computer Architecture, Linear Algebra, Statistics
 
 ## Personal Projects
 

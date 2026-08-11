@@ -26,10 +26,31 @@ import {
   SiLinux,
   SiTerraform,
   SiAnsible,
+  SiShopify,
+  SiGraphql,
+  SiReactrouter,
+  SiFastapi,
+  SiPayloadcms,
+  SiPosthog,
 } from 'react-icons/si';
-import { RiShieldKeyholeLine } from 'react-icons/ri';
+import { RiShieldKeyholeLine, RiStackLine } from 'react-icons/ri';
 import { FaJava, FaWindows } from 'react-icons/fa';
-import { TbBrandCpp, TbBrandCSharp } from 'react-icons/tb';
+import {
+  TbBrandCpp,
+  TbBrandCSharp,
+  TbDroplet,
+  TbAtom2,
+  TbCloud,
+  TbApi,
+  TbDatabaseCog,
+  TbFunction,
+  TbPuzzle,
+  TbTerminal2,
+  TbLayoutBoardSplit,
+  TbWebhook,
+  TbRouteSquare,
+  TbMailBolt,
+} from 'react-icons/tb';
 import { VscAzure } from 'react-icons/vsc';
 import { containerVariants, itemVariants } from '@/app/lib/animations';
 import { Card } from '@/app/components/ui/Card';
@@ -47,15 +68,58 @@ const skillCategories = [
         icon: SiNextdotjs,
         color: 'text-gray-800 dark:text-gray-300',
       },
+      { name: 'React Router', icon: SiReactrouter, color: 'text-red-500' },
       { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-500' },
+      { name: 'GraphQL', icon: SiGraphql, color: 'text-pink-500' },
       { name: 'Tailwind CSS', icon: SiTailwindcss, color: 'text-cyan-400' },
       { name: 'NextAuth', icon: RiShieldKeyholeLine, color: 'text-purple-400' },
       { name: 'Python', icon: SiPython, color: 'text-yellow-300' },
+      { name: 'FastAPI', icon: SiFastapi, color: 'text-teal-500' },
       { name: 'C#', icon: TbBrandCSharp, color: 'text-purple-400' },
       { name: 'Java', icon: FaJava, color: 'text-red-400' },
       { name: 'C++', icon: TbBrandCpp, color: 'text-blue-500' },
       { name: 'Ruby on Rails', icon: SiRubyonrails, color: 'text-red-500' },
       { name: 'Kotlin', icon: SiKotlin, color: 'text-purple-500' },
+    ],
+  },
+  {
+    title: 'Shopify & Commerce',
+    skills: [
+      { name: 'Shopify', icon: SiShopify, color: 'text-lime-500' },
+      { name: 'Liquid', icon: TbDroplet, color: 'text-sky-400' },
+      {
+        name: 'Online Store 2.0',
+        icon: RiStackLine,
+        color: 'text-emerald-400',
+      },
+      { name: 'Hydrogen', icon: TbAtom2, color: 'text-blue-400' },
+      { name: 'Oxygen', icon: TbCloud, color: 'text-cyan-400' },
+      { name: 'Storefront API', icon: SiGraphql, color: 'text-pink-500' },
+      { name: 'Admin API', icon: TbApi, color: 'text-green-500' },
+      { name: 'Shopify Functions', icon: TbFunction, color: 'text-orange-400' },
+      {
+        name: 'Metafields & Metaobjects',
+        icon: TbDatabaseCog,
+        color: 'text-purple-400',
+      },
+      {
+        name: 'UI Extensions & Polaris',
+        icon: TbPuzzle,
+        color: 'text-indigo-400',
+      },
+      { name: 'Webhooks', icon: TbWebhook, color: 'text-yellow-400' },
+      {
+        name: 'Shopify CLI',
+        icon: TbTerminal2,
+        color: 'text-gray-700 dark:text-gray-300',
+      },
+      {
+        name: 'Builder.io',
+        icon: TbLayoutBoardSplit,
+        color: 'text-fuchsia-400',
+      },
+      { name: 'Shopify Flow', icon: TbRouteSquare, color: 'text-lime-400' },
+      { name: 'Klaviyo', icon: TbMailBolt, color: 'text-rose-400' },
     ],
   },
   {
@@ -76,6 +140,12 @@ const skillCategories = [
       { name: 'PostgreSQL', icon: SiPostgresql, color: 'text-blue-400' },
       { name: 'MongoDB', icon: SiMongodb, color: 'text-green-500' },
       { name: 'MySQL', icon: SiMysql, color: 'text-blue-400' },
+      {
+        name: 'Payload CMS',
+        icon: SiPayloadcms,
+        color: 'text-gray-800 dark:text-gray-300',
+      },
+      { name: 'PostHog', icon: SiPosthog, color: 'text-orange-400' },
       { name: 'Postman', icon: SiPostman, color: 'text-orange-500' },
       { name: 'Salesforce', icon: SiSalesforce, color: 'text-blue-400' },
     ],
@@ -100,6 +170,7 @@ const subjects = [
   'Object Oriented Programming',
   'Data Structures & Algorithms',
   'Web & Mobile Development',
+  'Headless & Composable Commerce',
   'Agile & Test Driven Development',
   'Distributed Systems',
   'Human-Computer Interaction',
