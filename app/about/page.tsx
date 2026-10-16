@@ -367,7 +367,7 @@ export default function AboutPage() {
                     year: '2026',
                     month: 'Mar',
                     title: 'Trove Brands',
-                    desc: 'Joined Trove Brands as a Software Developer building Shopify apps, Hydrogen storefronts, and custom functions',
+                    desc: 'Joined Trove Brands as a Software Developer building checkout logic, multi-tenant services, and CI/CD infrastructure across four brands',
                     color: 'bg-yellow-400',
                   },
                 ]}
