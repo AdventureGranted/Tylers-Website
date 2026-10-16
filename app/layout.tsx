@@ -27,17 +27,22 @@ export const metadata: Metadata = {
     template: '%s | Tyler Grant',
   },
   description:
-    'A portfolio website showcasing my skills, projects, and experience as a computer scientist. Explore my work in software engeineering, algorithms, and problem-solving, and learn more about my passion for building innovative and efficient solutions.',
+    'Tyler Grant is a full-stack software engineer in Lehi, UT with 4+ years building products with TypeScript, React, Node.js, Python, and AWS, from real-time accessibility platforms to e-commerce checkout systems.',
   keywords: [
     'Tyler Grant',
     'Software Engineer',
-    'Software Engineer',
+    'Full-Stack Engineer',
     'Portfolio',
-    'Web Development',
-    'Computer Science',
+    'Lehi, UT',
+    'TypeScript',
     'React',
     'Next.js',
-    'TypeScript',
+    'Node.js',
+    'Python',
+    'AWS',
+    'Shopify',
+    'Hydrogen',
+    'E-commerce',
   ],
   authors: [{ name: 'Tyler Grant' }],
   creator: 'Tyler Grant',
@@ -51,7 +56,7 @@ export const metadata: Metadata = {
     siteName: 'Tyler Grant',
     title: 'Tyler Grant | Software Engineer',
     description:
-      'A portfolio showcasing skills, projects, and experience in software development.',
+      'Full-stack software engineer building with TypeScript, React, Node.js, Python, and AWS. See my projects, experience, and resume.',
     images: [
       {
         url: '/og-image.png',
@@ -65,7 +70,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Tyler Grant | Software Engineer',
     description:
-      'A portfolio showcasing skills, projects, and experience in software development.',
+      'Full-stack software engineer building with TypeScript, React, Node.js, Python, and AWS. See my projects, experience, and resume.',
     images: ['/og-image.png'],
   },
   robots: {
@@ -102,7 +107,20 @@ const personJsonLd = {
   url: siteUrl,
   jobTitle: 'Software Engineer',
   description:
-    'A software engineer passionate about building innovative and efficient solutions.',
+    'Full-stack software engineer with 4+ years building products with TypeScript, React, Node.js, Python, and AWS.',
+  worksFor: { '@type': 'Organization', name: 'Trove Brands' },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'University of Utah' },
+  knowsAbout: [
+    'TypeScript',
+    'React',
+    'Next.js',
+    'Node.js',
+    'Python',
+    'AWS',
+    'CI/CD',
+    'Shopify',
+    'Hydrogen',
+  ],
   email: 'recruit.tyler.grant@gmail.com',
   sameAs: [
     'https://github.com/tylerbb812',
@@ -116,7 +134,7 @@ const websiteJsonLd = {
   name: 'Tyler Grant',
   url: siteUrl,
   description:
-    'A portfolio showcasing skills, projects, and experience in software development.',
+    'Portfolio of Tyler Grant, a full-stack software engineer: projects, experience, and resume.',
   author: { '@type': 'Person', name: 'Tyler Grant' },
 };
 

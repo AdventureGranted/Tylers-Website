@@ -32,24 +32,22 @@ import {
   SiFastapi,
   SiPayloadcms,
   SiPosthog,
+  SiAwslambda,
+  SiGithubactions,
 } from 'react-icons/si';
-import { RiShieldKeyholeLine, RiStackLine } from 'react-icons/ri';
+import { RiShieldKeyholeLine } from 'react-icons/ri';
 import { FaJava, FaWindows } from 'react-icons/fa';
 import {
   TbBrandCpp,
   TbBrandCSharp,
   TbDroplet,
   TbAtom2,
-  TbCloud,
-  TbApi,
   TbDatabaseCog,
   TbFunction,
-  TbPuzzle,
-  TbTerminal2,
   TbLayoutBoardSplit,
   TbWebhook,
-  TbRouteSquare,
-  TbMailBolt,
+  TbInfinity,
+  TbTestPipe,
 } from 'react-icons/tb';
 import { VscAzure } from 'react-icons/vsc';
 import { containerVariants, itemVariants } from '@/app/lib/animations';
@@ -83,55 +81,44 @@ const skillCategories = [
     ],
   },
   {
+    title: 'Cloud & DevOps',
+    skills: [
+      { name: 'AWS', icon: SiAmazonwebservices, color: 'text-orange-400' },
+      { name: 'AWS Lambda', icon: SiAwslambda, color: 'text-orange-500' },
+      { name: 'CI/CD', icon: TbInfinity, color: 'text-teal-400' },
+      { name: 'GitHub Actions', icon: SiGithubactions, color: 'text-blue-500' },
+      { name: 'Testing & TDD', icon: TbTestPipe, color: 'text-green-400' },
+      { name: 'Docker', icon: SiDocker, color: 'text-blue-400' },
+      { name: 'Kubernetes', icon: SiKubernetes, color: 'text-blue-500' },
+      { name: 'Azure', icon: VscAzure, color: 'text-blue-400' },
+      { name: 'Terraform', icon: SiTerraform, color: 'text-purple-500' },
+      { name: 'Ansible', icon: SiAnsible, color: 'text-red-400' },
+      { name: 'Git', icon: SiGit, color: 'text-orange-500' },
+    ],
+  },
+  {
     title: 'Shopify & Commerce',
     skills: [
       { name: 'Shopify', icon: SiShopify, color: 'text-lime-500' },
+      { name: 'Hydrogen', icon: TbAtom2, color: 'text-blue-400' },
+      { name: 'Shopify Functions', icon: TbFunction, color: 'text-orange-400' },
       { name: 'Liquid', icon: TbDroplet, color: 'text-sky-400' },
       {
-        name: 'Online Store 2.0',
-        icon: RiStackLine,
-        color: 'text-emerald-400',
+        name: 'Storefront & Admin APIs',
+        icon: SiGraphql,
+        color: 'text-pink-500',
       },
-      { name: 'Hydrogen', icon: TbAtom2, color: 'text-blue-400' },
-      { name: 'Oxygen', icon: TbCloud, color: 'text-cyan-400' },
-      { name: 'Storefront API', icon: SiGraphql, color: 'text-pink-500' },
-      { name: 'Admin API', icon: TbApi, color: 'text-green-500' },
-      { name: 'Shopify Functions', icon: TbFunction, color: 'text-orange-400' },
       {
         name: 'Metafields & Metaobjects',
         icon: TbDatabaseCog,
         color: 'text-purple-400',
       },
-      {
-        name: 'UI Extensions & Polaris',
-        icon: TbPuzzle,
-        color: 'text-indigo-400',
-      },
       { name: 'Webhooks', icon: TbWebhook, color: 'text-yellow-400' },
-      {
-        name: 'Shopify CLI',
-        icon: TbTerminal2,
-        color: 'text-gray-700 dark:text-gray-300',
-      },
       {
         name: 'Builder.io',
         icon: TbLayoutBoardSplit,
         color: 'text-fuchsia-400',
       },
-      { name: 'Shopify Flow', icon: TbRouteSquare, color: 'text-lime-400' },
-      { name: 'Klaviyo', icon: TbMailBolt, color: 'text-rose-400' },
-    ],
-  },
-  {
-    title: 'Cloud & DevOps',
-    skills: [
-      { name: 'AWS', icon: SiAmazonwebservices, color: 'text-orange-400' },
-      { name: 'Azure', icon: VscAzure, color: 'text-blue-400' },
-      { name: 'Docker', icon: SiDocker, color: 'text-blue-400' },
-      { name: 'Kubernetes', icon: SiKubernetes, color: 'text-blue-500' },
-      { name: 'Terraform', icon: SiTerraform, color: 'text-purple-500' },
-      { name: 'Ansible', icon: SiAnsible, color: 'text-red-400' },
-      { name: 'Git', icon: SiGit, color: 'text-orange-500' },
     ],
   },
   {

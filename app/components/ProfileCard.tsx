@@ -82,9 +82,10 @@ export default function ProfileCard() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-4 max-w-xl text-xl text-gray-700 dark:text-gray-400"
         >
-          I&apos;m a passionate software engineer with experience in building
-          modern, responsive websites and applications. I love learning new
-          technologies and creating projects that make a difference.
+          I&apos;m a software engineer with 4+ years building full-stack
+          products, from a real-time ASL interpretation platform to checkout
+          systems and cloud services for brands like Owala and BlenderBottle. I
+          love automating the boring stuff and picking up new tech.
         </motion.p>
 
         {/* Social Links */}
