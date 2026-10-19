@@ -6,7 +6,7 @@ const withPWA = withPWAInit({
   register: true,
   // Keep the Balancely screenshot set (120 files) out of the service worker
   // precache; the gallery lazy-loads only the ones a visitor scrolls to.
-  publicExcludes: ['!noprecache/**/*', '!balancely/**/*'],
+  publicExcludes: ['!noprecache/**/*', '!balancely/**/*', '!backup/**/*'],
   disable: process.env.NODE_ENV === 'development',
   workboxOptions: {
     skipWaiting: true,

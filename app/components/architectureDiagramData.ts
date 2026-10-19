@@ -338,9 +338,10 @@ export const backupArchitecture: ArchitectureDiagramProps = {
           'Bot AI',
           HiLightningBolt,
           [
-            'Move scoring heuristics',
-            'Exit home priority, safe zone logic',
-            'Ace conservation strategy',
+            'Easy: random legal move',
+            'Medium: heuristic move scoring',
+            'Hard: plans the rest of its hand (30 ms budget)',
+            'Sees only its own hand, like a human',
           ],
           PURPLE_LAYER,
           PURPLE_CARD
@@ -379,7 +380,7 @@ export const backupArchitecture: ArchitectureDiagramProps = {
           'Online Features',
           HiGlobe,
           [
-            'Matchmaking & lobby',
+            'Lobbies with join codes',
             'ELO rating system',
             'Spectator mode, replays',
             'Async (correspondence) games',
@@ -409,14 +410,22 @@ export const backupArchitecture: ArchitectureDiagramProps = {
         svc(
           'PostgreSQL',
           HiDatabase,
-          ['Users, games, history', 'ELO ratings & stats', '5 SQL migrations'],
+          [
+            'Users, games, move log',
+            'ELO history, friends',
+            '24 SQL migrations',
+          ],
           ORANGE_LAYER,
           ORANGE_CARD
         ),
         svc(
           'Redis',
           HiClock,
-          ['Session storage', 'Ephemeral game state', 'Async game timers'],
+          [
+            'Live game state & per-game locks',
+            'Turn deadlines, rooms, spectators',
+            'Rate limits, Socket.IO adapter',
+          ],
           ORANGE_LAYER,
           ORANGE_CARD
         ),
@@ -424,12 +433,12 @@ export const backupArchitecture: ArchitectureDiagramProps = {
     },
   ],
   stats: [
-    '2/4/6 Players',
+    '2 to 6 Players',
     'Real-Time Multiplayer',
     'Async Turn-Based',
     'Pure TS Engine',
-    '271 Jest Tests',
-    'Bot AI with Heuristics',
+    '700+ Jest Tests',
+    'Easy / Medium / Hard Bots',
   ],
 };
 

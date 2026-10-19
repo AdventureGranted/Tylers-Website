@@ -137,13 +137,14 @@ Tyler's previous full-time role where he:
 - Supports multi-user households with role-based access, activity logs, and spending limits
 - Delivers spending insights, merchant analytics, forecasting, and annual reports
 
-### Back Up – Card Board Game (January 2026 – Present)
-- Developed a card-driven board game for 2, 4, or 6 players using React Native, Expo, and TypeScript
-- Built real-time multiplayer with Socket.IO and async turn-based mode with push notifications
-- Implemented pure TypeScript game engine with immutable state, legal move validation, and bot AI with difficulty levels
-- Created Node.js backend with Express, PostgreSQL, Redis, JWT auth, and ELO rating system
-- Features spectator mode, replay viewer, friends system, animated pieces, sound effects, and haptic feedback
-- Comprehensive test suite with 271 Jest tests covering game engine and server logic
+### Back Up – Card Board Game (February 2026 – Present)
+- Designed and built a card-driven board game for 2 to 6 players as a React Native and Expo iOS app in TypeScript
+- One pure TypeScript rules engine runs on the phone and on the server, which validates every move and sends each player only their own hand
+- Built live multiplayer with Socket.IO and Redis, plus async 24-hour turns with push notifications
+- Wrote Easy, Medium and Hard bots; Hard plans out its remaining hand within a 30 ms budget and weighs knockout risk from unseen cards
+- Node.js backend with Express, PostgreSQL, Redis, JWT auth and ELO ratings, deployed from a self-hosted GitHub Actions runner
+- Spectating, replays, friends, an interactive 10-step tutorial, animated pieces, sound and haptics
+- 700+ Jest tests across the engine, bots, server and UI, plus Maestro end-to-end flows
 
 ### Tyler-Grant.com (June 2025 – Present)
 - Built a full-stack portfolio using Next.js, TypeScript, Tailwind CSS, and Framer Motion

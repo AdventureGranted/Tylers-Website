@@ -15,7 +15,9 @@ import { containerVariants, itemVariants } from '@/app/lib/animations';
 import LazyArchitectureDiagram from '@/app/components/LazyArchitectureDiagram';
 import ThemedScreenshot from '@/app/components/ThemedScreenshot';
 import type { ArchitectureDiagramProps } from '@/app/components/ArchitectureDiagram';
+import type { Screenshot } from '@/app/components/ScreenshotGallery';
 import { balancelyScreenshots } from '@/app/projects/balancely/screenshots';
+import { backupScreenshots } from '@/app/projects/backup/screenshots';
 import {
   balancelyArchitecture,
   backupArchitecture,
@@ -46,16 +48,61 @@ interface Project {
   bullets: string[];
 }
 
-interface GridProject extends Project {
-  image: string;
+interface ScreenSet {
+  basePath: string;
+  shots: Screenshot[];
 }
 
-// Screens shown on the featured Balancely card, middle one in front
-const featuredScreens = [
+// Grid cards show either a static image or a stack of live app screens
+type GridProject = Project & ({ image: string } | { screens: ScreenSet });
+
+const pickScreens = (
+  basePath: string,
+  all: Screenshot[],
+  files: string[]
+): ScreenSet => ({
+  basePath,
+  shots: files.map((file) => all.find((shot) => shot.file === file)!),
+});
+
+const balancelyScreens = pickScreens('/balancely', balancelyScreenshots, [
   '02b-bank-review-card',
   '01-home',
   '03b-budgets-list',
-].map((file) => balancelyScreenshots.find((shot) => shot.file === file)!);
+]);
+
+const backupScreens = pickScreens('/backup', backupScreenshots, [
+  '02-main-menu',
+  '01-gameplay',
+  '03-setup',
+]);
+
+// Three phone screens, middle one in front
+function ScreenStack({
+  screens,
+  sizes,
+}: {
+  screens: ScreenSet;
+  sizes: string;
+}) {
+  return screens.shots.map((shot, i) => (
+    <div
+      key={shot.file}
+      className={`overflow-hidden rounded-[1.25rem] border-4 border-gray-900 bg-gray-900 shadow-xl transition-transform duration-300 md:rounded-[1.75rem] md:border-[6px] dark:border-gray-700 ${
+        i === 1
+          ? 'z-10 -mx-[7%] w-[40%] group-hover:-translate-y-1'
+          : 'w-[33%] translate-y-6 opacity-90'
+      }`}
+    >
+      <ThemedScreenshot
+        basePath={screens.basePath}
+        file={shot.file}
+        alt={shot.alt}
+        sizes={sizes}
+      />
+    </div>
+  ));
+}
 
 function ProjectDetails({ project }: { project: Project }) {
   return (
@@ -172,17 +219,18 @@ export default function ProjectsPage() {
       repo: null,
       privateRepo: true,
       demo: null,
-      caseStudy: null,
+      caseStudy: '/projects/backup',
       diagram: { ...backupArchitecture, title: 'Back Up Architecture' },
-      date: 'January 2026 – Present',
-      image: '/backup.png',
+      date: 'February 2026 – Present',
+      screens: backupScreens,
       bullets: [
-        'Developed a card-driven board game for 2, 4, or 6 players using React Native, Expo, and TypeScript',
-        'Built real-time multiplayer with Socket.IO and async turn-based mode with push notifications',
-        'Implemented pure TypeScript game engine with immutable state, legal move validation, and bot AI with difficulty levels',
-        'Created Node.js backend with Express, PostgreSQL, Redis, JWT auth, and ELO rating system',
-        'Features spectator mode, replay viewer, friends system, animated pieces, sound effects, and haptic feedback',
-        'Comprehensive test suite with 271 Jest tests covering game engine and server logic',
+        'Designed and built a card-driven board game for 2 to 6 players as a React Native and Expo iOS app in TypeScript',
+        'One pure TypeScript rules engine runs on the phone and on the server, which validates every move and sends each player only their own hand',
+        'Built live multiplayer with Socket.IO and Redis, plus async 24-hour turns with push notifications',
+        'Wrote Easy, Medium and Hard bots; Hard plans out its remaining hand within a 30 ms budget and weighs knockout risk from unseen cards',
+        'Node.js backend with Express, PostgreSQL, Redis, JWT auth and ELO ratings, deployed from a self-hosted GitHub Actions runner',
+        'Spectating, replays, friends, an interactive tutorial, animated pieces, sound and haptics',
+        '700+ Jest tests across the engine, bots, server and UI, plus Maestro end-to-end flows',
       ],
     },
     {
@@ -284,23 +332,10 @@ export default function ProjectsPage() {
               aria-hidden="true"
               className="bg-accent/10 flex items-center justify-center overflow-hidden rounded-2xl border border-gray-300 px-[4%] py-8 md:order-last dark:border-gray-700"
             >
-              {featuredScreens.map((shot, i) => (
-                <div
-                  key={shot.file}
-                  className={`overflow-hidden rounded-[1.25rem] border-4 border-gray-900 bg-gray-900 shadow-xl transition-transform duration-300 md:rounded-[1.75rem] md:border-[6px] dark:border-gray-700 ${
-                    i === 1
-                      ? 'z-10 -mx-[7%] w-[40%] group-hover:-translate-y-1'
-                      : 'w-[33%] translate-y-6 opacity-90'
-                  }`}
-                >
-                  <ThemedScreenshot
-                    basePath="/balancely"
-                    file={shot.file}
-                    alt={shot.alt}
-                    sizes="(min-width: 768px) 240px, 40vw"
-                  />
-                </div>
-              ))}
+              <ScreenStack
+                screens={balancelyScreens}
+                sizes="(min-width: 768px) 240px, 40vw"
+              />
             </Link>
             <div className="flex flex-col">
               <ProjectDetails project={featuredProject} />
@@ -314,22 +349,38 @@ export default function ProjectsPage() {
                 variants={itemVariants}
                 className="group hover:border-accent/50 flex flex-col rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
               >
-                <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl border border-gray-300 bg-gray-700 dark:border-gray-700">
-                  <Image
-                    src={project.image}
-                    alt={project.title + ' image'}
-                    fill
-                    className={`${
-                      project.image === '/boxie.png'
-                        ? 'object-center'
-                        : 'object-cover'
-                    } transition-transform duration-300 group-hover:scale-105`}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    placeholder="blur"
-                    blurDataURL={blurDataURLs[project.image]}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                </div>
+                {'screens' in project ? (
+                  // Duplicates the "Screenshots & Details" button, so it's
+                  // skipped by keyboard and screen readers
+                  <Link
+                    href={project.caseStudy!}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className="bg-accent/10 mb-4 flex aspect-video w-full items-start justify-center overflow-hidden rounded-2xl border border-gray-300 px-[4%] pt-6 dark:border-gray-700"
+                  >
+                    <ScreenStack
+                      screens={project.screens}
+                      sizes="(min-width: 768px) 220px, 40vw"
+                    />
+                  </Link>
+                ) : (
+                  <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl border border-gray-300 bg-gray-700 dark:border-gray-700">
+                    <Image
+                      src={project.image}
+                      alt={project.title + ' image'}
+                      fill
+                      className={`${
+                        project.image === '/boxie.png'
+                          ? 'object-center'
+                          : 'object-cover'
+                      } transition-transform duration-300 group-hover:scale-105`}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      placeholder="blur"
+                      blurDataURL={blurDataURLs[project.image]}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  </div>
+                )}
                 <ProjectDetails project={project} />
               </motion.div>
             ))}
