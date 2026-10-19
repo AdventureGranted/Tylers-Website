@@ -247,21 +247,30 @@ export default function BackupPage() {
               {backupClips.map((clip) => (
                 <figure key={clip.file}>
                   <div className="overflow-hidden rounded-[1.5rem] border-[6px] border-gray-900 bg-gray-900 shadow-lg dark:border-gray-700">
-                    <picture>
-                      <source
-                        media="(prefers-reduced-motion: reduce)"
-                        srcSet={`/backup/clips/${clip.file}-still.webp`}
-                      />
-                      <img
-                        src={`/backup/clips/${clip.file}.webp`}
-                        alt={clip.alt}
-                        width={400}
-                        height={813}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-auto w-full"
-                      />
-                    </picture>
+                    {/* Both themes are rendered and one is hidden with CSS;
+                        lazy images that are display:none are never fetched */}
+                    {(['dark', 'light'] as const).map((theme) => (
+                      <picture
+                        key={theme}
+                        className={
+                          theme === 'dark' ? 'hidden dark:block' : 'dark:hidden'
+                        }
+                      >
+                        <source
+                          media="(prefers-reduced-motion: reduce)"
+                          srcSet={`/backup/clips/${theme}/${clip.file}-still.webp`}
+                        />
+                        <img
+                          src={`/backup/clips/${theme}/${clip.file}.webp`}
+                          alt={clip.alt}
+                          width={400}
+                          height={813}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-auto w-full"
+                        />
+                      </picture>
+                    ))}
                   </div>
                   <figcaption className="mt-3 px-1">
                     <div className="text-sm font-semibold text-gray-900 dark:text-gray-200">

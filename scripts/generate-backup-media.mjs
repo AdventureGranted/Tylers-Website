@@ -31,17 +31,14 @@ const SCREENS = {
     light: '06-tutorial-back-up-rule.png',
     dark: '06-tutorial-back-up-rule.png',
   },
-  '05-results': { light: '08-results.png', dark: '08-results.png' },
+  '05-results': { light: '08-results.png', dark: '09-results-dark.png' },
 };
 
-// Clip name -> first frame to keep. Two recordings open on a fading debug menu.
-const CLIPS = {
-  'backed-up': 5,
-  'jack-swap': 0,
-  knockout: 0,
-  'leave-home': 0,
-  'team-win': 4,
-};
+const CLIPS = ['backed-up', 'jack-swap', 'knockout', 'leave-home', 'team-win'];
+
+// First frame to keep, per theme and clip. Two light recordings open on a
+// fading debug menu; the dark recordings start clean.
+const CLIP_START = { light: { 'backed-up': 5, 'team-win': 4 }, dark: {} };
 
 const sourceDir = process.argv[2];
 if (!sourceDir) {
@@ -71,24 +68,28 @@ for (const [name, themes] of Object.entries(SCREENS)) {
   }
 }
 
-// Clips become animated WebP (smaller than the GIFs, with full color) plus a
-// still frame shown to visitors who prefer reduced motion.
-const clipDir = join(OUT_DIR, 'clips');
-await mkdir(clipDir, { recursive: true });
-for (const [name, firstFrame] of Object.entries(CLIPS)) {
-  const gif = join(sourceDir, 'gifs', `${name}.gif`);
-  const { pages } = await sharp(gif).metadata();
-  const animatedPath = join(clipDir, `${name}.webp`);
-  const stillPath = join(clipDir, `${name}-still.webp`);
-  await sharp(gif, { page: firstFrame, pages: -1 })
-    .webp({ quality: WEBP_QUALITY, effort: 6 })
-    .toFile(animatedPath);
-  await sharp(gif, { page: Math.floor((firstFrame + pages) / 2) })
-    .webp({ quality: WEBP_QUALITY })
-    .toFile(stillPath);
-  await track(animatedPath);
-  await track(stillPath);
-  console.log(`clips/${name}`);
+// Clips (gifs/{dark,light}/<name>.gif) become animated WebP, smaller than the
+// GIFs and with full color, plus a still frame shown to visitors who prefer
+// reduced motion.
+for (const [theme, starts] of Object.entries(CLIP_START)) {
+  const clipDir = join(OUT_DIR, 'clips', theme);
+  await mkdir(clipDir, { recursive: true });
+  for (const name of CLIPS) {
+    const firstFrame = starts[name] ?? 0;
+    const gif = join(sourceDir, 'gifs', theme, `${name}.gif`);
+    const { pages } = await sharp(gif).metadata();
+    const animatedPath = join(clipDir, `${name}.webp`);
+    const stillPath = join(clipDir, `${name}-still.webp`);
+    await sharp(gif, { page: firstFrame, pages: -1 })
+      .webp({ quality: WEBP_QUALITY, effort: 6 })
+      .toFile(animatedPath);
+    await sharp(gif, { page: Math.floor((firstFrame + pages) / 2) })
+      .webp({ quality: WEBP_QUALITY })
+      .toFile(stillPath);
+    await track(animatedPath);
+    await track(stillPath);
+    console.log(`clips/${theme}/${name}`);
+  }
 }
 
 console.log(`Wrote ${(total / 1024 / 1024).toFixed(2)}MB to ${OUT_DIR}`);
