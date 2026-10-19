@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BsGithub } from 'react-icons/bs';
@@ -18,21 +17,12 @@ import type { ArchitectureDiagramProps } from '@/app/components/ArchitectureDiag
 import type { Screenshot } from '@/app/components/ScreenshotGallery';
 import { balancelyScreenshots } from '@/app/projects/balancely/screenshots';
 import { backupScreenshots } from '@/app/projects/backup/screenshots';
+import { BoxyCover, SelfHostingCover } from '@/app/projects/ProjectCovers';
 import {
   balancelyArchitecture,
   backupArchitecture,
   portfolioArchitecture,
 } from '@/app/components/architectureDiagramData';
-
-// Pre-generated blur data URLs for project images
-const blurDataURLs: Record<string, string> = {
-  '/selfhosting.png':
-    'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUG/8QAIRAAAQMEAgMBAAAAAAAAAAAAAQIDBAUGAAcRIRITMUH/xAAVAQEBAAAAAAAAAAAAAAAAAAAEBf/EABwRAAICAgMAAAAAAAAAAAAAAAECAAMEERIhMf/aAAwDAQACEQMRAD8AzO2tv1K4bUpFS9bKYsSQyl9uMhwrUEqAIJUQACeeeOc5xjFLJrVAT2eO37//2Q==',
-  '/boxie.png':
-    'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAcI/8QAIhAAAQMDBAMBAAAAAAAAAAAAAQIDBAUGEQAHEiEIE0Fx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAcEQACAgIDAAAAAAAAAAAAAAABAgADBBESITH/2gAMAwEAAhEDEEA/ANS7b2JAsmyaZbcN556PBbKfcv8AKlqJJUo8QByST116x1pdWk1t+p//2Q==',
-  '/backup.png':
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAARklEQVQYV2NkYPj/n4EIwMjIxPCfgRhFjIxMDAQVMTIyMRBUxMjIxEBQESMjEwNBRYyMTAwEFTEyMjEQVMTIyMRAUBEAZk0FC1VB1B0AAAAASUVORK5CYII=',
-};
 
 interface Project {
   title: string;
@@ -51,8 +41,9 @@ interface ScreenSet {
   shots: Screenshot[];
 }
 
-// Grid cards show either a static image or a stack of live app screens
-type GridProject = Project & ({ image: string } | { screens: ScreenSet });
+// Grid cards show either a stack of live app screens or drawn cover art
+type GridProject = Project &
+  ({ screens: ScreenSet } | { cover: React.ReactNode });
 
 const pickScreens = (
   basePath: string,
@@ -101,8 +92,11 @@ const siteScreens: ScreenSet = {
   ],
 };
 
-const screenStackClass =
-  'bg-accent/10 mb-4 flex aspect-video w-full items-start justify-center overflow-hidden rounded-2xl border border-gray-300 px-[4%] pt-6 dark:border-gray-700';
+const mediaClass =
+  'bg-accent/10 mb-4 flex w-full justify-center overflow-hidden rounded-2xl border border-gray-300 dark:border-gray-700';
+const screenStackClass = `${mediaClass} aspect-video items-start px-[4%] pt-6`;
+// Taller on phones so the cover art isn't clipped
+const coverClass = `${mediaClass} aspect-[4/3] items-center px-[6%] py-4 sm:aspect-video`;
 
 // Three phone screens, middle one in front
 function ScreenStack({
@@ -293,12 +287,13 @@ export default function ProjectsPage() {
       caseStudy: null,
       diagram: null,
       date: 'September 2022 – Present',
-      image: '/selfhosting.png',
+      cover: <SelfHostingCover />,
       bullets: [
         'Built a full-stack, self-hosted ecosystem with Plex, Sonarr, Radarr, Home Assistant, and more using Docker and reverse proxies for secure access',
         'Automated home and media workflows via REST APIs, webhooks, and OAuth2 authentication',
         'Deployed GitHub Actions runners to streamline CI/CD for personal and open-source projects',
         'Implemented logging, backups, and monitoring tools to maintain uptime and system resilience',
+        'Runs local LLMs, including Llama 3.2 Vision, through Open WebUI on a Proxmox server with an RTX 3090, powering this site’s AI chat and receipt parser demo',
       ],
     },
     {
@@ -310,7 +305,7 @@ export default function ProjectsPage() {
       caseStudy: null,
       diagram: null,
       date: 'January 2022 – December 2022',
-      image: '/boxie.png',
+      cover: <BoxyCover />,
       bullets: [
         'Developed a mobile app for tracking and organizing bin-stored items using React Native, AWS Amplify, and Expo',
         'Authored user and technical documentation to support long-term maintainability and user onboarding',
@@ -398,22 +393,7 @@ export default function ProjectsPage() {
                     />
                   </div>
                 ) : (
-                  <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl border border-gray-300 bg-gray-700 dark:border-gray-700">
-                    <Image
-                      src={project.image}
-                      alt={project.title + ' image'}
-                      fill
-                      className={`${
-                        project.image === '/boxie.png'
-                          ? 'object-center'
-                          : 'object-cover'
-                      } transition-transform duration-300 group-hover:scale-105`}
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      placeholder="blur"
-                      blurDataURL={blurDataURLs[project.image]}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  </div>
+                  <div className={coverClass}>{project.cover}</div>
                 )}
                 <ProjectDetails project={project} />
               </motion.div>
