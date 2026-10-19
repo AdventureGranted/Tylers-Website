@@ -21,6 +21,8 @@ import PageTransition from '@/app/components/PageTransition';
 import Breadcrumbs from '@/app/components/Breadcrumbs';
 import ScreenshotGallery from '@/app/components/ScreenshotGallery';
 import CTAFooter from '@/app/components/CTAFooter';
+import LazyArchitectureDiagram from '@/app/components/LazyArchitectureDiagram';
+import { backupArchitecture } from '@/app/components/architectureDiagramData';
 import { containerVariants, itemVariants } from '@/app/lib/animations';
 import { backupClips, backupScreenshots } from './screenshots';
 
@@ -324,6 +326,10 @@ export default function BackupPage() {
                 </span>
               ))}
             </div>
+            <LazyArchitectureDiagram
+              {...backupArchitecture}
+              title="Back Up Architecture"
+            />
           </motion.section>
 
           <CTAFooter />

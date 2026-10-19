@@ -18,11 +18,7 @@ import type { Screenshot } from '@/app/components/ScreenshotGallery';
 import { balancelyScreenshots } from '@/app/projects/balancely/screenshots';
 import { backupScreenshots } from '@/app/projects/backup/screenshots';
 import { BoxyCover, SelfHostingCover } from '@/app/projects/ProjectCovers';
-import {
-  balancelyArchitecture,
-  backupArchitecture,
-  portfolioArchitecture,
-} from '@/app/components/architectureDiagramData';
+import { portfolioArchitecture } from '@/app/components/architectureDiagramData';
 
 interface Project {
   title: string;
@@ -33,7 +29,11 @@ interface Project {
   caseStudy: string | null;
   diagram: (ArchitectureDiagramProps & { title: string }) | null;
   date: string;
+  // One sentence on what it is; the cards stay short and the showcase pages
+  // carry the full detail
+  summary: string;
   bullets: string[];
+  tech: string[];
 }
 
 interface ScreenSet {
@@ -198,11 +198,22 @@ function ProjectDetails({ project }: { project: Project }) {
           )}
         </div>
       )}
-      <ul className="list-outside list-disc space-y-2 pl-5 text-gray-900 dark:text-gray-200">
+      <p className="mb-3 text-gray-900 dark:text-gray-200">{project.summary}</p>
+      <ul className="mb-4 list-outside list-disc space-y-2 pl-5 text-gray-700 dark:text-gray-400">
         {project.bullets.map((b, i) => (
           <li key={i}>{b}</li>
         ))}
       </ul>
+      <div className="mb-4 flex flex-wrap gap-2">
+        {project.tech.map((t) => (
+          <span
+            key={t}
+            className="rounded-full border border-gray-300 px-3 py-1 text-sm text-gray-700 dark:border-gray-600 dark:text-gray-400"
+          >
+            {t}
+          </span>
+        ))}
+      </div>
       {/* Pinned to the bottom so it lines up across cards in a row */}
       {project.diagram && (
         <div className="mt-auto">
@@ -222,17 +233,24 @@ export default function ProjectsPage() {
       privateRepo: true,
       demo: null,
       caseStudy: '/projects/balancely',
-      diagram: { ...balancelyArchitecture, title: 'Balancely Architecture' },
+      diagram: null,
       date: 'January 2026 – Present',
       screens: balancelyScreens,
+      summary:
+        'A budgeting app my household runs on every day: native SwiftUI on iPhone and Apple Watch, backed by a self-hosted Next.js API.',
       bullets: [
-        'Born from a passion for personal finance developed over nearly 4 years in consumer lending at EnerBank USA',
-        'Designed and built end to end as a personal project my household uses daily: a native SwiftUI iOS app with a watchOS companion and home-screen widgets',
-        'Pulls in transactions automatically through SimpleFIN and Plaid bank feeds and Apple Card via FinanceKit, then queues them in a swipe-to-review deck with suggested categories and confidence levels',
-        'Tracks budget pace, account-backed savings goals, and subscriptions, and flags unusual spending with adaptive per-category anomaly detection',
-        'Backed by a self-hosted Next.js 16 REST API with Prisma, PostgreSQL, and BullMQ/Redis background workers, deployed through GitHub Actions',
-        'Keeps iOS and backend in sync without a generated client: backend tests record real JSON responses as contract fixtures that the iOS test suite decodes',
-        'Uses a self-hosted LLM for transaction categorization, budget audits, and receipt parsing',
+        'Pulls in bank transactions automatically through SimpleFIN, Plaid and Apple’s FinanceKit, then queues them in a swipe-to-review deck with suggested categories',
+        'Keeps iOS and the backend in sync without a generated client: backend tests record real JSON responses that the iOS test suite decodes',
+        'Uses a self-hosted LLM for transaction categorization, budget audits and receipt parsing',
+      ],
+      tech: [
+        'SwiftUI',
+        'watchOS',
+        'FinanceKit',
+        'Next.js',
+        'PostgreSQL',
+        'BullMQ',
+        'Redis',
       ],
     },
     {
@@ -242,17 +260,24 @@ export default function ProjectsPage() {
       privateRepo: true,
       demo: null,
       caseStudy: '/projects/backup',
-      diagram: { ...backupArchitecture, title: 'Back Up Architecture' },
+      diagram: null,
       date: 'February 2026 – Present',
       screens: backupScreens,
+      summary:
+        'A card-driven board game for 2 to 6 players on iOS, with bots, live multiplayer and one-turn-a-day async games.',
       bullets: [
-        'Designed and built a card-driven board game for 2 to 6 players as a React Native and Expo iOS app in TypeScript',
-        'One pure TypeScript rules engine runs on the phone and on the server, which validates every move and sends each player only their own hand',
-        'Built live multiplayer with Socket.IO and Redis, plus async 24-hour turns with push notifications',
-        'Wrote Easy, Medium and Hard bots; Hard plans out its remaining hand within a 30 ms budget and weighs knockout risk from unseen cards',
-        'Node.js backend with Express, PostgreSQL, Redis, JWT auth and ELO ratings, deployed from a self-hosted GitHub Actions runner',
-        'Spectating, replays, friends, an interactive tutorial, animated pieces, sound and haptics',
+        'One TypeScript rules engine runs on the phone and on the server, which validates every move and sends each player only their own hand',
+        'The Hard bot plans out its remaining hand within a 30 ms budget, weighing knockout risk from the cards it hasn’t seen',
         '700+ Jest tests across the engine, bots, server and UI, plus Maestro end-to-end flows',
+      ],
+      tech: [
+        'React Native',
+        'Expo',
+        'TypeScript',
+        'Node.js',
+        'Socket.IO',
+        'PostgreSQL',
+        'Redis',
       ],
     },
     {
@@ -268,15 +293,21 @@ export default function ProjectsPage() {
       },
       date: 'June 2025 – Present',
       screens: siteScreens,
+      summary:
+        'This site: a full-stack Next.js portfolio with its own accounts, admin tools and AI features, running on my own server.',
       bullets: [
-        'Built a full-stack portfolio using Next.js, TypeScript, Tailwind CSS, and Framer Motion for smooth animations',
-        'Implemented user authentication with NextAuth.js including registration, role-based access control, and profile management',
-        'Integrated self-hosted AI chatbot powered by local LLM to answer visitor questions about my skills, experience, and projects',
-        'Built a receipt parser demo using self-hosted vision AI model (Llama 3.2 Vision) to extract and categorize receipt data',
-        'Self-hosted S3-compatible object storage using Garage for image uploads with Cloudflare tunnel for secure access',
-        'Designed PostgreSQL database with Prisma ORM for users, projects, and comments',
-        'Created admin dashboard for content and member management with search and filtering',
-        'Deployed on personal server with GitHub Actions CI/CD pipeline for automated builds and deployments',
+        'An AI chat assistant and a receipt parser demo powered by self-hosted models, including Llama 3.2 Vision',
+        'NextAuth.js accounts with role-based access, and an admin dashboard for content and members',
+        'Self-hosted S3-compatible storage (Garage) behind a Cloudflare tunnel, deployed through GitHub Actions',
+      ],
+      tech: [
+        'Next.js',
+        'TypeScript',
+        'Tailwind CSS',
+        'Prisma',
+        'PostgreSQL',
+        'NextAuth.js',
+        'GitHub Actions',
       ],
     },
   ];
@@ -292,13 +323,14 @@ export default function ProjectsPage() {
       diagram: null,
       date: 'September 2022 – Present',
       cover: <SelfHostingCover />,
+      summary:
+        'A homelab running media, smart-home and local AI services on Proxmox and Docker.',
       bullets: [
-        'Built a full-stack, self-hosted ecosystem with Plex, Sonarr, Radarr, Home Assistant, and more using Docker and reverse proxies for secure access',
-        'Automated home and media workflows via REST APIs, webhooks, and OAuth2 authentication',
-        'Deployed GitHub Actions runners to streamline CI/CD for personal and open-source projects',
-        'Implemented logging, backups, and monitoring tools to maintain uptime and system resilience',
-        'Runs local LLMs, including Llama 3.2 Vision, through Open WebUI on a Proxmox server with an RTX 3090, powering this site’s AI chat and receipt parser demo',
+        'Runs Plex, Sonarr, Radarr, Home Assistant, Immich and more in Docker behind reverse proxies',
+        'Hosts local LLMs, including Llama 3.2 Vision, through Open WebUI on an RTX 3090, powering this site’s AI chat and receipt parser demo',
+        'Automates home and media workflows through REST APIs and webhooks, with self-hosted GitHub Actions runners, backups and monitoring',
       ],
+      tech: ['Proxmox', 'Docker', 'Home Assistant', 'Open WebUI', 'Cloudflare'],
     },
     {
       title: 'Boxy – Senior Project',
@@ -310,10 +342,12 @@ export default function ProjectsPage() {
       diagram: null,
       date: 'January 2022 – December 2022',
       cover: <BoxyCover />,
+      summary:
+        'My senior project: a mobile app for keeping track of what’s stored in which bin, using QR-coded labels.',
       bullets: [
-        'Developed a mobile app for tracking and organizing bin-stored items using React Native, AWS Amplify, and Expo',
-        'Authored user and technical documentation to support long-term maintainability and user onboarding',
+        'Authored user and technical documentation to support long-term maintainability and onboarding',
       ],
+      tech: ['React Native', 'Expo', 'AWS Amplify'],
     },
   ];
 
