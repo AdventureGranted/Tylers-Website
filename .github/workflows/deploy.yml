@@ -15,6 +15,9 @@ jobs:
   deploy:
     runs-on: main
     environment: PROD
+    # A normal deploy takes a few minutes; fail instead of hanging if the
+    # build stalls (e.g. the server runs short on memory)
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
