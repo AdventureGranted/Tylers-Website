@@ -31,13 +31,13 @@ export default async function ProjectsAdmin() {
           <div className="flex gap-4">
             <Link
               href="/admin"
-              className="text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+              className="hover:text-accent text-gray-500 transition-colors"
             >
               Dashboard
             </Link>
             <Link
               href="/admin/projects/new"
-              className="rounded-lg bg-yellow-500 px-4 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+              className="bg-accent-fill hover:bg-accent-fill-hover rounded-lg px-4 py-2 font-semibold text-gray-900 transition-colors"
             >
               New Project
             </Link>
@@ -49,7 +49,7 @@ export default async function ProjectsAdmin() {
             <p className="text-gray-500">No projects yet.</p>
             <Link
               href="/admin/projects/new"
-              className="mt-4 inline-block text-yellow-500 hover:underline dark:text-yellow-300"
+              className="text-accent mt-4 inline-block hover:underline"
             >
               Create your first project
             </Link>

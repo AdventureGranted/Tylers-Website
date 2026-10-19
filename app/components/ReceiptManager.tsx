@@ -498,7 +498,7 @@ export default function ReceiptManager({
     return (
       <div className="rounded-2xl bg-white p-6 dark:bg-gray-700">
         <div className="flex items-center gap-2 text-gray-500">
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+          <div className="border-t-accent h-5 w-5 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-700" />
           Loading receipts...
         </div>
       </div>
@@ -514,12 +514,12 @@ export default function ReceiptManager({
     <div className="rounded-2xl bg-white p-6 dark:bg-gray-700">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900 dark:text-gray-200">
-          <HiOutlineReceiptTax className="text-yellow-500 dark:text-yellow-300" />
+          <HiOutlineReceiptTax className="text-accent" />
           Project Costs
         </h2>
         <div className="text-right">
           <div className="text-sm text-gray-500">Total</div>
-          <div className="text-2xl font-bold text-yellow-500 dark:text-yellow-300">
+          <div className="text-accent text-2xl font-bold">
             ${total.toFixed(2)}
           </div>
         </div>
@@ -551,7 +551,7 @@ export default function ReceiptManager({
       {(!readOnly || allowUpload) && !showForm && (
         <button
           onClick={() => setShowForm(true)}
-          className="mb-4 flex items-center gap-2 rounded-lg bg-yellow-300 px-4 py-2 font-medium text-gray-900 transition-colors hover:bg-yellow-400"
+          className="bg-accent-fill hover:bg-accent-fill-hover mb-4 flex items-center gap-2 rounded-lg px-4 py-2 font-medium text-gray-900 transition-colors"
         >
           <HiOutlineUpload />
           Add Receipt
@@ -594,7 +594,7 @@ export default function ReceiptManager({
                 onDrop={handleDrop}
                 className={`relative rounded-lg border-2 border-dashed transition-colors ${
                   isDragging
-                    ? 'border-yellow-500 bg-yellow-300/10 dark:border-yellow-300'
+                    ? 'border-accent bg-accent/10'
                     : 'border-gray-300 hover:border-gray-500 dark:border-gray-700'
                 }`}
               >
@@ -703,7 +703,7 @@ export default function ReceiptManager({
                 <button
                   type="button"
                   onClick={addFormItem}
-                  className="rounded-md bg-yellow-500/20 px-2 py-1 text-xs font-medium text-yellow-500 transition-colors hover:bg-yellow-500/30 dark:text-yellow-300"
+                  className="bg-accent/20 text-accent hover:bg-accent/30 rounded-md px-2 py-1 text-xs font-medium transition-colors"
                 >
                   + Add Item
                 </button>
@@ -722,7 +722,7 @@ export default function ReceiptManager({
                           updateFormItem(index, 'name', e.target.value)
                         }
                         placeholder="Item name"
-                        className="min-w-0 flex-1 rounded-md border border-gray-300 bg-white px-2 py-1 text-gray-900 placeholder-gray-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                        className="focus:ring-accent min-w-0 flex-1 rounded-md border border-gray-300 bg-white px-2 py-1 text-gray-900 placeholder-gray-500 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                       />
                       <div className="relative shrink-0">
                         <span className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-500">
@@ -737,7 +737,7 @@ export default function ReceiptManager({
                             updateFormItem(index, 'price', e.target.value)
                           }
                           placeholder="0.00"
-                          className="w-20 rounded-md border border-gray-300 bg-white py-1 pr-2 pl-5 text-gray-900 placeholder-gray-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                          className="focus:ring-accent w-20 rounded-md border border-gray-300 bg-white py-1 pr-2 pl-5 text-gray-900 placeholder-gray-500 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                         />
                       </div>
                       <select
@@ -748,7 +748,7 @@ export default function ReceiptManager({
                             e.target.value as 'material' | 'tool' | 'misc'
                           )
                         }
-                        className={`shrink-0 rounded-md border-0 px-2 py-1 text-xs font-medium focus:ring-2 focus:ring-yellow-500 focus:outline-none ${
+                        className={`focus:ring-accent shrink-0 rounded-md border-0 px-2 py-1 text-xs font-medium focus:ring-2 focus:outline-none ${
                           item.category === 'material'
                             ? 'bg-blue-500/20 text-blue-400'
                             : item.category === 'tool'
@@ -790,7 +790,7 @@ export default function ReceiptManager({
                   value={materialAmount}
                   onChange={(e) => setMaterialAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
                 />
               </div>
               <div>
@@ -804,7 +804,7 @@ export default function ReceiptManager({
                   value={toolAmount}
                   onChange={(e) => setToolAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
                 />
               </div>
               <div>
@@ -818,7 +818,7 @@ export default function ReceiptManager({
                   value={miscAmount}
                   onChange={(e) => setMiscAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
                 />
               </div>
             </div>
@@ -832,7 +832,7 @@ export default function ReceiptManager({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="e.g., Wood supplies, Paint, etc."
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+                className="focus:ring-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
               />
             </div>
 
@@ -842,7 +842,7 @@ export default function ReceiptManager({
                 disabled={
                   uploading || (!toolAmount && !materialAmount && !miscAmount)
                 }
-                className="flex-1 rounded-lg bg-yellow-500 px-4 py-3 font-medium text-gray-900 transition-colors hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                className="bg-accent-fill hover:bg-accent-fill-hover flex-1 rounded-lg px-4 py-3 font-medium text-gray-900 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {uploading ? 'Uploading...' : 'Save'}
               </button>
@@ -911,7 +911,7 @@ export default function ReceiptManager({
               )}
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-semibold text-yellow-500 dark:text-yellow-300">
+                  <span className="text-accent font-semibold">
                     $
                     {(
                       receipt.toolAmount +
@@ -948,7 +948,7 @@ export default function ReceiptManager({
                 <div className="flex shrink-0 gap-1">
                   <button
                     onClick={() => openEditModal(receipt)}
-                    className="rounded-lg p-2 text-gray-500 transition-colors hover:bg-yellow-500/20 hover:text-yellow-500"
+                    className="hover:bg-accent/20 hover:text-accent rounded-lg p-2 text-gray-500 transition-colors"
                     title="Edit receipt"
                   >
                     <HiOutlinePencil className="text-lg" />
@@ -1029,7 +1029,7 @@ export default function ReceiptManager({
                 <button
                   type="button"
                   onClick={addEditItem}
-                  className="rounded-md bg-yellow-500/20 px-2 py-1 text-xs font-medium text-yellow-500 transition-colors hover:bg-yellow-500/30 dark:text-yellow-300"
+                  className="bg-accent/20 text-accent hover:bg-accent/30 rounded-md px-2 py-1 text-xs font-medium transition-colors"
                 >
                   + Add Item
                 </button>
@@ -1048,7 +1048,7 @@ export default function ReceiptManager({
                           updateEditItem(index, 'name', e.target.value)
                         }
                         placeholder="Item name"
-                        className="min-w-0 flex-1 rounded-md border border-gray-300 bg-white px-2 py-1 text-gray-900 placeholder-gray-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                        className="focus:ring-accent min-w-0 flex-1 rounded-md border border-gray-300 bg-white px-2 py-1 text-gray-900 placeholder-gray-500 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                       />
                       <div className="relative shrink-0">
                         <span className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-500">
@@ -1063,7 +1063,7 @@ export default function ReceiptManager({
                             updateEditItem(index, 'price', e.target.value)
                           }
                           placeholder="0.00"
-                          className="w-20 rounded-md border border-gray-300 bg-white py-1 pr-2 pl-5 text-gray-900 placeholder-gray-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                          className="focus:ring-accent w-20 rounded-md border border-gray-300 bg-white py-1 pr-2 pl-5 text-gray-900 placeholder-gray-500 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                         />
                       </div>
                       <select
@@ -1074,7 +1074,7 @@ export default function ReceiptManager({
                             e.target.value as 'material' | 'tool' | 'misc'
                           )
                         }
-                        className={`shrink-0 rounded-md border-0 px-2 py-1 text-xs font-medium focus:ring-2 focus:ring-yellow-500 focus:outline-none ${
+                        className={`focus:ring-accent shrink-0 rounded-md border-0 px-2 py-1 text-xs font-medium focus:ring-2 focus:outline-none ${
                           item.category === 'material'
                             ? 'bg-blue-500/20 text-blue-400'
                             : item.category === 'tool'
@@ -1115,7 +1115,7 @@ export default function ReceiptManager({
                   value={editMaterialAmount}
                   onChange={(e) => setEditMaterialAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
                 />
               </div>
               <div>
@@ -1129,7 +1129,7 @@ export default function ReceiptManager({
                   value={editToolAmount}
                   onChange={(e) => setEditToolAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
                 />
               </div>
               <div>
@@ -1143,7 +1143,7 @@ export default function ReceiptManager({
                   value={editMiscAmount}
                   onChange={(e) => setEditMiscAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
                 />
               </div>
             </div>
@@ -1157,7 +1157,7 @@ export default function ReceiptManager({
                 value={editDescription}
                 onChange={(e) => setEditDescription(e.target.value)}
                 placeholder="e.g., Wood supplies, Paint, etc."
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+                className="focus:ring-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
               />
             </div>
 
@@ -1168,7 +1168,7 @@ export default function ReceiptManager({
                   isUpdating ||
                   (!editToolAmount && !editMaterialAmount && !editMiscAmount)
                 }
-                className="flex-1 rounded-lg bg-yellow-500 px-4 py-3 font-medium text-gray-900 transition-colors hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                className="bg-accent-fill hover:bg-accent-fill-hover flex-1 rounded-lg px-4 py-3 font-medium text-gray-900 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isUpdating ? 'Saving...' : 'Save Changes'}
               </button>

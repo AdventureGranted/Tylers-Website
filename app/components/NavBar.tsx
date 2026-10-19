@@ -131,7 +131,7 @@ function ProfileAvatar({
 
   return (
     <div
-      className={`flex ${sizeClasses} items-center justify-center rounded-full bg-yellow-300 font-bold text-gray-900`}
+      className={`flex ${sizeClasses} bg-accent-fill items-center justify-center rounded-full font-bold text-gray-900`}
     >
       {name?.[0]?.toUpperCase() || 'U'}
     </div>
@@ -160,8 +160,8 @@ function NavLink({
       : 'flex items-center justify-center px-4 text-center text-2xl transition duration-300';
 
   const activeClasses = isActive
-    ? 'font-bold text-yellow-300 dark:text-yellow-300'
-    : 'text-gray-900 dark:text-gray-200 hover:text-yellow-300';
+    ? 'font-bold text-accent'
+    : 'text-gray-900 dark:text-gray-200 hover:text-accent';
 
   return (
     <Link
@@ -185,7 +185,7 @@ function Logo() {
           alt="Tyler Grant"
           width={180}
           height={60}
-          className="h-10 w-auto transition-all duration-300 group-hover:drop-shadow-[0_0_12px_rgba(253,224,71,0.8)]"
+          className="h-10 w-auto transition-all duration-300 group-hover:drop-shadow-[0_0_12px_color-mix(in_srgb,var(--color-accent)_80%,transparent)]"
         />
       </Link>
     </div>
@@ -214,7 +214,7 @@ function UserDropdown({
     <div className="relative" ref={menuRef}>
       <button
         onClick={onToggle}
-        className="flex items-center gap-1 rounded-lg px-2 py-1 text-lg text-gray-900 transition duration-300 hover:bg-gray-100 hover:text-yellow-300 dark:text-gray-200 dark:hover:bg-gray-700"
+        className="hover:text-accent flex items-center gap-1 rounded-lg px-2 py-1 text-lg text-gray-900 transition duration-300 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
       >
         <div className="relative">
           <ProfileAvatar
@@ -249,7 +249,7 @@ function UserDropdown({
           <Link
             href="/profile"
             onClick={onClose}
-            className="flex items-center px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 hover:text-yellow-300 dark:text-gray-200 dark:hover:bg-gray-600"
+            className="hover:text-accent flex items-center px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
           >
             <AiOutlineUser className="mr-2" />
             Profile
@@ -259,7 +259,7 @@ function UserDropdown({
               <Link
                 href="/admin/contacts"
                 onClick={onClose}
-                className="flex items-center justify-between px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 hover:text-yellow-300 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="hover:text-accent flex items-center justify-between px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
               >
                 <span className="flex items-center">
                   <HiOutlineMail className="mr-2" />
@@ -270,7 +270,7 @@ function UserDropdown({
               <Link
                 href="/admin/jobs"
                 onClick={onClose}
-                className="flex items-center px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 hover:text-yellow-300 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="hover:text-accent flex items-center px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
               >
                 <HiOutlineBriefcase className="mr-2" />
                 Jobs
@@ -278,7 +278,7 @@ function UserDropdown({
               <Link
                 href="/admin"
                 onClick={onClose}
-                className="flex items-center px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 hover:text-yellow-300 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="hover:text-accent flex items-center px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
               >
                 <AiOutlineDashboard className="mr-2" />
                 Admin Dashboard
@@ -291,7 +291,7 @@ function UserDropdown({
               onClose();
               signOut();
             }}
-            className="flex w-full items-center px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 hover:text-yellow-300 dark:text-gray-200 dark:hover:bg-gray-600"
+            className="hover:text-accent flex w-full items-center px-4 py-2 text-gray-900 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600"
           >
             <AiOutlineLogout className="mr-2" />
             Sign Out
@@ -310,8 +310,8 @@ function GuestAuthLinks({ pathname }: { pathname: string }) {
         href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
         className={`flex items-center px-2 text-lg transition duration-300 hover:scale-105 ${
           pathname === '/login'
-            ? 'font-bold text-yellow-300'
-            : 'text-gray-700 hover:text-yellow-300 dark:text-gray-400'
+            ? 'text-accent font-bold'
+            : 'hover:text-accent text-gray-700 dark:text-gray-400'
         }`}
       >
         <AiOutlineLogin className="mr-1" />
@@ -382,7 +382,7 @@ function MobileDrawer({
               <Link
                 onClick={onClose}
                 href="/profile"
-                className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 hover:text-yellow-300 dark:text-gray-200"
+                className="hover:text-accent flex items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 dark:text-gray-200"
               >
                 <AiOutlineUser className="mr-2" />
                 Profile
@@ -392,7 +392,7 @@ function MobileDrawer({
                   <Link
                     onClick={onClose}
                     href="/admin/contacts"
-                    className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 hover:text-yellow-300 dark:text-gray-200"
+                    className="hover:text-accent flex items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 dark:text-gray-200"
                   >
                     <HiOutlineMail className="mr-2" />
                     Messages
@@ -404,7 +404,7 @@ function MobileDrawer({
                   <Link
                     onClick={onClose}
                     href="/admin/jobs"
-                    className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 hover:text-yellow-300 dark:text-gray-200"
+                    className="hover:text-accent flex items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 dark:text-gray-200"
                   >
                     <HiOutlineBriefcase className="mr-2" />
                     Jobs
@@ -412,7 +412,7 @@ function MobileDrawer({
                   <Link
                     onClick={onClose}
                     href="/admin"
-                    className="flex items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 hover:text-yellow-300 dark:text-gray-200"
+                    className="hover:text-accent flex items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 dark:text-gray-200"
                   >
                     <AiOutlineDashboard className="mr-2" />
                     Admin
@@ -424,7 +424,7 @@ function MobileDrawer({
                   onClose();
                   signOut();
                 }}
-                className="flex w-full items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 hover:text-yellow-300 dark:text-gray-200"
+                className="hover:text-accent flex w-full items-center justify-center px-4 py-1 text-center text-xl text-gray-900 transition duration-300 dark:text-gray-200"
               >
                 <AiOutlineLogout className="mr-2" />
                 Sign Out
@@ -437,8 +437,8 @@ function MobileDrawer({
                 href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
                 className={`flex items-center justify-center px-4 text-center text-xl transition duration-300 ${
                   pathname === '/login'
-                    ? 'font-bold text-yellow-300'
-                    : 'text-gray-900 hover:text-yellow-300 dark:text-gray-200'
+                    ? 'text-accent font-bold'
+                    : 'hover:text-accent text-gray-900 dark:text-gray-200'
                 }`}
               >
                 <AiOutlineLogin className="mr-2" />
@@ -529,7 +529,7 @@ function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle navigation menu"
           >
-            <RxHamburgerMenu className="text-4xl text-gray-900 hover:text-yellow-300 dark:text-gray-200" />
+            <RxHamburgerMenu className="hover:text-accent text-4xl text-gray-900 dark:text-gray-200" />
             {session?.user?.role === 'admin' && (
               <UnreadBadge
                 count={unreadCount}

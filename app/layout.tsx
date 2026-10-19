@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Bricolage_Grotesque, Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/NavBar';
 import SessionProvider from './components/SessionProvider';
@@ -10,6 +10,11 @@ import ThemeProvider from './components/ThemeProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
+  subsets: ['latin'],
+});
+
+const bricolage = Bricolage_Grotesque({
+  variable: '--font-bricolage',
   subsets: ['latin'],
 });
 
@@ -93,8 +98,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
   viewportFit: 'cover',
   themeColor: '#111827',
 };
@@ -186,7 +189,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-gray-100 text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-200`}
+        className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} bg-gray-100 text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-200`}
       >
         <SessionProvider>
           <ThemeProvider>
@@ -195,7 +198,7 @@ export default function RootLayout({
               {/* Skip to main content link for accessibility */}
               <a
                 href="#main-content"
-                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-yellow-300 focus:px-4 focus:py-2 focus:text-gray-900 focus:outline-none"
+                className="focus:bg-accent-fill sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:px-4 focus:py-2 focus:text-gray-900 focus:outline-none"
               >
                 Skip to main content
               </a>

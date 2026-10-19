@@ -131,13 +131,13 @@ export default function CommentSection({ projectId }: CommentSectionProps) {
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Write a comment..."
             rows={3}
-            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 placeholder-gray-500 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
+            className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 placeholder-gray-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
           />
           <div className="mt-2 flex justify-end">
             <button
               type="submit"
               disabled={submitting || !newComment.trim()}
-              className="rounded-lg bg-yellow-500 px-4 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+              className="bg-accent-fill hover:bg-accent-fill-hover rounded-lg px-4 py-2 font-semibold text-gray-900 transition-colors disabled:opacity-50"
             >
               {submitting ? 'Posting...' : 'Post Comment'}
             </button>
@@ -146,10 +146,7 @@ export default function CommentSection({ projectId }: CommentSectionProps) {
       ) : (
         <div className="mb-6 rounded-lg bg-white p-4 text-center dark:bg-gray-700">
           <p className="text-gray-500">
-            <Link
-              href="/login"
-              className="text-yellow-500 hover:underline dark:text-yellow-300"
-            >
+            <Link href="/login" className="text-accent hover:underline">
               Sign in
             </Link>{' '}
             to leave a comment

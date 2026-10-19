@@ -72,7 +72,7 @@ export default function SettingsPage() {
   if (status === 'loading' || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-yellow-500 border-t-transparent" />
+        <div className="border-accent h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
       </div>
     );
   }
@@ -84,7 +84,7 @@ export default function SettingsPage() {
         <div className="mb-8 flex items-center gap-4">
           <Link
             href="/admin"
-            className="flex items-center gap-1 text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="hover:text-accent flex items-center gap-1 text-gray-500 transition-colors"
           >
             <AiOutlineArrowLeft />
             Back
@@ -92,7 +92,7 @@ export default function SettingsPage() {
         </div>
 
         <div className="mb-8 flex items-center gap-3">
-          <HiOutlineCog className="h-8 w-8 text-yellow-500 dark:text-yellow-300" />
+          <HiOutlineCog className="text-accent h-8 w-8" />
           <h1 className="text-2xl font-bold text-gray-900 md:text-3xl dark:text-gray-200">
             Site Settings
           </h1>
@@ -106,7 +106,7 @@ export default function SettingsPage() {
 
           <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-600 dark:bg-gray-700/50">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-yellow-500/10 text-yellow-500 dark:bg-yellow-300/10 dark:text-yellow-300">
+              <div className="bg-accent/10 text-accent flex h-10 w-10 items-center justify-center rounded-lg">
                 <BsTelephone className="text-lg" />
               </div>
               <div>
@@ -127,10 +127,8 @@ export default function SettingsPage() {
               aria-checked={showPhone}
               onClick={() => handleToggle(!showPhone)}
               disabled={saving}
-              className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-offset-gray-800 ${
-                showPhone
-                  ? 'bg-yellow-500 dark:bg-yellow-300'
-                  : 'bg-gray-300 dark:bg-gray-600'
+              className={`focus:ring-accent relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:opacity-50 dark:focus:ring-offset-gray-800 ${
+                showPhone ? 'bg-accent-fill' : 'bg-gray-300 dark:bg-gray-600'
               }`}
             >
               <span

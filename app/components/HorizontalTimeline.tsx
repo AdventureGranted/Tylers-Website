@@ -141,7 +141,7 @@ export default function HorizontalTimeline({ items }: HorizontalTimelineProps) {
           {/* Timeline line + dots row */}
           <div className="relative" style={{ height: '48px' }}>
             {/* Gradient line */}
-            <div className="absolute top-1/2 left-0 h-0.5 w-full -translate-y-1/2 bg-gradient-to-r from-purple-500 via-yellow-300 to-purple-500" />
+            <div className="absolute top-1/2 left-0 h-0.5 w-full -translate-y-1/2 bg-gray-300 dark:bg-gray-700" />
 
             {/* Connector lines + dots */}
             {items.map((item, i) => (

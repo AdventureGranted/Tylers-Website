@@ -45,14 +45,14 @@ export default function DemosPage() {
                 href={demo.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block h-full rounded-2xl border border-gray-300 bg-white p-6 shadow-md transition-all hover:border-teal-500/50 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50 dark:hover:shadow-yellow-300/5"
+                className="group hover:border-accent-soft/50 dark:hover:border-accent/50 dark:hover:shadow-accent/5 block h-full rounded-2xl border border-gray-300 bg-white p-6 shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
               >
                 <DemoCardContent demo={demo} />
               </a>
             ) : (
               <Link
                 href={demo.href}
-                className="group block h-full rounded-2xl border border-gray-300 bg-white p-6 shadow-md transition-all hover:border-teal-500/50 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50 dark:hover:shadow-yellow-300/5"
+                className="group hover:border-accent-soft/50 dark:hover:border-accent/50 dark:hover:shadow-accent/5 block h-full rounded-2xl border border-gray-300 bg-white p-6 shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
               >
                 <DemoCardContent demo={demo} />
               </Link>
@@ -68,14 +68,14 @@ function DemoCardContent({ demo }: { demo: (typeof demos)[number] }) {
   return (
     <>
       <div className="mb-4 flex items-center justify-between">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-500/10 text-teal-600 dark:bg-yellow-300/10 dark:text-yellow-300">
+        <div className="bg-accent-soft/10 text-accent dark:bg-accent/10 flex h-12 w-12 items-center justify-center rounded-xl">
           {demo.icon}
         </div>
         {demo.external && (
-          <HiOutlineExternalLink className="text-lg text-gray-500 transition-colors group-hover:text-teal-600 dark:group-hover:text-yellow-300" />
+          <HiOutlineExternalLink className="group-hover:text-accent text-lg text-gray-500 transition-colors" />
         )}
       </div>
-      <h2 className="mb-2 text-xl font-semibold text-gray-900 transition-colors group-hover:text-teal-600 dark:text-gray-200 dark:group-hover:text-yellow-300">
+      <h2 className="group-hover:text-accent mb-2 text-xl font-semibold text-gray-900 transition-colors dark:text-gray-200">
         {demo.title}
       </h2>
       <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">

@@ -347,7 +347,7 @@ export default async function AdminDashboard() {
           </h1>
           <Link
             href="/"
-            className="text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="hover:text-accent text-gray-500 transition-colors"
           >
             View Site
           </Link>
@@ -365,7 +365,7 @@ export default async function AdminDashboard() {
             >
               Contact Submissions
               {unreadContacts > 0 && (
-                <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-yellow-500 text-xs font-bold text-gray-900 dark:bg-yellow-300">
+                <span className="bg-accent-fill absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold text-gray-900">
                   {unreadContacts}
                 </span>
               )}
@@ -396,7 +396,7 @@ export default async function AdminDashboard() {
             </Link>
             <Link
               href="/admin/projects/new"
-              className="rounded-lg bg-yellow-500 px-4 py-3 text-center font-semibold text-gray-900 transition-colors hover:bg-yellow-600 md:py-2 md:text-left dark:bg-yellow-300 dark:hover:bg-yellow-400"
+              className="bg-accent-fill hover:bg-accent-fill-hover rounded-lg px-4 py-3 text-center font-semibold text-gray-900 transition-colors md:py-2 md:text-left"
             >
               New Project
             </Link>
@@ -410,11 +410,11 @@ export default async function AdminDashboard() {
               key={stat.label}
               className={`rounded-xl border border-gray-300 p-4 text-center dark:border-gray-700 ${
                 stat.highlight
-                  ? 'border-2 border-yellow-500/50 bg-yellow-500/10 dark:border-yellow-300/50 dark:bg-yellow-300/10'
+                  ? 'border-accent/50 bg-accent/10 border-2'
                   : 'bg-white dark:bg-gray-800'
               }`}
             >
-              <div className="text-2xl font-bold text-yellow-500 md:text-3xl dark:text-yellow-300">
+              <div className="text-accent text-2xl font-bold md:text-3xl">
                 {stat.value}
               </div>
               <div className="text-xs text-gray-500 md:text-sm">
@@ -431,9 +431,7 @@ export default async function AdminDashboard() {
               key={stat.label}
               className="rounded-xl border border-gray-300 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
             >
-              <div className="text-2xl font-bold text-yellow-500 dark:text-yellow-300">
-                {stat.value}
-              </div>
+              <div className="text-accent text-2xl font-bold">{stat.value}</div>
               <div className="text-sm font-medium text-gray-900 dark:text-gray-200">
                 {stat.label}
               </div>
@@ -468,7 +466,7 @@ export default async function AdminDashboard() {
                     <span className="truncate text-sm text-gray-700 dark:text-gray-400">
                       {page.page || '/'}
                     </span>
-                    <span className="ml-2 text-sm font-medium text-yellow-500 dark:text-yellow-300">
+                    <span className="text-accent ml-2 text-sm font-medium">
                       {page._count.page}
                     </span>
                   </div>
@@ -500,7 +498,7 @@ export default async function AdminDashboard() {
                     </div>
                     <div className="mt-1 h-2 rounded-full bg-white dark:bg-gray-700">
                       <div
-                        className="h-2 rounded-full bg-yellow-500 dark:bg-yellow-300"
+                        className="bg-accent-fill h-2 rounded-full"
                         style={{ width: `${pct}%` }}
                       />
                     </div>
@@ -524,7 +522,7 @@ export default async function AdminDashboard() {
                   <span className="text-gray-700 capitalize dark:text-gray-400">
                     {b.browser}
                   </span>
-                  <span className="text-sm text-yellow-500 dark:text-yellow-300">
+                  <span className="text-accent text-sm">
                     {b._count.browser}
                   </span>
                 </div>
@@ -577,7 +575,7 @@ export default async function AdminDashboard() {
                       <span className="text-gray-700 dark:text-gray-400">
                         {c.country || 'Unknown'}
                       </span>
-                      <span className="text-sm text-yellow-500 dark:text-yellow-300">
+                      <span className="text-accent text-sm">
                         {c._count.country}
                       </span>
                     </div>

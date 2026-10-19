@@ -112,7 +112,7 @@ export default function ContactForm() {
         </p>
         <button
           onClick={() => setStatus('idle')}
-          className="mt-6 text-sm text-yellow-300 hover:underline"
+          className="text-accent mt-6 text-sm hover:underline"
         >
           Send another message
         </button>
@@ -162,7 +162,7 @@ export default function ContactForm() {
               onChange={handleChange}
               aria-invalid={!!fieldErrors.name}
               aria-describedby={fieldErrors.name ? 'name-error' : undefined}
-              className={`w-full rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:bg-gray-700 dark:text-gray-200 ${
+              className={`focus:border-accent focus:ring-accent/50 w-full rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:ring-2 focus:outline-none dark:bg-gray-700 dark:text-gray-200 ${
                 fieldErrors.name
                   ? 'border-red-400 dark:border-red-500'
                   : 'border-gray-300 dark:border-gray-600'
@@ -194,7 +194,7 @@ export default function ContactForm() {
               onChange={handleChange}
               aria-invalid={!!fieldErrors.email}
               aria-describedby={fieldErrors.email ? 'email-error' : undefined}
-              className={`w-full rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:bg-gray-700 dark:text-gray-200 ${
+              className={`focus:border-accent focus:ring-accent/50 w-full rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:ring-2 focus:outline-none dark:bg-gray-700 dark:text-gray-200 ${
                 fieldErrors.email
                   ? 'border-red-400 dark:border-red-500'
                   : 'border-gray-300 dark:border-gray-600'
@@ -225,7 +225,7 @@ export default function ContactForm() {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+            className="focus:border-accent focus:ring-accent/50 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:ring-2 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
             placeholder="(123) 456-7890"
           />
         </motion.div>
@@ -246,7 +246,7 @@ export default function ContactForm() {
             onChange={handleChange}
             aria-invalid={!!fieldErrors.message}
             aria-describedby={fieldErrors.message ? 'message-error' : undefined}
-            className={`w-full resize-none rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:bg-gray-700 dark:text-gray-200 ${
+            className={`focus:border-accent focus:ring-accent/50 w-full resize-none rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:ring-2 focus:outline-none dark:bg-gray-700 dark:text-gray-200 ${
               fieldErrors.message
                 ? 'border-red-400 dark:border-red-500'
                 : 'border-gray-300 dark:border-gray-600'
@@ -267,7 +267,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-300 px-6 py-4 font-bold text-gray-900 transition-all duration-300 hover:bg-yellow-400 hover:shadow-lg hover:shadow-yellow-300/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            className="bg-accent-fill hover:bg-accent-fill-hover hover:shadow-accent/20 flex w-full items-center justify-center gap-2 rounded-xl px-6 py-4 font-bold text-gray-900 transition-all duration-300 hover:shadow-lg active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {status === 'loading' ? (
               <>

@@ -35,10 +35,6 @@ export default function ProfileCard() {
       transition={{ duration: 0.6 }}
       className="relative mx-auto mt-4 overflow-hidden rounded-3xl border border-gray-300 bg-white p-8 shadow-md xl:min-h-[280px] xl:py-12 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
     >
-      {/* Subtle gradient background decoration */}
-      <div className="absolute -top-56 -left-56 h-[448px] w-[448px] bg-[radial-gradient(closest-side,rgb(168_85_247/0.16),transparent)]" />
-      <div className="absolute -right-56 -bottom-56 h-[448px] w-[448px] bg-[radial-gradient(closest-side,rgb(253_224_71/0.08),transparent)]" />
-
       {/* Profile Image - centered on mobile, absolute left on md+ */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -46,8 +42,6 @@ export default function ProfileCard() {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="relative mx-auto mb-6 w-fit xl:absolute xl:top-1/2 xl:left-8 xl:mb-0 xl:-translate-y-1/2"
       >
-        {/* Glow effect behind image */}
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-500 to-yellow-300 opacity-50 blur-xl" />
         <div className="relative h-40 w-48 overflow-hidden rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105 xl:h-[200px] xl:w-[200px]">
           <Image
             src="/profile.jpg"
@@ -69,11 +63,8 @@ export default function ProfileCard() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="max-w-2xl text-4xl font-bold text-gray-900 dark:text-gray-200"
         >
-          Hi, I&apos;m{' '}
-          <span className="text-teal-600 dark:text-yellow-300">
-            Tyler Grant
-          </span>
-          . Nice to meet you!
+          Hi, I&apos;m <span className="text-accent">Tyler Grant</span>. Nice to
+          meet you!
         </motion.h1>
 
         <motion.p
@@ -102,7 +93,7 @@ export default function ProfileCard() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={link.label}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 transition-all duration-300 hover:scale-110 hover:bg-yellow-300 hover:text-gray-900 active:scale-95 dark:bg-gray-700 dark:text-gray-400"
+              className="hover:bg-accent-fill flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 transition-all duration-300 hover:scale-110 hover:text-gray-900 active:scale-95 dark:bg-gray-700 dark:text-gray-400"
             >
               {iconMap[link.iconName]}
             </a>
@@ -119,13 +110,13 @@ export default function ProfileCard() {
             href="/Tyler_Grant_Resume.pdf"
             download="Tyler_Grant_Resume.pdf"
             onClick={handleDownload}
-            className="inline-block rounded-full bg-yellow-300 px-8 py-4 text-lg font-bold text-gray-900 shadow-lg shadow-yellow-300/25 transition-all duration-300 hover:scale-105 hover:bg-yellow-400 hover:shadow-yellow-300/40 active:scale-95"
+            className="bg-accent-fill shadow-accent/25 hover:bg-accent-fill-hover hover:shadow-accent/40 inline-block rounded-full px-8 py-4 text-lg font-bold text-gray-900 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
           >
             Download Resume
           </a>
           <Link
             href="/about"
-            className="inline-block rounded-full border border-gray-300 bg-white px-8 py-4 text-lg font-bold text-gray-900 transition-all duration-300 hover:scale-105 hover:border-yellow-300/50 hover:bg-gray-100 active:scale-95 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-700"
+            className="hover:border-accent/50 inline-block rounded-full border border-gray-300 bg-white px-8 py-4 text-lg font-bold text-gray-900 transition-all duration-300 hover:scale-105 hover:bg-gray-100 active:scale-95 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-700"
           >
             Learn More About Me
           </Link>

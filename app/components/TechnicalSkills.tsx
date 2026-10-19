@@ -59,7 +59,7 @@ const skillCategories = [
     title: 'Languages & Frameworks',
     skills: [
       { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-400' },
-      { name: 'JavaScript', icon: SiJavascript, color: 'text-yellow-400' },
+      { name: 'JavaScript', icon: SiJavascript, color: 'text-accent-strong' },
       { name: 'React', icon: SiReact, color: 'text-cyan-400' },
       {
         name: 'Next.js',
@@ -71,7 +71,7 @@ const skillCategories = [
       { name: 'GraphQL', icon: SiGraphql, color: 'text-pink-500' },
       { name: 'Tailwind CSS', icon: SiTailwindcss, color: 'text-cyan-400' },
       { name: 'NextAuth', icon: RiShieldKeyholeLine, color: 'text-purple-400' },
-      { name: 'Python', icon: SiPython, color: 'text-yellow-300' },
+      { name: 'Python', icon: SiPython, color: 'text-accent' },
       { name: 'FastAPI', icon: SiFastapi, color: 'text-teal-500' },
       { name: 'C#', icon: TbBrandCSharp, color: 'text-purple-400' },
       { name: 'Java', icon: FaJava, color: 'text-red-400' },
@@ -113,7 +113,7 @@ const skillCategories = [
         icon: TbDatabaseCog,
         color: 'text-purple-400',
       },
-      { name: 'Webhooks', icon: TbWebhook, color: 'text-yellow-400' },
+      { name: 'Webhooks', icon: TbWebhook, color: 'text-accent-strong' },
       {
         name: 'Builder.io',
         icon: TbLayoutBoardSplit,
@@ -140,7 +140,7 @@ const skillCategories = [
   {
     title: 'Platforms',
     skills: [
-      { name: 'Linux', icon: SiLinux, color: 'text-yellow-400' },
+      { name: 'Linux', icon: SiLinux, color: 'text-accent-strong' },
       { name: 'Debian', icon: SiDebian, color: 'text-red-400' },
       { name: 'Ubuntu', icon: SiUbuntu, color: 'text-orange-500' },
       {
@@ -184,7 +184,7 @@ export default function TechnicalSkills() {
             className="h-full"
           >
             <Card className="h-full">
-              <h3 className="mb-4 text-xl font-semibold text-teal-600 dark:text-yellow-300">
+              <h3 className="text-accent mb-4 text-xl font-semibold">
                 {category.title}
               </h3>
               <div className="flex flex-wrap gap-3">
@@ -208,14 +208,14 @@ export default function TechnicalSkills() {
       {/* Knowledge Areas */}
       <motion.div variants={itemVariants} className="mt-8">
         <Card>
-          <h3 className="mb-4 text-xl font-semibold text-teal-600 dark:text-yellow-300">
+          <h3 className="text-accent mb-4 text-xl font-semibold">
             Knowledge Areas
           </h3>
           <div className="flex flex-wrap gap-3">
             {subjects.map((subject) => (
               <span
                 key={subject}
-                className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-all duration-300 hover:border-teal-500/50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:border-yellow-300/50 dark:hover:bg-gray-600"
+                className="hover:border-accent-soft/50 dark:hover:border-accent/50 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-all duration-300 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
               >
                 {subject}
               </span>

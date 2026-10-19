@@ -104,7 +104,7 @@ export default function MaterialsChecklist({
     return (
       <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+          <div className="border-t-accent h-4 w-4 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-700" />
           Loading...
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function MaterialsChecklist({
     <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
       <div className="mb-3 flex items-center justify-between">
         <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-          <HiOutlineClipboardList className="text-yellow-500 dark:text-yellow-300" />
+          <HiOutlineClipboardList className="text-accent" />
           Materials
         </h3>
         {materials.length > 0 && (
@@ -147,7 +147,7 @@ export default function MaterialsChecklist({
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="Item name"
-                  className="flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                   autoFocus
                 />
                 <input
@@ -155,14 +155,14 @@ export default function MaterialsChecklist({
                   value={newQuantity}
                   onChange={(e) => setNewQuantity(e.target.value)}
                   placeholder="Qty"
-                  className="w-16 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-16 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 />
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={handleAdd}
                   disabled={saving || !newName.trim()}
-                  className="flex-1 rounded bg-yellow-500 py-1 text-sm font-medium text-gray-900 hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                  className="bg-accent-fill hover:bg-accent-fill-hover flex-1 rounded py-1 text-sm font-medium text-gray-900 disabled:opacity-50"
                 >
                   {saving ? 'Adding...' : 'Add'}
                 </button>
@@ -196,7 +196,7 @@ export default function MaterialsChecklist({
                   type="checkbox"
                   checked={item.acquired}
                   onChange={() => handleToggle(item.id, item.acquired)}
-                  className="h-4 w-4 rounded border-gray-300 bg-white text-yellow-500 focus:ring-yellow-500 dark:border-gray-700 dark:bg-gray-800 dark:text-yellow-300 dark:focus:ring-yellow-300"
+                  className="text-accent focus:ring-accent h-4 w-4 rounded border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800"
                 />
               )}
               <span

@@ -84,7 +84,7 @@ function LoginForm() {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+          className="focus:border-accent focus:ring-accent/50 w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
           required
         />
       </motion.div>
@@ -98,7 +98,7 @@ function LoginForm() {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+          className="focus:border-accent focus:ring-accent/50 w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
           required
         />
       </motion.div>
@@ -107,7 +107,7 @@ function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+          className="bg-accent-fill hover:bg-accent-fill-hover w-full rounded-lg py-2 font-semibold text-gray-900 transition-colors disabled:opacity-50"
         >
           {loading ? 'Signing in...' : 'Sign In'}
         </button>
@@ -118,10 +118,7 @@ function LoginForm() {
         className="text-center text-sm text-gray-500"
       >
         Don&apos;t have an account?{' '}
-        <Link
-          href="/register"
-          className="text-yellow-500 hover:underline dark:text-yellow-300"
-        >
+        <Link href="/register" className="text-accent hover:underline">
           Create one
         </Link>
       </motion.p>
@@ -132,10 +129,6 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-x-clip bg-gray-100 px-4 dark:bg-gray-900">
-      {/* Soft glow orbs, top-left and bottom-right of the login section. Radial gradients rather than a blur filter: a large filter: blur() flickers while scrolling under the navbar's backdrop blur. */}
-      <div className="pointer-events-none absolute top-[calc(25%-192px)] left-1/4 h-[640px] w-[768px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(168_85_247/0.12),transparent)]" />
-      <div className="pointer-events-none absolute right-1/4 bottom-[calc(25%-168px)] h-[560px] w-[640px] translate-x-1/2 bg-[radial-gradient(closest-side,rgb(253_224_71/0.1),transparent)]" />
-
       <motion.div
         initial="hidden"
         animate="visible"
@@ -150,7 +143,7 @@ export default function LoginPage() {
             <HiOutlineLockClosed className="h-8 w-8 text-purple-500 dark:text-purple-400" />
             Sign In
           </h1>
-          <div className="mx-auto mt-4 h-1 w-full max-w-[8rem] rounded-full bg-gradient-to-r from-purple-500 to-yellow-300" />
+          <div className="bg-accent mx-auto mt-4 h-1 w-full max-w-[8rem] rounded-full" />
         </motion.div>
 
         <motion.div

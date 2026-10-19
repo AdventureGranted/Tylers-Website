@@ -112,7 +112,7 @@ export default function TrafficChart({ data, referrers }: TrafficChartProps) {
               onClick={() => setTimeRange(range)}
               className={`rounded-lg px-3 py-1 text-sm font-medium transition-colors ${
                 timeRange === range
-                  ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                  ? 'bg-accent-fill text-gray-900'
                   : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700'
               }`}
             >
@@ -127,7 +127,7 @@ export default function TrafficChart({ data, referrers }: TrafficChartProps) {
         <select
           value={selectedReferrer}
           onChange={(e) => setSelectedReferrer(e.target.value)}
-          className="rounded-lg border border-gray-300 bg-white px-3 py-1 text-sm text-gray-700 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:focus:ring-yellow-300"
+          className="focus:ring-accent rounded-lg border border-gray-300 bg-white px-3 py-1 text-sm text-gray-700 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400"
         >
           <option value="all">All Sources</option>
           {referrers.map((ref) => (
@@ -140,10 +140,7 @@ export default function TrafficChart({ data, referrers }: TrafficChartProps) {
 
       {/* Total */}
       <div className="mb-2 text-sm text-gray-500">
-        Total:{' '}
-        <span className="font-semibold text-yellow-500 dark:text-yellow-300">
-          {totalViews}
-        </span>{' '}
+        Total: <span className="text-accent font-semibold">{totalViews}</span>{' '}
         views
       </div>
 

@@ -83,7 +83,7 @@ export default function TimeTracker({
     return (
       <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+          <div className="border-t-accent h-4 w-4 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-700" />
           Loading...
         </div>
       </div>
@@ -99,10 +99,10 @@ export default function TimeTracker({
     <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
       <div className="mb-3 flex items-center justify-between">
         <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-          <HiOutlineClock className="text-yellow-500 dark:text-yellow-300" />
+          <HiOutlineClock className="text-accent" />
           Time Tracked
         </h3>
-        <div className="text-lg font-bold text-yellow-500 dark:text-yellow-300">
+        <div className="text-accent text-lg font-bold">
           {totalHours.toFixed(1)}h
         </div>
       </div>
@@ -126,13 +126,13 @@ export default function TimeTracker({
                   value={hours}
                   onChange={(e) => setHours(e.target.value)}
                   placeholder="Hours"
-                  className="w-20 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-20 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 />
                 <input
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 />
               </div>
               <input
@@ -140,13 +140,13 @@ export default function TimeTracker({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="What did you work on?"
-                className="w-full rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+                className="focus:ring-accent w-full rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               />
               <div className="flex gap-2">
                 <button
                   onClick={handleAdd}
                   disabled={saving || !hours}
-                  className="flex-1 rounded bg-yellow-500 py-1 text-sm font-medium text-gray-900 hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                  className="bg-accent-fill hover:bg-accent-fill-hover flex-1 rounded py-1 text-sm font-medium text-gray-900 disabled:opacity-50"
                 >
                   {saving ? 'Saving...' : 'Add'}
                 </button>
@@ -170,9 +170,7 @@ export default function TimeTracker({
               className="flex items-center justify-between rounded bg-gray-300 px-2 py-1 text-xs dark:bg-gray-700"
             >
               <div className="flex-1">
-                <span className="font-medium text-yellow-500 dark:text-yellow-300">
-                  {entry.hours}h
-                </span>
+                <span className="text-accent font-medium">{entry.hours}h</span>
                 {entry.description && (
                   <span className="ml-2 text-gray-500">
                     {entry.description}

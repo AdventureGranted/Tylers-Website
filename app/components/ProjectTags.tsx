@@ -93,7 +93,7 @@ export default function ProjectTags({
     return (
       <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+          <div className="border-t-accent h-4 w-4 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-700" />
           Loading...
         </div>
       </div>
@@ -108,7 +108,7 @@ export default function ProjectTags({
   return (
     <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
       <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-        <HiOutlineTag className="text-yellow-500 dark:text-yellow-300" />
+        <HiOutlineTag className="text-accent" />
         Skills / Tags
       </h3>
 
@@ -116,7 +116,7 @@ export default function ProjectTags({
         {tags.map((tag) => (
           <span
             key={tag}
-            className="flex items-center gap-1 rounded-full bg-yellow-500/20 px-2 py-1 text-xs font-medium text-yellow-600 dark:bg-yellow-300/20 dark:text-yellow-300"
+            className="bg-accent/20 text-accent-strong dark:text-accent flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium"
           >
             {tag}
             {!readOnly && (
@@ -143,7 +143,7 @@ export default function ProjectTags({
                 else setShowInput(false);
               }}
               placeholder="Add tag..."
-              className="w-24 rounded-full border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+              className="focus:ring-accent w-24 rounded-full border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               autoFocus
             />
           ) : (

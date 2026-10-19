@@ -56,7 +56,7 @@ const STATUS_COLORS: Record<string, string> = {
   TECHNICAL_INTERVIEW: 'bg-teal-500/20 text-teal-400',
   ONSITE: 'bg-emerald-500/20 text-emerald-400',
   OFFER: 'bg-green-500/20 text-green-400',
-  NEGOTIATING: 'bg-yellow-500/20 text-yellow-400',
+  NEGOTIATING: 'bg-accent/20 text-accent-strong',
   ACCEPTED: 'bg-green-600/20 text-green-300',
   REJECTED: 'bg-red-500/20 text-red-400',
   WITHDRAWN: 'bg-gray-500/20 text-gray-400',
@@ -108,7 +108,7 @@ function getFollowUpIndicator(followUpDate: string | null): {
     return { className: 'bg-red-500/20', label: 'Overdue' };
   }
   if (fDate.getTime() === today.getTime()) {
-    return { className: 'bg-yellow-500/20', label: 'Today' };
+    return { className: 'bg-accent/20', label: 'Today' };
   }
   return null;
 }
@@ -149,7 +149,7 @@ function DraggableJobCard({ job }: { job: Job }) {
           {new Date(job.applicationDate).toLocaleDateString()}
         </p>
         {followUp && (
-          <span className="mt-1 inline-block rounded px-1.5 py-0.5 text-xs font-medium text-yellow-300">
+          <span className="text-accent mt-1 inline-block rounded px-1.5 py-0.5 text-xs font-medium">
             Follow-up: {followUp.label}
           </span>
         )}
@@ -168,7 +168,7 @@ function DroppableColumn({ status, jobs }: { status: string; jobs: Job[] }) {
       ref={setNodeRef}
       className={`flex min-h-[200px] w-64 flex-shrink-0 flex-col rounded-xl border p-3 transition-colors ${
         isOver
-          ? 'border-yellow-300/50 bg-yellow-300/5'
+          ? 'border-accent/50 bg-accent/5'
           : 'border-gray-700 bg-gray-800/50'
       }`}
     >
@@ -356,7 +356,7 @@ export default function AdminJobsPage() {
   ) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+        <div className="border-t-accent h-12 w-12 animate-spin rounded-full border-4 border-gray-300 dark:border-gray-700" />
       </div>
     );
   }
@@ -369,7 +369,7 @@ export default function AdminJobsPage() {
           <div>
             <Link
               href="/admin"
-              className="mb-2 inline-block text-sm text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-300"
+              className="hover:text-accent mb-2 inline-block text-sm text-gray-500"
             >
               ← Back to Admin
             </Link>
@@ -384,7 +384,7 @@ export default function AdminJobsPage() {
                 onClick={() => setView('table')}
                 className={`rounded-l-lg px-4 py-2 text-sm font-medium transition-colors ${
                   view === 'table'
-                    ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                    ? 'bg-accent-fill text-gray-900'
                     : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
                 }`}
               >
@@ -394,7 +394,7 @@ export default function AdminJobsPage() {
                 onClick={() => setView('kanban')}
                 className={`rounded-r-lg px-4 py-2 text-sm font-medium transition-colors ${
                   view === 'kanban'
-                    ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                    ? 'bg-accent-fill text-gray-900'
                     : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
                 }`}
               >
@@ -409,7 +409,7 @@ export default function AdminJobsPage() {
             </Link>
             <Link
               href="/admin/jobs/new"
-              className="rounded-lg bg-yellow-500 px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-yellow-400 dark:bg-yellow-300 dark:hover:bg-yellow-200"
+              className="bg-accent-fill hover:bg-accent-fill-hover dark:hover:bg-accent-soft rounded-lg px-4 py-2 text-sm font-medium text-gray-900 transition-colors"
             >
               New Application
             </Link>
@@ -429,7 +429,7 @@ export default function AdminJobsPage() {
                   setSearchQuery(e.target.value);
                   setPagination((prev) => ({ ...prev, page: 1 }));
                 }}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-500 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-500 dark:focus:border-yellow-300 dark:focus:ring-yellow-300"
+                className="focus:border-accent focus:ring-accent rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-500 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-500"
               />
               <select
                 value={statusFilter}
@@ -437,7 +437,7 @@ export default function AdminJobsPage() {
                   setStatusFilter(e.target.value);
                   setPagination((prev) => ({ ...prev, page: 1 }));
                 }}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300 dark:focus:ring-yellow-300"
+                className="focus:border-accent focus:ring-accent rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               >
                 <option value="">All Statuses</option>
                 {STATUS_ORDER.map((s) => (
@@ -452,7 +452,7 @@ export default function AdminJobsPage() {
                   setSourceFilter(e.target.value);
                   setPagination((prev) => ({ ...prev, page: 1 }));
                 }}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300 dark:focus:ring-yellow-300"
+                className="focus:border-accent focus:ring-accent rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               >
                 <option value="">All Sources</option>
                 {Object.entries(SOURCE_LABELS).map(([key, label]) => (
@@ -480,7 +480,7 @@ export default function AdminJobsPage() {
                       <th
                         key={field}
                         onClick={() => handleSort(field)}
-                        className="cursor-pointer px-4 py-3 font-medium text-gray-600 transition-colors hover:text-yellow-500 dark:text-gray-400 dark:hover:text-yellow-300"
+                        className="hover:text-accent cursor-pointer px-4 py-3 font-medium text-gray-600 transition-colors dark:text-gray-400"
                       >
                         {label}
                         {sortIndicator(field)}
@@ -539,7 +539,7 @@ export default function AdminJobsPage() {
                                   job.followUpDate
                                 ).toLocaleDateString()}
                                 {followUp && (
-                                  <span className="text-xs font-medium text-yellow-300">
+                                  <span className="text-accent text-xs font-medium">
                                     ({followUp.label})
                                   </span>
                                 )}
@@ -606,7 +606,7 @@ export default function AdminJobsPage() {
           <>
             {kanbanLoading ? (
               <div className="flex items-center justify-center py-20">
-                <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+                <div className="border-t-accent h-12 w-12 animate-spin rounded-full border-4 border-gray-300 dark:border-gray-700" />
               </div>
             ) : (
               <DndContext onDragEnd={handleDragEnd}>

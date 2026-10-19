@@ -119,7 +119,7 @@ export default function JobsDashboardPage() {
           <div className="flex items-center gap-4">
             <Link
               href="/admin/jobs"
-              className="text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+              className="hover:text-accent text-gray-500 transition-colors"
             >
               &larr; Back
             </Link>
@@ -136,9 +136,7 @@ export default function JobsDashboardPage() {
               key={stat.label}
               className="rounded-xl border border-gray-300 bg-white p-4 text-center dark:border-gray-700 dark:bg-gray-800"
             >
-              <div className="text-2xl font-bold text-yellow-500 dark:text-yellow-300">
-                {stat.value}
-              </div>
+              <div className="text-accent text-2xl font-bold">{stat.value}</div>
               <div className="text-xs text-gray-500 md:text-sm">
                 {stat.label}
               </div>
@@ -327,7 +325,7 @@ export default function JobsDashboardPage() {
 
           {/* Interviews This Week */}
           <div className="rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h2 className="mb-4 text-lg font-semibold text-yellow-500 dark:text-yellow-300">
+            <h2 className="text-accent mb-4 text-lg font-semibold">
               Interviews This Week
             </h2>
             {needsAttention.interviewsThisWeek.length === 0 ? (
@@ -338,12 +336,12 @@ export default function JobsDashboardPage() {
                   <Link
                     key={item.id}
                     href={`/admin/jobs/${item.jobApplicationId}`}
-                    className="block rounded-lg border border-yellow-500/20 bg-yellow-500/5 p-3 transition-colors hover:bg-yellow-500/10 dark:border-yellow-300/20 dark:bg-yellow-300/5 dark:hover:bg-yellow-300/10"
+                    className="border-accent/20 bg-accent/5 hover:bg-accent/10 block rounded-lg border p-3 transition-colors"
                   >
                     <div className="text-sm font-medium text-gray-900 dark:text-gray-200">
                       {item.company} - {item.position}
                     </div>
-                    <div className="text-xs text-yellow-600 dark:text-yellow-300">
+                    <div className="text-accent-strong dark:text-accent text-xs">
                       {new Date(item.scheduledDate).toLocaleDateString()}
                     </div>
                   </Link>

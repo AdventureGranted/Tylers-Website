@@ -64,16 +64,12 @@ export default function ContactPage() {
             variants={itemVariants}
             className="relative mb-10 text-center md:mb-14"
           >
-            {/* Soft glow orbs. Radial gradients rather than a blur filter: a large filter: blur() flickers while scrolling under the navbar's backdrop blur. */}
-            <div className="pointer-events-none absolute -top-72 left-1/3 h-[640px] w-[768px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(168_85_247/0.12),transparent)]" />
-            <div className="pointer-events-none absolute -top-[248px] right-1/3 h-[560px] w-[640px] translate-x-1/2 bg-[radial-gradient(closest-side,rgb(253_224_71/0.1),transparent)]" />
-
             <div className="relative">
               <h1 className="mb-4 flex items-center justify-center gap-3 text-4xl font-bold text-gray-900 md:mb-6 md:text-5xl dark:text-gray-200">
                 <HiOutlineChatAlt2 className="h-9 w-9 text-purple-500 md:h-11 md:w-11 dark:text-purple-400" />
                 Get In Touch
               </h1>
-              <div className="mx-auto mb-6 h-1 w-full max-w-xs rounded-full bg-gradient-to-r from-purple-500 to-yellow-300 md:max-w-sm" />
+              <div className="bg-accent mx-auto mb-6 h-1 w-full max-w-xs rounded-full md:max-w-sm" />
               <p className="text-lg text-gray-700 md:text-xl dark:text-gray-400">
                 Feel free to reach out! I&apos;m always open to discussing new
                 opportunities, projects, or just having a chat.
@@ -90,16 +86,16 @@ export default function ContactPage() {
               <a
                 key={method.label}
                 href={method.href}
-                className="group flex items-center gap-4 rounded-2xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:border-yellow-500/50 hover:shadow-lg md:gap-6 md:rounded-3xl md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50"
+                className="group hover:border-accent/50 flex items-center gap-4 rounded-2xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:shadow-lg md:gap-6 md:rounded-3xl md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-gray-300 bg-white text-yellow-500 transition-colors group-hover:border-yellow-300 group-hover:bg-yellow-300 group-hover:text-gray-900 md:h-16 md:w-16 md:rounded-2xl md:text-4xl dark:border-gray-700 dark:bg-gray-700 dark:text-yellow-300">
+                <div className="text-accent group-hover:border-accent group-hover:bg-accent-fill flex h-14 w-14 items-center justify-center rounded-xl border border-gray-300 bg-white transition-colors group-hover:text-gray-900 md:h-16 md:w-16 md:rounded-2xl md:text-4xl dark:border-gray-700 dark:bg-gray-700">
                   {method.icon}
                 </div>
                 <div>
                   <p className="text-sm text-gray-700 md:text-base dark:text-gray-400">
                     {method.label}
                   </p>
-                  <p className="font-semibold text-gray-900 transition-colors group-hover:text-yellow-300 md:text-lg dark:text-gray-200">
+                  <p className="group-hover:text-accent font-semibold text-gray-900 transition-colors md:text-lg dark:text-gray-200">
                     {method.value}
                   </p>
                 </div>
@@ -115,7 +111,7 @@ export default function ContactPage() {
             <h2 className="mb-2 text-center text-lg font-semibold text-gray-700 md:text-xl dark:text-gray-400">
               Connect With Me
             </h2>
-            <div className="mx-auto mb-4 h-0.5 w-24 rounded-full bg-gradient-to-r from-purple-500 to-yellow-300 md:mb-6" />
+            <div className="bg-accent mx-auto mb-4 h-0.5 w-24 rounded-full md:mb-6" />
             <div className="flex justify-center gap-4 md:gap-6">
               {socialLinks.map((link) => (
                 <a
@@ -123,7 +119,7 @@ export default function ContactPage() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-14 w-14 items-center justify-center rounded-xl border border-gray-300 bg-white text-gray-700 transition-all duration-300 hover:border-yellow-300 hover:bg-yellow-300 hover:text-gray-900 hover:shadow-lg md:h-16 md:w-16 md:rounded-2xl md:text-3xl dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400"
+                  className="hover:border-accent hover:bg-accent-fill flex h-14 w-14 items-center justify-center rounded-xl border border-gray-300 bg-white text-gray-700 transition-all duration-300 hover:text-gray-900 hover:shadow-lg md:h-16 md:w-16 md:rounded-2xl md:text-3xl dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400"
                   aria-label={link.label}
                 >
                   {link.icon}

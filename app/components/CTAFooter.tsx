@@ -14,10 +14,6 @@ export default function CTAFooter() {
       variants={containerVariants}
       className="relative mt-16 overflow-hidden rounded-3xl border border-gray-300 bg-white px-8 py-16 text-center shadow-md md:px-16 md:py-20 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
     >
-      {/* Background decorations */}
-      <div className="absolute -top-56 -left-56 h-[448px] w-[448px] bg-[radial-gradient(closest-side,rgb(168_85_247/0.16),transparent)]" />
-      <div className="absolute -right-56 -bottom-56 h-[448px] w-[448px] bg-[radial-gradient(closest-side,rgb(253_224_71/0.08),transparent)]" />
-
       <div className="relative z-10">
         <motion.h2
           variants={itemVariants}
@@ -38,7 +34,7 @@ export default function CTAFooter() {
         <motion.div variants={itemVariants}>
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-3 rounded-full bg-yellow-300 px-10 py-4 text-lg font-bold text-gray-900 shadow-lg shadow-yellow-300/25 transition-all duration-300 hover:scale-105 hover:bg-yellow-400 hover:shadow-yellow-300/40 active:scale-95"
+            className="group bg-accent-fill shadow-accent/25 hover:bg-accent-fill-hover hover:shadow-accent/40 inline-flex items-center gap-3 rounded-full px-10 py-4 text-lg font-bold text-gray-900 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
           >
             Get In Touch
             <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />

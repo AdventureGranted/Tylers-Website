@@ -101,7 +101,7 @@ export default function AdminChatSessionsPage() {
   if (status === 'loading' || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+        <div className="border-t-accent h-12 w-12 animate-spin rounded-full border-4 border-gray-300 dark:border-gray-700" />
       </div>
     );
   }
@@ -112,7 +112,7 @@ export default function AdminChatSessionsPage() {
         <div className="mb-8">
           <Link
             href="/admin"
-            className="mb-2 inline-block text-sm text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="hover:text-accent mb-2 inline-block text-sm text-gray-500"
           >
             &larr; Back to Admin
           </Link>
@@ -154,7 +154,7 @@ export default function AdminChatSessionsPage() {
                       <div className="mt-1 flex flex-wrap items-center gap-4 text-sm text-gray-500">
                         <a
                           href={`mailto:${chatSession.visitorEmail}`}
-                          className="flex items-center gap-1 hover:text-yellow-500 dark:hover:text-yellow-300"
+                          className="hover:text-accent flex items-center gap-1"
                         >
                           <HiOutlineMail />
                           {chatSession.visitorEmail}
@@ -169,7 +169,7 @@ export default function AdminChatSessionsPage() {
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
-                        <div className="flex items-center gap-1 text-yellow-500 dark:text-yellow-300">
+                        <div className="text-accent flex items-center gap-1">
                           <IoChatbubblesOutline />
                           <span className="font-medium">
                             {chatSession.messageCount}
@@ -214,7 +214,7 @@ export default function AdminChatSessionsPage() {
                     {chatSession.messages.length > 0 && (
                       <button
                         onClick={() => toggleExpanded(chatSession.id)}
-                        className="flex items-center gap-1 text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+                        className="hover:text-accent flex items-center gap-1 text-gray-500 transition-colors"
                       >
                         {isExpanded ? (
                           <>
@@ -244,7 +244,7 @@ export default function AdminChatSessionsPage() {
                             <span
                               className={`text-xs font-medium ${
                                 message.role === 'assistant'
-                                  ? 'text-yellow-500 dark:text-yellow-300'
+                                  ? 'text-accent'
                                   : 'text-blue-500 dark:text-blue-400'
                               }`}
                             >

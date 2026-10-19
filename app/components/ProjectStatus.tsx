@@ -12,7 +12,7 @@ interface ProjectStatusProps {
 const STATUS_OPTIONS = [
   { value: 'planning', label: 'Planning', color: 'bg-gray-500' },
   { value: 'in_progress', label: 'In Progress', color: 'bg-blue-500' },
-  { value: 'on_hold', label: 'On Hold', color: 'bg-yellow-500' },
+  { value: 'on_hold', label: 'On Hold', color: 'bg-accent-fill' },
   { value: 'completed', label: 'Completed', color: 'bg-green-500' },
 ];
 
@@ -64,7 +64,7 @@ export default function ProjectStatus({
   return (
     <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
       <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-        <HiOutlineFlag className="text-yellow-500 dark:text-yellow-300" />
+        <HiOutlineFlag className="text-accent" />
         Project Status
       </h3>
       {readOnly ? (

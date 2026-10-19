@@ -177,7 +177,7 @@ export default async function HobbyDetailPage({ params }: Props) {
         <div className="mb-6">
           <Link
             href="/hobbies"
-            className="inline-flex items-center text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="hover:text-accent inline-flex items-center text-gray-500 transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -210,13 +210,13 @@ export default async function HobbyDetailPage({ params }: Props) {
           <div className="mx-auto max-w-4xl xl:min-w-0 xl:flex-1">
             {/* Title Row - title left, edit right */}
             <div className="mb-4 flex items-start justify-between gap-4">
-              <h1 className="text-4xl font-bold text-yellow-500 dark:text-yellow-300">
+              <h1 className="text-accent text-4xl font-bold">
                 {project.title}
               </h1>
               {isAdmin && (
                 <Link
                   href={`/admin/projects/${project.id}?from=${encodeURIComponent(`/hobbies/${slug}`)}`}
-                  className="inline-flex shrink-0 items-center rounded-lg bg-yellow-300 px-4 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-400"
+                  className="bg-accent-fill hover:bg-accent-fill-hover inline-flex shrink-0 items-center rounded-lg px-4 py-2 font-semibold text-gray-900 transition-colors"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +251,7 @@ export default async function HobbyDetailPage({ params }: Props) {
                   <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
                     <div className="mb-3 flex items-center">
                       <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-                        <HiOutlinePhotograph className="text-yellow-500 dark:text-yellow-300" />
+                        <HiOutlinePhotograph className="text-accent" />
                         Featured Photo
                       </h3>
                     </div>

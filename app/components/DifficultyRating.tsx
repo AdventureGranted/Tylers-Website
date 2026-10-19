@@ -73,7 +73,7 @@ export default function DifficultyRating({
     return (
       <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+          <div className="border-t-accent h-4 w-4 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-700" />
           Loading...
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function DifficultyRating({
   return (
     <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
       <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-        <HiStar className="text-yellow-500 dark:text-yellow-300" />
+        <HiStar className="text-accent" />
         Difficulty
       </h3>
 
@@ -99,7 +99,7 @@ export default function DifficultyRating({
           readOnly ? (
             <span key={star} className="text-xl">
               {star <= displayRating ? (
-                <HiStar className="text-yellow-400" />
+                <HiStar className="text-accent-strong" />
               ) : (
                 <HiOutlineStar className="text-gray-300 dark:text-gray-700" />
               )}
@@ -114,7 +114,7 @@ export default function DifficultyRating({
               className="text-xl transition-colors disabled:opacity-50"
             >
               {star <= displayRating ? (
-                <HiStar className="text-yellow-400" />
+                <HiStar className="text-accent-strong" />
               ) : (
                 <HiOutlineStar className="text-gray-300 dark:text-gray-700" />
               )}

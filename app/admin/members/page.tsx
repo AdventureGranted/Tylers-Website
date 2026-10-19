@@ -151,7 +151,7 @@ export default function MembersPage() {
         <div className="mb-6 flex items-center gap-4">
           <Link
             href="/admin"
-            className="flex items-center gap-2 text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="hover:text-accent flex items-center gap-2 text-gray-500 transition-colors"
           >
             <AiOutlineArrowLeft />
             Back
@@ -159,7 +159,7 @@ export default function MembersPage() {
         </div>
 
         <div className="mb-8 flex items-center gap-3">
-          <HiOutlineUserGroup className="text-3xl text-yellow-500 dark:text-yellow-300" />
+          <HiOutlineUserGroup className="text-accent text-3xl" />
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">
             Members
           </h1>
@@ -175,14 +175,14 @@ export default function MembersPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or email..."
-              className="w-full rounded-lg border border-gray-300 bg-white py-2 pr-4 pl-10 text-gray-900 placeholder-gray-500 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
+              className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white py-2 pr-4 pl-10 text-gray-900 placeholder-gray-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
             />
           </div>
 
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
-            className="appearance-none rounded-lg border border-gray-300 bg-white bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%239ca3af%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat py-2 pr-10 pl-4 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
+            className="focus:border-accent appearance-none rounded-lg border border-gray-300 bg-white bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%239ca3af%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20d%3D%22M19%209l-7%207-7-7%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat py-2 pr-10 pl-4 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
           >
             <option value="">All Roles</option>
             <option value="user">Users</option>
@@ -230,7 +230,7 @@ export default function MembersPage() {
                             className="h-10 w-10 rounded-full object-cover"
                           />
                         ) : (
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-500 font-bold text-gray-900 dark:bg-yellow-300">
+                          <div className="bg-accent-fill flex h-10 w-10 items-center justify-center rounded-full font-bold text-gray-900">
                             {user.name?.[0]?.toUpperCase() ||
                               user.email[0].toUpperCase()}
                           </div>
@@ -249,7 +249,7 @@ export default function MembersPage() {
                       <span
                         className={`inline-block rounded-full px-2 py-1 text-xs font-medium ${
                           user.role === 'admin'
-                            ? 'bg-yellow-500/20 text-yellow-600 dark:bg-yellow-300/20 dark:text-yellow-300'
+                            ? 'bg-accent/20 text-accent-strong dark:text-accent'
                             : 'bg-gray-300 text-gray-700 dark:bg-gray-700 dark:text-gray-400'
                         }`}
                       >

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const inputClass =
-  'w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300';
+  'w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-accent focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200';
 
 function NewJobForm() {
   const [company, setCompany] = useState('');
@@ -91,7 +91,7 @@ function NewJobForm() {
           </h1>
           <Link
             href="/admin/jobs"
-            className="text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="hover:text-accent text-gray-500 transition-colors"
           >
             Cancel
           </Link>
@@ -205,7 +205,7 @@ function NewJobForm() {
                     href={coverLetterUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="truncate text-sm text-yellow-500 hover:underline dark:text-yellow-300"
+                    className="text-accent truncate text-sm hover:underline"
                   >
                     Uploaded
                   </a>
@@ -219,7 +219,7 @@ function NewJobForm() {
                 </div>
               ) : (
                 <label
-                  className={`flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 transition-colors hover:border-yellow-500 dark:border-gray-700 dark:hover:border-yellow-300 ${uploadingCover ? 'opacity-50' : ''}`}
+                  className={`hover:border-accent flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 transition-colors dark:border-gray-700 ${uploadingCover ? 'opacity-50' : ''}`}
                 >
                   <input
                     type="file"
@@ -247,7 +247,7 @@ function NewJobForm() {
                     href={customResumeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="truncate text-sm text-yellow-500 hover:underline dark:text-yellow-300"
+                    className="text-accent truncate text-sm hover:underline"
                   >
                     Uploaded
                   </a>
@@ -261,7 +261,7 @@ function NewJobForm() {
                 </div>
               ) : (
                 <label
-                  className={`flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 transition-colors hover:border-yellow-500 dark:border-gray-700 dark:hover:border-yellow-300 ${uploadingResume ? 'opacity-50' : ''}`}
+                  className={`hover:border-accent flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 transition-colors dark:border-gray-700 ${uploadingResume ? 'opacity-50' : ''}`}
                 >
                   <input
                     type="file"
@@ -297,7 +297,7 @@ function NewJobForm() {
           <button
             type="submit"
             disabled={loading || uploadingCover || uploadingResume}
-            className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+            className="bg-accent-fill hover:bg-accent-fill-hover w-full rounded-lg py-2 font-semibold text-gray-900 transition-colors disabled:opacity-50"
           >
             {loading ? 'Creating...' : 'Create Application'}
           </button>

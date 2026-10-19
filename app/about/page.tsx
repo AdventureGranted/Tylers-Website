@@ -133,8 +133,7 @@ export default function AboutPage() {
           {/* Hero Section */}
           <motion.div variants={itemVariants} className="mb-12 text-center">
             <h1 className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl dark:text-gray-200">
-              About{' '}
-              <span className="text-teal-600 dark:text-yellow-300">Me</span>
+              About <span className="text-accent">Me</span>
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-gray-700 dark:text-gray-400">
               Software engineer, self-hosting enthusiast, husband, and dad.
@@ -155,7 +154,7 @@ export default function AboutPage() {
                 height={48}
                 className="mx-auto mb-2"
               />
-              <div className="text-3xl font-bold text-teal-600 dark:text-yellow-300">
+              <div className="text-accent text-3xl font-bold">
                 <AnimatedCounter target={500} suffix="+" />
               </div>
               <p className="mt-1 text-sm text-gray-700 dark:text-gray-400">
@@ -164,7 +163,7 @@ export default function AboutPage() {
             </div>
             <div className="rounded-2xl border border-gray-300 bg-white p-6 text-center shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
               <HiOutlineCode className="mx-auto mb-2 h-12 w-12 text-purple-500" />
-              <div className="text-2xl font-bold text-teal-600 dark:text-yellow-300">
+              <div className="text-accent text-2xl font-bold">
                 <AnimatedTooMany />
               </div>
               <p className="mt-1 text-sm text-gray-700 dark:text-gray-400">
@@ -175,8 +174,8 @@ export default function AboutPage() {
 
           {/* Motto */}
           <motion.div variants={itemVariants} className="mb-12">
-            <div className="relative rounded-2xl border border-gray-300 bg-gradient-to-br from-purple-500/10 to-yellow-300/10 p-8 text-center shadow-md dark:border-gray-700 dark:shadow-lg">
-              <FaQuoteLeft className="mx-auto mb-4 h-8 w-8 text-teal-600/50 dark:text-yellow-300/50" />
+            <div className="bg-accent/10 relative rounded-2xl border border-gray-300 p-8 text-center shadow-md dark:border-gray-700 dark:shadow-lg">
+              <FaQuoteLeft className="text-accent/50 mx-auto mb-4 h-8 w-8" />
               <p className="text-xl font-medium text-gray-900 italic md:text-2xl dark:text-gray-200">
                 &ldquo;When change comes, you can either drown behind it or ride
                 the edge and shape what&apos;s next.&rdquo;
@@ -189,7 +188,7 @@ export default function AboutPage() {
           <motion.section variants={itemVariants} className="mb-12">
             <div className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
               <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
-                <HiOutlineLightBulb className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
+                <HiOutlineLightBulb className="text-accent h-7 w-7" />
                 My Journey into Software Engineering
               </h2>
 
@@ -207,7 +206,7 @@ export default function AboutPage() {
                   an advanced Excel course that everything changed. We had one
                   assignment where we had to create macros and automate Excel
                   using VBA (Visual Basic for Applications).{' '}
-                  <span className="font-medium text-teal-600 dark:text-yellow-300">
+                  <span className="text-accent font-medium">
                     That was the first time I didn&apos;t hate a homework
                     assignment.
                   </span>{' '}
@@ -239,7 +238,7 @@ export default function AboutPage() {
                   years of classes (only a few generals transferred,
                   unfortunately). To this day, I love my job and my decision to
                   become a software engineer.{' '}
-                  <span className="font-medium text-teal-600 dark:text-yellow-300">
+                  <span className="text-accent font-medium">
                     I love that my wife also shares the same passion for
                     software engineering.
                   </span>
@@ -252,7 +251,7 @@ export default function AboutPage() {
           <motion.section variants={itemVariants} className="mb-12">
             <div className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
               <h2 className="mb-8 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
-                <HiOutlineSparkles className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
+                <HiOutlineSparkles className="text-accent h-7 w-7" />
                 My Journey
               </h2>
 
@@ -263,21 +262,21 @@ export default function AboutPage() {
                     month: 'Aug',
                     title: 'Started College',
                     desc: 'Began pursuing Accounting at University of Utah',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2019',
                     month: 'Nov',
                     title: 'The VBA Moment',
                     desc: 'Fell in love with coding during an Excel VBA assignment',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2020',
                     month: 'Jan',
                     title: 'Switched to CS',
                     desc: 'Made the leap to Computer Science and met my future wife',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2020',
@@ -291,28 +290,28 @@ export default function AboutPage() {
                     month: 'Jan',
                     title: 'Teaching Assistant',
                     desc: 'Started TA role for Data Structures & Algorithms',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2021',
                     month: 'May',
                     title: 'First Internship',
                     desc: 'Joined Zions Bank as a Software Engineer Intern',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2022',
                     month: 'Apr',
                     title: 'Boxy – Senior Project',
                     desc: 'Built a mobile app for tracking bin-stored items with React Native & AWS',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2022',
                     month: 'May',
                     title: 'Graduated',
                     desc: 'B.S. in Computer Science from University of Utah',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2022',
@@ -326,7 +325,7 @@ export default function AboutPage() {
                     month: 'Jul',
                     title: 'Sorenson',
                     desc: 'Joined Sorenson Communications as a Software Engineer',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2023',
@@ -340,35 +339,35 @@ export default function AboutPage() {
                     month: 'Jan',
                     title: 'Tyler-Grant.com',
                     desc: 'Launched my portfolio website with Next.js, AI chatbot, and receipt parser demo',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2025',
                     month: 'Feb',
                     title: 'Signos',
                     desc: 'Joined Signos to build health-tech solutions',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2026',
                     month: 'Jan',
                     title: 'Balancely',
                     desc: 'Built a comprehensive budgeting app, a native SwiftUI iOS app with AI receipt scanning and household support',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2026',
                     month: 'Feb',
                     title: 'Back Up',
                     desc: 'Created a multiplayer card board game with React Native, real-time Socket.IO, and bot AI',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                   {
                     year: '2026',
                     month: 'Mar',
                     title: 'Trove Brands',
                     desc: 'Joined Trove Brands as a Software Developer building checkout logic, multi-tenant services, and CI/CD infrastructure across four brands',
-                    color: 'bg-yellow-400',
+                    color: 'bg-accent-fill-hover',
                   },
                 ]}
               />
@@ -379,7 +378,7 @@ export default function AboutPage() {
           <motion.section variants={itemVariants} className="mb-12">
             <div className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
               <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
-                <HiOutlineAcademicCap className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
+                <HiOutlineAcademicCap className="text-accent h-7 w-7" />
                 Education & Achievements
               </h2>
 
@@ -397,9 +396,7 @@ export default function AboutPage() {
                   <h3 className="text-xl font-bold text-gray-900 dark:text-gray-200">
                     University of Utah
                   </h3>
-                  <p className="text-teal-600 dark:text-yellow-300">
-                    B.S. in Computer Science
-                  </p>
+                  <p className="text-accent">B.S. in Computer Science</p>
                 </div>
               </div>
 
@@ -470,14 +467,14 @@ export default function AboutPage() {
           <motion.section variants={itemVariants} className="mb-12">
             <div className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
               <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
-                <FaBrain className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
+                <FaBrain className="text-accent h-7 w-7" />
                 What I&apos;m Currently Learning
               </h2>
 
               <div className="space-y-4 text-gray-700 dark:text-gray-400">
                 <p>
                   I&apos;m diving deep into{' '}
-                  <span className="font-medium text-teal-600 dark:text-yellow-300">
+                  <span className="text-accent font-medium">
                     AI and machine learning
                   </span>
                   , exploring how to incorporate AI-driven features into
@@ -515,8 +512,8 @@ export default function AboutPage() {
                   </span>
                 </div>
 
-                <div className="rounded-xl bg-teal-500/10 p-4 dark:bg-yellow-500/10">
-                  <p className="text-sm text-teal-700 dark:text-yellow-300">
+                <div className="bg-accent-soft/10 dark:bg-accent/10 rounded-xl p-4">
+                  <p className="text-accent-strong dark:text-accent text-sm">
                     The best part? All of this is{' '}
                     <strong>completely free and self-hosted</strong>, built and
                     maintained by me. Knowing I have full control over my AI
@@ -532,7 +529,7 @@ export default function AboutPage() {
           <motion.section variants={itemVariants} className="mb-12">
             <div className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
               <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
-                <HiOutlineSparkles className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
+                <HiOutlineSparkles className="text-accent h-7 w-7" />
                 Outside of Coding
               </h2>
 
@@ -604,7 +601,7 @@ export default function AboutPage() {
                         href="https://venmo.com/u/Tyler-Grant-47"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-medium text-teal-600 hover:text-teal-500 dark:text-yellow-300 dark:hover:text-yellow-400"
+                        className="text-accent hover:text-accent-soft dark:hover:text-accent-strong font-medium"
                       >
                         @tyler-grant-47
                       </a>
@@ -686,7 +683,7 @@ export default function AboutPage() {
               {/* Family */}
               <div>
                 <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-gray-200">
-                  <HiOutlineUserGroup className="h-5 w-5 text-teal-600 dark:text-yellow-300" />
+                  <HiOutlineUserGroup className="text-accent h-5 w-5" />
                   Family
                 </h3>
 
@@ -755,8 +752,8 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 rounded-xl bg-teal-500/10 p-4 dark:bg-yellow-500/10">
-                  <p className="text-sm text-teal-700 dark:text-yellow-300">
+                <div className="bg-accent-soft/10 dark:bg-accent/10 mt-6 rounded-xl p-4">
+                  <p className="text-accent-strong dark:text-accent text-sm">
                     I&apos;m a go-getter who can function with just about no
                     sleep if it means helping someone else. I&apos;m constantly
                     trying to make memories with my wife and kid outside of
@@ -771,7 +768,7 @@ export default function AboutPage() {
           <motion.div variants={itemVariants} className="mb-12">
             <div className="rounded-2xl border border-gray-300 bg-white p-6 text-center shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg">
               <h2 className="mb-2 flex items-center justify-center gap-3 text-2xl font-bold text-gray-900 dark:text-gray-200">
-                <IoMdChatbubbles className="h-7 w-7 text-teal-600 dark:text-yellow-300" />
+                <IoMdChatbubbles className="text-accent h-7 w-7" />
                 Ask Me About...
               </h2>
               <p className="mb-6 text-gray-700 dark:text-gray-400">
@@ -815,7 +812,7 @@ export default function AboutPage() {
                         })
                       );
                     }}
-                    className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:scale-105 hover:border-teal-500/50 hover:bg-teal-500/10 hover:text-teal-600 active:scale-95 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:border-yellow-300/50 dark:hover:bg-yellow-500/10 dark:hover:text-yellow-300"
+                    className="hover:border-accent-soft/50 hover:bg-accent-soft/10 hover:text-accent dark:hover:border-accent/50 dark:hover:bg-accent/10 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:scale-105 active:scale-95 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400"
                   >
                     {topic.label}
                   </button>
@@ -832,7 +829,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <a
                 href="/contact"
-                className="rounded-full bg-teal-500 px-8 py-3 font-medium text-white transition-all hover:scale-105 hover:bg-teal-600 active:scale-95 dark:bg-yellow-300 dark:text-gray-900 dark:hover:bg-yellow-400"
+                className="bg-accent-fill hover:bg-accent-fill-hover rounded-full px-8 py-3 font-medium text-white transition-all hover:scale-105 active:scale-95 dark:text-gray-900"
               >
                 Get in Touch
               </a>

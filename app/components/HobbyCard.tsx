@@ -47,12 +47,12 @@ export default function HobbyCard({
       onClick={handleCardClick}
       className={`group relative flex h-full cursor-pointer flex-col rounded-3xl border bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-gray-800 dark:shadow-lg ${
         !published
-          ? 'border-yellow-500/50 opacity-75 dark:border-yellow-300/50'
-          : 'border-gray-300 hover:border-yellow-500/50 dark:border-gray-700 dark:hover:border-yellow-300/50'
+          ? 'border-accent/50 opacity-75'
+          : 'hover:border-accent/50 border-gray-300 dark:border-gray-700'
       }`}
     >
       {!published && (
-        <span className="absolute top-3 right-3 z-10 rounded-full bg-yellow-500 px-2.5 py-0.5 text-xs font-semibold text-gray-900 dark:bg-yellow-300">
+        <span className="bg-accent-fill absolute top-3 right-3 z-10 rounded-full px-2.5 py-0.5 text-xs font-semibold text-gray-900">
           Draft
         </span>
       )}
@@ -66,7 +66,7 @@ export default function HobbyCard({
             <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
               <div className="mb-3 flex items-center">
                 <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-                  <HiOutlinePhotograph className="text-teal-600 dark:text-yellow-300" />
+                  <HiOutlinePhotograph className="text-accent" />
                   Featured Photo
                 </h3>
               </div>
@@ -108,7 +108,7 @@ export default function HobbyCard({
           )}
         </div>
       )}
-      <h2 className="mb-1 text-2xl font-semibold text-yellow-500 transition-colors group-hover:text-yellow-600 dark:text-yellow-300 dark:group-hover:text-yellow-200">
+      <h2 className="text-accent group-hover:text-accent-strong dark:group-hover:text-accent-soft mb-1 text-2xl font-semibold transition-colors">
         {title}
       </h2>
       {description && (
@@ -116,7 +116,7 @@ export default function HobbyCard({
           {description}
         </p>
       )}
-      <span className="mt-auto text-sm text-gray-500 transition-colors group-hover:text-yellow-500 dark:group-hover:text-yellow-300">
+      <span className="group-hover:text-accent mt-auto text-sm text-gray-500 transition-colors">
         View details →
       </span>
     </div>

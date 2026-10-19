@@ -242,7 +242,7 @@ export default function WorkExperienceCard() {
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-2">
             <HiOutlineBriefcase className="h-5 w-5 text-purple-500" />
-            <span className="text-2xl font-bold text-teal-600 sm:text-3xl dark:text-yellow-300">
+            <span className="text-accent text-2xl font-bold sm:text-3xl">
               {engineeringExperiences.length}
             </span>
           </div>
@@ -251,7 +251,7 @@ export default function WorkExperienceCard() {
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-2">
             <HiOutlineClock className="h-5 w-5 text-purple-500" />
-            <span className="text-2xl font-bold text-teal-600 sm:text-3xl dark:text-yellow-300">
+            <span className="text-accent text-2xl font-bold sm:text-3xl">
               {calculateTotalExperience()}
             </span>
           </div>
@@ -260,7 +260,7 @@ export default function WorkExperienceCard() {
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-2">
             <HiOutlineCode className="h-5 w-5 text-purple-500" />
-            <span className="text-2xl font-bold text-teal-600 sm:text-3xl dark:text-yellow-300">
+            <span className="text-accent text-2xl font-bold sm:text-3xl">
               {uniqueTechnologies}
             </span>
           </div>
@@ -271,7 +271,7 @@ export default function WorkExperienceCard() {
       {/* Engineering Timeline */}
       <div className="relative">
         {/* Timeline line */}
-        <div className="absolute top-0 left-8 hidden h-full w-0.5 bg-gradient-to-b from-purple-500 via-yellow-300 to-purple-500 md:block" />
+        <div className="absolute top-0 left-8 hidden h-full w-0.5 bg-gray-300 md:block dark:bg-gray-700" />
 
         {engineeringExperiences.map((exp) => (
           <motion.div
@@ -280,7 +280,7 @@ export default function WorkExperienceCard() {
             className="group relative mb-8 last:mb-0"
           >
             {/* Timeline dot */}
-            <div className="absolute top-8 left-6 hidden h-5 w-5 rounded-full border-4 border-gray-100 bg-yellow-300 transition-all duration-300 group-hover:scale-125 group-hover:bg-purple-500 md:block dark:border-gray-900" />
+            <div className="bg-accent-fill absolute top-8 left-6 hidden h-5 w-5 rounded-full border-4 border-gray-100 transition-all duration-300 group-hover:scale-125 group-hover:bg-purple-500 md:block dark:border-gray-900" />
 
             {/* Card */}
             <Card className="transition-all duration-300 hover:opacity-90 md:ml-16">
@@ -305,9 +305,7 @@ export default function WorkExperienceCard() {
                       <h3 className="text-xl font-bold text-gray-900 dark:text-gray-200">
                         {exp.company}
                       </h3>
-                      <p className="text-teal-600 dark:text-yellow-300">
-                        {exp.role}
-                      </p>
+                      <p className="text-accent">{exp.role}</p>
                     </div>
                     <div className="flex flex-wrap items-center gap-2 lg:flex-nowrap lg:justify-end">
                       <span className="text-sm whitespace-nowrap text-gray-700 dark:text-gray-400">
@@ -378,9 +376,7 @@ export default function WorkExperienceCard() {
                           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-200">
                             {exp.company}
                           </h3>
-                          <p className="text-teal-600 dark:text-yellow-300">
-                            {exp.role}
-                          </p>
+                          <p className="text-accent">{exp.role}</p>
                         </div>
                         <div className="flex flex-wrap items-center gap-2 lg:flex-nowrap lg:justify-end">
                           <span className="text-sm whitespace-nowrap text-gray-700 dark:text-gray-400">

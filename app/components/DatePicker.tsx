@@ -166,7 +166,7 @@ export default function DatePicker({
                       selectedDate.getFullYear() === year &&
                       selectedDate.getMonth() === month &&
                       selectedDate.getDate() === day
-                        ? 'bg-yellow-500 font-medium text-gray-900 dark:bg-yellow-300'
+                        ? 'bg-accent-fill font-medium text-gray-900'
                         : 'text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'
                     }`}
                   >

@@ -149,8 +149,6 @@ export default function BalancelyPage() {
             {/* Soft glow orbs. Radial gradients rather than a blur filter: a
                 large filter: blur() flickers while scrolling under the
                 navbar's backdrop blur. */}
-            <div className="pointer-events-none absolute -top-72 left-1/4 h-[640px] w-[768px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(168_85_247/0.12),transparent)]" />
-            <div className="pointer-events-none absolute -top-[248px] right-1/4 h-[560px] w-[640px] translate-x-1/2 bg-[radial-gradient(closest-side,rgb(253_224_71/0.1),transparent)]" />
 
             <div className="relative">
               <h1 className="mb-2 text-4xl font-bold text-gray-900 md:text-5xl dark:text-gray-200">
@@ -162,7 +160,7 @@ export default function BalancelyPage() {
               <div className="mb-4 text-sm text-gray-700 dark:text-gray-400">
                 January 2026 – Present
               </div>
-              <div className="mb-6 h-1 w-full max-w-xs rounded-full bg-gradient-to-r from-purple-500 to-yellow-300 md:max-w-sm" />
+              <div className="bg-accent mb-6 h-1 w-full max-w-xs rounded-full md:max-w-sm" />
               <div className="mb-6 flex flex-wrap items-center gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-500/10 px-3 py-1 text-sm font-medium text-purple-700 dark:text-purple-300">
                   <HiOutlineHeart />
@@ -195,7 +193,7 @@ export default function BalancelyPage() {
           >
             <h2
               id="screens-heading"
-              className="mb-1 text-2xl font-semibold text-yellow-300"
+              className="text-accent mb-1 text-2xl font-semibold"
             >
               Screens
             </h2>
@@ -211,7 +209,7 @@ export default function BalancelyPage() {
 
           {/* What it does */}
           <motion.section variants={itemVariants} className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold text-yellow-300">
+            <h2 className="text-accent mb-4 text-2xl font-semibold">
               What it does
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -231,7 +229,7 @@ export default function BalancelyPage() {
 
           {/* How it's built */}
           <motion.section variants={itemVariants}>
-            <h2 className="mb-4 text-2xl font-semibold text-yellow-300">
+            <h2 className="text-accent mb-4 text-2xl font-semibold">
               How it’s built
             </h2>
             <div className="grid gap-4 md:grid-cols-2">

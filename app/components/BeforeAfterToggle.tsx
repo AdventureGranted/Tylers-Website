@@ -146,7 +146,7 @@ export default function BeforeAfterToggle({
     return (
       <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
         <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-          <HiOutlinePhotograph className="text-yellow-500 dark:text-yellow-300" />
+          <HiOutlinePhotograph className="text-accent" />
           Before / After
         </h3>
         <p className="text-xs text-gray-500">
@@ -168,10 +168,7 @@ export default function BeforeAfterToggle({
       {/* Header */}
       <div className="mb-3 flex items-center justify-between">
         <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-          <HiOutlinePhotograph
-            className="text-yellow-500 dark:text-yellow-300"
-            aria-hidden="true"
-          />
+          <HiOutlinePhotograph className="text-accent" aria-hidden="true" />
           Before / After
         </h3>
 
@@ -190,7 +187,7 @@ export default function BeforeAfterToggle({
               onClick={() => setShowAfter(false)}
               className={`px-3 py-1.5 text-xs font-medium transition-colors ${
                 !showAfter
-                  ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                  ? 'bg-accent-fill text-gray-900'
                   : 'text-gray-500 hover:text-gray-900 dark:text-gray-200'
               }`}
             >
@@ -204,7 +201,7 @@ export default function BeforeAfterToggle({
               onClick={() => setShowAfter(true)}
               className={`px-3 py-1.5 text-xs font-medium transition-colors ${
                 showAfter
-                  ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                  ? 'bg-accent-fill text-gray-900'
                   : 'text-gray-500 hover:text-gray-900 dark:text-gray-200'
               }`}
             >
@@ -260,7 +257,7 @@ export default function BeforeAfterToggle({
           aria-valuetext={`Showing ${Math.round(sliderPosition)}% before image, ${Math.round(100 - sliderPosition)}% after image`}
           tabIndex={0}
           onKeyDown={handleSliderKeyDown}
-          className="relative aspect-video cursor-ew-resize touch-none overflow-hidden rounded-lg bg-gray-300 select-none focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:bg-gray-700 dark:focus:ring-yellow-300"
+          className="focus:ring-accent relative aspect-video cursor-ew-resize touch-none overflow-hidden rounded-lg bg-gray-300 select-none focus:ring-2 focus:outline-none dark:bg-gray-700"
           onMouseDown={() => {
             isDragging.current = true;
             setIsSliding(true);
@@ -348,7 +345,7 @@ export default function BeforeAfterToggle({
                 onClick={() => handleModeChange('toggle')}
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'toggle'
-                    ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                    ? 'bg-accent-fill text-gray-900'
                     : 'text-gray-500 hover:text-gray-900 dark:text-gray-200'
                 }`}
               >
@@ -361,7 +358,7 @@ export default function BeforeAfterToggle({
                 onClick={() => handleModeChange('slider')}
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'slider'
-                    ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                    ? 'bg-accent-fill text-gray-900'
                     : 'text-gray-500 hover:text-gray-900 dark:text-gray-200'
                 }`}
               >
@@ -374,7 +371,7 @@ export default function BeforeAfterToggle({
                 onClick={() => handleModeChange('single')}
                 className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors ${
                   mode === 'single'
-                    ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                    ? 'bg-accent-fill text-gray-900'
                     : 'text-gray-500 hover:text-gray-900 dark:text-gray-200'
                 }`}
               >
@@ -398,7 +395,7 @@ export default function BeforeAfterToggle({
                 onChange={(e) =>
                   handleAfterIndexChange(parseInt(e.target.value))
                 }
-                className="w-full rounded border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+                className="focus:ring-accent w-full rounded border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               >
                 {images.map((img, i) => (
                   <option key={img.id} value={i}>
@@ -422,7 +419,7 @@ export default function BeforeAfterToggle({
                   onChange={(e) =>
                     handleBeforeIndexChange(parseInt(e.target.value))
                   }
-                  className="w-full rounded border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-full rounded border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 >
                   {images.map((img, i) => (
                     <option key={img.id} value={i}>
@@ -444,7 +441,7 @@ export default function BeforeAfterToggle({
                   onChange={(e) =>
                     handleAfterIndexChange(parseInt(e.target.value))
                   }
-                  className="w-full rounded border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-full rounded border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 >
                   {images.map((img, i) => (
                     <option key={img.id} value={i}>

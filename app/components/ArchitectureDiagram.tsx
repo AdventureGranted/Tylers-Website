@@ -35,8 +35,8 @@ function ConnectionArrow() {
   return (
     <div className="flex justify-center py-2">
       <div className="flex flex-col items-center">
-        <div className="h-4 w-px bg-gray-300 dark:bg-yellow-300/40" />
-        <div className="h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-gray-300 dark:border-t-yellow-300/40" />
+        <div className="dark:bg-accent/40 h-4 w-px bg-gray-300" />
+        <div className="dark:border-t-accent/40 h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-gray-300" />
       </div>
     </div>
   );
@@ -71,7 +71,7 @@ export default function ArchitectureDiagram({
     <div className="mt-4">
       <button
         onClick={() => setIsOpen(true)}
-        className="inline-flex items-center gap-2 rounded-lg border border-teal-500 bg-teal-500/10 px-4 py-2 text-sm font-semibold text-teal-600 transition-all hover:bg-teal-500/20 dark:border-yellow-300/30 dark:bg-yellow-300/10 dark:text-yellow-300 dark:hover:bg-yellow-300/20"
+        className="border-accent-soft bg-accent-soft/10 text-accent hover:bg-accent-soft/20 dark:border-accent/30 dark:bg-accent/10 dark:hover:bg-accent/20 inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold transition-all"
       >
         <HiCode className="h-4 w-4" />
         View Architecture
@@ -155,7 +155,7 @@ export default function ArchitectureDiagram({
                       {stats.map((stat, i) => (
                         <span
                           key={i}
-                          className="rounded-full border border-teal-500/30 bg-teal-500/10 px-3 py-1 text-xs font-medium text-teal-700 dark:border-yellow-300/20 dark:bg-yellow-300/5 dark:text-yellow-300"
+                          className="border-accent-soft/30 bg-accent-soft/10 text-accent-strong dark:border-accent/20 dark:bg-accent/5 dark:text-accent rounded-full border px-3 py-1 text-xs font-medium"
                         >
                           {stat}
                         </span>

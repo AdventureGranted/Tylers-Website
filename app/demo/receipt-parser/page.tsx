@@ -439,7 +439,7 @@ export default function ReceiptParserDemo() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8 text-center"
           >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-yellow-500/10 px-4 py-2 text-yellow-500 dark:text-yellow-300">
+            <div className="bg-accent/10 text-accent mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
               <HiSparkles />
               <span className="text-sm font-medium">AI-Powered Demo</span>
             </div>
@@ -465,7 +465,7 @@ export default function ReceiptParserDemo() {
               <div
                 className={`relative rounded-2xl border-2 border-dashed p-8 shadow-md transition-all dark:shadow-lg ${
                   dragActive
-                    ? 'border-yellow-500 bg-yellow-500/10'
+                    ? 'border-accent bg-accent/10'
                     : 'border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800'
                 }`}
                 onDrop={handleDrop}
@@ -561,12 +561,12 @@ export default function ReceiptParserDemo() {
                             sample.mockData
                           )
                         }
-                        className="rounded-xl border border-gray-300 bg-white p-3 text-left transition-all hover:border-yellow-500/50 hover:bg-white dark:border-gray-700 dark:bg-gray-700 dark:bg-gray-800"
+                        className="hover:border-accent/50 rounded-xl border border-gray-300 bg-white p-3 text-left transition-all hover:bg-white dark:border-gray-700 dark:bg-gray-700 dark:bg-gray-800"
                       >
                         {sample.isPdf ? (
                           <HiDocumentText className="mb-2 h-5 w-5 text-red-500" />
                         ) : (
-                          <FaReceipt className="mb-2 h-5 w-5 text-yellow-500 dark:text-yellow-300" />
+                          <FaReceipt className="text-accent mb-2 h-5 w-5" />
                         )}
                         <p className="text-xs font-medium text-gray-900 dark:text-gray-200">
                           {sample.name}
@@ -587,7 +587,7 @@ export default function ReceiptParserDemo() {
                   animate={{ opacity: 1, y: 0 }}
                   onClick={parseReceipt}
                   disabled={isLoading}
-                  className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-500 px-6 py-4 font-bold text-gray-900 transition-all hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                  className="bg-accent-fill hover:bg-accent-fill-hover mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-6 py-4 font-bold text-gray-900 transition-all disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isLoading ? (
                     <>
@@ -634,7 +634,7 @@ export default function ReceiptParserDemo() {
               className="rounded-2xl border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
             >
               <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-gray-200">
-                <FaReceipt className="text-yellow-500 dark:text-yellow-300" />
+                <FaReceipt className="text-accent" />
                 Parsed Results
               </h2>
 
@@ -696,7 +696,7 @@ export default function ReceiptParserDemo() {
                                   e.target.value as 'material' | 'tool' | 'misc'
                                 )
                               }
-                              className={`shrink-0 cursor-pointer rounded-md border-0 px-2 py-1 text-xs font-medium focus:ring-2 focus:ring-yellow-500 focus:outline-none ${
+                              className={`focus:ring-accent shrink-0 cursor-pointer rounded-md border-0 px-2 py-1 text-xs font-medium focus:ring-2 focus:outline-none ${
                                 item.category === 'material'
                                   ? 'bg-blue-500/20 text-blue-400'
                                   : item.category === 'tool'
@@ -732,7 +732,7 @@ export default function ReceiptParserDemo() {
                       <span className="text-gray-900 dark:text-gray-200">
                         Total
                       </span>
-                      <span className="text-yellow-500 dark:text-yellow-300">
+                      <span className="text-accent">
                         {formatCurrency(result.total)}
                       </span>
                     </div>
@@ -865,11 +865,11 @@ export default function ReceiptParserDemo() {
                 className="group rounded-2xl border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
               >
                 <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-500 to-yellow-600 text-white shadow-lg">
+                  <div className="from-accent to-accent-strong flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br text-white shadow-lg">
                     <HiClipboardList className="h-6 w-6" />
                   </div>
                   <div>
-                    <span className="text-xs font-medium text-yellow-500">
+                    <span className="text-accent text-xs font-medium">
                       Step 3
                     </span>
                     <h3 className="font-semibold text-gray-900 dark:text-gray-200">

@@ -236,7 +236,7 @@ function NewProjectForm() {
           </h1>
           <Link
             href={fromPath || '/admin/projects'}
-            className="text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+            className="hover:text-accent text-gray-500 transition-colors"
           >
             Cancel
           </Link>
@@ -258,7 +258,7 @@ function NewProjectForm() {
               id="title"
               value={title}
               onChange={handleTitleChange}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+              className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               required
             />
           </div>
@@ -272,7 +272,7 @@ function NewProjectForm() {
               id="slug"
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+              className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               required
             />
           </div>
@@ -288,7 +288,7 @@ function NewProjectForm() {
               id="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+              className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
             >
               <option value="hobby">Hobby</option>
               <option value="work">Work / CS Project</option>
@@ -307,7 +307,7 @@ function NewProjectForm() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+              className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
             />
           </div>
 
@@ -323,7 +323,7 @@ function NewProjectForm() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={10}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+              className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
             />
           </div>
 
@@ -346,7 +346,7 @@ function NewProjectForm() {
                   id="status"
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 >
                   <option value="planning">Planning</option>
                   <option value="in_progress">In Progress</option>
@@ -369,7 +369,7 @@ function NewProjectForm() {
                       e.target.value ? parseInt(e.target.value) : null
                     )
                   }
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 >
                   <option value="">Not rated</option>
                   <option value="1">1 - Easy</option>
@@ -395,7 +395,7 @@ function NewProjectForm() {
                   id="startDate"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 />
               </div>
               <div>
@@ -410,7 +410,7 @@ function NewProjectForm() {
                   id="completionDate"
                   value={completionDate}
                   onChange={(e) => setCompletionDate(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 />
               </div>
             </div>
@@ -431,7 +431,7 @@ function NewProjectForm() {
                 placeholder="0.00"
                 step="0.01"
                 min="0"
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               />
             </div>
 
@@ -449,7 +449,7 @@ function NewProjectForm() {
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
                 placeholder="woodworking, furniture, DIY"
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               />
             </div>
 
@@ -467,7 +467,7 @@ function NewProjectForm() {
                 onChange={(e) => setPrivateNotes(e.target.value)}
                 rows={3}
                 placeholder="Notes only visible to admins..."
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               />
             </div>
 
@@ -485,7 +485,7 @@ function NewProjectForm() {
                     e.key === 'Enter' && (e.preventDefault(), addLesson())
                   }
                   placeholder="Add a lesson..."
-                  className="flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 />
                 <button
                   type="button"
@@ -527,7 +527,7 @@ function NewProjectForm() {
                   value={newLinkTitle}
                   onChange={(e) => setNewLinkTitle(e.target.value)}
                   placeholder="Link title"
-                  className="w-1/3 rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent w-1/3 rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 />
                 <input
                   type="url"
@@ -537,7 +537,7 @@ function NewProjectForm() {
                     e.key === 'Enter' && (e.preventDefault(), addLink())
                   }
                   placeholder="https://..."
-                  className="flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 />
                 <button
                   type="button"
@@ -558,7 +558,7 @@ function NewProjectForm() {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-yellow-500 hover:underline dark:text-yellow-300"
+                        className="text-accent hover:underline"
                       >
                         {link.title}
                       </a>
@@ -585,8 +585,8 @@ function NewProjectForm() {
             <label
               className={`flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors ${
                 isDragging
-                  ? 'border-yellow-500 bg-yellow-500/10 dark:border-yellow-300 dark:bg-yellow-300/10'
-                  : 'border-gray-300 hover:border-yellow-500 dark:border-gray-700 dark:hover:border-yellow-300'
+                  ? 'border-accent bg-accent/10'
+                  : 'hover:border-accent border-gray-300 dark:border-gray-700'
               }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
@@ -650,7 +650,7 @@ function NewProjectForm() {
                         placeholder="Alt text / description"
                         value={img.alt}
                         onChange={(e) => updateImageAlt(index, e.target.value)}
-                        className="w-full rounded border border-gray-300 bg-white px-3 py-1 text-sm text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
+                        className="focus:border-accent w-full rounded border border-gray-300 bg-white px-3 py-1 text-sm text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
                       />
                       {img.type === 'video' && (
                         <span className="mt-1 inline-block rounded bg-blue-500/20 px-2 py-0.5 text-xs text-blue-400">
@@ -701,7 +701,7 @@ function NewProjectForm() {
               id="compareMode"
               value={compareMode}
               onChange={(e) => setCompareMode(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+              className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
             >
               <option value="toggle">Toggle (Before/After)</option>
               <option value="slider">Slider (Before/After)</option>
@@ -725,7 +725,7 @@ function NewProjectForm() {
                     onChange={(e) =>
                       setBeforeImageIndex(parseInt(e.target.value))
                     }
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                    className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                   >
                     {images
                       .filter((img) => img.type !== 'video')
@@ -750,7 +750,7 @@ function NewProjectForm() {
                     onChange={(e) =>
                       setAfterImageIndex(parseInt(e.target.value))
                     }
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                    className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                   >
                     {images
                       .filter((img) => img.type !== 'video')
@@ -781,7 +781,7 @@ function NewProjectForm() {
           <button
             type="submit"
             disabled={loading || uploading}
-            className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+            className="bg-accent-fill hover:bg-accent-fill-hover w-full rounded-lg py-2 font-semibold text-gray-900 transition-colors disabled:opacity-50"
           >
             {loading ? 'Creating...' : 'Create Project'}
           </button>

@@ -368,7 +368,7 @@ export default function AIChatBubble() {
         {/* Header */}
         <div className="flex items-center justify-between bg-white px-4 py-3 dark:bg-gray-700">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-500 dark:bg-yellow-300">
+            <div className="bg-accent-fill flex h-8 w-8 items-center justify-center rounded-full">
               <IoMdChatbubbles className="text-lg text-gray-900" />
             </div>
             <div>
@@ -408,7 +408,7 @@ export default function AIChatBubble() {
                   Chatting anonymously —{' '}
                   <button
                     onClick={() => setShowInfoForm(true)}
-                    className="font-medium text-teal-600 hover:underline dark:text-yellow-300"
+                    className="text-accent font-medium hover:underline"
                   >
                     share your info
                   </button>{' '}
@@ -436,7 +436,7 @@ export default function AIChatBubble() {
                   }
                   placeholder="Your name"
                   required
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
                 />
                 <input
                   type="email"
@@ -449,12 +449,12 @@ export default function AIChatBubble() {
                   }
                   placeholder="Your email"
                   required
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+                  className="focus:ring-accent w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
                 />
                 <div className="flex gap-2">
                   <button
                     type="submit"
-                    className="flex-1 rounded-lg bg-yellow-500 px-3 py-1.5 text-xs font-medium text-gray-900 transition-colors hover:bg-yellow-600 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                    className="bg-accent-fill hover:bg-accent-fill-hover flex-1 rounded-lg px-3 py-1.5 text-xs font-medium text-gray-900 transition-colors"
                   >
                     Save
                   </button>
@@ -481,7 +481,7 @@ export default function AIChatBubble() {
               <div
                 className={`max-w-[85%] overflow-hidden rounded-2xl px-4 py-2 ${
                   message.role === 'user'
-                    ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                    ? 'bg-accent-fill text-gray-900'
                     : 'bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-200'
                 }`}
               >
@@ -490,7 +490,7 @@ export default function AIChatBubble() {
                     {message.content}
                   </p>
                 ) : (
-                  <div className="prose prose-sm dark:prose-invert max-w-none text-sm break-words [&_a]:text-yellow-500 [&_a]:underline dark:[&_a]:text-yellow-300 [&_a:hover]:text-yellow-600 dark:[&_a:hover]:text-yellow-400 [&_code]:break-all [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_strong]:text-yellow-500 dark:[&_strong]:text-yellow-300 [&>li]:mb-1 [&>ol]:mb-2 [&>ol]:list-decimal [&>ol]:pl-4 [&>p]:mb-2 [&>p:last-child]:mb-0 [&>ul]:mb-2 [&>ul]:list-disc [&>ul]:pl-4">
+                  <div className="prose prose-sm dark:prose-invert [&_a]:text-accent [&_a:hover]:text-accent-strong [&_strong]:text-accent max-w-none text-sm break-words [&_a]:underline [&_code]:break-all [&_pre]:max-w-full [&_pre]:overflow-x-auto [&>li]:mb-1 [&>ol]:mb-2 [&>ol]:list-decimal [&>ol]:pl-4 [&>p]:mb-2 [&>p:last-child]:mb-0 [&>ul]:mb-2 [&>ul]:list-disc [&>ul]:pl-4">
                     <ReactMarkdown>{message.content}</ReactMarkdown>
                   </div>
                 )}
@@ -527,13 +527,13 @@ export default function AIChatBubble() {
               onKeyDown={handleKeyDown}
               placeholder="Type a message..."
               rows={1}
-              className="max-h-24 min-h-[40px] flex-1 resize-none rounded-xl border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none sm:text-sm dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-yellow-300"
+              className="focus:ring-accent max-h-24 min-h-[40px] flex-1 resize-none rounded-xl border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none sm:text-sm dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
               disabled={isLoading}
             />
             <button
               onClick={sendMessage}
               disabled={!input.trim() || isLoading}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-yellow-500 text-gray-900 transition-all hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+              className="bg-accent-fill hover:bg-accent-fill-hover flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-gray-900 transition-all disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="Send message"
             >
               <IoMdSend className="text-lg" />
@@ -546,7 +546,7 @@ export default function AIChatBubble() {
       {!(isMobile && keyboardVisible && isOpen) && (
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`fixed right-4 z-[9999] flex h-14 w-14 items-center justify-center rounded-full bg-yellow-500 shadow-lg transition-all hover:scale-110 hover:bg-yellow-600 dark:bg-yellow-300 dark:hover:bg-yellow-400 ${
+          className={`bg-accent-fill hover:bg-accent-fill-hover fixed right-4 z-[9999] flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all hover:scale-110 ${
             isOpen ? 'rotate-90' : ''
           }`}
           style={{ bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}

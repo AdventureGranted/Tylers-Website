@@ -201,9 +201,7 @@ export default function ImageLightbox({
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`h-2 w-2 rounded-full transition-colors ${
-                  index === currentIndex
-                    ? 'bg-yellow-500 dark:bg-yellow-300'
-                    : 'bg-white/50'
+                  index === currentIndex ? 'bg-accent-fill' : 'bg-white/50'
                 }`}
                 aria-label={`Go to image ${index + 1}`}
               />

@@ -170,7 +170,7 @@ export default function SortableHobbyGrid({
       {/* Header with buttons */}
       <div className="mb-8">
         <div className="flex items-center gap-4">
-          <GiHandSaw className="h-8 w-8 text-yellow-300" />
+          <GiHandSaw className="text-accent h-8 w-8" />
           <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-200">
             Hobbies
           </h1>
@@ -204,7 +204,7 @@ export default function SortableHobbyGrid({
                   </button>
                   <Link
                     href="/admin/projects/new?from=/hobbies"
-                    className="flex items-center gap-1 rounded-lg bg-yellow-300 px-3 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-yellow-400"
+                    className="bg-accent-fill hover:bg-accent-fill-hover flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-gray-900 transition-colors"
                   >
                     <HiPlus className="h-4 w-4" />
                     Add
@@ -214,7 +214,7 @@ export default function SortableHobbyGrid({
             </>
           )}
         </div>
-        <div className="mt-2 h-1 w-full rounded-full bg-gradient-to-r from-purple-500 to-yellow-300" />
+        <div className="bg-accent mt-2 h-1 w-full rounded-full" />
       </div>
 
       {/* Woodworking intro */}
@@ -225,12 +225,8 @@ export default function SortableHobbyGrid({
           animate="visible"
           variants={containerVariants}
         >
-          {/* Soft glow orbs. Radial gradients rather than a blur filter: a large filter: blur() flickers while scrolling under the navbar's backdrop blur. */}
-          <div className="pointer-events-none absolute -top-72 left-1/3 h-[640px] w-[768px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(168_85_247/0.12),transparent)]" />
-          <div className="pointer-events-none absolute -right-1/3 -bottom-[248px] h-[560px] w-[640px] translate-x-1/2 bg-[radial-gradient(closest-side,rgb(253_224_71/0.1),transparent)]" />
-
           <motion.div
-            className="rounded-xl border border-white/5 bg-gradient-to-br from-purple-500/10 to-yellow-300/10 p-6"
+            className="bg-accent/10 rounded-xl border border-white/5 p-6"
             variants={itemVariants}
           >
             <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
@@ -246,12 +242,12 @@ export default function SortableHobbyGrid({
 
           <motion.div className="mx-auto mt-8 w-fit" variants={itemVariants}>
             <div className="flex items-center justify-center gap-2">
-              <GiWoodBeam className="h-5 w-5 text-yellow-300" />
+              <GiWoodBeam className="text-accent h-5 w-5" />
               <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-200">
                 Recent Projects
               </h2>
             </div>
-            <div className="mt-2 h-0.5 w-full rounded-full bg-gradient-to-r from-purple-500 to-yellow-300" />
+            <div className="bg-accent mt-2 h-0.5 w-full rounded-full" />
           </motion.div>
         </motion.div>
       )}

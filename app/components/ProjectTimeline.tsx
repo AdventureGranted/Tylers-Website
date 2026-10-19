@@ -72,7 +72,7 @@ export default function ProjectTimeline({
     return (
       <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+          <div className="border-t-accent h-4 w-4 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-700" />
           Loading...
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function ProjectTimeline({
     <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
       <div className="mb-3 flex items-center justify-between">
         <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-          <HiOutlineCalendar className="text-yellow-500 dark:text-yellow-300" />
+          <HiOutlineCalendar className="text-accent" />
           Timeline
         </h3>
         {getDuration() && (

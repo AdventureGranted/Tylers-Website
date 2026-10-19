@@ -51,14 +51,14 @@ export default function ScreenshotGallery({
         <div className="hidden shrink-0 gap-2 sm:flex">
           <button
             onClick={() => scroll(-1)}
-            className="rounded-full border border-gray-300 p-2 text-gray-900 transition-colors hover:border-yellow-500 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:border-yellow-300 dark:hover:bg-gray-700"
+            className="hover:border-accent rounded-full border border-gray-300 p-2 text-gray-900 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
             aria-label="Scroll screenshots left"
           >
             <HiChevronLeft className="h-5 w-5" />
           </button>
           <button
             onClick={() => scroll(1)}
-            className="rounded-full border border-gray-300 p-2 text-gray-900 transition-colors hover:border-yellow-500 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:border-yellow-300 dark:hover:bg-gray-700"
+            className="hover:border-accent rounded-full border border-gray-300 p-2 text-gray-900 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
             aria-label="Scroll screenshots right"
           >
             <HiChevronRight className="h-5 w-5" />
@@ -80,7 +80,7 @@ export default function ScreenshotGallery({
           >
             <button
               onClick={() => setLightboxIndex(idx)}
-              className="block w-full overflow-hidden rounded-[2.25rem] border-[6px] border-gray-900 bg-gray-900 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-yellow-300 focus-visible:outline-none dark:border-gray-700"
+              className="focus-visible:ring-accent block w-full overflow-hidden rounded-[2.25rem] border-[6px] border-gray-900 bg-gray-900 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:ring-4 focus-visible:outline-none dark:border-gray-700"
               aria-label={`Enlarge screenshot: ${shot.title}`}
             >
               <ThemedScreenshot

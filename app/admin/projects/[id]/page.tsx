@@ -272,7 +272,7 @@ export default function EditProject({
             </button>
             <Link
               href={returnUrl}
-              className="text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+              className="hover:text-accent text-gray-500 transition-colors"
             >
               Cancel
             </Link>
@@ -314,7 +314,7 @@ export default function EditProject({
                   id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                   required
                 />
               </div>
@@ -331,7 +331,7 @@ export default function EditProject({
                   id="slug"
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                   required
                 />
               </div>
@@ -347,7 +347,7 @@ export default function EditProject({
                   id="category"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 >
                   <option value="hobby">Hobby</option>
                   <option value="work">Work / CS Project</option>
@@ -366,7 +366,7 @@ export default function EditProject({
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={3}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 />
               </div>
 
@@ -382,7 +382,7 @@ export default function EditProject({
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   rows={10}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                  className="focus:border-accent w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 />
               </div>
 
@@ -395,8 +395,8 @@ export default function EditProject({
                 <label
                   className={`flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors ${
                     isDragging
-                      ? 'border-yellow-500 bg-yellow-500/10 dark:border-yellow-300 dark:bg-yellow-300/10'
-                      : 'border-gray-300 hover:border-yellow-500 dark:border-gray-700 dark:hover:border-yellow-300'
+                      ? 'border-accent bg-accent/10'
+                      : 'hover:border-accent border-gray-300 dark:border-gray-700'
                   }`}
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
@@ -462,7 +462,7 @@ export default function EditProject({
                             onChange={(e) =>
                               updateImageAlt(index, e.target.value)
                             }
-                            className="w-full rounded border border-gray-300 bg-white px-3 py-1 text-sm text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-yellow-300"
+                            className="focus:border-accent w-full rounded border border-gray-300 bg-white px-3 py-1 text-sm text-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200"
                           />
                           {img.type === 'video' && (
                             <span className="mt-1 inline-block rounded bg-blue-500/20 px-2 py-0.5 text-xs text-blue-400">
@@ -517,7 +517,7 @@ export default function EditProject({
               <button
                 type="submit"
                 disabled={loading || uploading}
-                className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                className="bg-accent-fill hover:bg-accent-fill-hover w-full rounded-lg py-2 font-semibold text-gray-900 transition-colors disabled:opacity-50"
               >
                 {loading ? 'Saving...' : 'Save Changes'}
               </button>

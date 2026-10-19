@@ -90,7 +90,7 @@ interface Job {
 }
 
 const inputClass =
-  'w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300';
+  'w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-accent focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200';
 
 const cardClass =
   'rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800';
@@ -130,7 +130,7 @@ function toDateTimeLocalValue(dateStr: string | null) {
 function RatingDisplay({ rating }: { rating: number | null }) {
   if (rating === null) return null;
   return (
-    <span className="ml-2 text-yellow-500 dark:text-yellow-300">
+    <span className="text-accent ml-2">
       {Array.from({ length: 5 }, (_, i) => (
         <span key={i}>{i < rating ? '\u2605' : '\u2606'}</span>
       ))}
@@ -564,7 +564,7 @@ export default function JobDetailPage({
           <div className="flex items-center gap-4">
             <Link
               href="/admin/jobs"
-              className="text-gray-500 transition-colors hover:text-yellow-500 dark:hover:text-yellow-300"
+              className="hover:text-accent text-gray-500 transition-colors"
             >
               &larr; Back
             </Link>
@@ -900,7 +900,7 @@ export default function JobDetailPage({
             <button
               type="submit"
               disabled={saving}
-              className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+              className="bg-accent-fill hover:bg-accent-fill-hover w-full rounded-lg py-2 font-semibold text-gray-900 transition-colors disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Changes'}
             </button>
@@ -915,7 +915,7 @@ export default function JobDetailPage({
             </h2>
             <button
               onClick={() => setShowAddInterview(!showAddInterview)}
-              className="text-sm text-yellow-600 transition-colors hover:text-yellow-500 dark:text-yellow-300 dark:hover:text-yellow-200"
+              className="text-accent-strong hover:text-accent dark:text-accent dark:hover:text-accent-soft text-sm transition-colors"
             >
               {showAddInterview ? 'Cancel' : '+ Add Interview'}
             </button>
@@ -1001,7 +1001,7 @@ export default function JobDetailPage({
               <button
                 type="submit"
                 disabled={savingInterview}
-                className="rounded-lg bg-yellow-500 px-4 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                className="bg-accent-fill hover:bg-accent-fill-hover rounded-lg px-4 py-2 font-semibold text-gray-900 transition-colors disabled:opacity-50"
               >
                 {savingInterview ? 'Adding...' : 'Add Interview'}
               </button>
@@ -1254,7 +1254,7 @@ export default function JobDetailPage({
                               type="button"
                               onClick={() => handleSaveInterview(interview.id)}
                               disabled={savingInterview}
-                              className="rounded-lg bg-yellow-500 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                              className="bg-accent-fill hover:bg-accent-fill-hover rounded-lg px-4 py-2 text-sm font-semibold text-gray-900 transition-colors disabled:opacity-50"
                             >
                               {savingInterview ? 'Saving...' : 'Save'}
                             </button>
@@ -1338,7 +1338,7 @@ export default function JobDetailPage({
                             <button
                               type="button"
                               onClick={() => startEditInterview(interview)}
-                              className="text-sm text-yellow-600 transition-colors hover:text-yellow-500 dark:text-yellow-300 dark:hover:text-yellow-200"
+                              className="text-accent-strong hover:text-accent dark:text-accent dark:hover:text-accent-soft text-sm transition-colors"
                             >
                               Edit
                             </button>
@@ -1370,7 +1370,7 @@ export default function JobDetailPage({
             </h2>
             <button
               onClick={() => setShowAddContact(!showAddContact)}
-              className="text-sm text-yellow-600 transition-colors hover:text-yellow-500 dark:text-yellow-300 dark:hover:text-yellow-200"
+              className="text-accent-strong hover:text-accent dark:text-accent dark:hover:text-accent-soft text-sm transition-colors"
             >
               {showAddContact ? 'Cancel' : '+ Add Contact'}
             </button>
@@ -1455,7 +1455,7 @@ export default function JobDetailPage({
               <button
                 type="submit"
                 disabled={savingContact}
-                className="rounded-lg bg-yellow-500 px-4 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                className="bg-accent-fill hover:bg-accent-fill-hover rounded-lg px-4 py-2 font-semibold text-gray-900 transition-colors disabled:opacity-50"
               >
                 {savingContact ? 'Adding...' : 'Add Contact'}
               </button>
@@ -1568,7 +1568,7 @@ export default function JobDetailPage({
                           type="button"
                           onClick={() => handleSaveContact(contact.id)}
                           disabled={savingContact}
-                          className="rounded-lg bg-yellow-500 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                          className="bg-accent-fill hover:bg-accent-fill-hover rounded-lg px-4 py-2 text-sm font-semibold text-gray-900 transition-colors disabled:opacity-50"
                         >
                           {savingContact ? 'Saving...' : 'Save'}
                         </button>
@@ -1598,7 +1598,7 @@ export default function JobDetailPage({
                           <button
                             type="button"
                             onClick={() => startEditContact(contact)}
-                            className="text-sm text-yellow-600 transition-colors hover:text-yellow-500 dark:text-yellow-300 dark:hover:text-yellow-200"
+                            className="text-accent-strong hover:text-accent dark:text-accent dark:hover:text-accent-soft text-sm transition-colors"
                           >
                             Edit
                           </button>
@@ -1615,7 +1615,7 @@ export default function JobDetailPage({
                         {contact.email && (
                           <a
                             href={`mailto:${contact.email}`}
-                            className="text-yellow-600 hover:text-yellow-500 dark:text-yellow-300 dark:hover:text-yellow-200"
+                            className="text-accent-strong hover:text-accent dark:text-accent dark:hover:text-accent-soft"
                           >
                             {contact.email}
                           </a>
@@ -1623,7 +1623,7 @@ export default function JobDetailPage({
                         {contact.phone && (
                           <a
                             href={`tel:${contact.phone}`}
-                            className="text-yellow-600 hover:text-yellow-500 dark:text-yellow-300 dark:hover:text-yellow-200"
+                            className="text-accent-strong hover:text-accent dark:text-accent dark:hover:text-accent-soft"
                           >
                             {contact.phone}
                           </a>

@@ -72,7 +72,7 @@ export default function ImageCarousel({
         {/* Loading skeleton */}
         {!isCurrentLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-700">
-            <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+            <div className="border-t-accent h-12 w-12 animate-spin rounded-full border-4 border-gray-300 dark:border-gray-700" />
           </div>
         )}
 
@@ -153,7 +153,7 @@ export default function ImageCarousel({
               onClick={() => setCurrentIndex(index)}
               className={`h-2 w-2 rounded-full transition-colors ${
                 index === currentIndex
-                  ? 'bg-yellow-500 dark:bg-yellow-300'
+                  ? 'bg-accent-fill'
                   : 'bg-gray-300 dark:bg-gray-700'
               }`}
               aria-label={`Go to image ${index + 1}`}

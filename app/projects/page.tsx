@@ -60,7 +60,7 @@ const featuredScreens = [
 function ProjectDetails({ project }: { project: Project }) {
   return (
     <>
-      <h2 className="mb-1 text-2xl font-semibold text-yellow-300">
+      <h2 className="text-accent mb-1 text-2xl font-semibold">
         {project.title}
       </h2>
       {project.subtitle && (
@@ -79,7 +79,7 @@ function ProjectDetails({ project }: { project: Project }) {
           {project.caseStudy && (
             <Link
               href={project.caseStudy}
-              className="group/cs inline-flex w-fit items-center gap-2 rounded-lg bg-yellow-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400"
+              className="group/cs bg-accent-fill hover:bg-accent-fill-hover inline-flex w-fit items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-gray-900 transition-colors"
             >
               Screenshots &amp; Details
               <HiArrowRight className="transition-transform group-hover/cs:translate-x-0.5" />
@@ -90,7 +90,7 @@ function ProjectDetails({ project }: { project: Project }) {
               href={project.repo}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex w-fit items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:border-yellow-500 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:border-yellow-300 dark:hover:bg-gray-700"
+              className="hover:border-accent inline-flex w-fit items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
             >
               <BsGithub />
               View Code
@@ -107,7 +107,7 @@ function ProjectDetails({ project }: { project: Project }) {
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex w-fit items-center gap-2 rounded-lg bg-yellow-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400"
+              className="bg-accent-fill hover:bg-accent-fill-hover inline-flex w-fit items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-gray-900 transition-colors"
             >
               Live Demo
               <svg
@@ -257,16 +257,12 @@ export default function ProjectsPage() {
             variants={itemVariants}
             className="relative mb-10 text-center md:mb-14"
           >
-            {/* Soft glow orbs. Radial gradients rather than a blur filter: a large filter: blur() flickers while scrolling under the navbar's backdrop blur. */}
-            <div className="pointer-events-none absolute -top-72 left-1/3 h-[640px] w-[768px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(168_85_247/0.12),transparent)]" />
-            <div className="pointer-events-none absolute -top-[248px] right-1/3 h-[560px] w-[640px] translate-x-1/2 bg-[radial-gradient(closest-side,rgb(253_224_71/0.1),transparent)]" />
-
             <div className="relative">
               <h1 className="mb-4 flex items-center justify-center gap-3 text-4xl font-bold text-gray-900 md:mb-6 md:text-5xl dark:text-gray-200">
                 <HiOutlineFolder className="h-9 w-9 text-purple-500 md:h-11 md:w-11 dark:text-purple-400" />
                 Projects
               </h1>
-              <div className="mx-auto mb-6 h-1 w-full max-w-xs rounded-full bg-gradient-to-r from-purple-500 to-yellow-300 md:max-w-sm" />
+              <div className="bg-accent mx-auto mb-6 h-1 w-full max-w-xs rounded-full md:max-w-sm" />
               <p className="mx-auto max-w-2xl text-lg text-gray-700 dark:text-gray-400">
                 Apps and infrastructure I&apos;ve built outside my day job:
                 native iOS and mobile apps, full-stack web, and self-hosted
@@ -278,7 +274,7 @@ export default function ProjectsPage() {
           {/* Featured project */}
           <motion.div
             variants={itemVariants}
-            className="group mb-8 grid gap-6 rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-yellow-500/50 hover:shadow-xl md:grid-cols-2 md:gap-8 md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50"
+            className="group hover:border-accent/50 mb-8 grid gap-6 rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:grid-cols-2 md:gap-8 md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
           >
             {/* Duplicates the "Screenshots & Details" button, so it's skipped
                 by keyboard and screen readers */}
@@ -286,7 +282,7 @@ export default function ProjectsPage() {
               href={featuredProject.caseStudy!}
               tabIndex={-1}
               aria-hidden="true"
-              className="flex items-center justify-center overflow-hidden rounded-2xl border border-gray-300 bg-gradient-to-br from-purple-500/25 via-transparent to-yellow-300/15 px-[4%] py-8 md:order-last dark:border-gray-700"
+              className="bg-accent/10 flex items-center justify-center overflow-hidden rounded-2xl border border-gray-300 px-[4%] py-8 md:order-last dark:border-gray-700"
             >
               {featuredScreens.map((shot, i) => (
                 <div
@@ -316,7 +312,7 @@ export default function ProjectsPage() {
               <motion.div
                 key={idx}
                 variants={itemVariants}
-                className="group flex flex-col rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-yellow-500/50 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50"
+                className="group hover:border-accent/50 flex flex-col rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
               >
                 <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl border border-gray-300 bg-gray-700 dark:border-gray-700">
                   <Image

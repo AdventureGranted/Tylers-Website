@@ -99,7 +99,7 @@ export default function AdminContactsPage() {
   if (status === 'loading' || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+        <div className="border-t-accent h-12 w-12 animate-spin rounded-full border-4 border-gray-300 dark:border-gray-700" />
       </div>
     );
   }
@@ -111,14 +111,14 @@ export default function AdminContactsPage() {
           <div>
             <Link
               href="/admin"
-              className="mb-2 inline-block text-sm text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-300"
+              className="hover:text-accent mb-2 inline-block text-sm text-gray-500"
             >
               ← Back to Admin
             </Link>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">
               Contact Submissions
               {unreadCount > 0 && (
-                <span className="ml-3 rounded-full bg-yellow-500 px-3 py-1 text-sm font-medium text-gray-900 dark:bg-yellow-300">
+                <span className="bg-accent-fill ml-3 rounded-full px-3 py-1 text-sm font-medium text-gray-900">
                   {unreadCount} new
                 </span>
               )}
@@ -133,7 +133,7 @@ export default function AdminContactsPage() {
                 onClick={() => setFilter(f)}
                 className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                   filter === f
-                    ? 'bg-yellow-500 text-gray-900 dark:bg-yellow-300'
+                    ? 'bg-accent-fill text-gray-900'
                     : 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
                 }`}
               >
@@ -155,7 +155,7 @@ export default function AdminContactsPage() {
                 className={`rounded-2xl border bg-white p-6 transition-colors dark:bg-gray-800 ${
                   submission.read
                     ? 'border-gray-300 dark:border-gray-700'
-                    : 'border-yellow-500/50 bg-yellow-500/5 dark:border-yellow-300/50 dark:bg-yellow-300/5'
+                    : 'border-accent/50 bg-accent/5'
                 }`}
               >
                 <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
@@ -166,7 +166,7 @@ export default function AdminContactsPage() {
                     <div className="mt-1 flex flex-wrap items-center gap-4 text-sm text-gray-500">
                       <a
                         href={`mailto:${submission.email}`}
-                        className="flex items-center gap-1 hover:text-yellow-500 dark:hover:text-yellow-300"
+                        className="hover:text-accent flex items-center gap-1"
                       >
                         <HiOutlineMail />
                         {submission.email}
@@ -174,7 +174,7 @@ export default function AdminContactsPage() {
                       {submission.phone && (
                         <a
                           href={`tel:${submission.phone}`}
-                          className="flex items-center gap-1 hover:text-yellow-500 dark:hover:text-yellow-300"
+                          className="hover:text-accent flex items-center gap-1"
                         >
                           <HiOutlinePhone />
                           {submission.phone}
@@ -200,7 +200,7 @@ export default function AdminContactsPage() {
                       className={`rounded-lg p-2 transition-colors ${
                         submission.read
                           ? 'text-green-400 hover:bg-gray-100 dark:hover:bg-gray-700'
-                          : 'text-gray-500 hover:bg-gray-100 hover:text-yellow-500 dark:hover:bg-gray-700 dark:hover:text-yellow-300'
+                          : 'hover:text-accent text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700'
                       }`}
                       title={
                         submission.read ? 'Mark as unread' : 'Mark as read'

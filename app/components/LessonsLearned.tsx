@@ -110,7 +110,7 @@ export default function LessonsLearned({
     return (
       <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+          <div className="border-t-accent h-4 w-4 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-700" />
           Loading...
         </div>
       </div>
@@ -125,7 +125,7 @@ export default function LessonsLearned({
   return (
     <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
       <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-        <HiOutlineLightBulb className="text-yellow-500 dark:text-yellow-300" />
+        <HiOutlineLightBulb className="text-accent" />
         Lessons Learned
       </h3>
 
@@ -138,13 +138,13 @@ export default function LessonsLearned({
             onChange={(e) => setNewLesson(e.target.value)}
             onKeyDown={(e) => handleKeyDown(e, 'add')}
             placeholder="Add lesson..."
-            className="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 placeholder-gray-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+            className="focus:ring-accent min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 placeholder-gray-500 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
             disabled={saving}
           />
           <button
             onClick={handleAddLesson}
             disabled={saving || !newLesson.trim()}
-            className="shrink-0 rounded-lg bg-yellow-500 px-3 py-1.5 text-sm font-medium text-gray-900 transition-colors hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+            className="bg-accent-fill hover:bg-accent-fill-hover shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-900 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
           >
             Add
           </button>
@@ -168,7 +168,7 @@ export default function LessonsLearned({
                     value={editingText}
                     onChange={(e) => setEditingText(e.target.value)}
                     onKeyDown={(e) => handleKeyDown(e, 'edit')}
-                    className="min-w-0 flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+                    className="focus:ring-accent min-w-0 flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                     autoFocus
                     disabled={saving}
                   />
@@ -191,9 +191,7 @@ export default function LessonsLearned({
                 </>
               ) : (
                 <>
-                  <span className="text-yellow-500 dark:text-yellow-300">
-                    •
-                  </span>
+                  <span className="text-accent">•</span>
                   <span className="min-w-0 flex-1 text-sm break-words text-gray-900 dark:text-gray-200">
                     {lesson}
                   </span>
@@ -202,7 +200,7 @@ export default function LessonsLearned({
                       <button
                         onClick={() => handleStartEdit(index)}
                         disabled={saving}
-                        className="shrink-0 p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-yellow-500 dark:hover:bg-gray-700 dark:hover:text-yellow-300"
+                        className="hover:text-accent shrink-0 p-1 text-gray-500 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
                         title="Edit"
                       >
                         <HiOutlinePencil className="text-sm" />
@@ -226,7 +224,7 @@ export default function LessonsLearned({
 
       {!readOnly && saving && (
         <div className="mt-3 flex items-center gap-2 text-sm text-gray-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+          <div className="border-t-accent h-4 w-4 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-700" />
           Saving...
         </div>
       )}

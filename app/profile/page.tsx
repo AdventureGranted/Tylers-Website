@@ -240,10 +240,6 @@ export default function ProfilePage() {
 
   return (
     <div className="relative min-h-screen overflow-x-clip bg-gray-100 px-4 py-12 dark:bg-gray-900">
-      {/* Soft glow orbs. Radial gradients rather than a blur filter: a large filter: blur() flickers while scrolling under the navbar's backdrop blur. */}
-      <div className="pointer-events-none absolute -top-72 left-1/3 h-[640px] w-[768px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(168_85_247/0.12),transparent)]" />
-      <div className="pointer-events-none absolute -top-[248px] right-1/3 h-[560px] w-[640px] translate-x-1/2 bg-[radial-gradient(closest-side,rgb(253_224_71/0.1),transparent)]" />
-
       <motion.div
         initial="hidden"
         animate="visible"
@@ -255,7 +251,7 @@ export default function ProfilePage() {
             <HiOutlineUser className="h-8 w-8 text-purple-500 dark:text-purple-400" />
             Your Profile
           </h1>
-          <div className="mx-auto mt-4 h-1 w-full max-w-[8rem] rounded-full bg-gradient-to-r from-purple-500 to-yellow-300" />
+          <div className="bg-accent mx-auto mt-4 h-1 w-full max-w-[8rem] rounded-full" />
         </motion.div>
 
         <motion.div
@@ -288,13 +284,13 @@ export default function ProfilePage() {
                   className="h-30 w-30 rounded-full object-cover"
                 />
               ) : (
-                <div className="flex h-30 w-30 items-center justify-center rounded-full bg-yellow-500 text-4xl font-bold text-gray-900 dark:bg-yellow-300">
+                <div className="bg-accent-fill flex h-30 w-30 items-center justify-center rounded-full text-4xl font-bold text-gray-900">
                   {session.user.name?.[0]?.toUpperCase() || 'U'}
                 </div>
               )}
               {imageLoading && (
                 <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50">
-                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-yellow-500 border-t-transparent dark:border-yellow-300"></div>
+                  <div className="border-accent h-8 w-8 animate-spin rounded-full border-2 border-t-transparent"></div>
                 </div>
               )}
             </div>
@@ -365,7 +361,7 @@ export default function ProfilePage() {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300/50 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:border-yellow-300"
+                className="focus:border-accent focus:ring-accent/50 w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:ring-2 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 placeholder="Your name"
               />
             </div>
@@ -380,7 +376,7 @@ export default function ProfilePage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+              className="bg-accent-fill hover:bg-accent-fill-hover w-full rounded-lg py-2 font-semibold text-gray-900 transition-colors disabled:opacity-50"
             >
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
@@ -427,7 +423,7 @@ export default function ProfilePage() {
                 step={0.1}
                 value={zoom}
                 onChange={(e) => setZoom(Number(e.target.value))}
-                className="w-full accent-yellow-500 dark:accent-yellow-300"
+                className="accent-accent w-full"
               />
             </div>
 
@@ -441,7 +437,7 @@ export default function ProfilePage() {
               <button
                 onClick={handleCropSave}
                 disabled={imageLoading}
-                className="flex-1 rounded-lg bg-yellow-500 py-2 font-semibold text-gray-900 transition-colors hover:bg-yellow-600 disabled:opacity-50 dark:bg-yellow-300 dark:hover:bg-yellow-400"
+                className="bg-accent-fill hover:bg-accent-fill-hover flex-1 rounded-lg py-2 font-semibold text-gray-900 transition-colors disabled:opacity-50"
               >
                 {imageLoading ? 'Saving...' : 'Save'}
               </button>

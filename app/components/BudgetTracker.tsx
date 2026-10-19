@@ -94,7 +94,7 @@ export default function BudgetTracker({
     return (
       <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
+          <div className="border-t-accent h-4 w-4 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-700" />
           Loading...
         </div>
       </div>
@@ -109,7 +109,7 @@ export default function BudgetTracker({
   return (
     <div className="rounded-2xl bg-white p-4 dark:bg-gray-700">
       <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
-        <HiOutlineCurrencyDollar className="text-yellow-500 dark:text-yellow-300" />
+        <HiOutlineCurrencyDollar className="text-accent" />
         Budget vs Actual
       </h3>
 
@@ -127,7 +127,7 @@ export default function BudgetTracker({
               step="0.01"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className="w-20 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:ring-yellow-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-yellow-300"
+              className="focus:ring-accent w-20 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
               autoFocus
             />
             <button
@@ -141,7 +141,7 @@ export default function BudgetTracker({
         ) : (
           <button
             onClick={() => setEditing(true)}
-            className="flex items-center gap-1 text-sm text-gray-700 hover:text-yellow-500 dark:text-gray-400 dark:hover:text-yellow-300"
+            className="hover:text-accent flex items-center gap-1 text-sm text-gray-700 dark:text-gray-400"
           >
             {estimatedBudget ? `$${estimatedBudget.toFixed(2)}` : 'Set budget'}
             <HiOutlinePencil className="text-xs" />
@@ -151,7 +151,7 @@ export default function BudgetTracker({
 
       <div className="mb-2 flex items-center justify-between">
         <span className="text-xs text-gray-500">Actual Spent</span>
-        <span className="text-sm font-medium text-yellow-500 dark:text-yellow-300">
+        <span className="text-accent text-sm font-medium">
           ${actualCost.toFixed(2)}
         </span>
       </div>
@@ -164,7 +164,7 @@ export default function BudgetTracker({
                 percentUsed > 100
                   ? 'bg-red-500'
                   : percentUsed > 80
-                    ? 'bg-yellow-500'
+                    ? 'bg-accent-fill'
                     : 'bg-green-500'
               }`}
               style={{ width: `${Math.min(percentUsed, 100)}%` }}

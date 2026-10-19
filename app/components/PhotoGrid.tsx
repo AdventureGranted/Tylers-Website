@@ -42,7 +42,7 @@ export default function PhotoGrid({ images }: PhotoGridProps) {
           <button
             key={image.id}
             onClick={() => openLightbox(index)}
-            className="relative aspect-square overflow-hidden rounded-lg border border-gray-300 transition-all hover:border-yellow-300/50 focus:ring-2 focus:ring-yellow-300 focus:outline-none dark:border-gray-700"
+            className="hover:border-accent/50 focus:ring-accent relative aspect-square overflow-hidden rounded-lg border border-gray-300 transition-all focus:ring-2 focus:outline-none dark:border-gray-700"
           >
             {image.type === 'video' ? (
               <>
