@@ -29,7 +29,7 @@ export default async function HobbiesPage() {
 
   return (
     <PageTransition>
-      <div className="flex min-h-screen flex-col items-center px-4 py-12">
+      <div className="flex min-h-screen flex-col items-center overflow-x-clip px-4 py-12">
         <SortableHobbyGrid projects={projects} isAdmin={isAdmin} />
       </div>
     </PageTransition>

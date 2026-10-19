@@ -183,10 +183,10 @@ function RegisterForm() {
 
 export default function RegisterPage() {
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-gray-100 px-4 dark:bg-gray-900">
-      {/* Gradient orbs — top-left & bottom-right of section */}
-      <div className="pointer-events-none absolute top-1/4 left-1/4 h-64 w-96 -translate-x-1/2 rounded-full bg-purple-500/15 blur-[100px]" />
-      <div className="pointer-events-none absolute right-1/4 bottom-1/4 h-56 w-80 translate-x-1/2 rounded-full bg-yellow-300/15 blur-[100px]" />
+    <div className="relative flex min-h-screen items-center justify-center overflow-x-clip bg-gray-100 px-4 dark:bg-gray-900">
+      {/* Soft glow orbs, top-left and bottom-right of the section. Radial gradients rather than a blur filter: a large filter: blur() flickers while scrolling under the navbar's backdrop blur. */}
+      <div className="pointer-events-none absolute top-[calc(25%-192px)] left-1/4 h-[640px] w-[768px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(168_85_247/0.12),transparent)]" />
+      <div className="pointer-events-none absolute right-1/4 bottom-[calc(25%-168px)] h-[560px] w-[640px] translate-x-1/2 bg-[radial-gradient(closest-side,rgb(253_224_71/0.1),transparent)]" />
 
       <motion.div
         initial="hidden"

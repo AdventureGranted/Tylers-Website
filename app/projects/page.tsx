@@ -257,9 +257,9 @@ export default function ProjectsPage() {
             variants={itemVariants}
             className="relative mb-10 text-center md:mb-14"
           >
-            {/* Blurred gradient orbs */}
-            <div className="pointer-events-none absolute -top-24 left-1/3 h-64 w-96 -translate-x-1/2 rounded-full bg-purple-500/15 blur-[100px]" />
-            <div className="pointer-events-none absolute -top-20 right-1/3 h-56 w-80 translate-x-1/2 rounded-full bg-yellow-300/15 blur-[100px]" />
+            {/* Soft glow orbs. Radial gradients rather than a blur filter: a large filter: blur() flickers while scrolling under the navbar's backdrop blur. */}
+            <div className="pointer-events-none absolute -top-72 left-1/3 h-[640px] w-[768px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(168_85_247/0.12),transparent)]" />
+            <div className="pointer-events-none absolute -top-[248px] right-1/3 h-[560px] w-[640px] translate-x-1/2 bg-[radial-gradient(closest-side,rgb(253_224_71/0.1),transparent)]" />
 
             <div className="relative">
               <h1 className="mb-4 flex items-center justify-center gap-3 text-4xl font-bold text-gray-900 md:mb-6 md:text-5xl dark:text-gray-200">

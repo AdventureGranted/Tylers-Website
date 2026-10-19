@@ -225,9 +225,9 @@ export default function SortableHobbyGrid({
           animate="visible"
           variants={containerVariants}
         >
-          {/* Blurred gradient orbs */}
-          <div className="pointer-events-none absolute -top-24 left-1/3 h-64 w-96 -translate-x-1/2 rounded-full bg-purple-500/15 blur-[100px]" />
-          <div className="pointer-events-none absolute -right-1/3 -bottom-20 h-56 w-80 translate-x-1/2 rounded-full bg-yellow-300/15 blur-[100px]" />
+          {/* Soft glow orbs. Radial gradients rather than a blur filter: a large filter: blur() flickers while scrolling under the navbar's backdrop blur. */}
+          <div className="pointer-events-none absolute -top-72 left-1/3 h-[640px] w-[768px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(168_85_247/0.12),transparent)]" />
+          <div className="pointer-events-none absolute -right-1/3 -bottom-[248px] h-[560px] w-[640px] translate-x-1/2 bg-[radial-gradient(closest-side,rgb(253_224_71/0.1),transparent)]" />
 
           <motion.div
             className="rounded-xl border border-white/5 bg-gradient-to-br from-purple-500/10 to-yellow-300/10 p-6"

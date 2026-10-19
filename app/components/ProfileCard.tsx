@@ -36,8 +36,8 @@ export default function ProfileCard() {
       className="relative mx-auto mt-4 overflow-hidden rounded-3xl border border-gray-300 bg-white p-8 shadow-md xl:min-h-[280px] xl:py-12 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
     >
       {/* Subtle gradient background decoration */}
-      <div className="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
-      <div className="absolute -right-24 -bottom-24 h-48 w-48 rounded-full bg-yellow-300/10 blur-3xl" />
+      <div className="absolute -top-56 -left-56 h-[448px] w-[448px] bg-[radial-gradient(closest-side,rgb(168_85_247/0.16),transparent)]" />
+      <div className="absolute -right-56 -bottom-56 h-[448px] w-[448px] bg-[radial-gradient(closest-side,rgb(253_224_71/0.08),transparent)]" />
 
       {/* Profile Image - centered on mobile, absolute left on md+ */}
       <motion.div
