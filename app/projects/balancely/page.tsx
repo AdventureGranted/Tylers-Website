@@ -146,10 +146,6 @@ export default function BalancelyPage() {
 
           {/* Hero Section */}
           <motion.div variants={itemVariants} className="relative mb-10">
-            {/* Soft glow orbs. Radial gradients rather than a blur filter: a
-                large filter: blur() flickers while scrolling under the
-                navbar's backdrop blur. */}
-
             <div className="relative">
               <h1 className="mb-2 text-4xl font-bold text-gray-900 md:text-5xl dark:text-gray-200">
                 Balancely
