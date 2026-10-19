@@ -41,9 +41,10 @@ interface ScreenSet {
   shots: Screenshot[];
 }
 
-// Grid cards show either a stack of live app screens or drawn cover art
-type GridProject = Project &
-  ({ screens: ScreenSet } | { cover: React.ReactNode });
+// App projects get a full-width card with a stack of live screens; smaller,
+// older projects share a two-column grid with drawn cover art
+type FeaturedProject = Project & { screens: ScreenSet };
+type GridProject = Project & { cover: React.ReactNode };
 
 const pickScreens = (
   basePath: string,
@@ -93,10 +94,10 @@ const siteScreens: ScreenSet = {
 };
 
 const mediaClass =
-  'bg-accent/10 mb-4 flex w-full justify-center overflow-hidden rounded-2xl border border-gray-300 dark:border-gray-700';
-const screenStackClass = `${mediaClass} aspect-video items-start px-[4%] pt-6`;
+  'bg-accent/10 flex items-center justify-center overflow-hidden rounded-2xl border border-gray-300 dark:border-gray-700';
+const screenStackClass = `${mediaClass} px-[4%] py-8`;
 // Taller on phones so the cover art isn't clipped
-const coverClass = `${mediaClass} aspect-[4/3] items-center px-[6%] py-4 sm:aspect-video`;
+const coverClass = `${mediaClass} mb-4 aspect-[4/3] w-full px-[6%] py-4 sm:aspect-video`;
 
 // Three phone screens, middle one in front
 function ScreenStack({
@@ -213,27 +214,27 @@ function ProjectDetails({ project }: { project: Project }) {
 }
 
 export default function ProjectsPage() {
-  const featuredProject: Project = {
-    title: 'Balancely',
-    subtitle: 'iOS Personal Finance App',
-    repo: null,
-    privateRepo: true,
-    demo: null,
-    caseStudy: '/projects/balancely',
-    diagram: { ...balancelyArchitecture, title: 'Balancely Architecture' },
-    date: 'January 2026 – Present',
-    bullets: [
-      'Born from a passion for personal finance developed over nearly 4 years in consumer lending at EnerBank USA',
-      'Designed and built end to end as a personal project my household uses daily: a native SwiftUI iOS app with a watchOS companion and home-screen widgets',
-      'Pulls in transactions automatically through SimpleFIN and Plaid bank feeds and Apple Card via FinanceKit, then queues them in a swipe-to-review deck with suggested categories and confidence levels',
-      'Tracks budget pace, account-backed savings goals, and subscriptions, and flags unusual spending with adaptive per-category anomaly detection',
-      'Backed by a self-hosted Next.js 16 REST API with Prisma, PostgreSQL, and BullMQ/Redis background workers, deployed through GitHub Actions',
-      'Keeps iOS and backend in sync without a generated client: backend tests record real JSON responses as contract fixtures that the iOS test suite decodes',
-      'Uses a self-hosted LLM for transaction categorization, budget audits, and receipt parsing',
-    ],
-  };
-
-  const projects: GridProject[] = [
+  const featuredProjects: FeaturedProject[] = [
+    {
+      title: 'Balancely',
+      subtitle: 'iOS Personal Finance App',
+      repo: null,
+      privateRepo: true,
+      demo: null,
+      caseStudy: '/projects/balancely',
+      diagram: { ...balancelyArchitecture, title: 'Balancely Architecture' },
+      date: 'January 2026 – Present',
+      screens: balancelyScreens,
+      bullets: [
+        'Born from a passion for personal finance developed over nearly 4 years in consumer lending at EnerBank USA',
+        'Designed and built end to end as a personal project my household uses daily: a native SwiftUI iOS app with a watchOS companion and home-screen widgets',
+        'Pulls in transactions automatically through SimpleFIN and Plaid bank feeds and Apple Card via FinanceKit, then queues them in a swipe-to-review deck with suggested categories and confidence levels',
+        'Tracks budget pace, account-backed savings goals, and subscriptions, and flags unusual spending with adaptive per-category anomaly detection',
+        'Backed by a self-hosted Next.js 16 REST API with Prisma, PostgreSQL, and BullMQ/Redis background workers, deployed through GitHub Actions',
+        'Keeps iOS and backend in sync without a generated client: backend tests record real JSON responses as contract fixtures that the iOS test suite decodes',
+        'Uses a self-hosted LLM for transaction categorization, budget audits, and receipt parsing',
+      ],
+    },
     {
       title: 'Back Up – Card Board Game',
       subtitle: 'Multiplayer Mobile Game',
@@ -278,6 +279,9 @@ export default function ProjectsPage() {
         'Deployed on personal server with GitHub Actions CI/CD pipeline for automated builds and deployments',
       ],
     },
+  ];
+
+  const projects: GridProject[] = [
     {
       title: 'Self Hosted Media & Automation Platform',
       subtitle: 'Full-Stack Infrastructure Development',
@@ -341,28 +345,44 @@ export default function ProjectsPage() {
             </div>
           </motion.div>
 
-          {/* Featured project */}
-          <motion.div
-            variants={itemVariants}
-            className="group hover:border-accent/50 mb-8 grid gap-6 rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:grid-cols-2 md:gap-8 md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
-          >
-            {/* Duplicates the "Screenshots & Details" button, so it's skipped
-                by keyboard and screen readers */}
-            <Link
-              href={featuredProject.caseStudy!}
-              tabIndex={-1}
-              aria-hidden="true"
-              className="bg-accent/10 flex items-center justify-center overflow-hidden rounded-2xl border border-gray-300 px-[4%] py-8 md:order-last dark:border-gray-700"
-            >
+          {/* Featured projects, screens alternating right and left */}
+          {featuredProjects.map((project, idx) => {
+            // Screens on the right for even rows, left for odd (desktop only)
+            const mediaSide = idx % 2 === 0 ? 'md:order-last' : '';
+            const screens = (
               <ScreenStack
-                screens={balancelyScreens}
+                screens={project.screens}
                 sizes="(min-width: 768px) 240px, 40vw"
               />
-            </Link>
-            <div className="flex flex-col">
-              <ProjectDetails project={featuredProject} />
-            </div>
-          </motion.div>
+            );
+            return (
+              <motion.div
+                key={project.title}
+                variants={itemVariants}
+                className="group hover:border-accent/50 mb-8 grid gap-6 rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:grid-cols-2 md:gap-8 md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
+              >
+                {project.caseStudy ? (
+                  // Duplicates the "Screenshots & Details" button, so it's
+                  // skipped by keyboard and screen readers
+                  <Link
+                    href={project.caseStudy}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className={`${screenStackClass} ${mediaSide}`}
+                  >
+                    {screens}
+                  </Link>
+                ) : (
+                  <div className={`${screenStackClass} ${mediaSide}`}>
+                    {screens}
+                  </div>
+                )}
+                <div className="flex flex-col">
+                  <ProjectDetails project={project} />
+                </div>
+              </motion.div>
+            );
+          })}
 
           <div className="grid w-full gap-8 md:grid-cols-2">
             {projects.map((project, idx) => (
@@ -371,30 +391,7 @@ export default function ProjectsPage() {
                 variants={itemVariants}
                 className="group hover:border-accent/50 flex flex-col rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg"
               >
-                {'screens' in project && project.caseStudy ? (
-                  // Duplicates the "Screenshots & Details" button, so it's
-                  // skipped by keyboard and screen readers
-                  <Link
-                    href={project.caseStudy}
-                    tabIndex={-1}
-                    aria-hidden="true"
-                    className={screenStackClass}
-                  >
-                    <ScreenStack
-                      screens={project.screens}
-                      sizes="(min-width: 768px) 220px, 40vw"
-                    />
-                  </Link>
-                ) : 'screens' in project ? (
-                  <div className={screenStackClass}>
-                    <ScreenStack
-                      screens={project.screens}
-                      sizes="(min-width: 768px) 220px, 40vw"
-                    />
-                  </div>
-                ) : (
-                  <div className={coverClass}>{project.cover}</div>
-                )}
+                <div className={coverClass}>{project.cover}</div>
                 <ProjectDetails project={project} />
               </motion.div>
             ))}
