@@ -14,6 +14,9 @@ interface ImageLightboxProps {
   initialIndex: number;
   isOpen: boolean;
   onClose: () => void;
+  // Extra classes for the image, e.g. padding so the counter, close button
+  // and dots don't sit on top of a tall screenshot's content
+  imageClassName?: string;
 }
 
 export default function ImageLightbox({
@@ -21,6 +24,7 @@ export default function ImageLightbox({
   initialIndex,
   isOpen,
   onClose,
+  imageClassName = '',
 }: ImageLightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -183,7 +187,7 @@ export default function ImageLightbox({
             alt={images[currentIndex].alt || 'Image'}
             width={1200}
             height={800}
-            className="max-h-[85vh] w-auto object-contain"
+            className={`max-h-[85vh] w-auto object-contain ${imageClassName}`}
             sizes="(max-width: 768px) 100vw, 80vw"
             priority
           />

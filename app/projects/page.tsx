@@ -3,11 +3,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { HiOutlineFolder } from 'react-icons/hi';
+import { BsGithub } from 'react-icons/bs';
+import {
+  HiArrowRight,
+  HiOutlineFolder,
+  HiOutlineLockClosed,
+} from 'react-icons/hi';
 import PageTransition from '@/app/components/PageTransition';
 import CTAFooter from '@/app/components/CTAFooter';
 import { containerVariants, itemVariants } from '@/app/lib/animations';
 import LazyArchitectureDiagram from '@/app/components/LazyArchitectureDiagram';
+import ThemedScreenshot from '@/app/components/ThemedScreenshot';
+import type { ArchitectureDiagramProps } from '@/app/components/ArchitectureDiagram';
+import { balancelyScreenshots } from '@/app/projects/balancely/screenshots';
 import {
   balancelyArchitecture,
   backupArchitecture,
@@ -16,41 +24,156 @@ import {
 
 // Pre-generated blur data URLs for project images
 const blurDataURLs: Record<string, string> = {
-  '/family.jpeg':
-    'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAYH/8QAIhAAAQMEAgMBAAAAAAAAAAAAAQIDBAAFBhEhEjEHQWH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABwRAAICAgMAAAAAAAAAAAAAAAECAAMEERIhQf/aAAwDAQACEQMRAD8Ax3CseuWRY1CuV3bZS0+yh9HiCQvSgDRIPBII/ta9SlRZGTUxd+xnR5z/2Q==',
+  '/tyler-grant-site.webp':
+    'data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAMG/8QAHRAAAgIBBQAAAAAAAAAAAAAAAQIAITEDERITkf/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDLllKjbTCniMGsZkepjdexEYv/2Q==',
   '/selfhosting.png':
     'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUG/8QAIRAAAQMEAgMBAAAAAAAAAAAAAQIDBAUGAAcRIRITMUH/xAAVAQEBAAAAAAAAAAAAAAAAAAAEBf/EABwRAAICAgMAAAAAAAAAAAAAAAECAAMEERIhMf/aAAwDAQACEQMRAD8AzO2tv1K4bUpFS9bKYsSQyl9uMhwrUEqAIJUQACeeeOc5xjFLJrVAT2eO37//2Q==',
   '/boxie.png':
     'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAcI/8QAIhAAAQMDBAMBAAAAAAAAAAAAAQIDBAUGEQAHEiEIE0Fx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAcEQACAgIDAAAAAAAAAAAAAAABAgADBBESITH/2gAMAwEAAhEDEEA/ANS7b2JAsmyaZbcN556PBbKfcv8AKlqJJUo8QByST116x1pdWk1t+p//2Q==',
-  '/balancely.png':
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAOklEQVQYV2PU+M/wn4EIwMjAxPCfgRhFDMRoYmBiIKyIkYGJgaAiRgYmBoKKGBmYGAgqYmRgYgAAe4oFC/sMFDkAAAAASUVORK5CYII=',
   '/backup.png':
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAARklEQVQYV2NkYPj/n4EIwMjIxPCfgRhFjIxMDAQVMTIyMRBUxMjIxEBQESMjEwNBRYyMTAwEFTEyMjEQVMTIyMRAUBEAZk0FC1VB1B0AAAAASUVORK5CYII=',
 };
 
+interface Project {
+  title: string;
+  subtitle: string | null;
+  repo: string | null;
+  privateRepo: boolean;
+  demo: string | null;
+  caseStudy: string | null;
+  diagram: (ArchitectureDiagramProps & { title: string }) | null;
+  date: string;
+  bullets: string[];
+}
+
+interface GridProject extends Project {
+  image: string;
+}
+
+// Screens shown on the featured Balancely card, middle one in front
+const featuredScreens = [
+  '02b-bank-review-card',
+  '01-home',
+  '03b-budgets-list',
+].map((file) => balancelyScreenshots.find((shot) => shot.file === file)!);
+
+function ProjectDetails({ project }: { project: Project }) {
+  return (
+    <>
+      <h2 className="mb-1 text-2xl font-semibold text-yellow-300">
+        {project.title}
+      </h2>
+      {project.subtitle && (
+        <div className="text-md mb-1 text-gray-700 dark:text-gray-400">
+          {project.subtitle}
+        </div>
+      )}
+      <div className="mb-3 text-sm text-gray-700 dark:text-gray-400">
+        {project.date}
+      </div>
+      {(project.repo ||
+        project.privateRepo ||
+        project.demo ||
+        project.caseStudy) && (
+        <div className="mb-3 flex flex-wrap items-center gap-3">
+          {project.caseStudy && (
+            <Link
+              href={project.caseStudy}
+              className="group/cs inline-flex w-fit items-center gap-2 rounded-lg bg-yellow-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400"
+            >
+              Screenshots &amp; Details
+              <HiArrowRight className="transition-transform group-hover/cs:translate-x-0.5" />
+            </Link>
+          )}
+          {project.repo && (
+            <Link
+              href={project.repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-fit items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:border-yellow-500 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:border-yellow-300 dark:hover:bg-gray-700"
+            >
+              <BsGithub />
+              View Code
+            </Link>
+          )}
+          {project.privateRepo && (
+            <span className="inline-flex w-fit items-center gap-1.5 text-sm text-gray-700 dark:text-gray-400">
+              <HiOutlineLockClosed />
+              Private repo
+            </span>
+          )}
+          {project.demo && (
+            <Link
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-fit items-center gap-2 rounded-lg bg-yellow-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400"
+            >
+              Live Demo
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </Link>
+          )}
+        </div>
+      )}
+      <ul className="list-outside list-disc space-y-2 pl-5 text-gray-900 dark:text-gray-200">
+        {project.bullets.map((b, i) => (
+          <li key={i}>{b}</li>
+        ))}
+      </ul>
+      {/* Pinned to the bottom so it lines up across cards in a row */}
+      {project.diagram && (
+        <div className="mt-auto">
+          <LazyArchitectureDiagram {...project.diagram} />
+        </div>
+      )}
+    </>
+  );
+}
+
 export default function ProjectsPage() {
-  const projects = [
-    {
-      title: 'Balancely',
-      subtitle: 'iOS Personal Finance App',
-      link: 'https://github.com/AdventureGranted/balancely-web',
-      demo: null,
-      date: 'January 2026 – Present',
-      image: '/balancely.png',
-      bullets: [
-        'Born from a passion for personal finance developed over nearly 4 years in consumer lending at EnerBank USA',
-        'Native SwiftUI iOS app tracking transactions, budgets, savings goals, net worth, and recurring expenses with real-time alerts',
-        'Backed by a Next.js API (90+ routes) with PostgreSQL, Prisma ORM, JWT auth, push notifications, and S3-compatible file storage',
-        'Integrated AI-powered receipt scanning and email receipt import for automatic transaction entry',
-        'Supports multi-user households with role-based access, activity logs, and spending limits',
-        'Delivers spending insights, merchant analytics, forecasting, and annual reports',
-      ],
-    },
+  const featuredProject: Project = {
+    title: 'Balancely',
+    subtitle: 'iOS Personal Finance App',
+    repo: null,
+    privateRepo: true,
+    demo: null,
+    caseStudy: '/projects/balancely',
+    diagram: { ...balancelyArchitecture, title: 'Balancely Architecture' },
+    date: 'January 2026 – Present',
+    bullets: [
+      'Born from a passion for personal finance developed over nearly 4 years in consumer lending at EnerBank USA',
+      'Designed and built end to end as a personal project my household uses daily: a native SwiftUI iOS app with a watchOS companion and home-screen widgets',
+      'Pulls in transactions automatically through SimpleFIN and Plaid bank feeds and Apple Card via FinanceKit, then queues them in a swipe-to-review deck with suggested categories and confidence levels',
+      'Tracks budget pace, account-backed savings goals, and subscriptions, and flags unusual spending with adaptive per-category anomaly detection',
+      'Backed by a self-hosted Next.js 16 REST API with Prisma, PostgreSQL, and BullMQ/Redis background workers, deployed through GitHub Actions',
+      'Keeps iOS and backend in sync without a generated client: backend tests record real JSON responses as contract fixtures that the iOS test suite decodes',
+      'Uses a self-hosted LLM for transaction categorization, budget audits, and receipt parsing',
+    ],
+  };
+
+  const projects: GridProject[] = [
     {
       title: 'Back Up – Card Board Game',
       subtitle: 'Multiplayer Mobile Game',
-      link: 'https://github.com/AdventureGranted/backup',
+      repo: null,
+      privateRepo: true,
       demo: null,
+      caseStudy: null,
+      diagram: { ...backupArchitecture, title: 'Back Up Architecture' },
       date: 'January 2026 – Present',
       image: '/backup.png',
       bullets: [
@@ -65,10 +188,16 @@ export default function ProjectsPage() {
     {
       title: 'Tyler-Grant.com',
       subtitle: 'Full-Stack Portfolio & Authentication System',
-      link: 'https://github.com/AdventureGranted/Tylers-Website',
-      demo: 'http://tyler-grant.com/demo/receipt-parser',
+      repo: 'https://github.com/AdventureGranted/Tylers-Website',
+      privateRepo: false,
+      demo: 'https://tyler-grant.com/demo/receipt-parser',
+      caseStudy: null,
+      diagram: {
+        ...portfolioArchitecture,
+        title: 'Tyler-Grant.com Architecture',
+      },
       date: 'June 2025 – Present',
-      image: '/family.jpeg',
+      image: '/tyler-grant-site.webp',
       bullets: [
         'Built a full-stack portfolio using Next.js, TypeScript, Tailwind CSS, and Framer Motion for smooth animations',
         'Implemented user authentication with NextAuth.js including registration, role-based access control, and profile management',
@@ -83,8 +212,11 @@ export default function ProjectsPage() {
     {
       title: 'Self Hosted Media & Automation Platform',
       subtitle: 'Full-Stack Infrastructure Development',
-      link: null,
+      repo: null,
+      privateRepo: false,
       demo: null,
+      caseStudy: null,
+      diagram: null,
       date: 'September 2022 – Present',
       image: '/selfhosting.png',
       bullets: [
@@ -97,8 +229,11 @@ export default function ProjectsPage() {
     {
       title: 'Boxy – Senior Project',
       subtitle: null,
-      link: null,
+      repo: null,
+      privateRepo: false,
       demo: null,
+      caseStudy: null,
+      diagram: null,
       date: 'January 2022 – December 2022',
       image: '/boxie.png',
       bullets: [
@@ -110,7 +245,7 @@ export default function ProjectsPage() {
 
   return (
     <PageTransition>
-      <main className="flex min-h-screen flex-col items-center px-4 py-12 md:py-20">
+      <div className="flex min-h-screen flex-col items-center overflow-x-clip px-4 py-12 md:py-20">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -132,6 +267,47 @@ export default function ProjectsPage() {
                 Projects
               </h1>
               <div className="mx-auto mb-6 h-1 w-full max-w-xs rounded-full bg-gradient-to-r from-purple-500 to-yellow-300 md:max-w-sm" />
+              <p className="mx-auto max-w-2xl text-lg text-gray-700 dark:text-gray-400">
+                Apps and infrastructure I&apos;ve built outside my day job:
+                native iOS and mobile apps, full-stack web, and self-hosted
+                systems.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Featured project */}
+          <motion.div
+            variants={itemVariants}
+            className="group mb-8 grid gap-6 rounded-3xl border border-gray-300 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-yellow-500/50 hover:shadow-xl md:grid-cols-2 md:gap-8 md:p-8 dark:border-gray-700 dark:bg-gray-800 dark:shadow-lg dark:hover:border-yellow-300/50"
+          >
+            {/* Duplicates the "Screenshots & Details" button, so it's skipped
+                by keyboard and screen readers */}
+            <Link
+              href={featuredProject.caseStudy!}
+              tabIndex={-1}
+              aria-hidden="true"
+              className="flex items-center justify-center overflow-hidden rounded-2xl border border-gray-300 bg-gradient-to-br from-purple-500/25 via-transparent to-yellow-300/15 px-[4%] py-8 md:order-last dark:border-gray-700"
+            >
+              {featuredScreens.map((shot, i) => (
+                <div
+                  key={shot.file}
+                  className={`overflow-hidden rounded-[1.25rem] border-4 border-gray-900 bg-gray-900 shadow-xl transition-transform duration-300 md:rounded-[1.75rem] md:border-[6px] dark:border-gray-700 ${
+                    i === 1
+                      ? 'z-10 -mx-[7%] w-[40%] group-hover:-translate-y-1'
+                      : 'w-[33%] translate-y-6 opacity-90'
+                  }`}
+                >
+                  <ThemedScreenshot
+                    basePath="/balancely"
+                    file={shot.file}
+                    alt={shot.alt}
+                    sizes="(min-width: 768px) 240px, 40vw"
+                  />
+                </div>
+              ))}
+            </Link>
+            <div className="flex flex-col">
+              <ProjectDetails project={featuredProject} />
             </div>
           </motion.div>
 
@@ -153,86 +329,19 @@ export default function ProjectsPage() {
                         : 'object-cover'
                     } transition-transform duration-300 group-hover:scale-105`}
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    priority={idx === 0}
                     placeholder="blur"
                     blurDataURL={blurDataURLs[project.image]}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </div>
-                <h2 className="mb-1 text-2xl font-semibold text-yellow-300">
-                  {project.title}
-                </h2>
-                {project.subtitle && (
-                  <div className="text-md mb-1 text-gray-700 dark:text-gray-400">
-                    {project.subtitle}
-                  </div>
-                )}
-                {project.link && (
-                  <Link
-                    href={project.link}
-                    className="text-md mb-1 text-gray-700 dark:text-gray-400"
-                  >
-                    {project.link}
-                  </Link>
-                )}
-                <div className="mb-3 text-sm text-gray-700 dark:text-gray-400">
-                  {project.date}
-                </div>
-                {project.demo && (
-                  <Link
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mb-3 inline-flex w-fit items-center gap-2 rounded-lg bg-yellow-300 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400"
-                  >
-                    Live Demo
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                  </Link>
-                )}
-                <ul className="list-inside list-disc space-y-2 pl-2 text-gray-900 dark:text-gray-200">
-                  {project.bullets.map((b, i) => (
-                    <li key={i}>{b}</li>
-                  ))}
-                </ul>
-                {project.title === 'Balancely' && (
-                  <LazyArchitectureDiagram
-                    {...balancelyArchitecture}
-                    title="Balancely Architecture"
-                  />
-                )}
-                {project.title === 'Back Up – Card Board Game' && (
-                  <LazyArchitectureDiagram
-                    {...backupArchitecture}
-                    title="Back Up Architecture"
-                  />
-                )}
-                {project.title === 'Tyler-Grant.com' && (
-                  <LazyArchitectureDiagram
-                    {...portfolioArchitecture}
-                    title="Tyler-Grant.com Architecture"
-                  />
-                )}
+                <ProjectDetails project={project} />
               </motion.div>
             ))}
           </div>
 
           <CTAFooter />
         </motion.div>
-      </main>
+      </div>
     </PageTransition>
   );
 }
