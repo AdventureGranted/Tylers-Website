@@ -1,24 +1,24 @@
-// Generates web-sized Balancely screenshots for /projects/balancely.
+// Generates web-sized, theme-paired screenshots for ThemedScreenshot.
 //
-// Usage: node scripts/generate-balancely-screenshots.mjs <source-dir>
+// Usage: node scripts/generate-themed-screenshots.mjs <source-dir> <out-dir>
+//   e.g. node scripts/generate-themed-screenshots.mjs ~/balancely-shots public/balancely
 //
 // <source-dir> must contain dark/ and light/ folders of full-resolution PNGs.
 // The originals stay outside this repo; only the resized AVIF/WebP copies are
-// written to public/balancely/, so the deployed bundle never ships them.
+// written to <out-dir>, so the deployed bundle never ships them.
 import sharp from 'sharp';
 import { readdir, mkdir, stat } from 'fs/promises';
 import { join, basename, extname } from 'path';
 
-const OUT_DIR = 'public/balancely';
 const THEMES = ['dark', 'light'];
 const WIDTHS = [480, 960];
 const AVIF_QUALITY = 60;
 const WEBP_QUALITY = 80;
 
-const sourceDir = process.argv[2];
-if (!sourceDir) {
+const [sourceDir, outRoot] = process.argv.slice(2);
+if (!sourceDir || !outRoot) {
   console.error(
-    'Usage: node scripts/generate-balancely-screenshots.mjs <source-dir>'
+    'Usage: node scripts/generate-themed-screenshots.mjs <source-dir> <out-dir>'
   );
   process.exit(1);
 }
@@ -27,7 +27,7 @@ let total = 0;
 
 for (const theme of THEMES) {
   const inDir = join(sourceDir, theme);
-  const outDir = join(OUT_DIR, theme);
+  const outDir = join(outRoot, theme);
   await mkdir(outDir, { recursive: true });
 
   const files = (await readdir(inDir))
@@ -50,4 +50,4 @@ for (const theme of THEMES) {
   }
 }
 
-console.log(`Wrote ${(total / 1024 / 1024).toFixed(2)}MB to ${OUT_DIR}`);
+console.log(`Wrote ${(total / 1024 / 1024).toFixed(2)}MB to ${outRoot}`);
