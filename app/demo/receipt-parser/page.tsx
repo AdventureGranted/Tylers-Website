@@ -449,7 +449,7 @@ export default function ReceiptParserDemo() {
             <p className="mx-auto max-w-2xl text-gray-700 dark:text-gray-400">
               Built for home improvement and woodworking projects. Upload a
               receipt and AI extracts line items, categorizing them into
-              materials, tools, and misc — so you know exactly how much that
+              materials, tools, and misc, so you know exactly how much that
               bookshelf build cost in lumber vs tools. Track spending across
               hobby projects and keep a running tally of your costs.
             </p>
