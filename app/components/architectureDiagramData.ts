@@ -20,6 +20,10 @@ import {
   HiDocumentText,
   HiShieldCheck,
   HiTerminal,
+  HiLibrary,
+  HiRefresh,
+  HiBell,
+  HiSparkles,
 } from 'react-icons/hi';
 
 export interface ServiceBox {
@@ -93,45 +97,55 @@ function svc(
 export const balancelyArchitecture: ArchitectureDiagramProps = {
   layers: [
     {
-      title: 'Clients',
+      title: 'Apple Clients',
       layerColor: BLUE_LAYER,
       cardColor: BLUE_CARD,
       services: [
         svc(
           'iOS App (SwiftUI)',
           HiDeviceMobile,
-          ['Native SwiftUI', 'JWT authentication', 'Push notifications'],
+          [
+            'iOS 18+, MVVM with @Observable',
+            'async/await networking',
+            'CoreData offline queue with replay',
+            'Apple Card via FinanceKit',
+          ],
+          BLUE_LAYER,
+          BLUE_CARD
+        ),
+        svc(
+          'watchOS App & Widgets',
+          HiClock,
+          [
+            'watchOS companion app',
+            'WidgetKit home-screen widgets',
+            'Share data with the app via an App Group',
+          ],
           BLUE_LAYER,
           BLUE_CARD
         ),
       ],
     },
     {
-      title: 'Next.js 16 API Backend — 90+ Routes',
+      title: 'Next.js 16 REST API',
       layerColor: PURPLE_LAYER,
       cardColor: PURPLE_CARD,
       services: [
         svc(
-          'API Layer (90+ routes)',
+          'Route Handlers',
           HiServer,
-          [
-            '/api/auth, /api/transactions',
-            '/api/budgets, /api/receipts',
-            '/api/savings, /api/goals',
-            '/api/ai, /api/household',
-            '/api/forecast, /api/cron',
-          ],
+          ['REST API for the apps', 'Prisma ORM', 'Shared households'],
           PURPLE_LAYER,
           PURPLE_CARD
         ),
         svc(
-          'Shared Libraries',
-          HiCode,
+          'API Contract',
+          HiDocumentText,
           [
-            'Auth: JWT, CSRF, passwords',
-            'Data: Prisma, cache, Redis',
-            'AI: categorize, insights, OCR',
-            'Services: email, S3, Firebase',
+            'No generated client',
+            'Route tests record JSON fixtures',
+            'iOS tests decode them with app models',
+            'Parity check: iOS endpoints vs routes',
           ],
           PURPLE_LAYER,
           PURPLE_CARD
@@ -139,119 +153,98 @@ export const balancelyArchitecture: ArchitectureDiagramProps = {
       ],
     },
     {
-      title: 'Infrastructure',
+      title: 'Background Workers (BullMQ)',
+      layerColor: ORANGE_LAYER,
+      cardColor: ORANGE_CARD,
+      services: [
+        svc(
+          'Bank Sync',
+          HiRefresh,
+          ['SimpleFIN and Plaid feeds', 'New transactions land as drafts'],
+          ORANGE_LAYER,
+          ORANGE_CARD
+        ),
+        svc(
+          'Budget Alerts',
+          HiBell,
+          ['Pace-based budget alerts'],
+          ORANGE_LAYER,
+          ORANGE_CARD
+        ),
+        svc(
+          'AI Jobs',
+          HiSparkles,
+          ['Run on the self-hosted LLM'],
+          ORANGE_LAYER,
+          ORANGE_CARD
+        ),
+        svc(
+          'Merchant-Logo Learning',
+          HiPhotograph,
+          ['Logos in the transaction feed'],
+          ORANGE_LAYER,
+          ORANGE_CARD
+        ),
+      ],
+    },
+    {
+      title: 'Data & Services',
       layerColor: GREEN_LAYER,
       cardColor: GREEN_CARD,
       services: [
         svc(
           'PostgreSQL',
           HiDatabase,
-          ['35 models', 'Prisma ORM', 'Relational data'],
+          ['Primary data store', 'Prisma ORM'],
           GREEN_LAYER,
           GREEN_CARD
         ),
         svc(
           'Redis',
           HiLightningBolt,
-          ['Caching', 'Job queues (BullMQ)', 'Rate limiting'],
+          ['BullMQ job queues'],
           GREEN_LAYER,
           GREEN_CARD
         ),
         svc(
-          'S3 (MinIO)',
-          HiPhotograph,
-          ['Receipt storage', 'Attachments', 'Presigned URLs'],
-          GREEN_LAYER,
-          GREEN_CARD
-        ),
-        svc(
-          'AI Service (OpenWebUI)',
+          'Self-Hosted LLM',
           HiChip,
-          ['Auto-categorize', 'OCR / Vision', 'Spending insights'],
+          ['Transaction categorization', 'Budget audits', 'Receipt parsing'],
+          GREEN_LAYER,
+          GREEN_CARD
+        ),
+        svc(
+          'Bank Feeds',
+          HiLibrary,
+          ['SimpleFIN', 'Plaid'],
           GREEN_LAYER,
           GREEN_CARD
         ),
         svc(
           'Firebase',
           HiCloud,
-          ['Push notifications', 'Device management'],
+          ['Push notifications'],
           GREEN_LAYER,
           GREEN_CARD
         ),
         svc(
           'Sentry',
           HiShieldCheck,
-          ['Error tracking', 'Performance monitoring'],
-          GREEN_LAYER,
-          GREEN_CARD
-        ),
-        svc(
-          'SMTP Server',
-          HiMail,
-          ['Email alerts', 'Weekly digests'],
+          ['Error tracking'],
           GREEN_LAYER,
           GREEN_CARD
         ),
       ],
     },
     {
-      title: 'Background Processing',
-      layerColor: ORANGE_LAYER,
-      cardColor: ORANGE_CARD,
-      services: [
-        svc(
-          'BullMQ Workers',
-          HiCog,
-          ['email.worker.ts', 'budget-alert.worker.ts'],
-          ORANGE_LAYER,
-          ORANGE_CARD
-        ),
-        svc(
-          'Ofelia Scheduler (Cron)',
-          HiClock,
-          [
-            '06:00 Recurring transactions',
-            '07:00 Receipt emails',
-            '08:00 Monthly reports',
-            '09:00 Bill reminders',
-            '18:00 Notification digests',
-            '20:00 Anomaly detection',
-          ],
-          ORANGE_LAYER,
-          ORANGE_CARD
-        ),
-      ],
-    },
-    {
-      title: 'Deployment (Docker Compose)',
+      title: 'Deployment',
       layerColor: CYAN_LAYER,
       cardColor: CYAN_CARD,
       services: [
         svc(
-          'balancely (Next.js)',
-          HiServer,
-          ['Port 3000', 'App container'],
-          CYAN_LAYER,
-          CYAN_CARD
-        ),
-        svc(
-          'worker (BullMQ)',
-          HiCog,
-          ['ts-node', 'Background jobs'],
-          CYAN_LAYER,
-          CYAN_CARD
-        ),
-        svc(
-          'redis (7-alpine)',
-          HiLightningBolt,
-          ['Cache + queues'],
-          CYAN_LAYER,
-          CYAN_CARD
-        ),
-        svc(
-          'scheduler (Ofelia)',
-          HiClock,
-          ['Cron jobs', '10 scheduled tasks'],
+          'GitHub Actions',
+          HiTerminal,
+          ['Deploy pipeline', 'Self-hosted server'],
           CYAN_LAYER,
           CYAN_CARD
         ),
@@ -259,12 +252,10 @@ export const balancelyArchitecture: ArchitectureDiagramProps = {
     },
   ],
   stats: [
-    '35 DB Models',
-    '90+ API Routes',
-    '20 Dashboard Pages',
-    '10 Cron Jobs',
-    '4 Docker Services',
-    '7 Infrastructure Services',
+    'iOS, watchOS & Widgets',
+    'Offline Queue with Replay',
+    'Contract-Tested API',
+    'Self-Hosted Backend & LLM',
   ],
 };
 
