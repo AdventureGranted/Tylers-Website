@@ -432,7 +432,7 @@ export default function ReceiptParserDemo() {
   return (
     <PageTransition>
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-        <main className="mx-auto max-w-4xl px-4 py-12">
+        <div className="mx-auto max-w-4xl px-4 py-12">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -919,7 +919,7 @@ export default function ReceiptParserDemo() {
               </span>
             </motion.div>
           </motion.div>
-        </main>
+        </div>
       </div>
     </PageTransition>
   );

@@ -98,14 +98,14 @@ export default function AdminContactsPage() {
 
   if (status === 'loading' || loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
+      <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
         <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-yellow-500 dark:border-gray-700 dark:border-t-yellow-300" />
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 px-4 py-12 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-100 px-4 py-12 dark:bg-gray-900">
       <div className="mx-auto max-w-5xl">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -229,6 +229,6 @@ export default function AdminContactsPage() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

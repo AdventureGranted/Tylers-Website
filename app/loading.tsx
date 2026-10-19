@@ -1,7 +1,7 @@
 export default function Loading() {
   return (
     <div className="relative min-h-screen">
-      <main className="mx-6 pt-4 pb-16 lg:mx-25">
+      <div className="mx-6 pt-4 pb-16 lg:mx-25">
         {/* ProfileCard skeleton */}
         <div className="relative mx-auto mt-4 overflow-hidden rounded-3xl border border-gray-300 bg-white p-8 shadow-md xl:min-h-[280px] xl:py-12 dark:border-gray-700 dark:bg-gray-800">
           <div className="flex flex-col items-center xl:flex-row xl:items-start xl:gap-8">
@@ -60,7 +60,7 @@ export default function Loading() {
             ))}
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

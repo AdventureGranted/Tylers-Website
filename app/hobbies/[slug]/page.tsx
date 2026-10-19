@@ -162,7 +162,7 @@ export default async function HobbyDetailPage({ params }: Props) {
   );
 
   return (
-    <main className="min-h-screen px-4 py-12">
+    <div className="min-h-screen px-4 py-12">
       <div className={`mx-auto ${isAdmin ? 'max-w-[1600px]' : 'max-w-6xl'}`}>
         {/* Breadcrumbs */}
         <Breadcrumbs
@@ -325,6 +325,6 @@ export default async function HobbyDetailPage({ params }: Props) {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

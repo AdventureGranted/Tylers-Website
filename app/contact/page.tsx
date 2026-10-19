@@ -52,7 +52,7 @@ export default function ContactPage() {
 
   return (
     <PageTransition>
-      <main className="flex min-h-screen flex-col items-center px-4 py-12 md:py-20">
+      <div className="flex min-h-screen flex-col items-center px-4 py-12 md:py-20">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -137,7 +137,7 @@ export default function ContactPage() {
             <ContactForm />
           </motion.div>
         </motion.div>
-      </main>
+      </div>
     </PageTransition>
   );
 }

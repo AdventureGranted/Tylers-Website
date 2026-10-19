@@ -123,7 +123,7 @@ function AnimatedTooMany() {
 export default function AboutPage() {
   return (
     <PageTransition>
-      <main className="min-h-screen bg-gray-100 px-4 py-12 dark:bg-gray-900">
+      <div className="min-h-screen bg-gray-100 px-4 py-12 dark:bg-gray-900">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -845,7 +845,7 @@ export default function AboutPage() {
             </div>
           </motion.div>
         </motion.div>
-      </main>
+      </div>
     </PageTransition>
   );
 }
