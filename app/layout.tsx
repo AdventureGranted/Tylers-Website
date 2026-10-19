@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: '%s | Tyler Grant',
   },
   description:
-    'Tyler Grant is a full-stack software engineer in Lehi, UT with 4+ years building products with TypeScript, React, Node.js, Python, and AWS, from real-time accessibility platforms to e-commerce checkout systems.',
+    'Tyler Grant is a full-stack software engineer in Lehi, UT with 5+ years building products with TypeScript, React, Node.js, Python, and AWS, from real-time accessibility platforms to e-commerce checkout systems.',
   keywords: [
     'Tyler Grant',
     'Software Engineer',
@@ -110,7 +110,7 @@ const personJsonLd = {
   url: siteUrl,
   jobTitle: 'Software Engineer',
   description:
-    'Full-stack software engineer with 4+ years building products with TypeScript, React, Node.js, Python, and AWS.',
+    'Full-stack software engineer with 5+ years building products with TypeScript, React, Node.js, Python, and AWS.',
   worksFor: { '@type': 'Organization', name: 'Trove Brands' },
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'University of Utah' },
   knowsAbout: [
