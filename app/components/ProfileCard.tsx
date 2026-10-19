@@ -4,10 +4,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BsGithub, BsLinkedin } from 'react-icons/bs';
-import { HiOutlineMail } from 'react-icons/hi';
+import {
+  HiOutlineDownload,
+  HiOutlineLightBulb,
+  HiOutlineMail,
+  HiOutlineUser,
+} from 'react-icons/hi';
 import { useToast } from '@/app/hooks/useToast';
 import { trackResumeDownload } from '@/app/lib/analytics';
 import { SOCIAL_LINKS, SocialIconName } from '@/app/lib/config';
+
+// Icons match the navbar's About and Projects links
+const buttonClass =
+  'group inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-semibold transition-all duration-200 focus-visible:ring-4 focus-visible:ring-accent/40 focus-visible:outline-none active:scale-[0.98]';
+
+const secondaryButtonClass = `${buttonClass} border border-gray-300 bg-white text-gray-900 hover:border-accent hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700/60 dark:text-gray-200 dark:hover:border-accent dark:hover:bg-gray-700`;
 
 // Pre-generated blur data URL for profile image (10x10 placeholder)
 const profileBlurDataURL =
@@ -56,7 +67,7 @@ export default function ProfileCard() {
         </div>
       </motion.div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center xl:pl-56">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -104,21 +115,24 @@ export default function ProfileCard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="mt-6 flex flex-wrap justify-center gap-4"
+          className="mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center"
         >
           <a
             href="/Tyler_Grant_Resume.pdf"
             download="Tyler_Grant_Resume.pdf"
             onClick={handleDownload}
-            className="bg-accent-fill shadow-accent/25 hover:bg-accent-fill-hover hover:shadow-accent/40 inline-block rounded-full px-8 py-4 text-lg font-bold text-gray-900 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
+            className={`${buttonClass} bg-accent-fill shadow-accent/25 hover:bg-accent-fill-hover hover:shadow-accent/40 text-gray-900 shadow-lg`}
           >
+            <HiOutlineDownload className="h-5 w-5 transition-transform duration-200 group-hover:translate-y-0.5" />
             Download Resume
           </a>
-          <Link
-            href="/about"
-            className="hover:border-accent/50 inline-block rounded-full border border-gray-300 bg-white px-8 py-4 text-lg font-bold text-gray-900 transition-all duration-300 hover:scale-105 hover:bg-gray-100 active:scale-95 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-700"
-          >
-            Learn More About Me
+          <Link href="/about" className={secondaryButtonClass}>
+            <HiOutlineUser className="text-accent h-5 w-5" />
+            Get to Know Me
+          </Link>
+          <Link href="/projects" className={secondaryButtonClass}>
+            <HiOutlineLightBulb className="text-accent h-5 w-5" />
+            Personal Projects
           </Link>
         </motion.div>
       </div>
