@@ -7,6 +7,9 @@ interface LightboxImage {
   url: string;
   alt: string | null;
   type?: string;
+  // Intrinsic size, so the frame is the right shape before the image loads
+  width?: number;
+  height?: number;
 }
 
 interface ImageLightboxProps {
@@ -14,9 +17,9 @@ interface ImageLightboxProps {
   initialIndex: number;
   isOpen: boolean;
   onClose: () => void;
-  // Extra classes for the image, e.g. padding so the counter, close button
-  // and dots don't sit on top of a tall screenshot's content
-  imageClassName?: string;
+  // 'phone' shows the image inside a phone bezel with the controls around
+  // it, so they don't cover a tall screenshot's content
+  frame?: 'card' | 'phone';
 }
 
 export default function ImageLightbox({
@@ -24,7 +27,7 @@ export default function ImageLightbox({
   initialIndex,
   isOpen,
   onClose,
-  imageClassName = '',
+  frame = 'card',
 }: ImageLightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -83,6 +86,9 @@ export default function ImageLightbox({
 
   if (!isOpen) return null;
 
+  const isPhone = frame === 'phone';
+  const current = images[currentIndex];
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 md:p-8"
@@ -90,7 +96,11 @@ export default function ImageLightbox({
     >
       {/* Modal container */}
       <div
-        className="relative max-h-[85vh] max-w-4xl overflow-hidden rounded-2xl border border-gray-300 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-800"
+        className={
+          isPhone
+            ? 'relative px-16 pt-12 pb-10'
+            : 'relative max-h-[85vh] max-w-4xl overflow-hidden rounded-2xl border border-gray-300 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-800'
+        }
         onClick={(e) => e.stopPropagation()}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -171,23 +181,35 @@ export default function ImageLightbox({
         )}
 
         {/* Image or Video */}
-        {images[currentIndex].type === 'video' ? (
+        {current.type === 'video' ? (
           <video
-            key={images[currentIndex].url}
-            src={images[currentIndex].url}
+            key={current.url}
+            src={current.url}
             className="max-h-[85vh] w-auto object-contain"
             controls
             autoPlay
             playsInline
             preload="metadata"
           />
+        ) : isPhone ? (
+          <div className="overflow-hidden rounded-[3rem] border-8 border-gray-900 bg-gray-900 shadow-2xl dark:border-gray-700">
+            <Image
+              src={current.url}
+              alt={current.alt || 'Image'}
+              width={current.width ?? 1200}
+              height={current.height ?? 800}
+              className="h-[calc(90vh-5.5rem)] w-auto"
+              sizes="50vh"
+              priority
+            />
+          </div>
         ) : (
           <Image
-            src={images[currentIndex].url}
-            alt={images[currentIndex].alt || 'Image'}
-            width={1200}
-            height={800}
-            className={`max-h-[85vh] w-auto object-contain ${imageClassName}`}
+            src={current.url}
+            alt={current.alt || 'Image'}
+            width={current.width ?? 1200}
+            height={current.height ?? 800}
+            className="max-h-[85vh] w-auto object-contain"
             sizes="(max-width: 768px) 100vw, 80vw"
             priority
           />

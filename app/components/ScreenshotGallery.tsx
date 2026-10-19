@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 import ImageLightbox from '@/app/components/ImageLightbox';
 import ThemedScreenshot from '@/app/components/ThemedScreenshot';
@@ -22,6 +22,10 @@ interface ScreenshotGalleryProps {
 
 // Matches the card width below: 62vw on phones, 240px from the sm breakpoint
 const SIZES = '(min-width: 640px) 240px, 62vw';
+const SM_UP = '(min-width: 640px)';
+
+const FRAME_CLASS =
+  'block w-full overflow-hidden rounded-[2.25rem] border-[6px] border-gray-900 bg-gray-900 shadow-lg dark:border-gray-700';
 
 export default function ScreenshotGallery({
   screenshots,
@@ -31,6 +35,20 @@ export default function ScreenshotGallery({
   const { theme } = useTheme();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  // On phones the card is already near full screen width, so enlarging
+  // would only shrink it; screens only open in the lightbox from sm up
+  const [canEnlarge, setCanEnlarge] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia(SM_UP);
+    const update = () => {
+      setCanEnlarge(query.matches);
+      if (!query.matches) setLightboxIndex(null);
+    };
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
 
   const scroll = (direction: 1 | -1) => {
     const el = scrollerRef.current;
@@ -44,9 +62,8 @@ export default function ScreenshotGallery({
         <p className="text-sm text-gray-700 dark:text-gray-400">
           <span className="sm:hidden">Swipe to browse.</span>
           <span className="hidden sm:inline">
-            Scroll sideways or use the arrows.
-          </span>{' '}
-          Tap a screen to enlarge it.
+            Scroll sideways or use the arrows. Click a screen to enlarge it.
+          </span>
         </p>
         <div className="hidden shrink-0 gap-2 sm:flex">
           <button
@@ -78,18 +95,29 @@ export default function ScreenshotGallery({
             key={shot.file}
             className="w-[62vw] shrink-0 snap-start sm:w-[240px]"
           >
-            <button
-              onClick={() => setLightboxIndex(idx)}
-              className="focus-visible:ring-accent block w-full overflow-hidden rounded-[2.25rem] border-[6px] border-gray-900 bg-gray-900 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:ring-4 focus-visible:outline-none dark:border-gray-700"
-              aria-label={`Enlarge screenshot: ${shot.title}`}
-            >
-              <ThemedScreenshot
-                basePath={basePath}
-                file={shot.file}
-                alt={shot.alt}
-                sizes={SIZES}
-              />
-            </button>
+            {canEnlarge ? (
+              <button
+                onClick={() => setLightboxIndex(idx)}
+                className={`${FRAME_CLASS} focus-visible:ring-accent cursor-zoom-in transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:ring-4 focus-visible:outline-none`}
+                aria-label={`Enlarge screenshot: ${shot.title}`}
+              >
+                <ThemedScreenshot
+                  basePath={basePath}
+                  file={shot.file}
+                  alt={shot.alt}
+                  sizes={SIZES}
+                />
+              </button>
+            ) : (
+              <div className={FRAME_CLASS}>
+                <ThemedScreenshot
+                  basePath={basePath}
+                  file={shot.file}
+                  alt={shot.alt}
+                  sizes={SIZES}
+                />
+              </div>
+            )}
             <figcaption className="mt-3 px-1">
               <div className="text-sm font-semibold text-gray-900 dark:text-gray-200">
                 {shot.title}
@@ -107,10 +135,12 @@ export default function ScreenshotGallery({
           images={screenshots.map((shot) => ({
             url: `${basePath}/${theme}/${shot.file}-960.webp`,
             alt: shot.alt,
+            width: 1320,
+            height: 2868,
           }))}
           initialIndex={lightboxIndex}
           isOpen
-          imageClassName="px-2 pt-14 pb-10"
+          frame="phone"
           onClose={() => setLightboxIndex(null)}
         />
       )}
