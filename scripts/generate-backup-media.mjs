@@ -15,8 +15,8 @@ const WIDTHS = [480, 960];
 const AVIF_QUALITY = 60;
 const WEBP_QUALITY = 80;
 
-// Output name -> source PNG per theme. Screens captured in only one theme reuse
-// that capture for the other, so ThemedScreenshot always finds both.
+// Output name -> source PNG per theme. Every screen needs a light and a dark
+// capture, so ThemedScreenshot always finds both.
 const SCREENS = {
   '01-gameplay': {
     light: '03-gameplay-light-mode.png',
@@ -26,10 +26,6 @@ const SCREENS = {
   '03-setup': {
     light: '02-setup-classic.png',
     dark: '07-setup-rules-dark.png',
-  },
-  '04-tutorial': {
-    light: '06-tutorial-back-up-rule.png',
-    dark: '06-tutorial-back-up-rule.png',
   },
   '05-results': { light: '08-results.png', dark: '09-results-dark.png' },
 };
