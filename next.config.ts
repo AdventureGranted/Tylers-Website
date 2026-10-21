@@ -31,6 +31,10 @@ const nextConfig: NextConfig = {
   },
   // Required for Next.js 16 with Turbopack
   turbopack: {},
+  // The Demos tab was removed; send old links to Projects instead.
+  async redirects() {
+    return [{ source: '/demo', destination: '/projects', permanent: true }];
+  },
 };
 
 export default withPWA(nextConfig);

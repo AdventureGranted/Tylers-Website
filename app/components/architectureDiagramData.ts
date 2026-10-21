@@ -468,7 +468,7 @@ export const portfolioArchitecture: ArchitectureDiagramProps = {
           HiCollection,
           [
             'Home, About, Projects',
-            'Contact, Hobbies, Demos',
+            'Contact, Hobbies',
             'Login, Register, Admin',
             'Receipt Parser demo',
           ],
